@@ -32,6 +32,7 @@ in
       vim
       zsh
       neovim
+      delta
       git
       curl
       jq
