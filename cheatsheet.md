@@ -22,3 +22,9 @@ nix-collect-garbage -d
 ```bash
 nix-env -iA nixos.firefox
 ```
+
+-- updating and upgrading
+```bash
+nix-channel --update
+sudo nixos-rebuild --upgrade
+```
