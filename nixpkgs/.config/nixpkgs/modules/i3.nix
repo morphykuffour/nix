@@ -36,6 +36,11 @@
           notification = false;
         }
         {
+          command = "exec sxhkd";
+          always = true;
+          notification = false;
+        }
+        {
           command = "systemctl --user restart polybar.service";
           always = true;
           notification = false;
