@@ -1,23 +1,18 @@
-{ config, pkgs, lib, vimUtils, ... }:
+{ config, pkgs, lib, ... }:
 
-let
-  # installs a vim plugin from git with a given tag / branch
-  pluginGit = ref: repo: vimUtils.buildVimPluginFrom2Nix {
-    pname = "${lib.strings.sanitizeDerivationName repo}";
-    version = ref;
-    src = builtins.fetchGit {
-      url = "https://github.com/${repo}.git";
-      ref = ref;
-    };
-  };
-
-  # always installs latest version
-  plugin = pluginGit "HEAD";
-in
 {
+  imports =
+    [
+      #./xdg.nix # TODO fix environment issue
+      ./tmux.nix
+      ./neovim.nix
+    ];
+  nixpkgs.config.allowUnfree = true;
+
   home.username = "morp";
   home.homeDirectory = "/home/morp";
   home.stateVersion = "22.05";
+
   programs.home-manager.enable = true;
   home.packages = with pkgs;[
     tmux
@@ -30,17 +25,22 @@ in
     autojump
     conda
     ruby
+    nyxt
+    emacs
+    edir
+    ranger
+    tldr
+    notepadqq
+    eva
+    stylua
+    jq
+    curl
+    ripgrep
+    fd
+    fzf
+    nodejs
+    spotify-tui
+    spotify
   ];
-
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-    }))
-  ];
-
-  programs.neovim = {
-    enable = true;
-    package = pkgs.neovim-nightly;
-  };
-
 }
+
