@@ -9,7 +9,7 @@
         open = "repo view --web";
         pr = "pr create";
       };
-      editor = "vim";
+      editor = "nvim";
     };
   };
 }
