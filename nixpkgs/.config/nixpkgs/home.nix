@@ -5,8 +5,11 @@
     [
       ./modules/tmux/tmux.nix
       ./modules/fonts.nix
+      ./modules/shell.nix
+      ./modules/i3.nix
       ./modules/nvim/nvim.nix
     ];
+  nixpkgs.overlays = [ (import ./overlays/main.nix) ];
   nixpkgs.config.allowUnfree = true;
 
   home.username = "morp";
