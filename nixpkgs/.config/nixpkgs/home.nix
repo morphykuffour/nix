@@ -42,6 +42,7 @@
     nodejs
     spotify-tui
     spotify
+    jupyter
   ];
 }
 
