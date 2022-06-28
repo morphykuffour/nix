@@ -3,9 +3,9 @@
 {
   imports =
     [
-      #./xdg.nix # TODO fix environment issue
-      ./tmux.nix
-      ./neovim.nix
+      ./modules/tmux/tmux.nix
+      ./modules/fonts.nix
+      ./modules/nvim/nvim.nix
     ];
   nixpkgs.config.allowUnfree = true;
 
@@ -28,6 +28,7 @@
     nyxt
     emacs
     edir
+    delta
     ranger
     tldr
     notepadqq
