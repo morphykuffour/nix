@@ -1,8 +1,8 @@
 { config, pkgs, libs, ... }:
 let
-  email = "maas@lalani.dev";
-  name = "Maas Lalani";
-  user = "maaslalani";
+  email = "morph.kuffour@uconn.edu";
+  name = "Morphy Kuffour";
+  user = "morphykuffour";
 in
 {
   programs.git = {
@@ -12,7 +12,7 @@ in
       color.ui = true;
       commit.gpgsign = true;
       core.commitGraph = true;
-      credential.helper = "osxkeychain";
+      # credential.helper = "osxkeychain";
       diff.algorithm = "patience";
       fetch.prune = true;
       gc.writeCommitGraph = true;
