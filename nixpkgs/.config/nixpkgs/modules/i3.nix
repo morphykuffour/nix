@@ -1,7 +1,10 @@
 { pkgs, lib, ... }:
 let
-  mod = "Mod4";
+  # variables
+  mod = "Mod1";
   borderWidth = 3;
+
+  local_bin = "/home/morp/.local/bin";
 in
 {
   enable = true;
@@ -60,7 +63,7 @@ in
       size = 9.0;
     };
     gaps = {
-      inner = 15;
+      inner = 20;
       outer = 5;
     };
 
@@ -89,11 +92,21 @@ in
       "${mod}+Shift+k" = "move up";
       "${mod}+Shift+l" = "move right";
 
+      # run scripts TODO move to sxhkd when working
+      # "${mod}+ g" = "exec --no-startup-id ${local_bin}/google-search.sh";
+      # "${mod}+ 0" = "exec --no-startup-id ${local_bin}/nixpkg-search.sh";
+
+      "${mod} + shift + n" = "$TERMINAL sudo nmtui";
+
+      # layouts
+      # "${mod} + shift + h" = "layout split h";
+      # "${mod} + shift + v" = "layout split v";
+
       # split in horizontal orientation
       "${mod}+z" = "split h";
 
       # split in vertical orientation
-      "${mod}+v" = "split v";
+      "${mod}+x" = "split v";
 
       # Use KDE logoff screen TODO fix
       # "${mod}+Shift+e" = "exec --no-startup-id qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1";
@@ -110,16 +123,21 @@ in
         always = true;
         notification = false;
       }
-      # {
-      #   command = "systemctl --user restart polybar.service";
-      #   always = true;
-      #   notification = false;
-      # }
+      {
+        command = "kdeconnect-indicator";
+        always = true;
+        notification = false;
+      }
       {
         command = "${pkgs.feh}/bin/feh --bg-scale ~/Pictures/wall.jpg";
         always = true;
         notification = false;
       }
+      # {
+      #   command = "systemctl --user restart polybar.service";
+      #   always = true;
+      #   notification = false;
+      # }
     ];
 
   };
@@ -138,7 +156,12 @@ in
 }
 
 
+# bindsym --release $mod+x exec --no-startup-id rofi -lines 10 -padding 0 -show search -modi search:~/bin/rofi-web-search.py -i -p "Search: "
 
+#       bindsym ${mod}+ g = "exec --no-startup-id ${local_bin}/google-search.sh";
+#       bindsym ${mod}+ home = "exec --no-startup-id ${local_bin}/nixpkg-search.sh";
+
+# floating_modifier = Mod4
 # # toggle tiling / floating
 # bindsym $mod+Shift+space floating toggle
 
@@ -165,6 +188,11 @@ in
 #       # back to normal: Enter or Escape
 #       bindsym Return mode "default"
 #       bindsym Escape mode "default"
+# }
+# {
+#   command = "systemctl --user restart polybar.service";
+#   always = true;
+#   notification = false;
 # }
 
 # bindsym $mod+r mode "resize"
