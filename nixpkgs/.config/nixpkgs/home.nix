@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, current, pkgs, lib, ... }:
 
 # let
 # userConfig = import ./user.nix { };
@@ -12,8 +12,7 @@
       # ./modules/tmux/tmux.nix
       # ./modules/shell.nix
       ./modules/fonts.nix
-      ./modules/i3.nix
-      ./modules/polybar.nix
+      # ./modules/polybar.nix
       ./modules/nvim/nvim-hm.nix # tested and is working
       # ./modules/nvim.nix
     ];
@@ -23,6 +22,10 @@
   home.username = "morp";
   home.homeDirectory = "/home/morp";
   home.stateVersion = "22.05";
+
+  xsession.windowManager.i3 = import ./modules/i3.nix {
+    inherit current lib pkgs;
+  };
 
   programs.home-manager.enable = true;
   home.packages = with pkgs;[
@@ -46,6 +49,7 @@
     # neovim#-nightly # ppde
     # tldr
     eva # better bc (calculator)
+    aria # faster downloads
     hyperfine # benchmarking tool
     hexyl # hex viewer
     ripgrep # faster grep
