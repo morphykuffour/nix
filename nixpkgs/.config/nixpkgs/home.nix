@@ -11,9 +11,11 @@
     [
       # ./modules/tmux/tmux.nix
       # ./modules/shell.nix
-      ./modules/fonts.nix
       # ./modules/polybar.nix
-      ./modules/nvim/nvim-hm.nix # tested and is working
+      ./modules/fonts.nix
+      ./modules/sxhkd.nix
+      ./modules/nvim/nvim-hm.nix
+      ./modules/rofi.nix
       # ./modules/nvim.nix
     ];
   nixpkgs.overlays = [ (import ./overlays/main.nix) ];
@@ -26,6 +28,7 @@
   xsession.windowManager.i3 = import ./modules/i3.nix {
     inherit current lib pkgs;
   };
+
 
   programs.home-manager.enable = true;
   home.packages = with pkgs;[
@@ -49,7 +52,7 @@
     # neovim#-nightly # ppde
     # tldr
     eva # better bc (calculator)
-    aria # faster downloads
+    aria2 # faster downloads
     hyperfine # benchmarking tool
     hexyl # hex viewer
     ripgrep # faster grep
@@ -58,6 +61,7 @@
     jupyter # notebooks for prototyping
     ruby # ruby interpreter
     nyxt # script websites with sliime and emacs (browser)
+    slides # terminal presentations
     emacs # operating system
     edir # feature rich vidir
     ranger # slower lf
@@ -68,6 +72,10 @@
     nodejs # js compiler
     spotify-tui # spotify in terminal
     spotify # spotify gui
+    mpv
+    feh
+    sublime
+    surfraw
     (python39.withPackages (pp: with pp; [
       pynvim
     ]))
