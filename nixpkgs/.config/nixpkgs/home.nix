@@ -4,6 +4,7 @@
 # userConfig = import ./user.nix { };
 # gitConfig = import ./modules/git.nix {};
 # in
+# ${getEnv "HOME"}
 # with ; {
 
 {
@@ -12,12 +13,19 @@
       # ./modules/tmux/tmux.nix
       # ./modules/shell.nix
       # ./modules/polybar.nix
+      ./modules/spotify.nix
+      ./modules/redshift.nix
+      ./modules/pass.nix
       ./modules/fonts.nix
-      ./modules/sxhkd.nix
+      ./modules/sxhkd.nix # TODO move to i3.nix
       ./modules/nvim/nvim-hm.nix
       ./modules/rofi.nix
       # ./modules/nvim.nix
     ];
+  xsession.windowManager.i3 = import ./modules/i3.nix {
+    inherit current lib pkgs;
+  };
+
   nixpkgs.overlays = [ (import ./overlays/main.nix) ];
   nixpkgs.config.allowUnfree = true;
 
@@ -25,9 +33,6 @@
   home.homeDirectory = "/home/morp";
   home.stateVersion = "22.05";
 
-  xsession.windowManager.i3 = import ./modules/i3.nix {
-    inherit current lib pkgs;
-  };
 
 
   programs.home-manager.enable = true;
@@ -43,6 +48,7 @@
     bat # shell bat
     tealdeer # faster tldr
     fd # faster find
+    gh
     delta # better git pager
     pastel # view rgb codes
     neomutt # email client
@@ -58,6 +64,8 @@
     ripgrep # faster grep
     autojump # jump to directories
     conda # python env management
+    # python
+    # python3Full
     jupyter # notebooks for prototyping
     ruby # ruby interpreter
     nyxt # script websites with sliime and emacs (browser)
@@ -71,11 +79,18 @@
     fzf # fuzzy finder
     nodejs # js compiler
     spotify-tui # spotify in terminal
-    spotify # spotify gui
+    # spotify # spotify gui
+    spotifyd # spotify deamon
+    neofetch
+    zathura
     mpv
     feh
     sublime
     surfraw
+    ffmpeg
+    nix-index
+    redshift
+    discord
     (python39.withPackages (pp: with pp; [
       pynvim
     ]))
