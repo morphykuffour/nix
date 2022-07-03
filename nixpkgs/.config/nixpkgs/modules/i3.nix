@@ -57,7 +57,7 @@ in
         text = "#ffffff";
       };
     };
-    window.border = 0;
+    window.border = 2;
     fonts = {
       names = [ "Noto Sans" ];
       size = 9.0;
