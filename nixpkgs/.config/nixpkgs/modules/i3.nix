@@ -5,6 +5,7 @@ let
   borderWidth = 3;
 
   local_bin = "/home/morp/.local/bin";
+  home = "/home/morp/";
 in
 {
   enable = true;
@@ -96,7 +97,8 @@ in
       # "${mod}+ g" = "exec --no-startup-id ${local_bin}/google-search.sh";
       # "${mod}+ 0" = "exec --no-startup-id ${local_bin}/nixpkg-search.sh";
 
-      "${mod} + shift + n" = "$TERMINAL sudo nmtui";
+      # "${mod} + shift + n" = "$TERMINAL sudo nmtui";
+      "${mod} + shift + n" = "exec termite -e ${local_bin}/notetaker -t notetaker_window";
 
       # layouts
       # "${mod} + shift + h" = "layout split h";
@@ -129,12 +131,17 @@ in
         notification = false;
       }
       {
-        command = "${pkgs.feh}/bin/feh --bg-scale ~/Pictures/wall.jpg";
+        command = "blueman-applet";
+        always = true;
+        notification = false;
+      }
+      {
+        command = "${pkgs.feh}/bin/feh --bg-scale --randomize ~/Pictures/wallpapers/*";
         always = true;
         notification = false;
       }
       # {
-      #   command = "systemctl --user restart polybar.service";
+      #   command = "${home}/.config/polybar/launch.sh";
       #   always = true;
       #   notification = false;
       # }
@@ -143,14 +150,15 @@ in
   };
 
   extraConfig = ''
-    # Start i3bar to display a workspace bar (plus the system information i3status
-    # finds out, if available)
-    bar {
-            status_command i3status
-            tray_output primary
-            font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-            font pango:Jetbrains Mono 15
-    }
+      # Start i3bar to display a workspace bar (plus the system information i3status
+      # finds out, if available)
+      bar {
+              status_command i3status
+              tray_output primary
+              font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+              font pango:Jetbrains Mono 15
+      }
+    for_window [ title="notetaker_window" ] floating enable
 
   '';
 }
