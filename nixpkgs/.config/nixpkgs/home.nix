@@ -20,6 +20,7 @@
       ./modules/sxhkd.nix # TODO move to i3.nix
       ./modules/nvim/nvim-hm.nix
       ./modules/rofi.nix
+      ./modules/nur.nix
       # ./modules/nvim.nix
     ];
   xsession.windowManager.i3 = import ./modules/i3.nix {
@@ -79,10 +80,11 @@
     fzf # fuzzy finder
     nodejs # js compiler
     spotify-tui # spotify in terminal
-    # spotify # spotify gui
+    spotify # spotify gui
     spotifyd # spotify deamon
     neofetch
     zathura
+    viu
     mpv
     feh
     sublime
@@ -91,8 +93,13 @@
     nix-index
     redshift
     discord
+    termite
     (python39.withPackages (pp: with pp; [
       pynvim
+      pandas
+      requests
+      pip
+      ipython
     ]))
   ];
 }
