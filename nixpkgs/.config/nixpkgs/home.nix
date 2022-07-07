@@ -12,7 +12,8 @@
     [
       # ./modules/tmux/tmux.nix
       # ./modules/shell.nix
-      # ./modules/polybar.nix
+      ./modules/i3.nix
+      ./modules/polybar
       ./modules/spotify.nix
       ./modules/redshift.nix
       ./modules/pass.nix
@@ -21,11 +22,7 @@
       ./modules/nvim/nvim-hm.nix
       ./modules/rofi.nix
       ./modules/nur.nix
-      # ./modules/nvim.nix
     ];
-  xsession.windowManager.i3 = import ./modules/i3.nix {
-    inherit current lib pkgs;
-  };
 
   nixpkgs.overlays = [ (import ./overlays/main.nix) ];
   nixpkgs.config.allowUnfree = true;
@@ -34,9 +31,18 @@
   home.homeDirectory = "/home/morp";
   home.stateVersion = "22.05";
 
-
-
-  programs.home-manager.enable = true;
+  services.clipmenu.enable = true;
+  programs = {
+    home-manager = {
+      enable = true;
+    };
+    obs-studio = {
+      enable = true;
+      plugins = with pkgs.obs-studio-plugins; [
+        wlrobs
+      ];
+    };
+  };
   home.packages = with pkgs;[
 
     # terminal devtools
@@ -49,7 +55,8 @@
     bat # shell bat
     tealdeer # faster tldr
     fd # faster find
-    gh
+    gh # github cli
+    clipmenu
     delta # better git pager
     pastel # view rgb codes
     neomutt # email client
