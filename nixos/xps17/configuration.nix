@@ -357,6 +357,12 @@
   environment.pathsToLink = [ "/libexec" ];
   system.stateVersion = "22.05";
 
+  #temporary bluetooth fix
+  systemd.tmpfiles.rules = [
+    "d /var/lib/bluetooth 700 root root - -"
+  ];
+  systemd.targets."bluetooth".after = [ "systemd-tmpfiles-setup.service" ];
+
   # use flakes
   nix = {
     package = pkgs.nixFlakes;
