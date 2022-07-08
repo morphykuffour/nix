@@ -93,20 +93,45 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # home-manager
+    home-manager = {
+      url = "github:nix-community/home-manager/release-22.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # NUR packages
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # home-manager
-    home-manager = {
-      url = "github:nix-community/home-manager/release-22.05";
+    # macOS 
+    darwin = {
+      url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # windows wsl
+    wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    neovim.url = "github:neovim/neovim?dir=contrib";
   };
-  outputs = { nixpkgs, nur, home-manager, ... }:
+
+  outputs =
+    inputs@{ self
+    , nixpkgs
+    , home-manager
+    , nur
+    , darwin
+    , wsl
+    , neovim
+    , ...
+    }:
     let
+      user = "morp";
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
@@ -127,6 +152,13 @@
           ];
         };
       };
+      # os-agnotisc configurations
+      homeConfigurations = (
+        import ./home.nix {
+          inherit (nixpkgs) lib;
+          inherit inputs nixpkgs home-manager user;
+        }
+      );
     };
 }
 # sha256 = "0000000000000000000000000000000000000000000000000000";

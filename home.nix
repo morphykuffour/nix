@@ -17,7 +17,7 @@
       ./modules/spotify.nix
       ./modules/redshift.nix
       ./modules/pass.nix
-      ./modules/fonts.nix
+      # ./modules/fonts.nix
       ./modules/sxhkd.nix # TODO move to i3.nix
       ./modules/nvim.nix
       ./modules/rofi.nix
@@ -42,7 +42,11 @@
     };
   };
   home.packages = with pkgs;[
-
+    (
+      nerdfonts.override {
+        fonts = [ "JetBrainsMono" ];
+      }
+    )
     # terminal devtools
     kitty # terminal 
     tmux # terminal multiplexor
