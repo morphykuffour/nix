@@ -148,7 +148,6 @@
           modules = [
             nur.nixosModules.nur
             ./nixos/xps17/configuration.nix
-            ./home.nix
           ];
         };
       };
