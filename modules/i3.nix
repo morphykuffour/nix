@@ -23,16 +23,24 @@ in
     package = pkgs.i3-gaps;
 
     config = {
+
       bars = [{
         statusCommand = "${pkgs.i3status}/bin/i3status";
-        position = "top";
+        position = "bottom";
       }];
+
       modifier = mod;
       terminal = "${pkgs.kitty}/bin/kitty";
+      # fonts = {
+      #   names = [ "pango:DejaVu Sans Mono" ];
+      #   size = 13.0;
+      # };
+
       fonts = {
-        names = [ "pango:DejaVu Sans Mono" ];
-        size = 13.0;
+        names = [ "Noto Sans" ];
+        size = 15.0;
       };
+
       modes = {
         resize = {
           "j" = "resize shrink width 10 px or 10 ppt";
@@ -49,7 +57,6 @@ in
         };
       };
 
-
       window = {
         commands = [
           {
@@ -59,10 +66,6 @@ in
         ];
         border = 2;
       };
-      # fonts = {
-      #   names = [ "Noto Sans" ];
-      #   size = 9.0;
-      # };
       gaps = {
         inner = 20;
         outer = 5;
@@ -197,7 +200,7 @@ in
       assign [class=".obs-wrapped"] "8: obs"
       assign [class="Steam"] "9: game"
 
-      # Start i3bar to display a workspace bar (plus the system information i3status
+      # Start i3bar to display a workspace bar (plus the system informatio i3status
       # finds out, if available)
       # bar {
       #         status_command i3status
