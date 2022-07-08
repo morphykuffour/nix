@@ -18,7 +18,7 @@ in
     startMenuLaunchers = true;
 
     # Enable integration with Docker Desktop (needs to be installed)
-    # docker.enable = true;
+    docker.enable = true;
   };
 
   # Enable nix flakes
@@ -28,20 +28,20 @@ in
   '';
 
   environment.systemPackages = with pkgs;  [
-      wget 
-      vim
-      zsh
-      neovim
-      delta
-      git
-      curl
-      jq
-      emacs
-      file
-      exa
-      bat
-      rsync
-      stow
-      binutils
+    wget
+    vim
+    zsh
+    neovim
+    delta
+    git
+    curl
+    jq
+    emacs
+    file
+    exa
+    bat
+    rsync
+    stow
+    binutils
   ];
 }

@@ -24,9 +24,7 @@
       ./modules/nur.nix
     ];
 
-  nixpkgs.overlays = [ (import ./overlays/main.nix) ];
   nixpkgs.config.allowUnfree = true;
-
   home.username = "morp";
   home.homeDirectory = "/home/morp";
   home.stateVersion = "22.05";
