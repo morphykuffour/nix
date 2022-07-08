@@ -151,6 +151,15 @@
           ];
         };
       };
+
+      # wsl configurations
+      wslConfigurations = (
+        import ./wsl {
+          inherit (nixpkgs) lib;
+          inherit inputs nixpkgs home-manager nur user;
+        }
+      );
+
       # os-agnotisc configurations
       homeConfigurations = (
         import ./home.nix {
