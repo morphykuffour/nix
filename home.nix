@@ -19,7 +19,7 @@
       ./modules/pass.nix
       ./modules/fonts.nix
       ./modules/sxhkd.nix # TODO move to i3.nix
-      ./modules/nvim/nvim-hm.nix
+      ./modules/nvim.nix
       ./modules/rofi.nix
       # ./modules/nur.nix
     ];
