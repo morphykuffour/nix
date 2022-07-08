@@ -61,27 +61,27 @@
       );
 
       # macos configurations
-      darwinConfigurations = (
-        import ./darwin {
-          inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager darwin user;
-        }
-      );
+      # darwinConfigurations = (
+      #   import ./darwin {
+      #     inherit (nixpkgs) lib;
+      #     inherit inputs nixpkgs home-manager darwin user;
+      #   }
+      # );
 
       # wsl configurations
-      wslConfigurations = (
-        import ./wsl {
-          inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager nur user;
-        }
-      );
+      # wslConfigurations = (
+      #   import ./wsl {
+      #     inherit (nixpkgs) lib;
+      #     inherit inputs nixpkgs home-manager nur user;
+      #   }
+      # );
 
       # os-agnotisc configurations
-      homeConfigurations = (
-        import ./home.nix {
-          inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager user;
-        }
-      );
+      # homeConfigurations = (
+      #   import ./home.nix {
+      #     inherit (nixpkgs) lib;
+      #     inherit inputs nixpkgs home-manager user;
+      #   }
+      # );
     };
 }
