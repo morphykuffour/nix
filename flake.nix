@@ -92,8 +92,20 @@
       url = "github:nixos/nixpkgs/nixos-22.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # NUR packages
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # home-manager
+    home-manager = {
+      url = "github:nix-community/home-manager/release-22.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, nur, home-manager, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -107,7 +119,11 @@
       nixosConfigurations = {
         morp = lib.nixosSystem {
           inherit system;
-          modules = [ ./nixos/xps17/configuration.nix ];
+          # ...
+          modules = [
+            nur.nixosModules.nur
+            ./nixos/xps17/configuration.nix
+          ];
         };
       };
     };
