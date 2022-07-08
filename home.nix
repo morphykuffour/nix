@@ -93,6 +93,7 @@
     spotifyd # spotify deamon
     neofetch
     zathura
+    go
     viu
     mpv
     feh
