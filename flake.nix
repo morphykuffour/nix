@@ -2,7 +2,7 @@
   description = "an ambitous flake for linux, macos, win11-wsl";
 
   inputs = {
-    utils.url = "github:morphykuffour/nix";
+    # utils.url = "github:morphykuffour/nix";
 
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-22.05";
@@ -37,7 +37,7 @@
 
   outputs =
     inputs@{ self
-    , utils
+      # , utils
     , nixpkgs
     , home-manager
     , nur
