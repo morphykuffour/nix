@@ -49,7 +49,7 @@
     let
       #variables
       user = "morp";
-
+      pkgs = inputs.unstable.legacyPackages.x86_64-linux;
     in
     {
       # NixOS configurations
