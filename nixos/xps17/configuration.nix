@@ -120,9 +120,16 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   nixpkgs.config.packageOverrides = pkgs: {
-    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-      inherit pkgs;
-    };
+    nur = import
+      (builtins.fetchTarball
+        {
+          url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
+          sha256 = "12jfm3qqhxa418c4s867qwqz46gxhh3wb5vym954d2sli0yxnnv3";
+        })
+      {
+        inherit pkgs;
+
+      };
   };
 
   environment.systemPackages = with pkgs; [

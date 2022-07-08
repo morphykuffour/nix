@@ -21,7 +21,7 @@
       ./modules/sxhkd.nix # TODO move to i3.nix
       ./modules/nvim/nvim-hm.nix
       ./modules/rofi.nix
-      ./modules/nur.nix
+      # ./modules/nur.nix
     ];
 
   nixpkgs.config.allowUnfree = true;
