@@ -27,7 +27,7 @@ in
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-      sha256 = "12r1k5hw8plz1hnr7h827l9hjxr9j2pi75whcsvl6k4772wf6s0l";
+      sha256 = "0rsb4rsw56ipv979qasca7716dcrwg57cag6ybaapln5y18mzx37";
     }))
   ];
 
@@ -180,10 +180,13 @@ in
 
       # this allows you to add lua config files
       # ${lib.strings.fileContents ./lua/morpheus/options.lua}
+      # ${lib.strings.fileContents ./nvim/init.lua}
+
       ''
         lua << EOF
         ${lib.strings.fileContents ./nvim/init.nix.lua}
         ${lib.strings.fileContents ./nvim/lua/morpheus/hydra.lua}
+        ${lib.strings.fileContents ./nvim/lua/morpheus/plugins.lua}
         EOF
       ''
     ];
@@ -302,6 +305,7 @@ in
       (plugin "bfredl/nvim-miniyank")
       # (plugin "nvim-treesitter/nvim-treesitter-playground")
       (plugin "anuvyklack/keymap-layer.nvim")
+      (plugin "kmonad/kmonad-vim")
     ];
   };
 }

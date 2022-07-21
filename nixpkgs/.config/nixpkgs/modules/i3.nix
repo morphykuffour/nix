@@ -15,10 +15,10 @@ in
 
     config = {
 
-      bars = [{
-        statusCommand = "${pkgs.i3status}/bin/i3status";
-        position = "bottom";
-      }];
+      # bars = [{
+      #   statusCommand = "${pkgs.i3status}/bin/i3status";
+      #   position = "bottom";
+      # }];
 
       modifier = mod;
       terminal = "${pkgs.kitty}/bin/kitty";
@@ -85,6 +85,7 @@ in
         "${mod}+Shift+x" = "exec systemctl suspend";
         "${mod}+Shift+q" = "kill";
         "${mod}+b" = "exec ${pkgs.brave}/bin/brave";
+        "${mod}+y" = "exec ${pkgs.emacs}/bin/emacs";
         "${mod}+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";
         "Mod4+l" = "exec ${pkgs.systemd}/bin/loginctl lock-session";
         "Mod4+v" = "exec ${pkgs.clipmenu}/bin/clipmenu -i -fn Terminus:size=13 -nb '#002b36' -nf '#839496' -sb '#073642' -sf '#93a1a1'";
@@ -100,7 +101,7 @@ in
         "${mod}+Shift+k" = "move up";
         "${mod}+Shift+l" = "move right";
         "${mod}+z" = "split h";
-        "${mod}+x" = "split v";
+        "${mod}+|" = "split v";
         "${mod}+f" = "fullscreen toggle";
         "${mod}+Shift+s" = "layout stacking";
         "${mod}+Shift+w" = "layout tabbed";
@@ -171,7 +172,13 @@ in
           notification = false;
         }
         {
-          command = "${home}/.config/polybar/launch.sh";
+          # command = "${home}/.config/polybar/launch.sh";
+          command = "polybar &";
+          always = true;
+          notification = false;
+        }
+        {
+          command = "nm-applet";
           always = true;
           notification = false;
         }
@@ -184,26 +191,26 @@ in
     };
 
     extraConfig = ''
-      for_window [ title="notetaker_window" ] floating enable
-      title_align center
-      assign [class="nvim"] "1: nvim"
-      assign [class="kitty" title="^\[mosh\] "] "3: comms"
-      assign [class=".obs-wrapped"] "8: obs"
-      assign [class="Steam"] "9: game"
+       for_window [ title="notetaker_window" ] floating enable
+       title_align center
+       assign [class="nvim"] "1: nvim"
+       assign [class="kitty" title="^\[mosh\] "] "3: comms"
+       assign [class=".obs-wrapped"] "8: obs"
+       assign [class="Steam"] "9: game"
 
-      # Start i3bar to display a workspace bar (plus the system informatio i3status
-      # finds out, if available)
-      bar {
-              status_command i3status
-              tray_output primary
-              font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-              font pango:Jetbrains Mono 15
-      }
+       # Start i3bar to display a workspace bar (plus the system informatio i3status
+       # finds out, if available)
+      #  bar {
+      #          status_command i3status
+      #          tray_output primary
+      #          font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+      #          font pango:Jetbrains Mono 15
+      #  }
 
-      # workspace "1: emacs" output DisplayPort-0
-      # workspace "2: browsing" output DisplayPort-1
-      # workspace "3: comms" output DisplayPort-2
-      # workspace "10: video" output HDMI-A-0
+       # workspace "1: emacs" output DisplayPort-0
+       # workspace "2: browsing" output DisplayPort-1
+       # workspace "3: comms" output DisplayPort-2
+       # workspace "10: video" output HDMI-A-0
 
     '';
   };
