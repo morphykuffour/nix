@@ -109,16 +109,18 @@ in
         "${mod}+Shift+space" = "floating toggle";
         "${mod}+space" = "focus mode_toggle";
         "${mod}+a" = "focus parent";
-        "${mod}+1" = "workspace 1: nvim";
-        "${mod}+2" = "workspace 2: browsing";
-        "${mod}+3" = "workspace 3: comms";
-        "${mod}+4" = "workspace number 4";
-        "${mod}+5" = "workspace number 5";
-        "${mod}+6" = "workspace number 6";
+
         "${mod}+7" = "workspace number 7";
         "${mod}+8" = "workspace number 8";
         "${mod}+9" = "workspace number 9: game";
         "${mod}+0" = "workspace 10: video";
+        "F1" = "workspace number 1";
+        "F2" = "workspace number 2";
+        "F3" = "workspace number 3";
+        "F4" = "workspace number 4";
+        "F5" = "workspace number 5";
+        "F6" = "workspace number 6";
+
         "${mod}+Shift+1" = "move container to workspace 1: nvim";
         "${mod}+Shift+2" = "move container to workspace 2: browsing";
         "${mod}+Shift+3" = "move container to workspace 3: comms";
@@ -193,10 +195,10 @@ in
     extraConfig = ''
        for_window [ title="notetaker_window" ] floating enable
        title_align center
-       assign [class="nvim"] "1: nvim"
-       assign [class="kitty" title="^\[mosh\] "] "3: comms"
-       assign [class=".obs-wrapped"] "8: obs"
-       assign [class="Steam"] "9: game"
+       assign [class="nvim"] "1: editor"
+       assign [class="kitty" title="^\[nvim\] "] "1: editor "
+       assign [class=".obs-wrapped"] "5: obs"
+       assign [class="Steam"] "6: game"
 
        # Start i3bar to display a workspace bar (plus the system informatio i3status
        # finds out, if available)

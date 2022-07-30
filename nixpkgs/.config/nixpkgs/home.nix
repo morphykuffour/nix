@@ -80,6 +80,7 @@
       nyxt # script websites with sliime and emacs (browser)
       slides # terminal presentations
       emacs # operating system
+      pandoc
       edir # feature rich vidir
       ranger # slower lf
       stylua # lua formatter
