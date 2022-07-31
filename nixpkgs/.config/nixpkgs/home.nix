@@ -38,6 +38,14 @@
     };
   };
   nixpkgs.config.allowUnfree = true;
+
+ #nixpkgs.overlays = [
+ #  (import (builtins.fetchTarball {
+ #    url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
+ #    sha256 = "0xydf7sqy57cfpj4yrlzryrf90w0ih2yyk7a21zgapd3z6cmx22h";
+ #  }))
+ #];
+
   home = {
     username = "morp";
     homeDirectory = "/home/morp";
