@@ -137,7 +137,8 @@ in
         "${mod}+r" = ''mode "resize"'';
         # "${mod}+p" = "exec /home/dave/bin/layout _interactive";
 
-        "${mod} + shift + n" = "exec termite -e ${local_bin}/notetaker -t notetaker_window";
+        # "${mod}+Shift+n" = "exec termite -e ${local_bin}/notetaker -t notetaker_window";
+        "${mod}+Shift+n" = "exec kitty --title notetaker_window --config ${home}/.config/kitty/notetaker.conf ${local_bin}/notetaker";
 
         # run scripts TODO move to sxhkd when working
         # "${mod}+ g" = "exec --no-startup-id ${local_bin}/google-search.sh";
