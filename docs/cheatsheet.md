@@ -17,6 +17,10 @@ nixos-rebuild switch --rollback=2
 ```bash
 nix-collect-garbage -d
 ```
+- deduplicate nix store it scans the store for regular files with identical contents, and replaces them with hard links to a single instance.
+```bash
+nix store optimise - replace identical files in the store by hard links
+```
 
 - install packages using nix package manager
 ```bash
@@ -28,3 +32,5 @@ nix-env -iA nixos.firefox
 nix-channel --update
 sudo nixos-rebuild --upgrade
 ```
+
+
