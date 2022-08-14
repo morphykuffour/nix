@@ -17,6 +17,11 @@ nixos-rebuild switch --rollback=2
 ```bash
 nix-collect-garbage -d
 ```
+- After removing appropriate old generations you can run the garbage collector as follows:
+```bash
+nix-store --gc
+```
+
 - deduplicate nix store it scans the store for regular files with identical contents, and replaces them with hard links to a single instance.
 ```bash
 nix store optimise - replace identical files in the store by hard links

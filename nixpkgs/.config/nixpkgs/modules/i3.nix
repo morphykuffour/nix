@@ -8,25 +8,13 @@ let
   home = "/home/morp/";
 in
 {
-  # config = lib.mkIf config.my.gui-programs {
   xsession.windowManager.i3 = {
     enable = true;
     package = pkgs.i3-gaps;
 
     config = {
-
-      # bars = [{
-      #   statusCommand = "${pkgs.i3status}/bin/i3status";
-      #   position = "bottom";
-      # }];
-
       modifier = mod;
       terminal = "${pkgs.kitty}/bin/kitty";
-      # fonts = {
-      #   names = [ "pango:DejaVu Sans Mono" ];
-      #   size = 13.0;
-      # };
-
       fonts = {
         names = [ "Noto Sans" ];
         size = 15.0;
@@ -63,7 +51,7 @@ in
       };
 
       # Use Mouse+$mod to drag floating windows to their wanted position
-      # floating_modifier = ${mod};
+      # floating_modifier = "${mod}";
 
       keybindings = {
 
@@ -81,6 +69,7 @@ in
         "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
         "${mod}+Shift+d" = "exec ${pkgs.rofi}/bin/rofi -modi drun -show drun";
         "${mod}+s" = "exec flameshot gui --clipboard --path ${home}/Dropbox/screenshots/";
+        "Print" = "exec flameshot full --clipboard --path ${home}/Dropbox/screenshots/";
         "${mod}+w" = "exec ${pkgs.rofi}/bin/rofi -show window";
         "${mod}+Shift+x" = "exec systemctl suspend";
         "${mod}+Shift+q" = "kill";
@@ -110,42 +99,38 @@ in
         "${mod}+space" = "focus mode_toggle";
         "${mod}+a" = "focus parent";
 
+        "${mod}+1" = "workspace number 1";
+        "${mod}+2" = "workspace number 2";
+        "${mod}+3" = "workspace number 3";
+        "${mod}+4" = "workspace number 4";
+        "${mod}+5" = "workspace number 5";
+        "${mod}F6" = "workspace number 6";
         "${mod}+7" = "workspace number 7";
         "${mod}+8" = "workspace number 8";
         "${mod}+9" = "workspace number 9: game";
         "${mod}+0" = "workspace 10: video";
-        "F1" = "workspace number 1";
-        "F2" = "workspace number 2";
-        "F3" = "workspace number 3";
-        "F4" = "workspace number 4";
-        "F5" = "workspace number 5";
-        "F6" = "workspace number 6";
 
-        "${mod}+Shift+1" = "move container to workspace 1: nvim";
-        "${mod}+Shift+2" = "move container to workspace 2: browsing";
-        "${mod}+Shift+3" = "move container to workspace 3: comms";
+        "${mod}+Shift+1" = "move container to workspace number 1";
+        "${mod}+Shift+2" = "move container to workspace number 2";
+        "${mod}+Shift+3" = "move container to workspace number 3";
         "${mod}+Shift+4" = "move container to workspace number 4";
         "${mod}+Shift+5" = "move container to workspace number 5";
         "${mod}+Shift+6" = "move container to workspace number 6";
         "${mod}+Shift+7" = "move container to workspace number 7";
         "${mod}+Shift+8" = "move container to workspace number 8";
-        "${mod}+Shift+9" = "move container to workspace number 9: game";
-        "${mod}+Shift+0" = "move container to workspace 10: video";
+        "${mod}+Shift+9" = "move container to workspace number 9";
+        "${mod}+Shift+0" = "move container to workspace number 10";
+
         "${mod}+Shift+c" = "reload";
         "${mod}+Shift+r" = "restart";
         "${mod}+Shift+e" = ''exec "${pkgs.i3}/bin/i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' '${pkgs.i3}/bin/i3-msg exit'"'';
         "${mod}+r" = ''mode "resize"'';
-        # "${mod}+p" = "exec /home/dave/bin/layout _interactive";
 
-        # "${mod}+Shift+n" = "exec termite -e ${local_bin}/notetaker -t notetaker_window";
         "${mod}+Shift+n" = "exec kitty --title notetaker_window --config ${home}/.config/kitty/notetaker.conf ${local_bin}/notetaker";
 
         # run scripts TODO move to sxhkd when working
-        # "${mod}+ g" = "exec --no-startup-id ${local_bin}/google-search.sh";
-        # "${mod}+ 0" = "exec --no-startup-id ${local_bin}/nixpkg-search.sh";
-
-        # Use KDE logoff screen TODO fix
-        # "${mod}+Shift+e" = "exec --no-startup-id qdbus org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout -1 -1 -1";
+        "${mod}+ g" = "exec --no-startup-id ${local_bin}/google-search.sh";
+        "${mod}+ Shift + g" = "exec --no-startup-id ${local_bin}/nixpkg-search.sh";
       };
 
       startup = [
@@ -175,7 +160,6 @@ in
           notification = false;
         }
         {
-          # command = "${home}/.config/polybar/launch.sh";
           command = "polybar &";
           always = true;
           notification = false;
@@ -185,11 +169,11 @@ in
           always = true;
           notification = false;
         }
-        # {
-        #   command = "exec sxhkd";
-        #   always = true;
-        #   notification = false;
-        # }
+        {
+          command = "exec sxhkd -c /home/morp/.config/sxhkd/sxhkdrc";
+          always = true;
+          notification = false;
+        }
       ];
     };
 
@@ -217,6 +201,4 @@ in
 
     '';
   };
-
-  # };
 }
