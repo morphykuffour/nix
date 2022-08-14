@@ -1,16 +1,16 @@
+# { config, current, lib, pkgs, home-manager, ... }:
 { config, current, lib, pkgs, ... }:
-
-# ${getEnv "HOME"}
 {
   imports =
     [
       ./hardware-configuration.nix
       ./picom.nix
+      ./zfs.nix
+      # home-manager.nixosModule
     ];
 
   # editor settings TODO combine home-manager and linux system
-  environment.variables.EDITOR = "nvim";
-
+  environment.variables.EDITOR = "vim";
 
   environment.sessionVariables = rec {
     XDG_CACHE_HOME = "\${HOME}/.cache";
@@ -31,13 +31,9 @@
 
   # networking
   networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  
+  # networking.wireless.enable = true;
   networking.networkmanager.enable = true;
 
-  networking.firewall = {
-    allowedTCPPorts = [ 17500 ];
-    allowedUDPPorts = [ 17500 ];
-  };
 
   systemd.user.services.dropbox = {
     description = "Dropbox";
@@ -57,35 +53,34 @@
     };
   };
 
-  ## HACK: the provided service uses a dynamic user which can not authenticate to the pulse daemon
-  ## This is mitigated by using a static user
-  #users.users.spotifyd = {
-  #  group = "audio";
-  #  extraGroups = [ "audio" ];
-  #  description = "spotifyd daemon user";
-  #  home = "/var/lib/spotifyd";
-  #};
+  systemd.services = {
+    # keyd = {
+    #   enable = false;
+    #   description = "keyd key remapping daemon";
+    #   unitConfig = {
+    #     Requires = "local-fs.target";
+    #     After = "local-fs.target";
+    #   };
+    #   serviceConfig = {
+    #     Type = "simple";
+    #     ExecStart = "${pkgs.nur.repos.foolnotion.keyd}/bin/keyd";
+    #   };
+    #   wantedBy = [ "sysinit.target" ];
+    # };
 
-  #systemd.services.spotifyd = {
-  #  serviceConfig.User = "spotifyd";
-
-  #  serviceConfig.DynamicUser = lib.mkForce false;
-  #  serviceConfig.SupplementaryGroups = lib.mkForce [ ];
-  #};
-  ## End of hack...
-
-  systemd.services.keyd = {
-    enable = true;
-    description = "key remapping daemon";
-    unitConfig = {
-      Requires = "local-fs.target";
-      After = "local-fs.target";
-    };
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = "${pkgs.nur.repos.foolnotion.keyd}/bin/keyd";
-    };
-    wantedBy = [ "sysinit.target" ];
+    # kmonad = {
+    #   enable = false;
+    #   unitConfig = {
+    #     description = "kmonad key remapping daemon";
+    #   };
+    #   serviceConfig = {
+    #     Restart = "always";
+    #     RestartSec = "3";
+    #     ExecStart = "${pkgs.nur.repos.meain.kmonad}/bin/kmonad /etc/nixos/colemak-dh-extend-ansi.kbd";
+    #     Nice = "-20";
+    #   };
+    #   wantedBy = [ "default.target" ];
+    # };
   };
 
 
@@ -93,8 +88,8 @@
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.utf8";
 
-
   # Enable sound with pipewire.
+  hardware.bluetooth.enable = true;
   sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -106,7 +101,7 @@
     isNormalUser = true;
     description = "morp";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "docker" "video" "vboxusers" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "video" "vboxusers" "libvirtd" ];
     packages = with pkgs; [
       vim
       vscode
@@ -119,18 +114,11 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  nixpkgs.config.packageOverrides = pkgs: {
-    nur = import
-      (builtins.fetchTarball
-        {
-          url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
-          sha256 = "12jfm3qqhxa418c4s867qwqz46gxhh3wb5vym954d2sli0yxnnv3";
-        })
-      {
-        inherit pkgs;
-
-      };
-  };
+  # nixpkgs.config.packageOverrides = pkgs: {
+  #   nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+  #     inherit pkgs;
+  #   };
+  # };
 
   environment.systemPackages = with pkgs; [
     wget
@@ -150,46 +138,61 @@
     playerctl
     xorg.xbacklight
     dropbox-cli
+    i3-resurrect
+    xdotool
     # xdg-utils
     # xdg-desktop-portal
+    shared-mime-info
+    xdg-user-dirs
     bluedevil
     kdeconnect
     pciutils
     usbutils
+    libusb1
+    ventoy-bin
     bottles
     # flatpak
     picom
     bluez
     logiops
+    rustup
     brightnessctl
 
     # keyboard remapping stuff
-    nur.repos.foolnotion.keyd
+    qmk
+    keymapviz
+    vial
+    hidapi
+    # nur.repos.foolnotion.keyd
+    # nur.repos.meain.kmonad
 
     # container stuff
     docker
-    docker-compose
-    containerd
-    cni-plugins
-    ignite
-    runc
+    # docker-compose
+    # containerd
+    # cni-plugins
+    # ignite
+    # runc
 
     # tools
     perf-tools # TODO mount debugfs
     procps
     zsync
     cdrkit
+    sqlitebrowser
+    nfs-utils
+    zfs
+    bashmount
 
     # vm stuff
     vagrant
-    virtualbox
-    firecracker
+    # virtualbox
+    # firecracker
     qemu
     libvirt
     virt-manager
     spice-gtk
     quickemu
-    xdg-user-dirs
     samba
     OVMF
     swtpm
@@ -197,6 +200,26 @@
 
   # TODO move services under one function
   services = {
+
+    qemuGuest.enable = true;
+    # nfs TODO fix for vagrant
+    nfs.server = {
+      enable = true;
+      lockdPort = 4001;
+      mountdPort = 4002;
+      statdPort = 4000;
+      exports = ''
+        /export         192.168.1.10(rw,fsid=0,no_subtree_check) 192.168.1.15(rw,fsid=0,no_subtree_check)
+        /export/Samsung_PSSD_T7 192.168.1.10(rw,nohide,insecure,no_subtree_check) 192.168.1.15(rw,nohide,insecure,no_subtree_check)
+      '';
+
+      extraNfsdConfig = '''';
+    };
+
+    udev.packages = [
+      pkgs.qmk-udev-rules
+    ];
+
     spotifyd = {
       enable = true;
     };
@@ -216,8 +239,19 @@
     openssh.enable = true;
     clipmenu.enable = true;
     blueman.enable = true;
+
     # Enable CUPS to print documents.
-    printing.enable = true;
+    printing = {
+      enable = true;
+      drivers = [
+        pkgs.cnijfilter2
+      ];
+    };
+    avahi = {
+      enable = true;
+      nssmdns = true;
+    };
+
     # flatpak.enable = true;
 
     samba = {
@@ -287,6 +321,12 @@
       windowManager.i3 = {
         enable = true;
         package = pkgs.i3-gaps;
+
+        # sxhkd = {
+        #   package = pkgs.sxhkd;
+        #   configFile = builtins.getEnv "HOME" + "/.config/sxhkd/sxhkdrc";
+        # };
+
         extraPackages = with pkgs; [
           dmenu
           i3status
@@ -297,33 +337,53 @@
 
     };
   };
+
   # enable xdg_data_dirs
   # targets.genericLinux.enable = true;
 
-  # virtualisation
   virtualisation = {
+    # qemu.package = pkgs.qemu;
+
+    spiceUSBRedirection.enable = true;
 
     docker = {
       enable = true;
     };
 
-    virtualbox = {
-      guest.enable = true;
-      host.enableExtensionPack = true;
-      host.enable = true;
-    };
+    # virtualbox = {
+    #   guest.enable = true;
+    #   host.enable = true;
+    #   host.headless = true;
+    #   host.enableExtensionPack = true;
+    #   host.enableWebService = true;
+    #   host.addNetworkInterface = true;
+    # };
 
-    libvirtd = {
-      enable = true;
-      qemu = {
-        runAsRoot = false;
-        ovmf = {
-          enable = true;
-          package = pkgs.OVMFFull;
-        };
-        swtpm.enable = true;
-      };
-    };
+
+    # fix flake build TODO
+    # libvirtd = {
+    #   enable = true;
+    #   qemu = {
+    #     runAsRoot = true;
+    #     ovmf = {
+    #       enable = true;
+    #       package = [pkgs.OVMFFull ;
+    #     };
+    #     swtpm.enable = true;
+    #   };
+    #   allowedBridges = [ "virbr0" "virbr1" ];
+    # };
+  };
+
+  # Minimal configuration for NFS support with Vagrant.
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 17500 111 2049 4000 4001 4002 20048 ];
+    allowedUDPPorts = [ 17500 111 2049 4000 4001 4002 20048 ];
+
+    extraCommands = ''
+      ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 2049 -j ACCEPT
+    '';
   };
 
 
@@ -363,12 +423,6 @@
   # xdg.portal.gtkUsePortal = true;
   environment.pathsToLink = [ "/libexec" ];
   system.stateVersion = "22.05";
-
-  #temporary bluetooth fix
-  systemd.tmpfiles.rules = [
-    "d /var/lib/bluetooth 700 root root - -"
-  ];
-  systemd.targets."bluetooth".after = [ "systemd-tmpfiles-setup.service" ];
 
   # use flakes
   nix = {

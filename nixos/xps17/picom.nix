@@ -1,25 +1,17 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, ... }:
 
 {
   services.picom = {
     enable = true;
-    backend = "glx";
-    vSync = true;
-    inactiveOpacity = 0.93;
+    inactiveOpacity = 0.8;
     activeOpacity = 1.0;
-    menuOpacity = 0.93;
-
     opacityRules = [
-      "100:name = 'brave'"
-      "100:name = 'Picture in picture'"
-      "100:name = 'Picture-in-Picture'"
+      "100:class_g *= 'brave-browser'"
       "100:class_g = 'rofi'"
       "70:class_g = 'kitty'"
       "70:class_g = 'nvim'"
       "70:class_g = 'vim'"
     ];
-
-
     fade = true;
     shadow = true;
     fadeDelta = 4;
@@ -38,6 +30,8 @@
         "class_g = 'Google-chrome'"
       ];
     };
+    backend = "glx";
+    vSync = true;
 
     # extraOptions = ''
     # '';
