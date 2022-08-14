@@ -5,58 +5,49 @@
 
 {
   imports =
-    [
-      (modulesPath + "/installer/scan/not-detected.nix")
+    [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "uas" "sd_mod" "rtsx_pci_sdmmc" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "uas" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
-  
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    v4l2loopback
-  ];
-
+  boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    {
-      device = "/dev/disk/by-uuid/44823f14-19ba-4e35-9de7-d3e323291740";
+    { device = "/dev/disk/by-uuid/44823f14-19ba-4e35-9de7-d3e323291740";
       fsType = "ext4";
     };
 
+  # fileSystems."/export/Samsung_PSSD_T7" =
+  #   { device = "tmpfs";
+  #     fsType = "tmpfs";
+  #   };
+
   fileSystems."/boot/efi" =
-    {
-      device = "/dev/disk/by-uuid/934E-5F67";
+    { device = "/dev/disk/by-uuid/934E-5F67";
       fsType = "vfat";
     };
 
+  # fileSystems."/mnt/windows-partition" =
+  #   { device = "/dev/disk/by-uuid/2022-06-22-22-47-55-00";
+  #     fsType = "iso9660";
+  #   };
+
   swapDevices =
-    [{ device = "/dev/disk/by-uuid/90c83f17-cdb9-40ad-bb85-97cc5ec76c14"; }];
+    [ { device = "/dev/disk/by-uuid/90c83f17-cdb9-40ad-bb85-97cc5ec76c14"; }
+    ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.docker0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
+
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
-  # video and GPU setup
+  # high-resolution display
   hardware.video.hidpi.enable = lib.mkDefault true;
-  hardware.opengl.enable = true;
-  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-  # hardware.nvidia.modesetting.enable = true;
-
-  hardware.bluetooth = {
-    enable = true;
-    settings = {
-      # General = { ControllerMode = "bredr"; };
-      Policy = { AutoEnable = true; };
-    };
-  };
-
-
-  hardware.acpilight.enable = true;
 }
