@@ -36,12 +36,20 @@
     {
 
       # NixOS configurations
-      nixosConfigurations = (
-        import ./hosts {
-          inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager flake-utils nur;
-        }
-      );
+      # nixosConfigurations = (
+      #   import ./hosts {
+      #     inherit (nixpkgs) lib;
+      #     inherit inputs nixpkgs home-manager flake-utils nur;
+      #   }
+      # );
+
+      nixosConfigurations = {
+        xps17 = lib.nixosSystem {
+          inherit system;
+
+          modules = [ ./hosts/xps17];
+        };
+      };
 
       # darwinConfigurations = (                                              # Darwin Configurations
       #   import ./darwin {
