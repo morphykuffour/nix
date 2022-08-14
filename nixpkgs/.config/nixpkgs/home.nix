@@ -4,7 +4,7 @@
 # userConfig = import ./user.nix { };
 # gitConfig = import ./modules/git.nix {};
 # in
-# ${getEnv "HOME"}
+# ${builtins.getEnv "HOME"}
 # with ; {
 
 {
@@ -13,14 +13,14 @@
       # ./modules/tmux/tmux.nix
       # ./modules/shell.nix
       ./modules/i3.nix
-      # ./modules/email
       ./modules/spotify.nix
       ./modules/redshift.nix
       ./modules/pass.nix
       ./modules/fonts.nix
       ./modules/sxhkd.nix
-      ./modules/nvim.nix
+      # ./modules/nvim.nix
       ./modules/rofi.nix
+      ./modules/himalaya.nix
       # ./modules/nur.nix
     ];
 
@@ -39,89 +39,106 @@
   };
   nixpkgs.config.allowUnfree = true;
 
- #nixpkgs.overlays = [
- #  (import (builtins.fetchTarball {
- #    url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
- #    sha256 = "0xydf7sqy57cfpj4yrlzryrf90w0ih2yyk7a21zgapd3z6cmx22h";
- #  }))
- #];
-
   home = {
     username = "morp";
     homeDirectory = "/home/morp";
     stateVersion = "22.05";
 
     packages = with pkgs;[
-      # terminal devtools
-      kitty # terminal 
-      tmux # terminal multiplexor
-      zsh # shell
-      atuin # history management
-      starship # shell prompt
-      calibre
-      exa # shell ls
-      bat # shell bat
-      tealdeer # faster tldr
-      fd # faster find
-      gh # github cli
+
+      # devtools
+      kitty 
+      tmux
+      zsh
+      atuin 
+      starship 
+      exa 
+      bat
+      tealdeer 
+      fd 
+      gh
       clipmenu
-      delta # better git pager
+      delta 
       cscope
-      pastel # view rgb codes
+      pastel 
+      conda 
+      jupyter 
+      ruby 
+      edir 
+      ranger 
+      stylua 
+      cargo
+      jq 
+      curl 
+      fzf 
+      nodejs 
+      sbcl
+
+
+      # mail
       neomutt # email client
+      mu
       isync # sync mail locally
       msmtp # send mail
       pass # encrypt passwords
-      # neovim#-nightly # ppde
-      # tldr
-      eva # better bc (calculator)
-      aria2 # faster downloads
-      hyperfine # benchmarking tool
-      hexyl # hex viewer
-      ripgrep # faster grep
-      autojump # jump to directories
-      conda # python env management
-      # python
-      # python3Full
-      jupyter # notebooks for prototyping
-      ruby # ruby interpreter
-      nyxt # script websites with sliime and emacs (browser)
-      slides # terminal presentations
-      emacs # operating system
-      pandoc
-      edir # feature rich vidir
-      ranger # slower lf
-      stylua # lua formatter
-      cargo
-      jq # parse json streams
-      curl # work with urls
-      fzf # fuzzy finder
-      nodejs # js compiler
-      croc
+      himalaya
+
+      # productivity
+      calibre
+      emacs 
+      slides 
+
+      # windows
+      sxhkd
+
+      # creativity
+      davinci-resolve
+      inkscape
+      gimp
       blender
       kicad
-      spotify-tui # spotify in terminal
-      spotify # spotify gui
-      spotifyd # spotify deamon
+      ffmpeg
+
+      eva
+      aria2
+      hyperfine 
+      hexyl 
+      ripgrep 
+      autojump 
+      pandoc
+      croc
+      spotify
       neofetch
       zathura
       go
       viu
-      inkscape
-      gimp
-      blender
       mpv
       feh
       sublime
       surfraw
-      ffmpeg
       nix-index
       vial
       redshift
       discord
       termite
-      # qmk
-      sbcl
+
+      # neovim
+      neovim-unwrapped
+      tree-sitter
+      rnix-lsp
+      gopls
+      ccls
+      tree-sitter-grammars.tree-sitter-markdown
+      sumneko-lua-language-server
+      nodePackages.typescript-language-server
+      # nodePackages.insect
+      nodePackages.bash-language-server
+      nodePackages.pyright
+      nodePackages.typescript
+      nodePackages.prettier
+      black
+      rust-analyzer
+
       (python39.withPackages (pp: with pp; [
         pynvim
         pandas
