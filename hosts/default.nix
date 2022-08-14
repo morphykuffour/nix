@@ -24,7 +24,7 @@ in
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = { inherit user; };
         home-manager.users.${user} = {
-          imports = [ ./home.nix ];
+          imports = [ ../home.nix ];
         };
       }
     ];
