@@ -11,6 +11,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    darwin = {
+      url = "github:lnl7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
@@ -18,52 +23,57 @@
     nur = {
       url = "github:nix-community/NUR";
     };
+
+   homeManagerConfig = {
+      url = "path:/home/morp/nix/home.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs @{ self, nixpkgs, home-manager, flake-utils, nur, ... }:
+  outputs = inputs @{ self, nixpkgs, home-manager, darwin, flake-utils, nur, homeManagerConfig, ... }:
     let
-      system = "x86_64-linux";
       lib = nixpkgs.lib;
       user = "morp";
       # home = builtins.getEnv "HOME";
 
       pkgs = import nixpkgs {
-        inherit system;
+        # inherit system;
         config = { allowUnfree = true; };
       };
 
     in
     {
-
-      # NixOS configurations
-      # nixosConfigurations = (
-      #   import ./hosts {
-      #     inherit (nixpkgs) lib;
-      #     inherit inputs nixpkgs home-manager flake-utils nur;
-      #   }
-      # );
+      # homeManagerConfigurations = {
+      #   "morp" = home-manager.lib.homeManagerConfiguration {
+      #     inherit pkgs;
+      #     configuration = {
+      #       imports = [
+      #         ./home.nix
+      #       ];
+      #     };
+      #     system = "x86_64-linux";
+      #     homeDirectory = "/home/morp";
+      #     username = user;
+      #     stateVersion = "22.05";
+      #   };
+      # };
 
       nixosConfigurations = {
+      inherit (homeManagerConfig) homeConfigurations;
         xps17 = lib.nixosSystem {
-          inherit system;
-
-          modules = [ ./hosts/xps17];
+          system = "x86_64-linux";
+          modules = [ ./hosts/xps17 ];
         };
       };
 
-      # darwinConfigurations = (                                              # Darwin Configurations
-      #   import ./darwin {
-      #     inherit (nixpkgs) lib;
-      #     inherit inputs nixpkgs home-manager darwin user;
-      #   }
-      # );
-      #
-      # homeConfigurations = (                                                # Non-NixOS configurations
-      #   import ./nix {
-      #     inherit (nixpkgs) lib;
-      #     inherit inputs nixpkgs home-manager nixgl user;
-      #   }
-      # );
+      darwinConfigurations = {
+        # "Morphys-mac_mini" = darwin.lib.darwinSystem {
+        mac_mini = darwin.lib.darwinSystem {
+          system = "x86_64-darwin";
+          modules = [ ./hosts/mac_mini ];
+        };
+      };
 
     };
 }
+
