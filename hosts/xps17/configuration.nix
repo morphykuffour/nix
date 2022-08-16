@@ -30,7 +30,7 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   # networking
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "xps17"; # Define your hostname.
   # networking.wireless.enable = true;
   networking.networkmanager.enable = true;
 
@@ -132,6 +132,7 @@
     binutils
     gcc
     flameshot
+    sxiv
     polybar
     gnumake
     clipmenu
@@ -150,7 +151,7 @@
     usbutils
     libusb1
     ventoy-bin
-    bottles
+    # bottles
     # flatpak
     picom
     bluez
@@ -268,8 +269,6 @@
       };
     };
 
-
-
     xserver = {
 
       # Enable touchpad support (enabled default in most desktopManager).
@@ -292,40 +291,22 @@
           noDesktop = true;
           enableXfwm = false;
         };
-        # Enable the gnome Desktop Environment.
-        # gnome.enable = true;
-
-        # Enable the mate Desktop Environment.
-        # mate.enable = true;
-
-        # Enable the KDE Plasma Desktop Environment.
-        # plasma5.enable = true;
       };
 
       displayManager = {
-        # i3 display manager
         defaultSession = "none+i3";
         autoLogin = {
-          # Login
           enable = false;
           user = "morp";
         };
 
         # kde display manager
         sddm.enable = true;
-
-        # gnome display manager
-        # gdm.enable = true;
       };
 
       windowManager.i3 = {
         enable = true;
         package = pkgs.i3-gaps;
-
-        # sxhkd = {
-        #   package = pkgs.sxhkd;
-        #   configFile = builtins.getEnv "HOME" + "/.config/sxhkd/sxhkdrc";
-        # };
 
         extraPackages = with pkgs; [
           dmenu
@@ -361,18 +342,18 @@
 
 
     # fix flake build TODO
-    # libvirtd = {
-    #   enable = true;
-    #   qemu = {
-    #     runAsRoot = true;
-    #     ovmf = {
-    #       enable = true;
-    #       package = [pkgs.OVMFFull ;
-    #     };
-    #     swtpm.enable = true;
-    #   };
-    #   allowedBridges = [ "virbr0" "virbr1" ];
-    # };
+    libvirtd = {
+      enable = true;
+      qemu = {
+        runAsRoot = true;
+        ovmf = {
+          enable = true;
+          # package = [ pkgs.OVMFFull ];
+        };
+        swtpm.enable = true;
+      };
+      allowedBridges = [ "virbr0" "virbr1" ];
+    };
   };
 
   # Minimal configuration for NFS support with Vagrant.
@@ -385,8 +366,6 @@
       ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 2049 -j ACCEPT
     '';
   };
-
-
 
   # fonts
   fonts.fonts = with pkgs; [
@@ -419,8 +398,6 @@
 
   };
 
-  # xdg.portal.enable = true;
-  # xdg.portal.gtkUsePortal = true;
   environment.pathsToLink = [ "/libexec" ];
   system.stateVersion = "22.05";
 

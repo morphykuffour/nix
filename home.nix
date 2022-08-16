@@ -73,6 +73,9 @@
       fzf 
       nodejs 
       sbcl
+texlive.combine {
+  inherit (texlive) scheme-small collection-langkorean algorithms cm-super;
+}
 
 
       # mail
