@@ -24,13 +24,13 @@
       url = "github:nix-community/NUR";
     };
 
-   homeManagerConfig = {
-      url = "path:/home/morp/nix/home.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+    nixGL = {
+      url = "github:guibou/nixGL";
+      flake = false;
     };
   };
 
-  outputs = inputs @{ self, nixpkgs, home-manager, darwin, flake-utils, nur, homeManagerConfig, ... }:
+  outputs = inputs @{ self, nixpkgs, home-manager, darwin, flake-utils, nur, nixGL, ... }:
     let
       lib = nixpkgs.lib;
       user = "morp";
@@ -43,23 +43,33 @@
 
     in
     {
-      # homeManagerConfigurations = {
-      #   "morp" = home-manager.lib.homeManagerConfiguration {
-      #     inherit pkgs;
-      #     configuration = {
-      #       imports = [
-      #         ./home.nix
-      #       ];
-      #     };
-      #     system = "x86_64-linux";
-      #     homeDirectory = "/home/morp";
-      #     username = user;
-      #     stateVersion = "22.05";
-      #   };
-      # };
+      homeConfigurations = {
+        morp = inputs.home-manager.lib.homeManagerConfiguration {
+          system = "x86_64-linux";
+          homeDirectory = "/home/morp";
+          username = "morp";
+          stateVersion = "22.05";
 
+          configuration = { config, pkgs, ... }:
+            let
+              overlay-unstable = final: prev: {
+                unstable = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
+              };
+            in
+            {
+              nixpkgs.overlays = [ overlay-unstable ];
+              nixpkgs.config = {
+                allowUnfree = true;
+                # allowBroken = true;
+              };
+
+              imports = [ ./home.nix ];
+            };
+        };
+      };
+      morp = self.homeConfigurations.morp.activationPackage;
+      defaultPackage.x86_64-linux = self.morp;
       nixosConfigurations = {
-      inherit (homeManagerConfig) homeConfigurations;
         xps17 = lib.nixosSystem {
           system = "x86_64-linux";
           modules = [ ./hosts/xps17 ];

@@ -1,4 +1,4 @@
-{ config, current, pkgs, lib, ... }:
+{ config, current, pkgs, lib, nixGL, ... }:
 
 # let
 # userConfig = import ./user.nix { };
