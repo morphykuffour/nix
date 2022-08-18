@@ -25,9 +25,26 @@
 
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  # boot.loader.systemd-boot.enable = true;
+  boot = {
+    initrd = {
+      availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "uas" "sd_mod" "rtsx_pci_sdmmc" ];
+      kernelModules = [ ];
+    };
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
+    supportedFilesystems = [ "ntfs" ];
+    loader = {
+      grub = {
+        enable = true;
+        version = 2;
+        device = "/dev/nvme0n1";
+        useOSProber = true;
+      };
+      efi.canTouchEfiVariables = true;
+      efi.efiSysMountPoint = "/boot/efi";
+    };
+  };
 
   # networking
   networking.hostName = "xps17"; # Define your hostname.
