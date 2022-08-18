@@ -122,7 +122,6 @@ texlive.combine {
       nix-index
       vial
       redshift
-      discord
       termite
 
       # neovim

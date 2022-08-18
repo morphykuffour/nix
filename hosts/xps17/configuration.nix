@@ -38,12 +38,24 @@
       grub = {
         enable = true;
         version = 2;
-        device = "/dev/nvme0n1";
+        # device = "/dev/nvme0n1p1";
         useOSProber = true;
+        mirroredBoots =
+          [
+            {
+              devices = [
+                # "/dev/disk/by-uuid/934E-5F67"
+                "/dev/nvme0n1p1"
+              ];
+              path = "/boot/efi";
+            }
+          ];
       };
       efi.canTouchEfiVariables = true;
       efi.efiSysMountPoint = "/boot/efi";
     };
+
+
   };
 
   # networking
