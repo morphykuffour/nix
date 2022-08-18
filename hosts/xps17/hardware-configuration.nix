@@ -21,11 +21,11 @@
   #     fsType = "tmpfs";
   #   };
 
-  fileSystems."/boot/efi" =
-    {
-      device = "/dev/disk/by-uuid/934E-5F67";
-      fsType = "vfat";
-    };
+  # fileSystems."/boot/efi" =
+  #   {
+  #     device = "/dev/disk/by-uuid/934E-5F67";
+  #     fsType = "vfat";
+  #   };
 
   # fileSystems."/mnt/windows-partition" =
   #   { device = "/dev/disk/by-uuid/2022-06-22-22-47-55-00";

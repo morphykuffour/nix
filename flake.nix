@@ -1,5 +1,5 @@
 {
-  description = "My Personal NixOS and Darwin System Flake Configuration";
+  description = "My Personal NixOS, Darwin, and WSL";
 
   inputs = {
     nixpkgs = {
@@ -16,26 +16,40 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    wsl = {
+      url = "gitbub:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
 
-    nur = {
-      url = "github:nix-community/NUR";
+    # nur = {
+    #   url = "github:nix-community/NUR";
+    # };
+    #
+    # nixGL = {
+    #   url = "github:guibou/nixGL";
+    #   flake = false;
+    # };
+
+    discord = {
+      url = "github:InternetUnexplorer/discord-overlay";
     };
 
-    nixGL = {
-      url = "github:guibou/nixGL";
-      flake = false;
-    };
   };
 
-  outputs = inputs @{ self, nixpkgs, home-manager, darwin, flake-utils, nur, nixGL, ... }:
+  outputs = inputs @{ self, nixpkgs, home-manager, darwin, flake-utils, nur, nixGL, discord, ... }:
     let
       lib = nixpkgs.lib;
       user = "morp";
+      # localOverlay = import ./overlay.nix; # TODO fix with proper overlay
       # home = builtins.getEnv "HOME";
-
+      overlays = [ 
+        discord
+        wsl
+      ];
       pkgs = import nixpkgs {
         # inherit system;
         config = { allowUnfree = true; };
