@@ -95,7 +95,7 @@
       sxhkd
 
       # creativity
-      davinci-resolve
+      # davinci-resolve
       inkscape
       gimp
       blender
