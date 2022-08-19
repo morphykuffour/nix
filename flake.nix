@@ -62,12 +62,13 @@
       defaultPackage.x86_64-linux = self.morp;
       nixosConfigurations = {
         xps17 = lib.nixosSystem {
-          # system = "x86_64-linux";
+          system = "x86_64-linux";
           modules = [ ./hosts/xps17 ];
+          # inherit pkgsForSystem;
         };
 
         wsl-nixos = lib.nixosSystem {
-          # system = "x86_64-linux";
+          system = "x86_64-linux";
           modules = [ ./hosts/wsl ];
         };
 
@@ -87,7 +88,8 @@
       # };
 
       # homeConfigurations.wsl-nixos = mkHomeConfiguration {
-      #   extraSpecialArgs = {
+ 
+     #   extraSpecialArgs = {
       #     withGUI = true;
       #     isDesktop = true;
       #     networkInterface = "wlp0s20f3";
