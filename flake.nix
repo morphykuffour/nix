@@ -16,88 +16,93 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    wsl = {
-      url = "gitbub:nix-community/NixOS-WSL";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # wsl-nixos = {
+    #   url = "gitbub:nix-community/NixOS-WSL";
+    #   inputs.flake-compat.follows = "flake-compat";
+    #   inputs.flake-utils.follows = "flake-utils";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
 
-    # nur = {
-    #   url = "github:nix-community/NUR";
-    # };
-    #
-    # nixGL = {
-    #   url = "github:guibou/nixGL";
-    #   flake = false;
-    # };
-
     discord = {
       url = "github:InternetUnexplorer/discord-overlay";
     };
 
+    # flake-compat = {
+    #   url = "github:edolstra/flake-compat";
+    #   flake = false;
+    # };
+
   };
 
-  outputs = inputs @{ self, nixpkgs, home-manager, darwin, flake-utils, nur, nixGL, discord, ... }:
+  outputs = inputs @{ self, nixpkgs, home-manager, darwin, flake-utils, discord, ... }:
     let
       lib = nixpkgs.lib;
       user = "morp";
       # localOverlay = import ./overlay.nix; # TODO fix with proper overlay
-      # home = builtins.getEnv "HOME";
-      overlays = [ 
-        discord
-        wsl
-      ];
-      pkgs = import nixpkgs {
-        # inherit system;
+      # overlays = [ 
+      #     wsl-nixos
+      #   ];
+      pkgsForSystem = system: import nixpkgs {
+        overlays = [
+          discord
+        ];
         config = { allowUnfree = true; };
+        inherit system;
       };
+
+      mkHomeConfiguration = args: home-manager.lib.homeManagerConfiguration (rec {
+        system = args.system or "x86_64-linux";
+        configuration = import ./home.nix;
+        homeDirectory = "/home/morp";
+        username = "morp";
+        pkgs = pkgsForSystem system;
+      } // args);
 
     in
-    {
-      homeConfigurations = {
-        morp = inputs.home-manager.lib.homeManagerConfiguration {
-          system = "x86_64-linux";
-          homeDirectory = "/home/morp";
-          username = "morp";
-          stateVersion = "22.05";
+    flake-utils.lib.eachSystem [ "x86_64-linux" ]
+      (system: rec {
+        legacyPackages = pkgsForSystem system;
+      }) // {
 
-          configuration = { config, pkgs, ... }:
-            let
-              overlay-unstable = final: prev: {
-                unstable = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
-              };
-            in
-            {
-              nixpkgs.overlays = [ overlay-unstable ];
-              nixpkgs.config = {
-                allowUnfree = true;
-                # allowBroken = true;
-              };
+      # defaultPackage.x86_64-linux = self.morp;
+      # nixosConfigurations = {
+      #   xps17 = lib.nixosSystem {
+      #     system = "x86_64-linux";
+      #     modules = [ ./hosts/xps17 ];
+      #   };
+      # };
 
-              imports = [ ./home.nix ];
-            };
-        };
-      };
-      morp = self.homeConfigurations.morp.activationPackage;
-      defaultPackage.x86_64-linux = self.morp;
-      nixosConfigurations = {
-        xps17 = lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [ ./hosts/xps17 ];
+      homeConfigurations.xps17 = mkHomeConfiguration {
+        extraSpecialArgs = {
+          withGUI = true;
+          isDesktop = true;
+          networkInterface = "wlp0s20f3";
+          # inherit localOverlay;
         };
       };
 
-      darwinConfigurations = {
-        # "Morphys-mac_mini" = darwin.lib.darwinSystem {
-        mac_mini = darwin.lib.darwinSystem {
-          system = "x86_64-darwin";
-          modules = [ ./hosts/mac_mini ];
+      homeConfigurations.wsl-nixos = mkHomeConfiguration {
+        extraSpecialArgs = {
+          withGUI = true;
+          isDesktop = true;
+          networkInterface = "wlp0s20f3";
+          # inherit wslOverlay;
         };
       };
 
+      homeConfigurations.mac-mini = mkHomeConfiguration {
+        system = "aarch64-darwin";
+        extraSpecialArgs = {
+          withGUI = false;
+          isDesktop = false;
+          networkInterface = "en1";
+          # inherit localOverlay;
+        };
+      };
+      inherit home-manager;
     };
 }
-
