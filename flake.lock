@@ -75,22 +75,6 @@
         "type": "github"
       }
     },
-    "nixGL": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1660560253,
-        "narHash": "sha256-cq7z+NX3zIfXdRjMOgo1JysTlSpkyRLZqFL9L2S2qhc=",
-        "owner": "guibou",
-        "repo": "nixGL",
-        "rev": "6ba34f86658ba9a30b3c2e5cd5ae0709676583f2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "guibou",
-        "repo": "nixGL",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1635099624,
@@ -123,30 +107,13 @@
         "type": "github"
       }
     },
-    "nur": {
-      "locked": {
-        "lastModified": 1660455845,
-        "narHash": "sha256-rmH5WLGSCEnqlj+o5Vd+vnhaVgV+4/lhKEHH3/luMUY=",
-        "owner": "nix-community",
-        "repo": "NUR",
-        "rev": "6fe9873a4704de8e9f57a26c8a86e127647b0131",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "NUR",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "darwin": "darwin",
         "discord": "discord",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
-        "nixGL": "nixGL",
-        "nixpkgs": "nixpkgs_2",
-        "nur": "nur"
+        "nixpkgs": "nixpkgs_2"
       }
     },
     "utils": {
