@@ -16,13 +16,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # wsl-nixos = {
-    #   url = "gitbub:nix-community/NixOS-WSL";
-    #   inputs.flake-compat.follows = "flake-compat";
-    #   inputs.flake-utils.follows = "flake-utils";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-
     flake-utils = {
       url = "github:numtide/flake-utils";
     };
@@ -30,11 +23,6 @@
     discord = {
       url = "github:InternetUnexplorer/discord-overlay";
     };
-
-    # flake-compat = {
-    #   url = "github:edolstra/flake-compat";
-    #   flake = false;
-    # };
 
   };
 
@@ -44,23 +32,26 @@
       user = "morp";
       # localOverlay = import ./overlay.nix; # TODO fix with proper overlay
       # overlays = [ 
+      #   discord
       #     wsl-nixos
       #   ];
+
       pkgsForSystem = system: import nixpkgs {
-        overlays = [
-          discord
-        ];
         config = { allowUnfree = true; };
         inherit system;
       };
 
-      mkHomeConfiguration = args: home-manager.lib.homeManagerConfiguration (rec {
-        system = args.system or "x86_64-linux";
-        configuration = import ./home.nix;
-        homeDirectory = "/home/morp";
-        username = "morp";
-        pkgs = pkgsForSystem system;
-      } // args);
+      # mkHomeConfiguration = args: home-manager.lib.homeManagerConfiguration (rec {
+      #   system = args.system or "x86_64-linux";
+      #   # configuration = import ./home.nix;
+      #   modules = [
+      #     ./home.nix
+      #     ./hosts/xps17
+      #   ];
+      #   # homeDirectory = "/home/morp";
+      #   # username = "morp";
+      #   pkgs = pkgsForSystem system;
+      # } // args);
 
     in
     flake-utils.lib.eachSystem [ "x86_64-linux" ]
@@ -68,41 +59,52 @@
         legacyPackages = pkgsForSystem system;
       }) // {
 
-      # defaultPackage.x86_64-linux = self.morp;
-      # nixosConfigurations = {
-      #   xps17 = lib.nixosSystem {
-      #     system = "x86_64-linux";
-      #     modules = [ ./hosts/xps17 ];
+      defaultPackage.x86_64-linux = self.morp;
+      nixosConfigurations = {
+        xps17 = lib.nixosSystem {
+          # system = "x86_64-linux";
+          modules = [ ./hosts/xps17 ];
+        };
+
+        wsl-nixos = lib.nixosSystem {
+          # system = "x86_64-linux";
+          modules = [ ./hosts/wsl ];
+        };
+
+        mac-mini = lib.nixosSystem {
+          system = "aarch64-darwin";
+          modules = [ ./hosts/mac_mini ];
+        };
+      };
+
+      # homeConfigurations.xps17 = mkHomeConfiguration {
+      #   extraSpecialArgs = {
+      #     withGUI = true;
+      #     isDesktop = true;
+      #     networkInterface = "wlp0s20f3";
+      #     # inherit localOverlay;
       #   };
       # };
 
-      homeConfigurations.xps17 = mkHomeConfiguration {
-        extraSpecialArgs = {
-          withGUI = true;
-          isDesktop = true;
-          networkInterface = "wlp0s20f3";
-          # inherit localOverlay;
-        };
-      };
+      # homeConfigurations.wsl-nixos = mkHomeConfiguration {
+      #   extraSpecialArgs = {
+      #     withGUI = true;
+      #     isDesktop = true;
+      #     networkInterface = "wlp0s20f3";
+      #     # inherit wslOverlay;
+      #   };
+      # };
 
-      homeConfigurations.wsl-nixos = mkHomeConfiguration {
-        extraSpecialArgs = {
-          withGUI = true;
-          isDesktop = true;
-          networkInterface = "wlp0s20f3";
-          # inherit wslOverlay;
-        };
-      };
+      # homeConfigurations.mac-mini = mkHomeConfiguration {
+      #   system = "aarch64-darwin";
+      #   extraSpecialArgs = {
+      #     withGUI = false;
+      #     isDesktop = false;
+      #     networkInterface = "en1";
+      #     # inherit localOverlay;
+      #   };
+      # };
 
-      homeConfigurations.mac-mini = mkHomeConfiguration {
-        system = "aarch64-darwin";
-        extraSpecialArgs = {
-          withGUI = false;
-          isDesktop = false;
-          networkInterface = "en1";
-          # inherit localOverlay;
-        };
-      };
       inherit home-manager;
     };
 }

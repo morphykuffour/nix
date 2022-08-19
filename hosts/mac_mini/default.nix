@@ -8,22 +8,25 @@
 #       └─ home.nix
 #
 
-{ lib, inputs, nixpkgs, home-manager, darwin, user, ...}:
+{ lib, inputs, nixpkgs, home-manager, darwin, user, ... }:
 
 let
-  system = "x86_64-darwin";                                
+  system = "aarch64-darwin";
 in
 {
-  macbook = darwin.lib.darwinSystem {                       
+  macbook = darwin.lib.darwinSystem {
     inherit system;
     specialArgs = { inherit user inputs; };
-    modules = [                                           
+    modules = [
+      # Modules that are used
       ./configuration.nix
-      
-      home-manager.darwinModules.home-manager {          
+
+      home-manager.darwinModules.home-manager
+      {
+        # Home-Manager module that is used
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = { inherit user; }; 
+        home-manager.extraSpecialArgs = { inherit user; }; # Pass flake variable
         home-manager.users.${user} = import ./home.nix;
       }
     ];
