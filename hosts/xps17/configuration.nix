@@ -38,11 +38,12 @@
         version = 2;
         enable = true;
         devices = [
-          "nodev"
-          # "/dev/nvme0n1p1"
+              "nodev"
+          # "/dev/nvme1n1"
         ];
-        # efiSupport = true;
-        # useOSProber = true;
+          efiSupport = true;
+        #   efiInstallAsRemovable = true;
+        useOSProber = true;
       };
 
       efi = {
