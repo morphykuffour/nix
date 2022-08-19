@@ -16,17 +16,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-    };
-
     discord = {
       url = "github:InternetUnexplorer/discord-overlay";
     };
 
   };
 
-  outputs = inputs @{ self, nixpkgs, home-manager, darwin, flake-utils, discord, ... }:
+  outputs = inputs @{ self, nixpkgs, home-manager, darwin, discord, ... }:
     let
       lib = nixpkgs.lib;
       user = "morp";
@@ -41,25 +37,8 @@
         inherit system;
       };
 
-      # mkHomeConfiguration = args: home-manager.lib.homeManagerConfiguration (rec {
-      #   system = args.system or "x86_64-linux";
-      #   # configuration = import ./home.nix;
-      #   modules = [
-      #     ./home.nix
-      #     ./hosts/xps17
-      #   ];
-      #   # homeDirectory = "/home/morp";
-      #   # username = "morp";
-      #   pkgs = pkgsForSystem system;
-      # } // args);
-
     in
-    flake-utils.lib.eachSystem [ "x86_64-linux" ]
-      (system: rec {
-        legacyPackages = pkgsForSystem system;
-      }) // {
-
-      defaultPackage.x86_64-linux = self.morp;
+    {
       nixosConfigurations = {
         xps17 = lib.nixosSystem {
           system = "x86_64-linux";
@@ -67,16 +46,23 @@
           # inherit pkgsForSystem;
         };
 
+      };
+
+      nixosConfigurations = {
         wsl-nixos = lib.nixosSystem {
           system = "x86_64-linux";
           modules = [ ./hosts/wsl ];
         };
 
+      };
+
+      nixosConfigurations = {
         mac-mini = lib.nixosSystem {
           system = "aarch64-darwin";
           modules = [ ./hosts/mac_mini ];
         };
       };
+
 
       # homeConfigurations.xps17 = mkHomeConfiguration {
       #   extraSpecialArgs = {
@@ -88,8 +74,8 @@
       # };
 
       # homeConfigurations.wsl-nixos = mkHomeConfiguration {
- 
-     #   extraSpecialArgs = {
+
+      #   extraSpecialArgs = {
       #     withGUI = true;
       #     isDesktop = true;
       #     networkInterface = "wlp0s20f3";
