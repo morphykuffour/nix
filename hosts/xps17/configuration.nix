@@ -1,15 +1,13 @@
-# { config, current, lib, pkgs, home-manager, ... }:
-{ config, current, lib, pkgs, ... }:
+{ config, current, lib, pkgs, home-manager, ... }:
 {
   imports =
     [
       ./hardware-configuration.nix
       ./picom.nix
       ./zfs.nix
-      # home-manager.nixosModule
+      home-manager.nixosModule
     ];
 
-  # editor settings TODO combine home-manager and linux system
   environment.variables.EDITOR = "vim";
 
   environment.sessionVariables = rec {
@@ -35,22 +33,24 @@
     extraModulePackages = [ ];
     supportedFilesystems = [ "ntfs" ];
     loader = {
-      grub = {
-        enable = true;
-        version = 2;
-        # device = "/dev/nvme0n1p1";
-        useOSProber = true;
-        mirroredBoots =
-          [
-            {
-              devices = [
-                # "/dev/disk/by-uuid/934E-5F67"
-                "/dev/nvme0n1p1"
-              ];
-              path = "/boot/efi";
-            }
-          ];
-      };
+      # grub = {
+      #   enable = true;
+      #   version = 2;
+      #   # device = "/dev/nvme0n1p1";
+      #   useOSProber = true;
+      #   mirroredBoots =
+      #     [
+      #       {
+      #         devices = [
+      #           # "/dev/disk/by-uuid/934E-5F67"
+      #           "/dev/nvme0n1p1"
+      #         ];
+      #         path = "/boot/efi";
+      #       }
+      #     ];
+      # };
+
+      systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
       efi.efiSysMountPoint = "/boot/efi";
     };
