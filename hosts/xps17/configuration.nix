@@ -141,6 +141,10 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "python3.10-mistune-0.8.4"
+  ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   # nixpkgs.config.packageOverrides = pkgs: {

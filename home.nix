@@ -1,4 +1,4 @@
-{ config, current, pkgs, lib, nixGL, ... }:
+{ config, current, pkgs, lib, ... }:
 
 # let
 # userConfig = import ./user.nix { };
@@ -20,7 +20,7 @@
       ./modules/sxhkd.nix
       # ./modules/nvim.nix
       ./modules/rofi.nix
-      ./modules/himalaya.nix
+      # ./modules/himalaya.nix
       # ./modules/nur.nix
     ];
 
@@ -34,6 +34,7 @@
       enable = true;
       plugins = with pkgs.obs-studio-plugins; [
         wlrobs
+        obs-gstreamer
       ];
     };
   };
@@ -45,37 +46,36 @@
     stateVersion = "22.05";
 
     packages = with pkgs;[
-
-      # devtools
-      kitty 
+      kitty
       tmux
       zsh
-      atuin 
-      starship 
-      exa 
+      atuin
+      starship
+      exa
       bat
-      tealdeer 
-      fd 
+      tealdeer
+      fd
       gh
       clipmenu
-      delta 
+      delta
       cscope
-      pastel 
-      conda 
-      jupyter 
-      ruby 
-      edir 
-      ranger 
-      stylua 
+      pastel
+      conda
+      jupyter
+      ruby
+      edir
+      ranger
+      stylua
       cargo
-      jq 
-      curl 
-      fzf 
-      nodejs 
+      jq
+      curl
+      fzf
+      nodejs
       sbcl
-texlive.combine {
-  inherit (texlive) scheme-small collection-langkorean algorithms cm-super;
-}
+      # texlive.combine
+      # {
+      #   inherit (texlive) scheme-small collection-langkorean algorithms cm-super;
+      # }
 
 
       # mail
@@ -88,8 +88,8 @@ texlive.combine {
 
       # productivity
       calibre
-      emacs 
-      slides 
+      emacs
+      slides
 
       # windows
       sxhkd
@@ -104,10 +104,10 @@ texlive.combine {
 
       eva
       aria2
-      hyperfine 
-      hexyl 
-      ripgrep 
-      autojump 
+      hyperfine
+      hexyl
+      ripgrep
+      autojump
       pandoc
       croc
       spotify
@@ -123,6 +123,7 @@ texlive.combine {
       vial
       redshift
       termite
+      discord
 
       # neovim
       neovim-unwrapped
@@ -149,12 +150,10 @@ texlive.combine {
         ipython
         dbus-python
         html2text
-        icalendar
+        # icalendar
         keymapviz
-        virtualenv
-
+        # virtualenv
       ]))
     ];
   };
 }
-
