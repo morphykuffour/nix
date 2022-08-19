@@ -26,24 +26,20 @@
     let
       lib = nixpkgs.lib;
       user = "morp";
-      # localOverlay = import ./overlay.nix; # TODO fix with proper overlay
-      # overlays = [ 
-      #   discord
-      #     wsl-nixos
-      #   ];
+      # overlays = import ./overlay.nix; # TODO fix 
 
       pkgsForSystem = system: import nixpkgs {
         config = { allowUnfree = true; };
         inherit system;
       };
-
     in
     {
       nixosConfigurations = {
         xps17 = lib.nixosSystem {
           system = "x86_64-linux";
           modules = [ ./hosts/xps17 ];
-          # inherit pkgsForSystem;
+          specialArgs = inputs;
+          # inherit overlays;
         };
 
       };
@@ -62,36 +58,6 @@
           modules = [ ./hosts/mac_mini ];
         };
       };
-
-
-      # homeConfigurations.xps17 = mkHomeConfiguration {
-      #   extraSpecialArgs = {
-      #     withGUI = true;
-      #     isDesktop = true;
-      #     networkInterface = "wlp0s20f3";
-      #     # inherit localOverlay;
-      #   };
-      # };
-
-      # homeConfigurations.wsl-nixos = mkHomeConfiguration {
-
-      #   extraSpecialArgs = {
-      #     withGUI = true;
-      #     isDesktop = true;
-      #     networkInterface = "wlp0s20f3";
-      #     # inherit wslOverlay;
-      #   };
-      # };
-
-      # homeConfigurations.mac-mini = mkHomeConfiguration {
-      #   system = "aarch64-darwin";
-      #   extraSpecialArgs = {
-      #     withGUI = false;
-      #     isDesktop = false;
-      #     networkInterface = "en1";
-      #     # inherit localOverlay;
-      #   };
-      # };
 
       inherit home-manager;
     };
