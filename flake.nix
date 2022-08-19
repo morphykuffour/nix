@@ -34,21 +34,22 @@
       };
     in
     {
+      # xps17 NixOs
       nixosConfigurations = {
         xps17 = lib.nixosSystem {
           system = "x86_64-linux";
 
           modules = [
-            ./hosts/xps17 
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.morp = import ./home.nix;
+            ./hosts/xps17
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.morp = import ./home.nix;
 
-            # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
-            # home-manager.extraSpecialArgs
-          }
+              # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+              # home-manager.extraSpecialArgs
+            }
           ];
           specialArgs = inputs;
           # inherit overlays;
@@ -56,21 +57,28 @@
 
       };
 
-      nixosConfigurations = {
-        wsl-nixos = lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [ ./hosts/wsl ];
-        };
+      # xps17 Windows 11
+      # nixosConfigurations = {
+      #   wsl-nixos = lib.nixosSystem {
+      #     system = "x86_64-linux";
+      #     modules = [ ./hosts/wsl ];
+      #   };
+      # };
 
-      };
-
-      nixosConfigurations = {
-        mac-mini = lib.nixosSystem {
+      # mac_mini Mac Os Monterey
+      darwinConfigurations = {
+        mac_mini = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
-          modules = [ ./hosts/mac_mini ];
+          modules = [
+            ./hosts/mac_mini
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.morp = import ./home.nix;
+            }
+          ];
         };
       };
-
-      inherit home-manager;
     };
 }

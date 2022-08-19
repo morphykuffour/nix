@@ -102,7 +102,7 @@
     #   serviceConfig = {
     #     Restart = "always";
     #     RestartSec = "3";
-    #     ExecStart = "${pkgs.nur.repos.meain.kmonad}/bin/kmonad /etc/nixos/colemak-dh-extend-ansi.kbd";
+    #     ExecStart = "${pkgs.nur.repos.meain.kmonad}/bin/kmonad ./keeb/colemak-dh-extend-ansi.kbd";
     #     Nice = "-20";
     #   };
     #   wantedBy = [ "default.target" ];
