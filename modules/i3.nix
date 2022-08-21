@@ -104,7 +104,7 @@ in
         "${mod}+3" = "workspace number 3";
         "${mod}+4" = "workspace number 4";
         "${mod}+5" = "workspace number 5";
-        "${mod}F6" = "workspace number 6";
+        "${mod}+6" = "workspace number 6";
         "${mod}+7" = "workspace number 7";
         "${mod}+8" = "workspace number 8";
         "${mod}+9" = "workspace number 9: game";
@@ -180,10 +180,10 @@ in
     extraConfig = ''
        for_window [ title="notetaker_window" ] floating enable
        title_align center
-       assign [class="nvim"] "1: editor"
-       assign [class="kitty" title="^\[nvim\] "] "1: editor "
-       assign [class=".obs-wrapped"] "5: obs"
-       assign [class="Steam"] "6: game"
+       # assign [class="nvim"] "1: editor"
+       # assign [class="kitty" title="^\[nvim\] "] "1: editor "
+       # assign [class=".obs-wrapped"] "5: obs"
+       # assign [class="Steam"] "6: game"
 
        # Start i3bar to display a workspace bar (plus the system informatio i3status
        # finds out, if available)

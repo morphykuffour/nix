@@ -16,13 +16,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nur = {
+      url = "github:nix-community/NUR";
+    };
+
     discord = {
       url = "github:InternetUnexplorer/discord-overlay";
     };
 
   };
 
-  outputs = inputs @{ self, nixpkgs, home-manager, darwin, discord, ... }:
+  outputs = inputs @{ self, nixpkgs, home-manager, darwin, nur, discord, ... }:
     let
       lib = nixpkgs.lib;
       user = "morp";

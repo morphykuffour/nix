@@ -38,4 +38,8 @@ nix-channel --update
 sudo nixos-rebuild --upgrade
 ```
 
-
+-- get sha256 for remote pkgs
+```bash
+# nix-prefetch-url --unpack https://github.com/nix-community/NUR/archive/master.tar.gz
+nix-prefetch-url --unpack #<url>
+```
