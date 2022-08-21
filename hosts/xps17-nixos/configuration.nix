@@ -58,7 +58,7 @@
   };
 
   # networking
-  networking.hostName = "xps17"; # Define your hostname.
+  networking.hostName = "xps17-nixos"; # Define your hostname.
   # networking.wireless.enable = true;
   networking.networkmanager.enable = true;
 
