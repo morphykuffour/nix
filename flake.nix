@@ -40,34 +40,32 @@
     {
       # xps17 NixOs
       nixosConfigurations = {
-        xps17 = lib.nixosSystem {
+        xps17-nixos = lib.nixosSystem {
           system = "x86_64-linux";
 
           modules = [
-            ./hosts/xps17
+            ./hosts/xps17-nixos
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.morp = import ./home.nix;
-
-              # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
-              # home-manager.extraSpecialArgs
+              home-manager.extraSpecialArgs = { inherit user;};
+              home-manager.users.${user} = {
+                imports = [ ./home.nix ];
+              };
             }
           ];
           specialArgs = inputs;
           # inherit overlays;
         };
 
-      };
+        xps17-wsl = lib.nixosSystem {
+          system = "x86_64-linux";
 
-      # xps17 Windows 11
-      # nixosConfigurations = {
-      #   wsl-nixos = lib.nixosSystem {
-      #     system = "x86_64-linux";
-      #     modules = [ ./hosts/wsl ];
-      #   };
-      # };
+          modules = [ ./hosts/xps17-wsl ];
+        };
+
+      };
 
       # mac_mini Mac Os Monterey
       darwinConfigurations = {
