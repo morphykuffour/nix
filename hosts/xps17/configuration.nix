@@ -1,11 +1,13 @@
 { config, current, lib, pkgs, home-manager, ... }:
+
 {
   imports =
     [
       ./hardware-configuration.nix
       ./picom.nix
       ./zfs.nix
-      home-manager.nixosModule
+      # home-manager.nixosModule
+      # nur.nixosModules.nur
     ];
 
   environment.variables.EDITOR = "vim";
@@ -38,10 +40,10 @@
         version = 2;
         enable = true;
         devices = [
-              "nodev"
+          "nodev"
           # "/dev/nvme1n1"
         ];
-          efiSupport = true;
+        efiSupport = true;
         #   efiInstallAsRemovable = true;
         useOSProber = true;
       };
@@ -142,13 +144,15 @@
     "python3.10-mistune-0.8.4"
   ];
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+
   # nixpkgs.config.packageOverrides = pkgs: {
-  #   nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-  #     inherit pkgs;
-  #   };
+  #   nur = import
+  #     (builtins.fetchTarball  = {
+  #       url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
+  #       sha256 = "0a1jcjs3dlx0jixiyx6s2x4jm7c9k22q874f4agfhydqa14jqrcc";
+  #     };) inherit pkgs;
   # };
+  #
 
   environment.systemPackages = with pkgs; [
     wget
