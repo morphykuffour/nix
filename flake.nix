@@ -24,9 +24,12 @@
       url = "github:InternetUnexplorer/discord-overlay";
     };
 
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, nur, discord, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, darwin, nur, discord, nixos-hardware, ... }@inputs:
     let
       lib = nixpkgs.lib;
       user = "morp";
@@ -54,6 +57,7 @@
           modules = [
             ./hosts/xps17-nixos
             nur.nixosModules.nur
+            nixos-hardware.nixosModules.dell-xps-17-9700
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
