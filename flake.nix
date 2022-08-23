@@ -26,43 +26,58 @@
 
   };
 
-  outputs = inputs @{ self, nixpkgs, home-manager, darwin, nur, discord, ... }:
+  outputs = { self, nixpkgs, home-manager, darwin, nur, discord, ... }@inputs:
     let
       lib = nixpkgs.lib;
       user = "morp";
-      # overlays = import ./overlay.nix; # TODO fix 
+      system = "x86_64-linux";
 
       pkgsForSystem = system: import nixpkgs {
         config = { allowUnfree = true; };
         inherit system;
       };
+
+      # Overlays from ./overlays directory
+      # overlays = with inputs; [
+        # emacs.overlay
+      # ]
+      # Overlays from ./overlays directory
+      # ++ (importNixFiles ./overlays);
+
     in
     {
       # xps17 NixOs
       nixosConfigurations = {
         xps17-nixos = lib.nixosSystem {
-          system = "x86_64-linux";
-
+          inherit system;
+          # specialArgs = { inherit inputs user overlays; };
           modules = [
             ./hosts/xps17-nixos
+            nur.nixosModules.nur
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit user;};
-              home-manager.users.${user} = {
+              # home-manager.extraSpecialArgs = { inherit user; };
+              # home-manager.users.${user} = {
+              home-manager.users.morp = {
                 imports = [ ./home.nix ];
               };
             }
           ];
           specialArgs = inputs;
-          # inherit overlays;
         };
 
         xps17-wsl = lib.nixosSystem {
           system = "x86_64-linux";
 
           modules = [ ./hosts/xps17-wsl ];
+          nixpkgs.overlays = [
+            (import (builtins.fetchTarball {
+              url = "https://github.com/InternetUnexplorer/discord-overlay/archive/main.tar.gz";
+            }))
+
+          ];
         };
 
       };
