@@ -4,12 +4,7 @@ system-wide dotfiles for WSL, Linux and Mac OS X
 
 - [x] TODO test on Linux #WORKING
 - [x] TODO test on WSL #WORKING
-- [ ] TODO test on macos
-
-Build nixos to check
-```bash
-sudo nixos-rebuild build --flake .#xps17
-```
+- [ ] TODO test on macos 
 
 Build nixos and switch to new configuration. `<flake-uri> = pwd`
 ```bash
