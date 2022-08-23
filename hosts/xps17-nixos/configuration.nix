@@ -6,8 +6,6 @@
       ./hardware-configuration.nix
       ./picom.nix
       ./zfs.nix
-      # home-manager.nixosModule
-      # nur.nixosModules.nur
     ];
 
   environment.variables.EDITOR = "vim";
@@ -96,19 +94,19 @@
     #   wantedBy = [ "sysinit.target" ];
     # };
 
-    # kmonad = {
-    #   enable = false;
-    #   unitConfig = {
-    #     description = "kmonad key remapping daemon";
-    #   };
-    #   serviceConfig = {
-    #     Restart = "always";
-    #     RestartSec = "3";
-    #     ExecStart = "${pkgs.nur.repos.meain.kmonad}/bin/kmonad ./keeb/colemak-dh-extend-ansi.kbd";
-    #     Nice = "-20";
-    #   };
-    #   wantedBy = [ "default.target" ];
-    # };
+    kmonad = {
+      enable = false;
+      unitConfig = {
+        description = "kmonad key remapping daemon";
+      };
+      serviceConfig = {
+        Restart = "always";
+        RestartSec = "3";
+        ExecStart = "${pkgs.nur.repos.meain.kmonad}/bin/kmonad ./keeb/colemak-dh-extend-ansi.kbd";
+        Nice = "-20";
+      };
+      wantedBy = [ "default.target" ];
+    };
   };
 
 
@@ -127,7 +125,7 @@
   users.defaultUserShell = pkgs.zsh;
   users.users.morp = {
     isNormalUser = true;
-    description = "morp";
+    description = "default account for linux";
     shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" "docker" "video" "vboxusers" "libvirtd" ];
     packages = with pkgs; [
@@ -138,21 +136,26 @@
   };
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "python3.10-mistune-0.8.4"
-  ];
+    permittedInsecurePackages = [
+      "python3.10-mistune-0.8.4"
+    ];
+
+    packageOverrides = pkgs: {
+      nur = (import (builtins.fetchTarball {
+        url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
+        sha256 = "1dd5r1bqnd4m141cnjvkdk6isl14hdf0rv98bw1p9hcl8w4ff4cg";
+      }
+      )) {
+        inherit pkgs;
+      };
+    };
+  };
 
 
-  # nixpkgs.config.packageOverrides = pkgs: {
-  #   nur = import
-  #     (builtins.fetchTarball  = {
-  #       url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
-  #       sha256 = "0a1jcjs3dlx0jixiyx6s2x4jm7c9k22q874f4agfhydqa14jqrcc";
-  #     };) inherit pkgs;
-  # };
-  #
+
 
   environment.systemPackages = with pkgs; [
     wget
@@ -199,7 +202,7 @@
     vial
     hidapi
     # nur.repos.foolnotion.keyd
-    # nur.repos.meain.kmonad
+    nur.repos.meain.kmonad
 
     # container stuff
     docker

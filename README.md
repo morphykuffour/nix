@@ -2,7 +2,9 @@
 
 system-wide dotfiles for WSL, Linux and Mac OS X
 
-- [ ] TODO test on macos and WSL
+- [x] TODO test on Linux #WORKING
+- [x] TODO test on WSL #WORKING
+- [ ] TODO test on macos
 
 Build nixos to check
 ```bash
@@ -11,10 +13,15 @@ sudo nixos-rebuild build --flake .#xps17
 
 Build nixos and switch to new configuration. `<flake-uri> = pwd`
 ```bash
-sudo nixos-rebuild switch --flake .#xps17
+sudo nixos-rebuild switch --flake .#xps17-nixos
 ```
 
 Build darwin and switch to new configuration. `<flake-uri> = pwd`
 ```bash
 sudo darwin-rebuild switch --flake .#mac_mini
+```
+
+Build wsl and switch to new configuration. `<flake-uri> = pwd`
+```bash
+sudo nixos-rebuild switch --flake .#xps17-wsl
 ```
