@@ -11,7 +11,7 @@
       address = "morphy.kuffour@uconn.edu";
       realName = "Morphy Kuffour";
       userName = "morphy.kuffour";
-      passwordCommand ="pass show gmail";
+      passwordCommand = "'pass show gmail'";
       imap = {
         host = "imap.gmail.com";
         port = 993;
