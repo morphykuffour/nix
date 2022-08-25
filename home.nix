@@ -1,12 +1,4 @@
 { config, current, pkgs, lib, ... }:
-
-# let
-# userConfig = import ./user.nix { };
-# gitConfig = import ./modules/git.nix {};
-# in
-# ${builtins.getEnv "HOME"}
-# with ; {
-
 {
   imports =
     [
@@ -20,7 +12,7 @@
       ./modules/sxhkd.nix
       # ./modules/nvim.nix
       ./modules/rofi.nix
-      # ./modules/himalaya.nix
+      ./modules/himalaya.nix
       # ./modules/nur.nix
     ];
 

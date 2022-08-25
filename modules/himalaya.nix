@@ -3,6 +3,7 @@
   programs.himalaya = {
     enable = true;
   };
+
   accounts.email.accounts = {
     uconn_gmail = {
       primary = true;

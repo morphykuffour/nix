@@ -57,7 +57,7 @@
           modules = [
             ./hosts/xps17-nixos
             nur.nixosModules.nur
-            nixos-hardware.nixosModules.dell-xps-17-9700
+            # nixos-hardware.nixosModules.dell-xps-17-9700
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -86,7 +86,7 @@
 
       };
 
-      # mac_mini Mac Os Monterey
+      # mac_mini Mac Os Monterey TODO fix
       darwinConfigurations = {
         mac_mini = darwin.lib.darwinSystem {
           system = "aarch64-darwin";

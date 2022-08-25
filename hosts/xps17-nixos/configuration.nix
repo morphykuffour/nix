@@ -177,6 +177,7 @@
     xorg.xbacklight
     dropbox-cli
     i3-resurrect
+    autorandr
     xdotool
     # xdg-utils
     # xdg-desktop-portal
@@ -195,6 +196,7 @@
     logiops
     rustup
     brightnessctl
+    xdragon
 
     # keyboard remapping stuff
     qmk
