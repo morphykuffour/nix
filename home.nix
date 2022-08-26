@@ -12,7 +12,7 @@
       ./modules/sxhkd.nix
       # ./modules/nvim.nix
       ./modules/rofi.nix
-      ./modules/himalaya.nix
+      # ./modules/himalaya.nix
       # ./modules/nur.nix
     ];
 
