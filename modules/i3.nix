@@ -2,8 +2,6 @@
 let
   # variables
   mod = "Mod1";
-  borderWidth = 3;
-
   local_bin = "/home/morp/.local/bin";
   home = "/home/morp/";
 in
@@ -43,15 +41,13 @@ in
             command = "floating enable";
           }
         ];
-        border = 2;
+        border = 3;
       };
+
       gaps = {
         inner = 20;
         outer = 5;
       };
-
-      # Use Mouse+$mod to drag floating windows to their wanted position
-      # floating_modifier = "${mod}";
 
       keybindings = {
 
@@ -66,38 +62,37 @@ in
         "XF86MonBrightnessUp" = "exec brightnessctl set 4%+";
 
         # Application keybindings
-        "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
+        "${mod}+Return"  = "exec ${pkgs.kitty}/bin/kitty";
         "${mod}+Shift+d" = "exec ${pkgs.rofi}/bin/rofi -modi drun -show drun";
-        "${mod}+s" = "exec flameshot gui --clipboard --path ${home}/Dropbox/screenshots/";
-        "Print" = "exec flameshot full --clipboard --path ${home}/Dropbox/screenshots/";
-        "${mod}+w" = "exec ${pkgs.rofi}/bin/rofi -show window";
+        "${mod}+s"       = "exec flameshot gui --clipboard --path ${home}/Dropbox/screenshots/";
+        "Print"          = "exec flameshot full --clipboard --path ${home}/Dropbox/screenshots/";
+        "${mod}+w"       = "exec ${pkgs.rofi}/bin/rofi -show window";
         "${mod}+Shift+x" = "exec systemctl suspend";
         "${mod}+Shift+q" = "kill";
-        "${mod}+b" = "exec ${pkgs.brave}/bin/brave";
-        "${mod}+y" = "exec ${pkgs.emacs}/bin/emacs";
-        "${mod}+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";
-        "Mod4+l" = "exec ${pkgs.systemd}/bin/loginctl lock-session";
-        "Mod4+v" = "exec ${pkgs.clipmenu}/bin/clipmenu -i -fn Terminus:size=13 -nb '#002b36' -nf '#839496' -sb '#073642' -sf '#93a1a1'";
-
+        "${mod}+b"       = "exec ${pkgs.brave}/bin/brave";
+        "${mod}+y"       = "exec ${pkgs.emacs}/bin/emacs";
+        "${mod}+d"       = "exec ${pkgs.dmenu}/bin/dmenu_run";
+        "Mod4+l"         = "exec ${pkgs.systemd}/bin/loginctl lock-session";
+        "Mod4+v"         = "exec ${pkgs.clipmenu}/bin/clipmenu -i -fn Terminus:size=13 -nb '#002b36' -nf '#839496' -sb '#073642' -sf '#93a1a1'";
 
         # i3 window management
-        "${mod}+h" = "focus left";
-        "${mod}+j" = "focus down";
-        "${mod}+k" = "focus up";
-        "${mod}+l" = "focus right";
-        "${mod}+Shift+h" = "move left";
-        "${mod}+Shift+j" = "move down";
-        "${mod}+Shift+k" = "move up";
-        "${mod}+Shift+l" = "move right";
-        "${mod}+z" = "split h";
-        "${mod}+|" = "split v";
-        "${mod}+f" = "fullscreen toggle";
-        "${mod}+Shift+s" = "layout stacking";
-        "${mod}+Shift+w" = "layout tabbed";
-        "${mod}+e" = "layout toggle split";
+        "${mod}+h"           = "focus left";
+        "${mod}+j"           = "focus down";
+        "${mod}+k"           = "focus up";
+        "${mod}+l"           = "focus right";
+        "${mod}+Shift+h"     = "move left";
+        "${mod}+Shift+j"     = "move down";
+        "${mod}+Shift+k"     = "move up";
+        "${mod}+Shift+l"     = "move right";
+        "${mod}+z"           = "split h";
+        "${mod}+|"           = "split v";
+        "${mod}+f"           = "fullscreen toggle";
+        "${mod}+Shift+s"     = "layout stacking";
+        "${mod}+Shift+w"     = "layout tabbed";
+        "${mod}+e"           = "layout toggle split";
         "${mod}+Shift+space" = "floating toggle";
-        "${mod}+space" = "focus mode_toggle";
-        "${mod}+a" = "focus parent";
+        "${mod}+space"       = "focus mode_toggle";
+        "${mod}+a"           = "focus parent";
 
         "${mod}+1" = "workspace number 1";
         "${mod}+2" = "workspace number 2";
@@ -178,27 +173,16 @@ in
     };
 
     extraConfig = ''
-       for_window [ title="notetaker_window" ] floating enable
+       for_window [ title="notetaker_window" ] floating enable resize set 640 480
        title_align center
-       # assign [class="nvim"] "1: editor"
-       # assign [class="kitty" title="^\[nvim\] "] "1: editor "
-       # assign [class=".obs-wrapped"] "5: obs"
-       # assign [class="Steam"] "6: game"
-
-       # Start i3bar to display a workspace bar (plus the system informatio i3status
-       # finds out, if available)
-      #  bar {
-      #          status_command i3status
-      #          tray_output primary
-      #          font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-      #          font pango:Jetbrains Mono 15
-      #  }
-
        # workspace "1: emacs" output DisplayPort-0
        # workspace "2: browsing" output DisplayPort-1
        # workspace "3: comms" output DisplayPort-2
        # workspace "10: video" output HDMI-A-0
 
+       # class                   border  backgr. text    indicator child_border
+       client.focused            #ffdb01 #ffdb01 #0000ff #ffdb01   #ffdb01
+       client.focused_inactive   #333333 #5f676a #ffffff #484e50   #5f676a
     '';
   };
 }
