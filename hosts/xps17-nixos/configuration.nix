@@ -215,6 +215,8 @@
     # runc
 
     # tools
+    libreoffice
+    reptyr
     perf-tools # TODO mount debugfs
     procps
     zsync
