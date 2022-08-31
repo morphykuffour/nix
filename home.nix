@@ -139,6 +139,7 @@
         pandas
         requests
         pip
+        i3ipc
         ipython
         dbus-python
         html2text
