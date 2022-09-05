@@ -205,19 +205,11 @@
     hidapi
     # nur.repos.foolnotion.keyd
     nur.repos.meain.kmonad
-
-    # container stuff
+    gnome.dconf-editor
     docker
-    # docker-compose
-    # containerd
-    # cni-plugins
-    # ignite
-    # runc
-
-    # tools
     libreoffice
     reptyr
-    perf-tools # TODO mount debugfs
+    perf-tools
     procps
     zsync
     cdrkit
@@ -225,12 +217,8 @@
     nfs-utils
     zfs
     bashmount
-
-    # vm stuff
     vagrant
     grub2
-    # virtualbox
-    # firecracker
     qemu
     libvirt
     virt-manager
@@ -328,10 +316,14 @@
 
       desktopManager = {
         xterm.enable = false;
-        xfce = {
+        # xfce = {
+        #   enable = true;
+        #   noDesktop = true;
+        #   enableXfwm = false;
+        # };
+        mate = {
           enable = true;
-          noDesktop = true;
-          enableXfwm = false;
+          # excludePackages = [ pkgs.mate.mate-terminal pkgs.mate.pluma ];
         };
       };
 
