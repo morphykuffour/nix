@@ -70,7 +70,7 @@ in
         "${mod}+Shift+x" = "exec systemctl suspend";
         "${mod}+Shift+q" = "kill";
         "${mod}+b"       = "exec ${pkgs.brave}/bin/brave";
-        "${mod}+y"       = "exec ${pkgs.emacs}/bin/emacs";
+        # "${mod}+y"       = "exec ${pkgs.emacs}/bin/emacs";
         "${mod}+d"       = "exec ${pkgs.dmenu}/bin/dmenu_run";
         "Mod4+l"         = "exec ${pkgs.systemd}/bin/loginctl lock-session";
         "Mod4+v"         = "exec ${pkgs.clipmenu}/bin/clipmenu -i -fn Terminus:size=13 -nb '#002b36' -nf '#839496' -sb '#073642' -sf '#93a1a1'";
