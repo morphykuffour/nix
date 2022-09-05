@@ -157,78 +157,6 @@
 
 
 
-  environment.systemPackages = with pkgs; [
-    wget
-    xclip
-    git
-    stow
-    brave
-    sqlite
-    unzip
-    coreutils
-    binutils
-    gcc
-    flameshot
-    sxiv
-    polybar
-    gnumake
-    clipmenu
-    playerctl
-    xorg.xbacklight
-    dropbox-cli
-    i3-resurrect
-    autorandr
-    xdotool
-    # xdg-utils
-    # xdg-desktop-portal
-    shared-mime-info
-    xdg-user-dirs
-    bluedevil
-    kdeconnect
-    pciutils
-    usbutils
-    libusb1
-    ventoy-bin
-    # bottles
-    # flatpak
-    picom
-    bluez
-    logiops
-    rustup
-    brightnessctl
-    xdragon
-
-    # keyboard remapping stuff
-    qmk
-    keymapviz
-    vial
-    hidapi
-    # nur.repos.foolnotion.keyd
-    nur.repos.meain.kmonad
-    gnome.dconf-editor
-    docker
-    libreoffice
-    reptyr
-    perf-tools
-    procps
-    zsync
-    cdrkit
-    sqlitebrowser
-    nfs-utils
-    zfs
-    bashmount
-    vagrant
-    grub2
-    qemu
-    libvirt
-    virt-manager
-    spice-gtk
-    quickemu
-    samba
-    OVMF
-    swtpm
-  ];
-
   # TODO move services under one function
   services = {
 
@@ -440,4 +368,71 @@
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
   };
+
+
+  environment.systemPackages = with pkgs; [
+    wget
+    xclip
+    git
+    stow
+    brave
+    sqlite
+    unzip
+    coreutils
+    binutils
+    gcc
+    flameshot
+    sxiv
+    polybar
+    gnumake
+    clipmenu
+    playerctl
+    xorg.xbacklight
+    dropbox-cli
+    i3-resurrect
+    autorandr
+    xdotool
+    plover.dev
+    shared-mime-info
+    xdg-user-dirs
+    bluedevil
+    kdeconnect
+    pciutils
+    usbutils
+    libusb1
+    ventoy-bin
+    picom
+    bluez
+    logiops
+    rustup
+    brightnessctl
+    xdragon
+    keymapviz
+    vial
+    hidapi
+    # nur.repos.foolnotion.keyd
+    nur.repos.meain.kmonad
+    gnome.dconf-editor
+    docker
+    libreoffice
+    reptyr
+    perf-tools
+    procps
+    zsync
+    cdrkit
+    sqlitebrowser
+    nfs-utils
+    zfs
+    bashmount
+    vagrant
+    grub2
+    qemu
+    libvirt
+    virt-manager
+    spice-gtk
+    quickemu
+    samba
+    OVMF
+    swtpm
+  ];
 }

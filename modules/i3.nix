@@ -155,11 +155,6 @@ in
           notification = false;
         }
         {
-          command = "polybar &";
-          always = true;
-          notification = false;
-        }
-        {
           command = "nm-applet";
           always = true;
           notification = false;
@@ -169,16 +164,17 @@ in
           always = true;
           notification = false;
         }
+        # {
+        #   command = "polybar &";
+        #   always = true;
+        #   notification = false;
+        # }
       ];
     };
 
     extraConfig = ''
        for_window [ title="notetaker_window" ] floating enable resize set 640 480
        title_align center
-       # workspace "1: emacs" output DisplayPort-0
-       # workspace "2: browsing" output DisplayPort-1
-       # workspace "3: comms" output DisplayPort-2
-       # workspace "10: video" output HDMI-A-0
 
        # class                   border  backgr. text    indicator child_border
        client.focused            #ffdb01 #ffdb01 #0000ff #ffdb01   #ffdb01
