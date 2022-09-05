@@ -20,6 +20,10 @@
       url = "github:nix-community/NUR";
     };
 
+    neovim = {
+      url = "github:nix-community/neovim-nightly-overlay";
+    };
+
     discord = {
       url = "github:InternetUnexplorer/discord-overlay";
     };
