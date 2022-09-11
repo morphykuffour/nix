@@ -43,14 +43,6 @@
         config = { allowUnfree = true; };
         inherit system;
       };
-
-      # Overlays from ./overlays directory
-      # overlays = with inputs; [
-        # emacs.overlay
-      # ]
-      # Overlays from ./overlays directory
-      # ++ (importNixFiles ./overlays);
-
     in
     {
       # xps17 NixOs
@@ -80,11 +72,21 @@
           system = "x86_64-linux";
 
           modules = [ ./hosts/xps17-wsl ];
+
           nixpkgs.overlays = [
             (import (builtins.fetchTarball {
               url = "https://github.com/InternetUnexplorer/discord-overlay/archive/main.tar.gz";
             }))
 
+
+            (self: super:
+              {
+                emacsWithConfig = super.emacsWithPackages (epkgs:
+                  (with epkgs.melpaPackages; [
+                    pdf-tools
+                  ])
+                );
+              })
           ];
         };
 
