@@ -13,7 +13,6 @@
       # ./modules/nvim.nix
       ./modules/rofi.nix
       # ./modules/himalaya.nix
-      # ./modules/nur.nix
     ];
 
 
@@ -31,6 +30,16 @@
     };
   };
   nixpkgs.config.allowUnfree = true;
+  # nixpkgs.overlays = [
+  #   (self: super:
+  #     {
+  #       emacsWithConfig = super.emacsWithPackages (epkgs:
+  #         (with epkgs.melpaPackages; [
+  #           pdf-tools
+  #         ])
+  #       );
+  #     })
+  # ];
 
   home = {
     username = "morp";
@@ -64,36 +73,21 @@
       fzf
       nodejs
       sbcl
-      # texlive.combine
-      # {
-      #   inherit (texlive) scheme-small collection-langkorean algorithms cm-super;
-      # }
-
-
-      # mail
-      neomutt # email client
+      neomutt
       mu
-      isync # sync mail locally
-      msmtp # send mail
-      pass # encrypt passwords
+      isync
+      msmtp
+      pass
       himalaya
-
-      # productivity
       calibre
       emacs
       slides
-
-      # windows
       sxhkd
-
-      # creativity
-      # davinci-resolve
       inkscape
       gimp
       blender
       kicad
       ffmpeg
-
       eva
       aria2
       hyperfine
@@ -116,8 +110,6 @@
       redshift
       termite
       discord
-
-      # neovim
       neovim-unwrapped
       tree-sitter
       rnix-lsp
@@ -143,9 +135,7 @@
         ipython
         dbus-python
         html2text
-        # icalendar
         keymapviz
-        # virtualenv
       ]))
     ];
   };
