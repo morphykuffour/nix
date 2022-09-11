@@ -195,6 +195,12 @@
       #media-session.enable = true;
     };
 
+    httpd = {
+      enable = true;
+      package = pkgs.apacheHttpd;
+      user = "wwwrun";
+    };
+
     openssh.enable = true;
     clipmenu.enable = true;
     blueman.enable = true;
@@ -424,6 +430,7 @@
     nfs-utils
     zfs
     bashmount
+    apacheHttpd
     vagrant
     grub2
     qemu
