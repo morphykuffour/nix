@@ -198,7 +198,13 @@
     httpd = {
       enable = true;
       package = pkgs.apacheHttpd;
+      adminAddr = "morty@example.org";
       user = "wwwrun";
+      extraConfig = 
+      ''
+        Listen 127.0.0.1:80
+        ServerName localhost
+      '';
     };
 
     openssh.enable = true;
