@@ -107,6 +107,7 @@
       surfraw
       nix-index
       vial
+      apacheHttpd
       redshift
       termite
       discord
