@@ -84,6 +84,7 @@
                 emacsWithConfig = super.emacsWithPackages (epkgs:
                   (with epkgs.melpaPackages; [
                     pdf-tools
+                    magit
                   ])
                 );
               })
