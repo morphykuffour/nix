@@ -78,9 +78,9 @@
               url = "https://github.com/InternetUnexplorer/discord-overlay/archive/main.tar.gz";
             }))
 
-
             (self: super:
               {
+
                 emacsWithConfig = super.emacsWithPackages (epkgs:
                   (with epkgs.melpaPackages; [
                     pdf-tools
