@@ -261,10 +261,10 @@
         #   noDesktop = true;
         #   enableXfwm = false;
         # };
-        # mate = {
-        #   enable = true;
-        #   # excludePackages = [ pkgs.mate.mate-terminal pkgs.mate.pluma ];
-        # };
+        mate = {
+          enable = true;
+          # excludePackages = [ pkgs.mate.mate-terminal pkgs.mate.pluma ];
+        };
       };
 
       displayManager = {
