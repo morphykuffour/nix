@@ -123,6 +123,7 @@
       nodePackages.pyright
       nodePackages.typescript
       nodePackages.prettier
+      mathpix-snipping-tool
       black
       rust-analyzer
 

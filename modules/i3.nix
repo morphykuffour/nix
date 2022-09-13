@@ -15,7 +15,7 @@ in
       terminal = "${pkgs.kitty}/bin/kitty";
       fonts = {
         names = [ "Noto Sans" ];
-        size = 15.0;
+        size = 9.0;
       };
 
       modes = {

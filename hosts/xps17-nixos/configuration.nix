@@ -146,7 +146,7 @@
     packageOverrides = pkgs: {
       nur = (import (builtins.fetchTarball {
         url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
-        sha256 = "1dd5r1bqnd4m141cnjvkdk6isl14hdf0rv98bw1p9hcl8w4ff4cg";
+        sha256 = "0sn47qg0ci3j7jlm213m7k6nv4apk68fjrn927hf6rhn2f0g1nm1";
       }
       )) {
         inherit pkgs;
@@ -425,6 +425,9 @@
     # nur.repos.foolnotion.keyd
     nur.repos.meain.kmonad
     gnome.dconf-editor
+    mate.mate-power-manager
+    orchis-theme
+    tela-circle-icon-theme
     docker
     libreoffice
     reptyr
