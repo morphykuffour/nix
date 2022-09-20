@@ -431,6 +431,8 @@
     docker
     libreoffice
     reptyr
+    wireshark
+    tshark
     perf-tools
     procps
     zsync

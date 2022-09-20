@@ -45,8 +45,8 @@ in
       };
 
       gaps = {
-        inner = 20;
-        outer = 5;
+        inner = 2;
+        outer = 2;
       };
 
       keybindings = {
