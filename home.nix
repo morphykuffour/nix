@@ -115,6 +115,7 @@
       rnix-lsp
       gopls
       ccls
+      fpp
       tree-sitter-grammars.tree-sitter-markdown
       sumneko-lua-language-server
       nodePackages.typescript-language-server

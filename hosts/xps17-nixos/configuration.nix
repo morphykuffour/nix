@@ -433,6 +433,7 @@
     reptyr
     wireshark
     tshark
+    rustdesk
     perf-tools
     procps
     zsync
