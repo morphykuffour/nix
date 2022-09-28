@@ -452,6 +452,8 @@
     quickemu
     samba
     OVMF
+    openconnect
     swtpm
+    gdb
   ];
 }

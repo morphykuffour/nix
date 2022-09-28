@@ -119,7 +119,8 @@
       tree-sitter-grammars.tree-sitter-markdown
       sumneko-lua-language-server
       nodePackages.typescript-language-server
-      # nodePackages.insect
+      nodePackages.insect
+      nodePackages.mermaid-cli
       nodePackages.bash-language-server
       nodePackages.pyright
       nodePackages.typescript
