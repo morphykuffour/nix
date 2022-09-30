@@ -127,7 +127,7 @@
     isNormalUser = true;
     description = "default account for linux";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "docker" "video" "vboxusers" "libvirtd" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "video" "vboxusers" "libvirtd" "input" ];
     packages = with pkgs; [
       vim
       vscode
@@ -159,40 +159,23 @@
 
   # TODO move services under one function
   services = {
+    # firmware updates with fwupd
+    fwupd.enable = true;
+    # fingerprint reader
+    fprintd.enable = true;
 
     qemuGuest.enable = true;
-    # nfs TODO fix for vagrant
-    nfs.server = {
-      enable = true;
-      lockdPort = 4001;
-      mountdPort = 4002;
-      statdPort = 4000;
-      exports = ''
-        /export         192.168.1.10(rw,fsid=0,no_subtree_check) 192.168.1.15(rw,fsid=0,no_subtree_check)
-        /export/Samsung_PSSD_T7 192.168.1.10(rw,nohide,insecure,no_subtree_check) 192.168.1.15(rw,nohide,insecure,no_subtree_check)
-      '';
 
-      extraNfsdConfig = '''';
-    };
-
-    udev.packages = [
-      pkgs.qmk-udev-rules
-    ];
-
-    spotifyd = {
-      enable = true;
-    };
     pipewire = {
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-      # If you want to use JACK applications, uncomment this
-      #jack.enable = true;
+    };
 
-      # use the example session manager (no others are packaged yet so this is enabled by default,
-      # no need to redefine it in your config for now)
-      #media-session.enable = true;
+    mysql = {
+      enable = true;
+      package = pkgs.mysql80;
     };
 
     httpd = {
@@ -256,11 +239,11 @@
 
       desktopManager = {
         xterm.enable = false;
-        # xfce = {
-        #   enable = true;
-        #   noDesktop = true;
-        #   enableXfwm = false;
-        # };
+        xfce = {
+          enable = true;
+          # noDesktop = true;
+          # enableXfwm = false;
+        };
         mate = {
           enable = true;
           # excludePackages = [ pkgs.mate.mate-terminal pkgs.mate.pluma ];
@@ -455,5 +438,11 @@
     openconnect
     swtpm
     gdb
+    libinput-gestures
+    wmctrl
+    fprintd
+    fwupd
+    mysql80
+    asciinema
   ];
 }
