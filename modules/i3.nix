@@ -122,6 +122,7 @@ in
         "${mod}+r" = ''mode "resize"'';
 
         "${mod}+Shift+n" = "exec kitty --title notetaker_window --config ${home}/.config/kitty/notetaker.conf ${local_bin}/notetaker";
+        "${mod}+Shift+." = "exec kitty --title floatimage_window ${local_bin}/floatimage";
 
         # run scripts TODO move to sxhkd when working
         "${mod}+ g" = "exec --no-startup-id ${local_bin}/google-search.sh";
@@ -164,16 +165,13 @@ in
           always = true;
           notification = false;
         }
-        # {
-        #   command = "polybar &";
-        #   always = true;
-        #   notification = false;
-        # }
       ];
     };
 
     extraConfig = ''
        for_window [ title="notetaker_window" ] floating enable resize set 640 480
+       title_align center
+       for_window [ title="floatimage_window" ] floating enable resize set 640 480
        title_align center
 
        # class                   border  backgr. text    indicator child_border
