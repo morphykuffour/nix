@@ -171,7 +171,7 @@ in
     extraConfig = ''
        for_window [ title="notetaker_window" ] floating enable resize set 640 480
        title_align center
-       for_window [ title="floatimage_window" ] floating enable resize set 864 286
+       for_window [ title="floatimage_window" ] floating enable resize set 640 260
        title_align center
 
        # class                   border  backgr. text    indicator child_border
