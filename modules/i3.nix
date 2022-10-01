@@ -172,7 +172,7 @@ in
        for_window [ title="notetaker_window" ] floating enable resize set 640 480
        title_align center
        for_window [ title="floatimage_window" ] floating enable resize set 640 260
-       title_align center
+       title_align center 
 
        # class                   border  backgr. text    indicator child_border
        client.focused            #ffdb01 #ffdb01 #0000ff #ffdb01   #ffdb01
