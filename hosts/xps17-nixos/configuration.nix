@@ -6,6 +6,7 @@
       ./hardware-configuration.nix
       ./picom.nix
       ./zfs.nix
+      # ./dslr.nix
     ];
 
   environment.variables.EDITOR = "vim";
@@ -21,9 +22,7 @@
     ];
   };
 
-
   # Bootloader.
-  # boot.loader.systemd-boot.enable = true;
   boot = {
     initrd = {
       availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "uas" "sd_mod" "rtsx_pci_sdmmc" ];
@@ -51,8 +50,6 @@
         canTouchEfiVariables = true;
       };
     };
-
-
   };
 
   # networking
@@ -120,7 +117,6 @@
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
 
-
   # user account
   users.defaultUserShell = pkgs.zsh;
   users.users.morp = {
@@ -154,14 +150,8 @@
     };
   };
 
-
-
-
-  # TODO move services under one function
   services = {
-    # firmware updates with fwupd
     fwupd.enable = true;
-    # fingerprint reader
     fprintd.enable = true;
 
     qemuGuest.enable = true;
@@ -276,9 +266,6 @@
     };
   };
 
-  # enable xdg_data_dirs
-  # targets.genericLinux.enable = true;
-
   virtualisation = {
     # qemu.package = pkgs.qemu;
 
@@ -287,16 +274,6 @@
     docker = {
       enable = true;
     };
-
-    # virtualbox = {
-    #   guest.enable = true;
-    #   host.enable = true;
-    #   host.headless = true;
-    #   host.enableExtensionPack = true;
-    #   host.enableWebService = true;
-    #   host.addNetworkInterface = true;
-    # };
-
 
     # fix flake build TODO
     libvirtd = {
@@ -314,15 +291,15 @@
   };
 
   # Minimal configuration for NFS support with Vagrant.
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [ 17500 111 2049 4000 4001 4002 20048 ];
-    allowedUDPPorts = [ 17500 111 2049 4000 4001 4002 20048 ];
-
-    extraCommands = ''
-      ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 2049 -j ACCEPT
-    '';
-  };
+  # networking.firewall = {
+  #   enable = true;
+  #   allowedTCPPorts = [ 17500 111 2049 4000 4001 4002 20048 ];
+  #   allowedUDPPorts = [ 17500 111 2049 4000 4001 4002 20048 ];
+  #
+  #   extraCommands = ''
+  #     ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 2049 -j ACCEPT
+  #   '';
+  # };
 
   # fonts
   fonts.fonts = with pkgs; [
@@ -335,35 +312,33 @@
     dconf = {
       enable = true;
     };
-
     kdeconnect = {
       enable = true;
     };
-
     mtr = {
       enable = true;
     };
-
     autojump = {
       enable = true;
     };
-
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
     };
-
   };
 
   environment.pathsToLink = [ "/libexec" ];
   system.stateVersion = "22.05";
 
-  # use flakes
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 14d";
+    };
+    optimise.automatic = true;
   };
-
 
   environment.systemPackages = with pkgs; [
     wget
@@ -443,6 +418,6 @@
     fprintd
     fwupd
     mysql80
-    asciinema
+    # mysql-workbench
   ];
 }
