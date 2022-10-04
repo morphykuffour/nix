@@ -6,7 +6,7 @@
       ./hardware-configuration.nix
       ./picom.nix
       ./zfs.nix
-      # ./dslr.nix
+      ./dslr.nix
     ];
 
   environment.variables.EDITOR = "vim";
@@ -76,7 +76,7 @@
     };
   };
 
-  systemd.services = {
+  # systemd.services = {
     # keyd = {
     #   enable = false;
     #   description = "keyd key remapping daemon";
@@ -91,20 +91,20 @@
     #   wantedBy = [ "sysinit.target" ];
     # };
 
-    kmonad = {
-      enable = false;
-      unitConfig = {
-        description = "kmonad key remapping daemon";
-      };
-      serviceConfig = {
-        Restart = "always";
-        RestartSec = "3";
-        ExecStart = "${pkgs.nur.repos.meain.kmonad}/bin/kmonad ./keeb/colemak-dh-extend-ansi.kbd";
-        Nice = "-20";
-      };
-      wantedBy = [ "default.target" ];
-    };
-  };
+    # kmonad = {
+    #   enable = false;
+    #   unitConfig = {
+    #     description = "kmonad key remapping daemon";
+    #   };
+    #   serviceConfig = {
+    #     Restart = "always";
+    #     RestartSec = "3";
+    #     ExecStart = "${pkgs.nur.repos.meain.kmonad}/bin/kmonad ./keeb/colemak-dh-extend-ansi.kbd";
+    #     Nice = "-20";
+    #   };
+    #   wantedBy = [ "default.target" ];
+    # };
+  # };
 
 
   # locale
@@ -112,7 +112,18 @@
   i18n.defaultLocale = "en_US.utf8";
 
   # Enable sound with pipewire.
-  hardware.bluetooth.enable = true;
+  # hardware.bluetooth.enable = true;
+
+  hardware.bluetooth = {
+    enable = true;
+    hsphfpd.enable = true;         # HSP & HFP daemon
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+      };
+    };
+  };
+
   sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -123,7 +134,7 @@
     isNormalUser = true;
     description = "default account for linux";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "docker" "video" "vboxusers" "libvirtd" "input" ];
+    extraGroups = [ "uucp" "dialout" "networkmanager" "wheel" "docker" "video" "vboxusers" "libvirtd" "input" ];
     packages = with pkgs; [
       vim
       vscode
@@ -142,7 +153,7 @@
     packageOverrides = pkgs: {
       nur = (import (builtins.fetchTarball {
         url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
-        sha256 = "0spvvwiax4g71sfbplbcx7if0hswpdw19dkh7hhanjdsd142lgvs";
+        sha256 = "1jdaq4py6556qvdd83v29clx1w9p144zmp0nz9h9fmzzv15ii778";
       }
       )) {
         inherit pkgs;
@@ -150,6 +161,7 @@
     };
   };
 
+  xdg.portal.enable = true;
   services = {
     fwupd.enable = true;
     fprintd.enable = true;
@@ -196,7 +208,7 @@
       nssmdns = true;
     };
 
-    # flatpak.enable = true;
+    flatpak.enable = true;
 
     samba = {
       enable = true;
@@ -353,16 +365,17 @@
     gcc
     flameshot
     sxiv
-    polybar
+    # polybar
     gnumake
     clipmenu
     playerctl
     xorg.xbacklight
     dropbox-cli
-    i3-resurrect
+    # i3-resurrect
     autorandr
     xdotool
-    plover.dev
+    # plover.dev
+    # plover.stable
     shared-mime-info
     xdg-user-dirs
     bluedevil
@@ -381,7 +394,7 @@
     vial
     hidapi
     # nur.repos.foolnotion.keyd
-    nur.repos.meain.kmonad
+    # nur.repos.meain.kmonad
     gnome.dconf-editor
     mate.mate-power-manager
     orchis-theme
@@ -418,6 +431,9 @@
     fprintd
     fwupd
     mysql80
+    dbeaver
+    dig
+    psmisc
     # mysql-workbench
   ];
 }
