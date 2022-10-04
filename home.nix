@@ -1,17 +1,21 @@
-{ config, current, pkgs, lib, plover, ... }:
 {
-  imports =
-    [
-      ./modules/i3.nix
-      ./modules/spotify.nix
-      ./modules/redshift.nix
-      ./modules/pass.nix
-      ./modules/fonts.nix
-      ./modules/sxhkd.nix
-      # ./modules/nvim.nix
-      ./modules/rofi.nix
-    ];
-
+  config,
+  current,
+  pkgs,
+  lib,
+  plover,
+  ...
+}: {
+  imports = [
+    ./modules/i3.nix
+    ./modules/spotify.nix
+    ./modules/redshift.nix
+    ./modules/pass.nix
+    ./modules/fonts.nix
+    ./modules/sxhkd.nix
+    # ./modules/nvim.nix
+    ./modules/rofi.nix
+  ];
 
   services.clipmenu.enable = true;
   programs = {
@@ -34,7 +38,7 @@
     homeDirectory = "/home/morp";
     stateVersion = "22.05";
 
-    packages = with pkgs;[
+    packages = with pkgs; [
       kitty
       tmux
       zsh
@@ -117,17 +121,18 @@
       black
       rust-analyzer
 
-      (python39.withPackages (pp: with pp; [
-        pynvim
-        pandas
-        requests
-        pip
-        i3ipc
-        ipython
-        dbus-python
-        html2text
-        keymapviz
-      ]))
+      (python39.withPackages (pp:
+        with pp; [
+          pynvim
+          pandas
+          requests
+          pip
+          i3ipc
+          ipython
+          dbus-python
+          html2text
+          keymapviz
+        ]))
     ];
   };
 }

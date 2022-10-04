@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   services.picom = {
     enable = true;
 
@@ -31,14 +29,14 @@
     fade = true;
     shadow = true;
     fadeDelta = 4;
-    fadeSteps = [ 0.02 0.02 ];
+    fadeSteps = [0.02 0.02];
     settings = {
       blur = true;
       frame-opacity = 1;
       blur-background = true;
       inactive-opacity-override = false;
       blur-kern = "7x7box";
-      blur-background-exclude = [ "class_g = 'brave-browser'" ];
+      blur-background-exclude = ["class_g = 'brave-browser'"];
       inactiveDim = "0.2";
       focus-exclude = [
         "class_i = 'brave-browser'"

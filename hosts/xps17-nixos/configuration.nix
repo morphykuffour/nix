@@ -1,13 +1,17 @@
-{ config, current, lib, pkgs, home-manager, ... }:
-
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./picom.nix
-      ./zfs.nix
-      ./dslr.nix
-    ];
+  config,
+  current,
+  lib,
+  pkgs,
+  home-manager,
+  ...
+}: {
+  imports = [
+    ./hardware-configuration.nix
+    ./picom.nix
+    ./zfs.nix
+    ./dslr.nix
+  ];
 
   environment.variables.EDITOR = "vim";
 
@@ -25,12 +29,12 @@
   # Bootloader.
   boot = {
     initrd = {
-      availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "uas" "sd_mod" "rtsx_pci_sdmmc" ];
-      kernelModules = [ ];
+      availableKernelModules = ["xhci_pci" "nvme" "usbhid" "uas" "sd_mod" "rtsx_pci_sdmmc"];
+      kernelModules = [];
     };
-    kernelModules = [ "kvm-intel" ];
-    extraModulePackages = [ ];
-    supportedFilesystems = [ "ntfs" ];
+    kernelModules = ["kvm-intel"];
+    extraModulePackages = [];
+    supportedFilesystems = ["ntfs"];
     loader = {
       systemd-boot.enable = false;
       grub = {
@@ -57,10 +61,9 @@
   # networking.wireless.enable = true;
   networking.networkmanager.enable = true;
 
-
   systemd.user.services.dropbox = {
     description = "Dropbox";
-    wantedBy = [ "graphical-session.target" ];
+    wantedBy = ["graphical-session.target"];
     environment = {
       QT_PLUGIN_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtPluginPrefix;
       QML2_IMPORT_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtQmlPrefix;
@@ -77,35 +80,34 @@
   };
 
   # systemd.services = {
-    # keyd = {
-    #   enable = false;
-    #   description = "keyd key remapping daemon";
-    #   unitConfig = {
-    #     Requires = "local-fs.target";
-    #     After = "local-fs.target";
-    #   };
-    #   serviceConfig = {
-    #     Type = "simple";
-    #     ExecStart = "${pkgs.nur.repos.foolnotion.keyd}/bin/keyd";
-    #   };
-    #   wantedBy = [ "sysinit.target" ];
-    # };
-
-    # kmonad = {
-    #   enable = false;
-    #   unitConfig = {
-    #     description = "kmonad key remapping daemon";
-    #   };
-    #   serviceConfig = {
-    #     Restart = "always";
-    #     RestartSec = "3";
-    #     ExecStart = "${pkgs.nur.repos.meain.kmonad}/bin/kmonad ./keeb/colemak-dh-extend-ansi.kbd";
-    #     Nice = "-20";
-    #   };
-    #   wantedBy = [ "default.target" ];
-    # };
+  # keyd = {
+  #   enable = false;
+  #   description = "keyd key remapping daemon";
+  #   unitConfig = {
+  #     Requires = "local-fs.target";
+  #     After = "local-fs.target";
+  #   };
+  #   serviceConfig = {
+  #     Type = "simple";
+  #     ExecStart = "${pkgs.nur.repos.foolnotion.keyd}/bin/keyd";
+  #   };
+  #   wantedBy = [ "sysinit.target" ];
   # };
 
+  # kmonad = {
+  #   enable = false;
+  #   unitConfig = {
+  #     description = "kmonad key remapping daemon";
+  #   };
+  #   serviceConfig = {
+  #     Restart = "always";
+  #     RestartSec = "3";
+  #     ExecStart = "${pkgs.nur.repos.meain.kmonad}/bin/kmonad ./keeb/colemak-dh-extend-ansi.kbd";
+  #     Nice = "-20";
+  #   };
+  #   wantedBy = [ "default.target" ];
+  # };
+  # };
 
   # locale
   time.timeZone = "America/New_York";
@@ -116,7 +118,7 @@
 
   hardware.bluetooth = {
     enable = true;
-    hsphfpd.enable = true;         # HSP & HFP daemon
+    hsphfpd.enable = true; # HSP & HFP daemon
     settings = {
       General = {
         Enable = "Source,Sink,Media,Socket";
@@ -134,7 +136,7 @@
     isNormalUser = true;
     description = "default account for linux";
     shell = pkgs.zsh;
-    extraGroups = [ "uucp" "dialout" "networkmanager" "wheel" "docker" "video" "vboxusers" "libvirtd" "input" ];
+    extraGroups = ["uucp" "dialout" "networkmanager" "wheel" "docker" "video" "vboxusers" "libvirtd" "input"];
     packages = with pkgs; [
       vim
       vscode
@@ -151,23 +153,23 @@
     ];
 
     packageOverrides = pkgs: {
-      nur = (import (builtins.fetchTarball {
-        url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
-        sha256 = "1jdaq4py6556qvdd83v29clx1w9p144zmp0nz9h9fmzzv15ii778";
-      }
-      ))
-
-      # ;
-      #
-      # discord = (import (builtins.fetchTarball {
-      #   url = "https://github.com/InternetUnexplorer/discord-overlay/archive/main.tar.gz";
-      #   sha256 = "0gwlgjijqr23w2g2pnif8dz0a8df4jv88hga0am3c6cch4h4s05m";
-      # }))
-      #
-
-      {
-        inherit pkgs;
-      };
+      nur =
+        (import (
+          builtins.fetchTarball {
+            url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
+            sha256 = "1jdaq4py6556qvdd83v29clx1w9p144zmp0nz9h9fmzzv15ii778";
+          }
+        ))
+        # ;
+        #
+        # discord = (import (builtins.fetchTarball {
+        #   url = "https://github.com/InternetUnexplorer/discord-overlay/archive/main.tar.gz";
+        #   sha256 = "0gwlgjijqr23w2g2pnif8dz0a8df4jv88hga0am3c6cch4h4s05m";
+        # }))
+        #
+        {
+          inherit pkgs;
+        };
     };
   };
 
@@ -195,7 +197,7 @@
       package = pkgs.apacheHttpd;
       adminAddr = "morty@example.org";
       user = "morp";
-      # extraConfig = 
+      # extraConfig =
       # ''
       #   Listen 127.0.0.1:80
       #   ServerName localhost
@@ -223,19 +225,17 @@
     samba = {
       enable = true;
       shares = {
-        public =
-          {
-            path = "/home/morp/Public";
-            "read only" = true;
-            browseable = "yes";
-            "guest ok" = "yes";
-            comment = "Public samba share.";
-          };
+        public = {
+          path = "/home/morp/Public";
+          "read only" = true;
+          browseable = "yes";
+          "guest ok" = "yes";
+          comment = "Public samba share.";
+        };
       };
     };
 
     xserver = {
-
       # Enable touchpad support (enabled default in most desktopManager).
       libinput.enable = true;
 
@@ -284,7 +284,6 @@
           sxhkd
         ];
       };
-
     };
   };
 
@@ -308,7 +307,7 @@
         };
         swtpm.enable = true;
       };
-      allowedBridges = [ "virbr0" "virbr1" ];
+      allowedBridges = ["virbr0" "virbr1"];
     };
   };
 
@@ -325,9 +324,8 @@
 
   # fonts
   fonts.fonts = with pkgs; [
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    (nerdfonts.override {fonts = ["JetBrainsMono"];})
   ];
-
 
   # Programs
   programs = {
@@ -349,7 +347,7 @@
     };
   };
 
-  environment.pathsToLink = [ "/libexec" ];
+  environment.pathsToLink = ["/libexec"];
   system.stateVersion = "22.05";
 
   nix = {
