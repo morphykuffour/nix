@@ -26,6 +26,7 @@
 
     discord = {
       url = "github:InternetUnexplorer/discord-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixos-hardware = {
@@ -34,8 +35,12 @@
 
     plover = {
       url = "github:dnaq/plover-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Plover
+    # plover-flake.url = "github:dnaq/plover-flake"; 
+    # plover-flake.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, home-manager, darwin, nur, discord, nixos-hardware, plover, ... }@inputs:
@@ -50,31 +55,62 @@
       };
     in
     {
+      overlays.default = with inputs;
+        nixpkgs.lib.composeManyExtensions [
+          discord.overlays.default
+          # nixGL.overlay
+          # (final: prev: {
+          #   mkNixGLWrappedApp = pkg: binName:
+          #     prev.symlinkJoin {
+          #       name = pkg.name + "-nixgl";
+          #       paths = [
+          #         (prev.writeShellScriptBin binName ''
+          #           exec ${prev.nixgl.nixGLIntel}/bin/nixGLIntel \
+          #             ${pkg}/bin/${binName} "$@"
+          #         '')
+          #         pkg
+          #       ];
+          #     };
+          # })
+          # nixpkgs-lor.overlays.default
+          plover.overlay
+          neovim.overlay
+          nur.overlay
+        ];
       # xps17 NixOs
       nixosConfigurations = {
         xps17-nixos = lib.nixosSystem {
           inherit system;
           # specialArgs = { inherit inputs user overlays; };
+
+          # nixpkgs.overlays = [
+          #   nur.overlay
+          #   inputs.discord.overlay
+          #   inputs.neovim.overlay
+          # ];
+
+
           modules = [
             ./hosts/xps17-nixos
             nur.nixosModules.nur
-            # plover.apps.plover
             # nixos-hardware.nixosModules.dell-xps-17-9700
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              # home-manager.extraSpecialArgs = { inherit user; };
-              # home-manager.users.${user} = {
-              home-manager.users.morp = {
-                imports = [ ./home.nix ];
+            home-manager.nixosModules.home-manager {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.morp = {
+                  imports = [ ./home.nix ];
+                };
+                extraSpecialArgs = {
+                  plover = inputs.plover.packages."x86_64-linux".plover;
+                };
               };
             }
           ];
           specialArgs = inputs;
         };
 
-      # mac_mini Mac Os Monterey TODO fix
+        # mac_mini Mac Os Monterey TODO fix
         windows-wsl = lib.nixosSystem {
           system = "x86_64-linux";
 

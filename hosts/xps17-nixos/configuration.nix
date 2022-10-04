@@ -157,6 +157,14 @@
       }
       ))
 
+      # ;
+      #
+      # discord = (import (builtins.fetchTarball {
+      #   url = "https://github.com/InternetUnexplorer/discord-overlay/archive/main.tar.gz";
+      #   sha256 = "0gwlgjijqr23w2g2pnif8dz0a8df4jv88hga0am3c6cch4h4s05m";
+      # }))
+      #
+
       {
         inherit pkgs;
       };
@@ -376,8 +384,9 @@
     # i3-resurrect
     autorandr
     xdotool
-    plover.dev
+    # plover.dev
     # plover.stable
+    # plover
     shared-mime-info
     xdg-user-dirs
     bluedevil
@@ -436,6 +445,8 @@
     dbeaver
     dig
     psmisc
+    discord
+    neovim
     # mysql-workbench
   ];
 }
