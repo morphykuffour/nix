@@ -20,6 +20,11 @@
       url = "github:nix-community/NUR";
     };
 
+    # nixgl = {                                                        
+    #   url = "github:guibou/nixGL";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+
     neovim = {
       url = "github:nix-community/neovim-nightly-overlay";
     };
@@ -69,6 +74,7 @@
     overlays.default = with inputs;
       lib.composeManyExtensions [
         discord.overlays.default
+
         # nixGL.overlay
         # (final: prev: {
         #   mkNixGLWrappedApp = pkg: binName:
@@ -83,7 +89,7 @@
         #       ];
         #     };
         # })
-        # nixpkgs-lor.overlays.default
+
         plover.overlay
         neovim.overlay
         nur.overlay
@@ -95,7 +101,11 @@
         modules = [
           ./hosts/xps17-nixos
           nur.nixosModules.nur
-          {environment.systemPackages = [alejandra.defaultPackage.${system}];}
+          {
+            environment.systemPackages = [
+              alejandra.defaultPackage.${system}
+            ];
+          }
 
           # nixos-hardware.nixosModules.dell-xps-17-9700
           home-manager.nixosModules.home-manager
