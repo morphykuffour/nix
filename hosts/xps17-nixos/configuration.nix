@@ -40,12 +40,8 @@
       grub = {
         version = 2;
         enable = true;
-        devices = [
-          "nodev"
-          # "/dev/nvme1n1"
-        ];
+        devices = [ "nodev" ];
         efiSupport = true;
-        #   efiInstallAsRemovable = true;
         useOSProber = true;
       };
 
@@ -57,7 +53,7 @@
   };
 
   # networking
-  networking.hostName = "xps17-nixos"; # Define your hostname.
+  networking.hostName = "xps17-nixos";
   # networking.wireless.enable = true;
   networking.networkmanager.enable = true;
 
@@ -140,7 +136,6 @@
     packages = with pkgs; [
       vim
       vscode
-      sublime
     ];
   };
 
@@ -160,13 +155,6 @@
             sha256 = "1jdaq4py6556qvdd83v29clx1w9p144zmp0nz9h9fmzzv15ii778";
           }
         ))
-        # ;
-        #
-        # discord = (import (builtins.fetchTarball {
-        #   url = "https://github.com/InternetUnexplorer/discord-overlay/archive/main.tar.gz";
-        #   sha256 = "0gwlgjijqr23w2g2pnif8dz0a8df4jv88hga0am3c6cch4h4s05m";
-        # }))
-        #
         {
           inherit pkgs;
         };
@@ -351,7 +339,8 @@
   system.stateVersion = "22.05";
 
   nix = {
-    package = pkgs.nixFlakes;
+    # package = pkgs.nixFlakes;
+    # package = nixVersions.stable;
     extraOptions = "experimental-features = nix-command flakes";
     gc = {
       automatic = true;
@@ -379,16 +368,12 @@
     playerctl
     xorg.xbacklight
     dropbox-cli
-    # i3-resurrect
     autorandr
     xdotool
-    # plover.dev
-    # plover.stable
-    # plover
     shared-mime-info
     xdg-user-dirs
     bluedevil
-    kdeconnect
+    plasma5Packages.kdeconnect-kde
     pciutils
     usbutils
     libusb1
@@ -445,6 +430,5 @@
     psmisc
     discord
     neovim
-    # mysql-workbench
   ];
 }
