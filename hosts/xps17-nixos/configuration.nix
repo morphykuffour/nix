@@ -155,7 +155,9 @@
         url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
         sha256 = "1jdaq4py6556qvdd83v29clx1w9p144zmp0nz9h9fmzzv15ii778";
       }
-      )) {
+      ))
+
+      {
         inherit pkgs;
       };
     };
@@ -374,9 +376,8 @@
     # i3-resurrect
     autorandr
     xdotool
-    # plover.dev
+    plover.dev
     # plover.stable
-    # plover
     shared-mime-info
     xdg-user-dirs
     bluedevil

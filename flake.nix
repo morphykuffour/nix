@@ -58,7 +58,7 @@
           modules = [
             ./hosts/xps17-nixos
             nur.nixosModules.nur
-            # plover.packages
+            # plover.apps.plover
             # nixos-hardware.nixosModules.dell-xps-17-9700
             home-manager.nixosModules.home-manager
             {
