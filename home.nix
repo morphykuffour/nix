@@ -26,17 +26,8 @@
       ];
     };
   };
+
   nixpkgs.config.allowUnfree = true;
-  # nixpkgs.overlays = [
-  #   (self: super:
-  #     {
-  #       emacsWithConfig = super.emacsWithPackages (epkgs:
-  #         (with epkgs.melpaPackages; [
-  #           pdf-tools
-  #         ])
-  #       );
-  #     })
-  # ];
 
   home = {
     username = "morp";
