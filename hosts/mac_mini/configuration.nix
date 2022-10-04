@@ -6,21 +6,25 @@
 #       ├─ ./default.nix
 #       └─ ./configuration.nix *
 #
-
-{ config, pkgs, user, ... }:
-
 {
-  users.users."${user}" = {               # macOS user
+  config,
+  pkgs,
+  user,
+  ...
+}: {
+  users.users."${user}" = {
+    # macOS user
     home = "/Users/${user}";
-    shell = pkgs.zsh;                     # Default shell
+    shell = pkgs.zsh; # Default shell
   };
 
   networking = {
-    computerName = "MacBook";             # Host name
+    computerName = "MacBook"; # Host name
     hostName = "MacBook";
   };
 
-  fonts = {                               # Fonts
+  fonts = {
+    # Fonts
     fontDir.enable = true;
     fonts = with pkgs; [
       source-code-pro
@@ -34,12 +38,14 @@
   };
 
   environment = {
-    shells = with pkgs; [ zsh ];          # Default shell
-    variables = {                         # System variables
+    shells = with pkgs; [zsh]; # Default shell
+    variables = {
+      # System variables
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
-    systemPackages = with pkgs; [         # Installed Nix packages
+    systemPackages = with pkgs; [
+      # Installed Nix packages
       # Terminal
       git
       ranger
@@ -51,16 +57,19 @@
     ];
   };
 
-  programs = {                            # Shell needs to be enabled
+  programs = {
+    # Shell needs to be enabled
     zsh.enable = true;
   };
 
   services = {
-    nix-daemon.enable = true;             # Auto upgrade daemon
-    yabai = {                             # Tiling window manager
+    nix-daemon.enable = true; # Auto upgrade daemon
+    yabai = {
+      # Tiling window manager
       enable = true;
       package = pkgs.yabai;
-      config = {                          # Other configuration options
+      config = {
+        # Other configuration options
         layout = "bsp";
         auto_balance = "off";
         split_ratio = "0.50";
@@ -86,9 +95,10 @@
         yabai -m rule --add app='^System Information$' manage=off layer=above
         #yabai -m rule --add=
         #yabai -m rule --add=
-      '';                                 # Specific rules for if it is managed and on which layer
+      ''; # Specific rules for if it is managed and on which layer
     };
-    skhd = {                              # Hotkey daemon
+    skhd = {
+      # Hotkey daemon
       enable = true;
       package = pkgs.skhd;
       skhdConfig = ''
@@ -138,14 +148,15 @@
 
         # Menu
         #cmd + space : for now its using the default keybinding to open Spotlight Search
-      '';                                 # Hotkey config
+      ''; # Hotkey config
     };
   };
 
-  homebrew = {                            # Declare Homebrew using Nix-Darwin
+  homebrew = {
+    # Declare Homebrew using Nix-Darwin
     enable = true;
-    autoUpdate = true;                    # Auto update packages
-    cleanup = "zap";                      # Uninstall not listed packages and casks
+    autoUpdate = true; # Auto update packages
+    cleanup = "zap"; # Uninstall not listed packages and casks
     brews = [
     ];
     casks = [
@@ -155,7 +166,8 @@
 
   nix = {
     package = pkgs.nix;
-    gc = {                                # Garbage collection
+    gc = {
+      # Garbage collection
       automatic = true;
       interval.Day = 7;
       options = "--delete-older-than 7d";
@@ -168,27 +180,31 @@
 
   system = {
     defaults = {
-      NSGlobalDomain = {                  # Global macOS system settings
+      NSGlobalDomain = {
+        # Global macOS system settings
         KeyRepeat = 1;
         NSAutomaticCapitalizationEnabled = false;
         NSAutomaticSpellingCorrectionEnabled = false;
       };
-      dock = {                            # Dock settings
+      dock = {
+        # Dock settings
         autohide = true;
         orientation = "bottom";
         showhidden = true;
         tilesize = 40;
       };
-      finder = {                          # Finder settings
-        QuitMenuItem = false;             # I believe this probably will need to be true if using spacebar
-      };  
-      trackpad = {                        # Trackpad settings
+      finder = {
+        # Finder settings
+        QuitMenuItem = false; # I believe this probably will need to be true if using spacebar
+      };
+      trackpad = {
+        # Trackpad settings
         Clicking = true;
         TrackpadRightClick = true;
       };
     };
     keyboard = {
-      enableKeyMapping = true;            # Needed for skhd
+      enableKeyMapping = true; # Needed for skhd
     };
     activationScripts.postActivation.text = ''sudo chsh -s ${pkgs.zsh}/bin/zsh''; # Since it's not possible to declare default shell, run this command after build
     stateVersion = 4;

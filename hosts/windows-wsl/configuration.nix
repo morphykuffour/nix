@@ -1,10 +1,13 @@
-{ lib, pkgs, config, modulesPath, ... }:
-
-with lib;
-let
-  nixos-wsl = import ./nixos-wsl;
-in
 {
+  lib,
+  pkgs,
+  config,
+  modulesPath,
+  ...
+}:
+with lib; let
+  nixos-wsl = import ./nixos-wsl;
+in {
   imports = [
     "${modulesPath}/profiles/minimal.nix"
 
@@ -27,7 +30,7 @@ in
     experimental-features = nix-command flakes
   '';
 
-  environment.systemPackages = with pkgs;  [
+  environment.systemPackages = with pkgs; [
     wget
     vim
     zsh
