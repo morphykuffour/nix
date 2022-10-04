@@ -2,8 +2,6 @@
 {
   imports =
     [
-      # ./modules/tmux/tmux.nix
-      # ./modules/shell.nix
       ./modules/i3.nix
       ./modules/spotify.nix
       ./modules/redshift.nix
@@ -12,7 +10,6 @@
       ./modules/sxhkd.nix
       # ./modules/nvim.nix
       ./modules/rofi.nix
-      # ./modules/himalaya.nix
     ];
 
 

@@ -376,6 +376,7 @@
     xdotool
     # plover.dev
     # plover.stable
+    # plover
     shared-mime-info
     xdg-user-dirs
     bluedevil
