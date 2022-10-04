@@ -1,4 +1,4 @@
-{ config, current, pkgs, lib, ... }:
+{ config, current, pkgs, lib, plover, ... }:
 {
   imports =
     [
@@ -106,8 +106,8 @@
       vial
       redshift
       termite
-      discord
-      neovim-unwrapped
+      plover
+      # neovim-unwrapped
       tree-sitter
       rnix-lsp
       gopls
