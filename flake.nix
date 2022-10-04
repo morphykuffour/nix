@@ -31,9 +31,14 @@
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
     };
+
+    plover = {
+      url = "github:dnaq/plover-flake";
+    };
+
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, nur, discord, nixos-hardware, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, darwin, nur, discord, nixos-hardware, plover, ... }@inputs:
     let
       lib = nixpkgs.lib;
       user = "morp";
@@ -68,10 +73,11 @@
           specialArgs = inputs;
         };
 
-        xps17-wsl = lib.nixosSystem {
+      # mac_mini Mac Os Monterey TODO fix
+        windows-wsl = lib.nixosSystem {
           system = "x86_64-linux";
 
-          modules = [ ./hosts/xps17-wsl ];
+          modules = [ ./hosts/windows-wsl ];
 
           nixpkgs.overlays = [
             (import (builtins.fetchTarball {
