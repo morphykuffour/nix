@@ -132,7 +132,7 @@
       };
 
       win-wsl = import ./hosts/windows-wsl {
-        inherit config nixpkgs nixos-wsl overlays inputs;
+        inherit pkgsForSystem nixpkgs nixos-wsl inputs;
       };
     };
 
