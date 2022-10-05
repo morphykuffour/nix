@@ -1,4 +1,4 @@
-{ config, nixpkgs, pkgs, nixos-wsl, overlays, inputs, ... }: 
+{ config, nixpkgs, pkgs, nixos-wsl, inputs, ... }: 
 
 nixpkgs.lib.nixosSystem rec {
   system = "x86_64-linux";
@@ -7,7 +7,7 @@ nixpkgs.lib.nixosSystem rec {
     nixos-wsl.nixosModules.wsl
 
     {
-      nixpkgs = { inherit config overlays; };
+      nixpkgs = { inherit config ; };
       networking.hostName = "xps17-nixos";
       system.stateVersion = "22.05";
 
