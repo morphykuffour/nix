@@ -132,7 +132,8 @@
       };
 
       win-wsl = import ./hosts/windows-wsl {
-        inherit pkgsForSystem nixpkgs nixos-wsl inputs;
+        config = {allowUnfree = true;};
+        inherit system pkgsForSystem nixpkgs nixos-wsl inputs;
       };
     };
 
