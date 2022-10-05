@@ -5,38 +5,21 @@
   modulesPath,
   ...
 }:
-with lib; let
-  nixos-wsl = import ./nixos-wsl;
-in {
-  imports = [
-    "${modulesPath}/profiles/minimal.nix"
 
-    nixos-wsl.nixosModules.wsl
-  ];
+{
+  imports = [ "${modulesPath}/profiles/minimal.nix" ];
 
-  wsl = {
-    enable = true;
-    automountPath = "/mnt";
-    defaultUser = "nixos";
-    startMenuLaunchers = true;
+  hardware.opengl.enable = true;
 
-    # Enable integration with Docker Desktop (needs to be installed)
-    docker.enable = true;
-  };
-
-  # Enable nix flakes
-  nix.package = pkgs.nixFlakes;
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
 
   environment.systemPackages = with pkgs; [
+    git
     wget
     vim
     zsh
     neovim
     delta
-    git
+    home-manager
     curl
     jq
     emacs
@@ -47,4 +30,17 @@ in {
     stow
     binutils
   ];
+
+  users.users.morp = {
+    isNormalUser = true;
+    home = "/home/morp";
+    shell = pkgs.zsh;
+    extraGroups = [ "wheel" ];
+  };
+
+  # Enable nix flakes
+  nix.package = pkgs.nixFlakes;
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
 }

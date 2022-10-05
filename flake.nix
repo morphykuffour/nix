@@ -16,6 +16,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-wsl = {
+      url = "github:nix-community/nixos-wsl";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nur = {
       url = "github:nix-community/NUR";
     };
@@ -59,6 +64,7 @@
     nixos-hardware,
     plover,
     alejandra,
+    nixos-wsl,
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
@@ -125,26 +131,8 @@
         specialArgs = inputs;
       };
 
-      # mac_mini Mac Os Monterey TODO fix
-      windows-wsl = lib.nixosSystem {
-        system = "x86_64-linux";
-
-        modules = [./hosts/windows-wsl];
-
-        nixpkgs.overlays = [
-          (import (builtins.fetchTarball {
-            url = "https://github.com/InternetUnexplorer/discord-overlay/archive/main.tar.gz";
-          }))
-
-          (self: super: {
-            emacsWithConfig = super.emacsWithPackages (
-              epkgs: (with epkgs.melpaPackages; [
-                pdf-tools
-                magit
-              ])
-            );
-          })
-        ];
+      win-wsl = import ./hosts/windows-wsl {
+        inherit config nixpkgs nixos-wsl overlays inputs;
       };
     };
 
