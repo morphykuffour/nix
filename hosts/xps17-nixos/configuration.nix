@@ -9,7 +9,7 @@
   imports = [
     ./hardware-configuration.nix
     ./picom.nix
-    ./zfs.nix
+    # ./zfs.nix
     ./dslr.nix
   ];
 
@@ -405,7 +405,7 @@
     cdrkit
     sqlitebrowser
     nfs-utils
-    zfs
+    # zfs
     bashmount
     apacheHttpd
     vagrant

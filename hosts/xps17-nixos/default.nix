@@ -8,6 +8,6 @@
     ./configuration.nix
     ./hardware-configuration.nix
     ./picom.nix
-    ./zfs.nix
+    # ./zfs.nix
   ];
 }
