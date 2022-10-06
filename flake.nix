@@ -134,7 +134,7 @@
       # TODO fix
       win-wsl = import ./hosts/windows-wsl {
         config = {allowUnfree = true;};
-        inherit system pkgsForSystem nixpkgs nixos-wsl inputs;
+        inherit system nixpkgs nixos-wsl inputs;
       };
     };
 
