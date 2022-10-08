@@ -430,5 +430,7 @@
     psmisc
     discord
     neovim
+    mycli
+    grc
   ];
 }
