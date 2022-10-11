@@ -78,7 +78,7 @@
       inkscape
       gimp
       blender
-      kicad
+      # kicad
       ffmpeg
       eva
       aria2

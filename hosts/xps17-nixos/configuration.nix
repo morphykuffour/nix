@@ -143,9 +143,9 @@
   nixpkgs.config = {
     allowUnfree = true;
 
-    permittedInsecurePackages = [
-      "python3.10-mistune-0.8.4"
-    ];
+    # permittedInsecurePackages = [
+    #   "python3.10-mistune-0.8.4"
+    # ];
 
     packageOverrides = pkgs: {
       nur =
