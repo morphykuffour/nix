@@ -133,7 +133,6 @@
 
       # TODO fix
       win-wsl = import ./hosts/windows-wsl {
-        config = {allowUnfree = true;};
         inherit system nixpkgs nixos-wsl inputs;
       };
     };
