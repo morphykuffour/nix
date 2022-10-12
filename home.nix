@@ -102,7 +102,6 @@
       redshift
       termite
       plover
-      # neovim-unwrapped
       tree-sitter
       rnix-lsp
       gopls
