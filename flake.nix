@@ -25,7 +25,7 @@
       url = "github:nix-community/NUR";
     };
 
-    # nixgl = {                                                        
+    # nixgl = {
     #   url = "github:guibou/nixGL";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
@@ -67,6 +67,13 @@
     nixos-wsl,
     ...
   } @ inputs: let
+    config = {
+      allowBroken = true;
+      allowUnfree = true;
+      tarball-ttl = 0;
+      contentAddressedByDefault = false;
+    };
+
     lib = nixpkgs.lib;
     user = "morp";
     system = "x86_64-linux";
@@ -80,7 +87,6 @@
     overlays.default = with inputs;
       lib.composeManyExtensions [
         discord.overlays.default
-
         # nixGL.overlay
         # (final: prev: {
         #   mkNixGLWrappedApp = pkg: binName:
@@ -95,11 +101,11 @@
         #       ];
         #     };
         # })
-
         plover.overlay
         neovim.overlay
         nur.overlay
       ];
+
     # xps17 NixOs
     nixosConfigurations = {
       xps17-nixos = lib.nixosSystem {
@@ -131,11 +137,12 @@
         specialArgs = inputs;
       };
 
-      # TODO fix
+      # xps17 WSL TODO fix
       win-wsl = import ./hosts/windows-wsl {
-        inherit system nixpkgs nixos-wsl inputs;
+        inherit config nixpkgs system nixos-wsl inputs;
       };
     };
+    win-wsl = self.nixosConfigurations.win-wsl.config.system.build.toplevel;
 
     # mac_mini Mac Os Monterey TODO fix
     darwinConfigurations = {
