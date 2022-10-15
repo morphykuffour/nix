@@ -20,6 +20,7 @@
     XDG_CONFIG_HOME = "\${HOME}/.config";
     XDG_BIN_HOME = "\${HOME}/.local/bin";
     XDG_DATA_HOME = "\${HOME}/.local/share";
+    ANDROID_HOME = "\${HOME}/Android/Sdk";
 
     PATH = [
       "\${XDG_BIN_HOME}"
@@ -132,7 +133,7 @@
     isNormalUser = true;
     description = "default account for linux";
     shell = pkgs.zsh;
-    extraGroups = ["uucp" "dialout" "networkmanager" "wheel" "docker" "video" "vboxusers" "libvirtd" "input"];
+    extraGroups = ["uucp" "dialout" "networkmanager" "wheel" "docker" "video" "vboxusers" "libvirtd" "input" "adbusers"];
     packages = with pkgs; [
       vim
       vscode
@@ -317,6 +318,7 @@
 
   # Programs
   programs = {
+    adb.enable = true;
     dconf = {
       enable = true;
     };
@@ -432,5 +434,7 @@
     neovim
     mycli
     grc
+    android-studio
+    flutter
   ];
 }
