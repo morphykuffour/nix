@@ -21,7 +21,7 @@
     XDG_BIN_HOME = "\${HOME}/.local/bin";
     XDG_DATA_HOME = "\${HOME}/.local/share";
     ANDROID_HOME = "\${HOME}/Android/Sdk";
-
+    CHROME_EXECUTABLE = "/home/morp/.nix-profile/bin/google-chrome-stable";
     PATH = [
       "\${XDG_BIN_HOME}"
     ];
@@ -436,5 +436,10 @@
     grc
     android-studio
     flutter
+    cmake
+    ninja
+    clang
+    google-chrome
+    yarn
   ];
 }
