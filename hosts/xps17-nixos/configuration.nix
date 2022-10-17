@@ -10,6 +10,7 @@
     ./hardware-configuration.nix
     ./picom.nix
     # ./zfs.nix
+    # ./mongosh.nix
     ./dslr.nix
   ];
 
@@ -153,7 +154,7 @@
         (import (
           builtins.fetchTarball {
             url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
-            sha256 = "1jdaq4py6556qvdd83v29clx1w9p144zmp0nz9h9fmzzv15ii778";
+            sha256 = "0ayx0qam0xvjn693nh460h9w3ki2brgidq6yv1qyw8kymj08csj4";
           }
         ))
         {
@@ -181,17 +182,17 @@
       package = pkgs.mysql80;
     };
 
-    httpd = {
-      enable = true;
-      package = pkgs.apacheHttpd;
-      adminAddr = "morty@example.org";
-      user = "morp";
-      # extraConfig =
-      # ''
-      #   Listen 127.0.0.1:80
-      #   ServerName localhost
-      # '';
-    };
+    # httpd = {
+    #   enable = true;
+    #   package = pkgs.apacheHttpd;
+    #   adminAddr = "morty@example.org";
+    #   user = "morp";
+    #   # extraConfig =
+    #   # ''
+    #   #   Listen 127.0.0.1:80
+    #   #   ServerName localhost
+    #   # '';
+    # };
 
     openssh.enable = true;
     clipmenu.enable = true;
@@ -409,7 +410,7 @@
     nfs-utils
     # zfs
     bashmount
-    apacheHttpd
+    # apacheHttpd
     vagrant
     grub2
     qemu
@@ -441,5 +442,7 @@
     clang
     google-chrome
     yarn
+    firefox
+    mongodb
   ];
 }
