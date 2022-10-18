@@ -149,7 +149,7 @@
       mac_mini = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
-          ./hosts/mac_mini
+          ./hosts/mac-mini
           home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
