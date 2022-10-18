@@ -122,7 +122,7 @@
           nur.nixosModules.nur
           {
             environment.systemPackages = [
-              alejandra.defaultPackage.${system}
+              alejandra.defaultPackage.x86_64-linux
             ];
           }
 
