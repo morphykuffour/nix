@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   # create ~/.config/systemd/user/default.target.wants/redshift.service to enable
   services.redshift = {
     enable = true;
@@ -16,4 +19,3 @@
     longitude = "-71.502289";
   };
 }
-

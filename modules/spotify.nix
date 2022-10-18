@@ -1,5 +1,9 @@
-{ config, pkgs, lib, ... }:
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   path = ".config/spotifyd";
   file = "spotifyd.conf";
   settings = {
@@ -22,13 +26,11 @@ let
     };
   };
 
-  toml = pkgs.formats.toml { };
+  toml = pkgs.formats.toml {};
   config = toml.generate file settings;
-in
-{
+in {
   home.file."${path}/${file}".source = config;
 }
-
 # { config, pkgs, lib, ... }:
 # {
 #   services.spotifyd = {
@@ -46,11 +48,10 @@ in
 #       zeroconf_port = 8888
 #       proxy = "http://localhost:8888"
 #       use_mpris = true
-#       mixer = "PCM" 
+#       mixer = "PCM"
 #       volume_controller = "alsa"  # use softvol for macOS
 #     '';
 #   };
-
 #   # HACK: the provided service uses a dynamic user which can not authenticate to the pulse daemon
 #   # This is mitigated by using a static user
 #   users.users.spotifyd = {
@@ -59,15 +60,12 @@ in
 #     description = "spotifyd daemon user";
 #     home = "/var/lib/spotifyd";
 #   };
-
 #   systemd.services.spotifyd = {
 #     serviceConfig.User = "spotifyd";
-
 #     serviceConfig.DynamicUser = lib.mkForce false;
 #     serviceConfig.SupplementaryGroups = lib.mkForce [ ];
 #   };
 #   # End of hack...
-
 #   # firewall.rules = dag: with dag; {
 #   #   inet.filter.input = {
 #   #     spotify-tcp = between [ "established" ] [ "drop" ] ''
@@ -83,3 +81,4 @@ in
 #   #   };
 #   # };
 # }
+

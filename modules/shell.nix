@@ -1,5 +1,9 @@
-{ config, pkgs, lib, ... }:
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   color = color: text: "%F{${color}}${text}%f";
   cyan = color "cyan";
   blue = color "blue";
@@ -9,8 +13,7 @@ let
 
   join = builtins.concatStringsSep " && ";
   cmdJoin = builtins.concatStringsSep "; ";
-in
-{
+in {
   programs.zsh = {
     autocd = true;
     dotDir = ".config/zsh";
@@ -30,7 +33,7 @@ in
 
       dstroy = "fd -H .DS_Store | xargs sudo rm";
 
-# spoon = "open -a ${pkgs.hammerspoon}/Applications/Hammerspoon.app";
+      # spoon = "open -a ${pkgs.hammerspoon}/Applications/Hammerspoon.app";
 
       g = "git";
       ga = "git add";
@@ -103,7 +106,7 @@ in
       bi = "${b} install";
       bu = "${b} update";
 
-      nupf = join [ "cd $HOME/_" "rm flake.lock" hms "${gcam} 'bump flakes'" gp "cd -" ];
+      nupf = join ["cd $HOME/_" "rm flake.lock" hms "${gcam} 'bump flakes'" gp "cd -"];
 
       # home-manager switch
       hms = join [
@@ -197,33 +200,31 @@ in
         export PROMPT="%F{cyan}\$USER%f%F{blue}@\$HOST%f %F{blue}%3~%f %F{magenta}\$GIT_BRANCH%f %F{red}\$GIT_STATUS%f
       %(?.%F{green}❯%f.%F{red}❯%f) "
     '';
-    sessionVariables =
-      let
-        pathJoin = builtins.concatStringsSep ":";
-      in
-      rec {
-        ANDROID_SDK_PLATFORM_TOOLS = "$HOME/Library/Android/sdk/platform-tools";
-        ANDROID_SDK_ROOT = "$HOME/Library/Android/sdk";
-        ANDROID_SDK_TOOLS = "$HOME/Library/Android/sdk/tools";
-        BREW_SBIN = "/usr/local/sbin";
-        BROWSER = "open";
-        CARGO_BIN = "${config.xdg.configHome}/.cargo/bin";
-        CLICOLOR = 1;
-        COLORTERM = "truecolor";
-        EDITOR = "nvim";
-        GNUPGHOME = "${config.xdg.dataHome}/gnupg";
-        GOBIN = "${GOPATH}/bin";
-        GOPATH = "${config.xdg.configHome}/go";
-        JAVA_HOME = "/Applications/Android Studio.app/Contents/jre/Contents/Home/";
-        KEYTIMEOUT = 1;
-        KUBECONFIG = pathJoin [ "$HOME/.kube/config" "$HOME/.kube/config.shopify.cloudplatform" ];
-        NIX_BIN = "$HOME/.nix-profile/bin";
-        NIX_PATH = pathJoin [ "$NIX_PATH" "$HOME/.nix-defexpr/channels" ];
-        PATH = pathJoin [ CARGO_BIN GOBIN NIX_BIN BREW_SBIN ANDROID_SDK_TOOLS ANDROID_SDK_PLATFORM_TOOLS "$PATH" ];
-        SOLARGRAPH_CACHE = "${config.xdg.cacheHome}/solargraph";
-        VIM_SESSION_PATH = "/tmp/session.vim";
-        _ZL_DATA = "${config.xdg.dataHome}/z/zlua";
-      };
+    sessionVariables = let
+      pathJoin = builtins.concatStringsSep ":";
+    in rec {
+      ANDROID_SDK_PLATFORM_TOOLS = "$HOME/Library/Android/sdk/platform-tools";
+      ANDROID_SDK_ROOT = "$HOME/Library/Android/sdk";
+      ANDROID_SDK_TOOLS = "$HOME/Library/Android/sdk/tools";
+      BREW_SBIN = "/usr/local/sbin";
+      BROWSER = "open";
+      CARGO_BIN = "${config.xdg.configHome}/.cargo/bin";
+      CLICOLOR = 1;
+      COLORTERM = "truecolor";
+      EDITOR = "nvim";
+      GNUPGHOME = "${config.xdg.dataHome}/gnupg";
+      GOBIN = "${GOPATH}/bin";
+      GOPATH = "${config.xdg.configHome}/go";
+      JAVA_HOME = "/Applications/Android Studio.app/Contents/jre/Contents/Home/";
+      KEYTIMEOUT = 1;
+      KUBECONFIG = pathJoin ["$HOME/.kube/config" "$HOME/.kube/config.shopify.cloudplatform"];
+      NIX_BIN = "$HOME/.nix-profile/bin";
+      NIX_PATH = pathJoin ["$NIX_PATH" "$HOME/.nix-defexpr/channels"];
+      PATH = pathJoin [CARGO_BIN GOBIN NIX_BIN BREW_SBIN ANDROID_SDK_TOOLS ANDROID_SDK_PLATFORM_TOOLS "$PATH"];
+      SOLARGRAPH_CACHE = "${config.xdg.cacheHome}/solargraph";
+      VIM_SESSION_PATH = "/tmp/session.vim";
+      _ZL_DATA = "${config.xdg.dataHome}/z/zlua";
+    };
     plugins = [
       {
         name = "zsh-syntax-highlighting";

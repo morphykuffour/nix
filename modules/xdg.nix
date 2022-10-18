@@ -2,16 +2,18 @@
 #
 # Set up and enforce XDG compliance. Other modules will take care of their own,
 # but this takes care of the general cases.
-
-{ config, home-manager, ... }:
 {
+  config,
+  home-manager,
+  ...
+}: {
   imports = [
     <home-manager/modules/home-environment.nix>
   ];
   ### A tidy $HOME is a tidy mind
   home-manager.users.morp.xdg.enable = true;
 
-   environment = {
+  environment = {
     sessionVariables = {
       # These are the defaults, and xdg.enable does set them, but due to load
       # order, they're not set before environment.variables are set, which could

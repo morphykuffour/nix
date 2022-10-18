@@ -66,50 +66,57 @@
     alejandra,
     nixos-wsl,
     ...
-  } @ inputs: let
-    config = {
-      allowBroken = true;
-      allowUnfree = true;
-      tarball-ttl = 0;
-      contentAddressedByDefault = false;
-    };
+  } @ inputs: {
+    nixosConfigurations = let
+      # config = {
+      #   allowBroken = true;
+      #   allowUnfree = true;
+      #   tarball-ttl = 0;
+      #   contentAddressedByDefault = false;
+      # };
+      #
+      # user = "morp";
+      #
+      # pkgsForSystem = system:
+      #   import nixpkgs {
+      #     config = {allowUnfree = true;};
+      #     inherit system;
+      #   };
+      #
+      defaultModules = [
+        home-manager.nixosModules.home-manager
+        ({
+          config,
+          lib,
+          lib',
+          ...
+        }: {
+          config = {
+            _module.args = {
+              lib' = lib // import ./lib {inherit config lib;};
+            };
 
-    lib = nixpkgs.lib;
-    user = "morp";
-    system = "x86_64-linux";
-
-    pkgsForSystem = system:
-      import nixpkgs {
-        config = {allowUnfree = true;};
-        inherit system;
-      };
-  in {
-    overlays.default = with inputs;
-      lib.composeManyExtensions [
-        discord.overlays.default
-        # nixGL.overlay
-        # (final: prev: {
-        #   mkNixGLWrappedApp = pkg: binName:
-        #     prev.symlinkJoin {
-        #       name = pkg.name + "-nixgl";
-        #       paths = [
-        #         (prev.writeShellScriptBin binName ''
-        #           exec ${prev.nixgl.nixGLIntel}/bin/nixGLIntel \
-        #             ${pkg}/bin/${binName} "$@"
-        #         '')
-        #         pkg
-        #       ];
-        #     };
-        # })
-        plover.overlay
-        neovim.overlay
-        nur.overlay
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.morp.imports = [./home.nix];
+            };
+          };
+        })
       ];
+    in {
+      # overlays
+      overlays.default = with inputs;
+        nixpkgs.lib.composeManyExtensions [
+          discord.overlays.default
+          plover.overlay
+          neovim.overlay
+          nur.overlay
+        ];
 
-    # xps17 NixOs
-    nixosConfigurations = {
-      xps17-nixos = lib.nixosSystem {
-        inherit system;
+      # xps17 NixOs
+      xps17-nixos = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
         modules = [
           ./hosts/xps17-nixos
           nur.nixosModules.nur
@@ -138,25 +145,29 @@
       };
 
       # xps17 WSL TODO fix
-      win-wsl = import ./hosts/windows-wsl {
-        inherit config nixpkgs system nixos-wsl inputs;
+      win-wsl = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules =
+          [
+            ./hosts/windows-wsl
+          ]
+          ++ defaultModules;
       };
-    };
-    win-wsl = self.nixosConfigurations.win-wsl.config.system.build.toplevel;
 
-    # mac_mini Mac Os Monterey TODO fix
-    darwinConfigurations = {
-      mac_mini = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [
-          ./hosts/mac-mini
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.morp = import ./home.nix;
-          }
-        ];
+      # mac_mini Mac Os Monterey TODO fix
+      darwinConfigurations = {
+        mac_mini = darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [
+            ./hosts/mac-mini
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.morp = import ./home.nix;
+            }
+          ];
+        };
       };
     };
   };

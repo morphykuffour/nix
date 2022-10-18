@@ -1,44 +1,49 @@
-{ config, pkgs, lib, ... }:
-
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-with types;
-let
-
+with types; let
   genBlockLua = title: content: ''
     -- ${title} {{{
     ${content}
     -- }}}
   '';
 
-  luaPlugin = attrs: attrs // {
-    type = "lua";
-    config = lib.optionalString (attrs ? config) (genBlockLua attrs.plugin.pname attrs.config);
-  };
+  luaPlugin = attrs:
+    attrs
+    // {
+      type = "lua";
+      config = lib.optionalString (attrs ? config) (genBlockLua attrs.plugin.pname attrs.config);
+    };
 
-  makeFtPlugins = ftplugins: with attrsets;
-    mapAttrs'
-      (key: value: nameValuePair "nvim/after/ftplugin/${key}.vim" ({ text = value; }))
+  makeFtPlugins = ftplugins:
+    with attrsets;
+      mapAttrs'
+      (key: value: nameValuePair "nvim/after/ftplugin/${key}.vim" {text = value;})
       ftplugins;
 
   # installs a vim plugin from git with a given tag / branch
-  pluginGit = ref: repo: pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "${lib.strings.sanitizeDerivationName repo}";
-    version = ref;
-    src = builtins.fetchGit {
-      url = "https://github.com/${repo}.git";
-      ref = ref;
+  pluginGit = ref: repo:
+    pkgs.vimUtils.buildVimPluginFrom2Nix {
+      pname = "${lib.strings.sanitizeDerivationName repo}";
+      version = ref;
+      src = builtins.fetchGit {
+        url = "https://github.com/${repo}.git";
+        ref = ref;
+      };
     };
-  };
 
   # always installs latest version
   plugin = pluginGit "HEAD";
-in
-{
+in {
   # install neovim
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-      sha256 =  "0fysfvf5d9jmgcbp2pkfw0i0y5n3c3f0abdvl2pjmx4w6p2k8v4x";
+      sha256 = "0fysfvf5d9jmgcbp2pkfw0i0y5n3c3f0abdvl2pjmx4w6p2k8v4x";
     }))
   ];
 

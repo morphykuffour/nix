@@ -1,11 +1,13 @@
-{ pkgs, lib, ... }:
-let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   # variables
   mod = "Mod1";
   local_bin = "/home/morp/.local/bin";
   home = "/home/morp/";
-in
-{
+in {
   xsession.windowManager.i3 = {
     enable = true;
     package = pkgs.i3-gaps;
@@ -14,7 +16,7 @@ in
       modifier = mod;
       terminal = "${pkgs.kitty}/bin/kitty";
       fonts = {
-        names = [ "Noto Sans" ];
+        names = ["Noto Sans"];
         size = 9.0;
       };
 
@@ -37,7 +39,7 @@ in
       window = {
         commands = [
           {
-            criteria = { window_role = "pop-up"; };
+            criteria = {window_role = "pop-up";};
             command = "floating enable";
           }
         ];
@@ -50,7 +52,6 @@ in
       };
 
       keybindings = {
-
         # Audio keybindings
         "XF86AudioMute" = "exec amixer set Master toggle";
         "XF86AudioLowerVolume" = "exec amixer set Master 4%-";
@@ -62,37 +63,37 @@ in
         "XF86MonBrightnessUp" = "exec brightnessctl set 4%+";
 
         # Application keybindings
-        "${mod}+Return"  = "exec ${pkgs.kitty}/bin/kitty";
+        "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
         "${mod}+Shift+d" = "exec ${pkgs.rofi}/bin/rofi -modi drun -show drun";
-        "${mod}+s"       = "exec flameshot gui --clipboard --path ${home}/Dropbox/screenshots/";
-        "Print"          = "exec flameshot full --clipboard --path ${home}/Dropbox/screenshots/";
-        "${mod}+w"       = "exec ${pkgs.rofi}/bin/rofi -show window";
+        "${mod}+s" = "exec flameshot gui --clipboard --path ${home}/Dropbox/screenshots/";
+        "Print" = "exec flameshot full --clipboard --path ${home}/Dropbox/screenshots/";
+        "${mod}+w" = "exec ${pkgs.rofi}/bin/rofi -show window";
         "${mod}+Shift+x" = "exec systemctl suspend";
         "${mod}+Shift+q" = "kill";
-        "${mod}+b"       = "exec ${pkgs.brave}/bin/brave";
+        "${mod}+b" = "exec ${pkgs.brave}/bin/brave";
         # "${mod}+y"       = "exec ${pkgs.emacs}/bin/emacs";
-        "${mod}+d"       = "exec ${pkgs.dmenu}/bin/dmenu_run";
-        "Mod4+l"         = "exec ${pkgs.systemd}/bin/loginctl lock-session";
-        "Mod4+v"         = "exec ${pkgs.clipmenu}/bin/clipmenu -i -fn Terminus:size=13 -nb '#002b36' -nf '#839496' -sb '#073642' -sf '#93a1a1'";
+        "${mod}+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";
+        "Mod4+l" = "exec ${pkgs.systemd}/bin/loginctl lock-session";
+        "Mod4+v" = "exec ${pkgs.clipmenu}/bin/clipmenu -i -fn Terminus:size=13 -nb '#002b36' -nf '#839496' -sb '#073642' -sf '#93a1a1'";
 
         # i3 window management
-        "${mod}+h"           = "focus left";
-        "${mod}+j"           = "focus down";
-        "${mod}+k"           = "focus up";
-        "${mod}+l"           = "focus right";
-        "${mod}+Shift+h"     = "move left";
-        "${mod}+Shift+j"     = "move down";
-        "${mod}+Shift+k"     = "move up";
-        "${mod}+Shift+l"     = "move right";
-        "${mod}+z"           = "split h";
-        "${mod}+|"           = "split v";
-        "${mod}+f"           = "fullscreen toggle";
-        "${mod}+Shift+s"     = "layout stacking";
-        "${mod}+Shift+w"     = "layout tabbed";
-        "${mod}+e"           = "layout toggle split";
+        "${mod}+h" = "focus left";
+        "${mod}+j" = "focus down";
+        "${mod}+k" = "focus up";
+        "${mod}+l" = "focus right";
+        "${mod}+Shift+h" = "move left";
+        "${mod}+Shift+j" = "move down";
+        "${mod}+Shift+k" = "move up";
+        "${mod}+Shift+l" = "move right";
+        "${mod}+z" = "split h";
+        "${mod}+|" = "split v";
+        "${mod}+f" = "fullscreen toggle";
+        "${mod}+Shift+s" = "layout stacking";
+        "${mod}+Shift+w" = "layout tabbed";
+        "${mod}+e" = "layout toggle split";
         "${mod}+Shift+space" = "floating toggle";
-        "${mod}+space"       = "focus mode_toggle";
-        "${mod}+a"           = "focus parent";
+        "${mod}+space" = "focus mode_toggle";
+        "${mod}+a" = "focus parent";
 
         "${mod}+1" = "workspace number 1";
         "${mod}+2" = "workspace number 2";
@@ -168,14 +169,14 @@ in
     };
 
     extraConfig = ''
-       for_window [ title="notetaker_window" ] floating enable resize set 640 480
-       title_align center
-       for_window [ title="floatimage_window" ] floating enable resize set 640 260
-       title_align center 
+      for_window [ title="notetaker_window" ] floating enable resize set 640 480
+      title_align center
+      for_window [ title="floatimage_window" ] floating enable resize set 640 260
+      title_align center
 
-       # class                   border  backgr. text    indicator child_border
-       client.focused            #ffdb01 #ffdb01 #0000ff #ffdb01   #ffdb01
-       client.focused_inactive   #333333 #5f676a #ffffff #484e50   #5f676a
+      # class                   border  backgr. text    indicator child_border
+      client.focused            #ffdb01 #ffdb01 #0000ff #ffdb01   #ffdb01
+      client.focused_inactive   #333333 #5f676a #ffffff #484e50   #5f676a
     '';
   };
 }
