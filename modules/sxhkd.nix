@@ -1,8 +1,7 @@
 let
   # user scripts
   local_bin = "~/.local/bin";
-in
-{
+in {
   services.sxhkd = {
     enable = true;
     keybindings = {
@@ -55,7 +54,6 @@ in
         -theme-str '* \{ font: 10px; \}' \
         -theme-str 'listview \{ spacing: 0; \}' \
         -theme-str 'window \{ width: 20em; \}'";
-
     };
   };
 }

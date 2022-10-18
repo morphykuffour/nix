@@ -1,10 +1,13 @@
-{ config, pkgs, libs, ... }:
-let
+{
+  config,
+  pkgs,
+  libs,
+  ...
+}: let
   email = "morph.kuffour@uconn.edu";
   name = "Morphy Kuffour";
   user = "morphykuffour";
-in
-{
+in {
   programs.git = {
     enable = true;
     extraConfig = {

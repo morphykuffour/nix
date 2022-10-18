@@ -42,7 +42,7 @@
       grub = {
         version = 2;
         enable = true;
-        devices = [ "nodev" ];
+        devices = ["nodev"];
         efiSupport = true;
         useOSProber = true;
       };

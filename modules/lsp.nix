@@ -1,5 +1,6 @@
-{ pkgs, ... }:
-with pkgs; with pkgs.nodePackages; [
+{pkgs, ...}:
+with pkgs;
+with pkgs.nodePackages; [
   elmPackages.elm-language-server
   fnlfmt
   haskellPackages.haskell-language-server

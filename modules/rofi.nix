@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.rofi = {
     enable = true;
 
@@ -9,7 +7,7 @@
       * Copyright: deadguy
       * (edited by Litarvan)
       */
-    
+
       configuration {
         display-drun:    "Activate";
         display-run:     "Execute";
@@ -59,7 +57,7 @@
         width:    18%;
         orientation:  horizontal;
         children:  [mainbox];
-        x-offset:  29px;        
+        x-offset:  29px;
         y-offset:  57px;
       }
 

@@ -4,13 +4,10 @@
   config,
   modulesPath,
   ...
-}:
-
-{
-  imports = [ "${modulesPath}/profiles/minimal.nix" ];
+}: {
+  imports = ["${modulesPath}/profiles/minimal.nix"];
 
   hardware.opengl.enable = true;
-
 
   environment.systemPackages = with pkgs; [
     git
@@ -35,7 +32,7 @@
     isNormalUser = true;
     home = "/home/morp";
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" ];
+    extraGroups = ["wheel"];
   };
 
   # Enable nix flakes

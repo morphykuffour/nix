@@ -1,22 +1,20 @@
 # credits: @LightDiscord who helped me to update to picom
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   services.picom = {
     enable = true;
-    package = pkgs.callPackage ../packages/compton-unstable.nix { };
+    package = pkgs.callPackage ../packages/compton-unstable.nix {};
     experimentalBackends = true;
 
     blur = true;
-    blurExclude = [ "window_type = 'dock'" "window_type = 'desktop'" ];
+    blurExclude = ["window_type = 'dock'" "window_type = 'desktop'"];
 
     fade = true;
     fadeDelta = 5;
 
     shadow = true;
-    shadowOffsets = [ (-7) (-7) ];
+    shadowOffsets = [(-7) (-7)];
     shadowOpacity = "0.7";
-    shadowExclude = [ "window_type *= 'normal' && ! name ~= ''" ];
+    shadowExclude = ["window_type *= 'normal' && ! name ~= ''"];
     noDockShadow = true;
     noDNDShadow = true;
 
