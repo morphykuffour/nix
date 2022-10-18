@@ -150,8 +150,8 @@
         modules =
           [
             ./hosts/windows-wsl
-          ]
-          ++ defaultModules;
+          ];
+          # ++ defaultModules;
       };
 
       # mac_mini Mac Os Monterey TODO fix
