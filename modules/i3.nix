@@ -102,9 +102,8 @@ in
         "${mod}+6" = "workspace number 6";
         "${mod}+7" = "workspace number 7";
         "${mod}+8" = "workspace number 8";
-        "${mod}+9" = "workspace number 9: game";
-        "${mod}+0" = "workspace 10: video";
-
+        "${mod}+9" = "workspace number 9";
+        "${mod}+0" = "workspace number 10";
         "${mod}+Shift+1" = "move container to workspace number 1";
         "${mod}+Shift+2" = "move container to workspace number 2";
         "${mod}+Shift+3" = "move container to workspace number 3";
