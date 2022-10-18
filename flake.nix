@@ -149,9 +149,9 @@
         system = "x86_64-linux";
         modules =
           [
-            ./hosts/windows-wsl
-          ];
-          # ++ defaultModules;
+            ./hosts/win-wsl
+          ]
+          ++ defaultModules;
       };
 
       # mac_mini Mac Os Monterey TODO fix
