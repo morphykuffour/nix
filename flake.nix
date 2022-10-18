@@ -150,8 +150,14 @@
         modules =
           [
             ./hosts/win-wsl
-          ]
-          ++ defaultModules;
+          {
+            environment.systemPackages = [
+              alejandra.defaultPackage.x86_64-linux
+            ];
+          }
+          ];
+          # ++ defaultModules;
+        specialArgs = inputs;
       };
 
       # mac_mini Mac Os Monterey TODO fix
