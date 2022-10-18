@@ -370,7 +370,7 @@
     clipmenu
     playerctl
     xorg.xbacklight
-    dropbox-cli
+    # dropbox-cli
     autorandr
     xdotool
     shared-mime-info
