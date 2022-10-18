@@ -18,5 +18,5 @@ sudo darwin-rebuild switch --flake .#mac_mini
 
 Build wsl and switch to new configuration. `<flake-uri> = pwd`
 ```bash
-sudo nixos-rebuild switch --flake .#xps17-wsl
+sudo nixos-rebuild switch --flake .#win-wsl
 ```
