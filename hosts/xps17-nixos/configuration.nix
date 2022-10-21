@@ -385,21 +385,22 @@
     plasma5Packages.kdeconnect-kde
     pciutils
     usbutils
-    libusb1
     ventoy-bin
     picom
     bluez
-    logiops
+    # logiops
     rustup
     brightnessctl
     xdragon
-    keymapviz
-    vial
-    hidapi
+    # keymapviz
+    # vial
+    # libusb1
+    # hidapi
     # nur.repos.foolnotion.keyd
     # nur.repos.meain.kmonad
     gnome.dconf-editor
     mate.mate-power-manager
+    mate.mate-media
     orchis-theme
     tela-circle-icon-theme
     docker
@@ -413,7 +414,7 @@
     zsync
     cdrkit
     sqlitebrowser
-    nfs-utils
+    # nfs-utils
     # zfs
     bashmount
     # apacheHttpd
@@ -426,7 +427,7 @@
     quickemu
     samba
     OVMF
-    openconnect
+    # openconnect
     swtpm
     gdb
     libinput-gestures
@@ -444,14 +445,13 @@
     android-studio
     android-tools
     android-udev-rules
-    flutter
+    # flutter
     cmake
     ninja
     clang
-    google-chrome
+    # google-chrome
     yarn
     firefox
     mongodb
-    mate.mate-media
   ];
 }
