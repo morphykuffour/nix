@@ -436,6 +436,8 @@
     mycli
     grc
     android-studio
+    android-tools
+    android-udev-rules
     flutter
     cmake
     ninja
