@@ -95,6 +95,9 @@ in {
         "${mod}+space" = "focus mode_toggle";
         "${mod}+a" = "focus parent";
 
+        "${mod}+[" = "workspace prev";
+        "${mod}+]" = "workspace next";
+
         "${mod}+1" = "workspace number 1";
         "${mod}+2" = "workspace number 2";
         "${mod}+3" = "workspace number 3";
