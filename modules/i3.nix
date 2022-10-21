@@ -94,9 +94,12 @@ in {
         "${mod}+Shift+space" = "floating toggle";
         "${mod}+space" = "focus mode_toggle";
         "${mod}+a" = "focus parent";
+        "${mod}+Tab"="workspace back_and_forth";
+        "${mod}+Prior" = "workspace prev";
+        "${mod}+Next"  = "workspace next";
 
-        "${mod}+[" = "workspace prev";
-        "${mod}+]" = "workspace next";
+      # bindsym $mod+[ workspace prev
+      # bindsym $mod+] workspace next
 
         "${mod}+1" = "workspace number 1";
         "${mod}+2" = "workspace number 2";
@@ -182,6 +185,9 @@ in {
       # i3 v4.21
       client.focused_tab_title  #ffdb01 #0125ff #0000ff #ffdb01   #ffdb01
       client.focused_inactive   #333333 #5f676a #ffffff #484e50   #5f676a
+
     '';
   };
 }
+      # bindsym $mod+[ workspace prev
+      # bindsym $mod+] workspace next
