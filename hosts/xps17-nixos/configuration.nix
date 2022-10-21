@@ -236,7 +236,7 @@
       enable = true;
 
       # TODO fix this
-      autorun = false;
+      # autorun = false;
 
       # Configure keymap in X11
       layout = "us";
@@ -244,11 +244,11 @@
 
       desktopManager = {
         xterm.enable = false;
-        xfce = {
-          enable = true;
-          noDesktop = true;
-          # enableXfwm = false;
-        };
+        # xfce = {
+        #   enable = true;
+        #   noDesktop = true;
+        #   # enableXfwm = false;
+        # };
         mate = {
           enable = true;
           # excludePackages = [ pkgs.mate.mate-terminal pkgs.mate.pluma ];
@@ -452,5 +452,6 @@
     yarn
     firefox
     mongodb
+    mate.mate-media
   ];
 }
