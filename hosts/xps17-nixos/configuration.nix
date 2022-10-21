@@ -235,6 +235,9 @@
       # Enable the X11 windowing system.
       enable = true;
 
+      # TODO fix this
+      autorun = false;
+
       # Configure keymap in X11
       layout = "us";
       xkbVariant = "";
@@ -243,7 +246,7 @@
         xterm.enable = false;
         xfce = {
           enable = true;
-          # noDesktop = true;
+          noDesktop = true;
           # enableXfwm = false;
         };
         mate = {
@@ -253,7 +256,9 @@
       };
 
       displayManager = {
-        defaultSession = "none+i3";
+        startx.enable = true;
+        # defaultSession = "none+i3";
+        defaultSession = "mate";
         autoLogin = {
           enable = false;
           user = "morp";
@@ -365,11 +370,12 @@
     gcc
     flameshot
     sxiv
-    # polybar
+    polybar
     gnumake
     clipmenu
     playerctl
     xorg.xbacklight
+    # xorg.xorgserver
     # dropbox-cli
     autorandr
     xdotool
