@@ -95,8 +95,8 @@ in {
         "${mod}+space" = "focus mode_toggle";
         "${mod}+a" = "focus parent";
         "${mod}+Tab"="workspace back_and_forth";
-        "${mod}+Prior" = "workspace prev";
-        "${mod}+Next"  = "workspace next";
+        "${mod}+Prior" = "workspace next";
+        "${mod}+Next"  = "workspace prev";
 
         # TODO: figure out
         # bindsym $mod+[ workspace prev
