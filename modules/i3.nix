@@ -172,6 +172,11 @@ in {
           always = true;
           notification = false;
         }
+        {
+          command = "${home}/.config/polybar/launch.sh";                                                                                     
+          always = true;                                                                                                                     
+          notification = false;                                                                                                              
+        }  
       ];
     };
 
