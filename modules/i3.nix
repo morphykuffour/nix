@@ -98,8 +98,9 @@ in {
         "${mod}+Prior" = "workspace prev";
         "${mod}+Next"  = "workspace next";
 
-      # bindsym $mod+[ workspace prev
-      # bindsym $mod+] workspace next
+        # TODO: figure out
+        # bindsym $mod+[ workspace prev
+        # bindsym $mod+] workspace next
 
         "${mod}+1" = "workspace number 1";
         "${mod}+2" = "workspace number 2";
