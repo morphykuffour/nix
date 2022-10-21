@@ -398,7 +398,7 @@
     tela-circle-icon-theme
     docker
     libreoffice
-    reptyr
+    reptyr # TODO learn usuage
     wireshark
     tshark
     rustdesk
