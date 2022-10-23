@@ -7,9 +7,10 @@
   ...
 }: {
   imports = [
+    <nixos-hardware/dell/xps/17-9710/intel>
     ./hardware-configuration.nix
     ./picom.nix
-    # ./zfs.nix
+    ./forticlientsslvpn.nix
     # ./mongosh.nix
     ./dslr.nix
   ];
@@ -243,21 +244,19 @@
       xkbVariant = "";
 
       desktopManager = {
-        xterm.enable = false;
-        # xfce = {
-        #   enable = true;
-        #   noDesktop = true;
-        #   # enableXfwm = false;
-        # };
+        xterm = {
+          enable = false;
+        };
         mate = {
           enable = true;
-          # excludePackages = [ pkgs.mate.mate-terminal pkgs.mate.pluma ];
+        };
+        gnome = {
+          enable = true;
         };
       };
 
       displayManager = {
         startx.enable = true;
-        # defaultSession = "none+i3";
         defaultSession = "mate";
         autoLogin = {
           enable = false;
@@ -442,10 +441,6 @@
     neovim
     mycli
     grc
-    android-studio
-    android-tools
-    android-udev-rules
-    # flutter
     cmake
     ninja
     clang
@@ -453,5 +448,10 @@
     yarn
     firefox
     mongodb
+    android-studio
+    android-tools
+    android-udev-rules
+    gradle
+    # flutter
   ];
 }
