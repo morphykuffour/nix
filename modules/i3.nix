@@ -195,5 +195,3 @@ in {
     '';
   };
 }
-      # bindsym $mod+[ workspace prev
-      # bindsym $mod+] workspace next
