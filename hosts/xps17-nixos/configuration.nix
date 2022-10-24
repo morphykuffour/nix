@@ -10,7 +10,7 @@
     <nixos-hardware/dell/xps/17-9710/intel>
     ./hardware-configuration.nix
     ./picom.nix
-    ./forticlientsslvpn.nix
+    # ./forticlientsslvpn.nix
     # ./mongosh.nix
     ./dslr.nix
   ];
