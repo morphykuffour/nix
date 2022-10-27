@@ -452,6 +452,7 @@
     android-tools
     android-udev-rules
     gradle
+    zoom-us
     # flutter
   ];
 }
