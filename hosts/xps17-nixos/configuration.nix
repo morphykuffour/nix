@@ -453,6 +453,9 @@
     android-udev-rules
     gradle
     zoom-us
+    protonmail-bridge
+    teams
+    ffmpeg-full
     # flutter
   ];
 }
