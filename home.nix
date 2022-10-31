@@ -79,7 +79,7 @@
       gimp
       blender
       # kicad
-      ffmpeg
+      # ffmpeg
       eva
       aria2
       hyperfine
