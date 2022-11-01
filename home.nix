@@ -63,7 +63,7 @@
       jq
       curl
       fzf
-      nodejs
+      # nodejs
       sbcl
       neomutt
       mu
@@ -119,6 +119,7 @@
       mathpix-snipping-tool
       black
       rust-analyzer
+      postman
 
       (python39.withPackages (pp:
         with pp; [

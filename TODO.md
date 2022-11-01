@@ -1,0 +1,1 @@
+- [ ] Create a nix derivation for ubuntu and arch to install software in one swoop
