@@ -24,7 +24,7 @@ nix-store --gc
 
 - deduplicate nix store it scans the store for regular files with identical contents, and replaces them with hard links to a single instance.
 ```bash
-nix store optimise - replace identical files in the store by hard links
+nix store optimise # replace identical files in the store by hard links
 ```
 
 - install packages using nix package manager
@@ -42,4 +42,15 @@ sudo nixos-rebuild --upgrade
 ```bash
 # nix-prefetch-url --unpack https://github.com/nix-community/NUR/archive/master.tar.gz
 nix-prefetch-url --unpack #<url>
+```
+
+The following shows how to list packages installed in your local user profile:
+
+```bash
+nix-env --query
+```
+Running the same command as root will list packages installed in root's profile:
+
+```bash
+sudo nix-env --query
 ```
