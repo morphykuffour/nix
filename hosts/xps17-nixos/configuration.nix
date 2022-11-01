@@ -454,8 +454,11 @@
     gradle
     zoom-us
     protonmail-bridge
-    teams
+    # teams
     ffmpeg-full
+    awscli
+    # TODO change to wireguard kernel_module
+    protonvpn-gui
     # flutter
   ];
 }
