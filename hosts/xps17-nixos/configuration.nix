@@ -135,7 +135,7 @@
     isNormalUser = true;
     description = "default account for linux";
     shell = pkgs.zsh;
-    extraGroups = ["uucp" "dialout" "networkmanager" "wheel" "docker" "video" "vboxusers" "libvirtd" "input" "adbusers"];
+    extraGroups = ["uucp" "dialout" "networkmanager" "wheel" "docker" "video" "vboxusers" "libvirtd" "input" "adbusers" "wireshark"];
     packages = with pkgs; [
       vim
       vscode
