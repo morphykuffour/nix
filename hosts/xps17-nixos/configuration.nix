@@ -35,7 +35,7 @@
       availableKernelModules = ["xhci_pci" "nvme" "usbhid" "uas" "sd_mod" "rtsx_pci_sdmmc"];
       kernelModules = [];
     };
-    kernelModules = ["kvm-intel"];
+    kernelModules = ["kvm-intel" "wireguard"];
     extraModulePackages = [];
     supportedFilesystems = ["ntfs"];
     loader = {
