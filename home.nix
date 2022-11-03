@@ -120,7 +120,6 @@
       black
       rust-analyzer
       postman
-
       (python39.withPackages (pp:
         with pp; [
           pynvim
