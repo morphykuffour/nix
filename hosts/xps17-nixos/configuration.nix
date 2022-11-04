@@ -284,6 +284,12 @@
   virtualisation = {
     # qemu.package = pkgs.qemu;
 
+    virtualbox = {
+      host.package = pkgs.virtualbox;
+      host.headless = true;
+      host.enable = true;
+      guest.enable = true;
+    };
     spiceUSBRedirection.enable = true;
 
     docker = {
@@ -459,6 +465,7 @@
     awscli
     # TODO change to wireguard kernel_module
     protonvpn-gui
+    virtualbox
     # flutter
   ];
 }
