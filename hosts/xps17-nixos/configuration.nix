@@ -31,6 +31,8 @@
 
   # Bootloader.
   boot = {
+    # kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+    kernelParams = [ "nohibernate" ];
     initrd = {
       availableKernelModules = ["xhci_pci" "nvme" "usbhid" "uas" "sd_mod" "rtsx_pci_sdmmc"];
       kernelModules = [];
@@ -420,7 +422,7 @@
     cdrkit
     sqlitebrowser
     # nfs-utils
-    # zfs
+    zfs
     bashmount
     # apacheHttpd
     vagrant
