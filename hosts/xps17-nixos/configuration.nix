@@ -7,6 +7,7 @@
     # ./forticlientsslvpn.nix
     # ./mongosh.nix
     ./dslr.nix
+    ./wireguard.nix
   ];
 
   environment.variables.EDITOR = "vim";
