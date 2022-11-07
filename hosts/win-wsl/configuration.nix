@@ -80,6 +80,7 @@ in {
     nodejs
     ranger
     gnumake 
+    ripgrep
   ];
 
 }
