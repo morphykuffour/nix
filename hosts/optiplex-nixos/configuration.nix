@@ -126,6 +126,7 @@
     autojump
     bat
     which
+    gnumake
   ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }
