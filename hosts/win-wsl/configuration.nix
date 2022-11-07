@@ -27,6 +27,7 @@ in {
     extraGroups = ["wheel"];
   };
 
+  services.openssh.enable = true;
   wsl = {
     enable = true;
     wslConf.automount.root = "/mnt";
