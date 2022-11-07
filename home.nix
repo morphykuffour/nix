@@ -13,7 +13,8 @@
     ./modules/pass.nix
     ./modules/fonts.nix
     ./modules/sxhkd.nix
-    ./modules/tailscale.nix
+    # TODO make tailscale work
+    # ./modules/tailscale.nix
     # ./modules/nvim.nix
     ./modules/rofi.nix
   ];
