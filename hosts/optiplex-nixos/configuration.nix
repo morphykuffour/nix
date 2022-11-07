@@ -141,7 +141,7 @@
     stow
     zsh
     tmux
-    # neovim
+    neovim
     starship
     atuin
     brave
