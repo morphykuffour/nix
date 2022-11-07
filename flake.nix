@@ -25,6 +25,7 @@
       url = "github:nix-community/NUR";
     };
 
+    # TODO get nvidia prime offloading to work
     # nixgl = {
     #   url = "github:guibou/nixGL";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -52,6 +53,11 @@
       url = "github:kamadorueda/alejandra/3.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -65,6 +71,7 @@
     plover,
     alejandra,
     nixos-wsl,
+    agenix,
     ...
   } @ inputs: {
     nixosConfigurations = let
@@ -120,6 +127,7 @@
         modules = [
           ./hosts/xps17-nixos
           nur.nixosModules.nur
+          agenix.nixosModule
           {
             environment.systemPackages = [
               alejandra.defaultPackage.x86_64-linux
