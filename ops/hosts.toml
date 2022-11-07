@@ -1,0 +1,30 @@
+# [hosts.itsuki]
+# network = "avalon"
+# ip_addr = "192.168.2.174"
+# ssh_pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP0eD0K2FqhkkIsUrYfmHigwbaUgOSotdSsNlLMRJiqx"
+# tailscale = "100.68.185.47"
+
+[hosts.xps17-nixos]
+network = "xps17-nixos"
+ip_addr = ""
+ssh_pubkey = ""
+tailscale = ""
+
+# [hosts.mac-mini]
+# network = "mac-mini"
+# ip_addr = ""
+# ssh_pubkey = ""
+# tailscale = ""
+#
+# [hosts.optiplex-nixos]
+# network = "mac-mini"
+# ip_addr = ""
+# ssh_pubkey = ""
+# tailscale = ""
+#
+# [hosts.win-wsl]
+# network = "mac-mini"
+# ip_addr = ""
+# ssh_pubkey = ""
+# tailscale = ""
+#
