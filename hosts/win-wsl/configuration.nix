@@ -29,12 +29,12 @@ in {
 
   wsl = {
     enable = true;
-    automountPath = "/mnt";
+    wslConf.automount.root = "/mnt";
     defaultUser = "morp";
     startMenuLaunchers = true;
 
     # Enable integration with Docker Desktop
-    docker.enable = true;
+    docker-desktop.enable = true;
 
     # tailscale.enable = true;
   };
@@ -55,7 +55,7 @@ in {
     home-manager
     curl
     jq
-    emacs
+    # emacs
     file
     exa
     bat
