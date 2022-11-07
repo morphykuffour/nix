@@ -1,3 +1,3 @@
 [submodule "hosts/win-wsl/NixOS-WSL"]
-	path = hosts/win-wsl/NixOS-WSL
+	path = hosts/win-wsl/nixos-wsl
 	url = https://github.com/nix-community/NixOS-WSL.git
