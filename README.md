@@ -4,9 +4,9 @@ system-wide dotfiles for WSL, Linux and Mac OS X
 
 - [x] TODO test on Linux #works
 - [x] TODO test on Linux on ZFS #works
-- [x] TODO test on WSL #builds
-    - [ ] TODO test on wsl `make switch`
-- [ ] TODO test on macos 
+- [x] TODO test on WSL #works
+    - [ ] TODO add wsl github repo as a submodule without nix complaining
+- [ ] TODO get macos and nix working together
 
 Clone the repo using the following command in bash
 ```bash
