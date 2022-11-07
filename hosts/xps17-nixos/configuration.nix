@@ -392,7 +392,6 @@
     cmake
     ninja
     clang
-    # google-chrome
     yarn
     firefox
     mongodb
