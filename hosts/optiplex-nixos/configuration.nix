@@ -12,10 +12,28 @@
   nixpkgs.config.allowUnfree = true;
 
 
-  # networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "optiplex-nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true;  
+  
+  systemd.user.services.dropbox = {
+    description = "Dropbox";
+    wantedBy = ["graphical-session.target"];
+    environment = {
+      QT_PLUGIN_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtPluginPrefix;
+      QML2_IMPORT_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtQmlPrefix;
+    };
+    serviceConfig = {
+      ExecStart = "${pkgs.dropbox.out}/bin/dropbox";
+      ExecReload = "${pkgs.coreutils.out}/bin/kill -HUP $MAINPID";
+      KillMode = "control-group"; # upstream recommends process
+      Restart = "on-failure";
+      PrivateTmp = true;
+      ProtectSystem = "full";
+      Nice = 10;
+    };
+  };
 
   # Set your time zone.
   time.timeZone = "America/New_York";
