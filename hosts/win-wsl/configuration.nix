@@ -13,6 +13,10 @@ in {
     nixos-wsl.nixosModules.wsl
   ];
 
+  # Set your time zone.
+  time.timeZone = "America/New_York";
+  i18n.defaultLocale = "en_US.UTF-8";
+
   system.stateVersion = "unstable";
   hardware.opengl.enable = true;
   nixpkgs.config.allowUnfree = true;
@@ -20,11 +24,14 @@ in {
     hostName = "win-wsl";
   };
 
-  users.users.morp = {
-    isNormalUser = true;
-    home = "/home/morp";
-    shell = pkgs.zsh;
-    extraGroups = ["wheel"];
+  users = {
+      defaultUserShell = pkgs.zsh;
+      users.morp = {
+      isNormalUser = true;
+      home = "/home/morp";
+      shell = pkgs.zsh;
+      extraGroups = ["wheel"];
+    };
   };
 
   services.openssh.enable = true;
@@ -63,5 +70,16 @@ in {
     rsync
     stow
     binutils
+    exa
+    autojump
+    atuin
+    starship
+    tmux
+    tealdeer
+    xclip
+    nodejs
+    ranger
+    gnumake 
   ];
+
 }
