@@ -4,8 +4,8 @@ system-wide dotfiles for WSL, Linux and Mac OS X
 
 - [x] TODO test on Linux #works
 - [x] TODO test on Linux on ZFS #works
-- [x] TODO test on WSL 
-    - [ ] TODO test on wsl
+- [x] TODO test on WSL #builds
+    - [ ] TODO test on wsl `make switch`
 - [ ] TODO test on macos 
 
 Clone the repo using the following command in bash
