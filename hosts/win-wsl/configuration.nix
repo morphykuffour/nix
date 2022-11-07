@@ -6,7 +6,7 @@
   ...
 }:
 with lib; let
-  nixos-wsl = import ./nixos-wsl;
+  nixos-wsl = import ./NixOS-WSL;
 in {
   imports = [
     "${modulesPath}/profiles/minimal.nix"
