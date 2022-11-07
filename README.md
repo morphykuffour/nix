@@ -24,3 +24,9 @@ Build wsl and switch to new configuration. `<flake-uri> = pwd`
 ```bash
 sudo nixos-rebuild switch --flake .#win-wsl
 ```
+
+
+Build nixos on zfs and switch to new configuration. `<flake-uri> = pwd`
+```bash
+sudo nixos-rebuild switch --flake .#optiplex-nixos
+```
