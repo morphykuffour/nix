@@ -1,5 +1,21 @@
-{ stdenv, lib, fetchurl, gnome3, glib, libSM, gdk_pixbuf, libX11, libXinerama, iproute,
-  makeWrapper, libredirect, ppp, coreutils, gawk, pango }:
+{
+  stdenv,
+  lib,
+  fetchurl,
+  gnome3,
+  glib,
+  libSM,
+  gdk_pixbuf,
+  libX11,
+  libXinerama,
+  iproute,
+  makeWrapper,
+  libredirect,
+  ppp,
+  coreutils,
+  gawk,
+  pango,
+}:
 stdenv.mkDerivation rec {
   name = "forticlientsslvpn";
   # forticlient will be copied into /tmp before execution. this is necessary as
@@ -16,15 +32,14 @@ stdenv.mkDerivation rec {
     # url = http://www.zen.co.uk/userfiles/knowledgebase/FortigateSSLVPNClient/forticlientsslvpn_linux_4.4.2317.tar.gz;
     sha256 = "19clnf9rgrnwazlpah8zz5kvz6kc8lxawrgmksx25k5ywflmbcrr";
   };
-  phases = [ "unpackPhase" "buildPhase" "installPhase" "fixupPhase" ];
+  phases = ["unpackPhase" "buildPhase" "installPhase" "fixupPhase"];
 
-  buildInputs = [ makeWrapper ];
+  buildInputs = [makeWrapper];
 
   binPath = lib.makeBinPath [
     coreutils
     gawk
   ];
-
 
   libPath = lib.makeLibraryPath [
     stdenv.cc.cc
@@ -87,6 +102,6 @@ stdenv.mkDerivation rec {
     homepage = http://www.fortinet.com;
     description = "Forticlient SSL-VPN client";
     license = lib.licenses.unfree;
-    maintainers = [ lib.maintainers.makefu ];
+    maintainers = [lib.maintainers.makefu];
   };
 }

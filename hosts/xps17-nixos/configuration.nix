@@ -1,5 +1,11 @@
-{ config, current, lib, pkgs, home-manager, ... }:
 {
+  config,
+  current,
+  lib,
+  pkgs,
+  home-manager,
+  ...
+}: {
   imports = [
     <nixos-hardware/dell/xps/17-9710/intel>
     ./hardware-configuration.nix
@@ -7,7 +13,7 @@
     # ./forticlientsslvpn.nix
     # ./mongosh.nix
     ./dslr.nix
-    ./wireguard.nix
+    # ./wireguard.nix
   ];
 
   environment.variables.EDITOR = "vim";
@@ -26,7 +32,7 @@
 
   # Bootloader.
   boot = {
-    kernelParams = [ "nohibernate" ];
+    kernelParams = ["nohibernate"];
     initrd = {
       availableKernelModules = ["xhci_pci" "nvme" "usbhid" "uas" "sd_mod" "rtsx_pci_sdmmc"];
       kernelModules = [];
@@ -408,6 +414,7 @@
     vim
     vscode
     # TODO change to wireguard kernel_module
+    wireguard-tools
     protonvpn-gui
     virtualbox
   ];
