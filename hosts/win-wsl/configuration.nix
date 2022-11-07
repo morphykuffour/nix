@@ -81,6 +81,7 @@ in {
     ranger
     gnumake 
     ripgrep
+    fzf
   ];
 
 }
