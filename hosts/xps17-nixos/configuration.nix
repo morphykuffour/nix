@@ -11,7 +11,6 @@
     ./hardware-configuration.nix
     ./picom.nix
     ./dslr.nix
-    ./tailscale.nix
     # ./forticlientsslvpn.nix
     # ./mongosh.nix
     # ./wireguard.nix
