@@ -176,16 +176,15 @@
       # xps17 WSL TODO fix
       win-wsl = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules =
-          [
-            ./hosts/win-wsl
+        modules = [
+          ./hosts/win-wsl
           {
             environment.systemPackages = [
               alejandra.defaultPackage.x86_64-linux
             ];
           }
-          ];
-          # ++ defaultModules;
+        ];
+        # ++ defaultModules;
         specialArgs = inputs;
       };
 

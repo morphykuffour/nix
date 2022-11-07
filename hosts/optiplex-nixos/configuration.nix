@@ -1,22 +1,23 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix ./zfs.nix
-    ];
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./zfs.nix
+  ];
   nixpkgs.config.allowUnfree = true;
-
 
   networking.hostName = "optiplex-nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  
-  
+  networking.networkmanager.enable = true;
+
   systemd.user.services.dropbox = {
     description = "Dropbox";
     wantedBy = ["graphical-session.target"];
@@ -52,9 +53,8 @@
 
   # Enable the X11 windowing system.
   services = {
-    xserver= {
+    xserver = {
       desktopManager = {
-
         plasma5 = {
           enable = true;
         };
@@ -62,18 +62,17 @@
         # mate = {
         #   enable = true;
         # };
-        
       };
 
       enable = true;
       displayManager = {
-          startx.enable = true;
-          defaultSession = "plasma";
-          autoLogin = {
-              enable = true;
-              user = "morp";
-          };
-          sddm.enable = true;
+        startx.enable = true;
+        defaultSession = "plasma";
+        autoLogin = {
+          enable = true;
+          user = "morp";
+        };
+        sddm.enable = true;
       };
 
       windowManager.i3 = {
@@ -105,14 +104,14 @@
   # Enable touchpad support (enabled default in most desktopManager).
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users  = {
-	defaultUserShell = pkgs.zsh;
-	users.morp = {
-	    isNormalUser = true;
-	    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-	    shell = pkgs.zsh;
-	    # packages = with pkgs; [ thunderbird ];
-	};
+  users = {
+    defaultUserShell = pkgs.zsh;
+    users.morp = {
+      isNormalUser = true;
+      extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
+      shell = pkgs.zsh;
+      # packages = with pkgs; [ thunderbird ];
+    };
   };
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -150,7 +149,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim 
+    vim
     wget
     discord
     tealdeer
@@ -171,6 +170,5 @@
     which
     gnumake
   ];
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 }
-

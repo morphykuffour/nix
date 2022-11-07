@@ -94,9 +94,9 @@ in {
         "${mod}+Shift+space" = "floating toggle";
         "${mod}+space" = "focus mode_toggle";
         "${mod}+a" = "focus parent";
-        "${mod}+Tab"="workspace back_and_forth";
+        "${mod}+Tab" = "workspace back_and_forth";
         "${mod}+Prior" = "workspace next";
-        "${mod}+Next"  = "workspace prev";
+        "${mod}+Next" = "workspace prev";
 
         # TODO: figure out
         # bindsym $mod+[ workspace prev
@@ -173,10 +173,10 @@ in {
           notification = false;
         }
         {
-          command = "${home}/.config/polybar/launch.sh";                                                                                     
-          always = true;                                                                                                                     
-          notification = false;                                                                                                              
-        }  
+          command = "${home}/.config/polybar/launch.sh";
+          always = true;
+          notification = false;
+        }
       ];
     };
 
