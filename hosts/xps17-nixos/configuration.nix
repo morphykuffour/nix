@@ -131,19 +131,11 @@
     description = "default account for linux";
     shell = pkgs.zsh;
     extraGroups = ["uucp" "dialout" "networkmanager" "wheel" "docker" "video" "vboxusers" "libvirtd" "input" "adbusers" "wireshark"];
-    packages = with pkgs; [
-      vim
-      vscode
-    ];
+    # packages = with pkgs; [ ];
   };
 
   nixpkgs.config = {
     allowUnfree = true;
-
-    # permittedInsecurePackages = [
-    #   "python3.10-mistune-0.8.4"
-    # ];
-
     packageOverrides = pkgs: {
       nur =
         (import (
@@ -413,6 +405,8 @@
     # teams
     ffmpeg-full
     awscli
+    vim
+    vscode
     # TODO change to wireguard kernel_module
     protonvpn-gui
     virtualbox

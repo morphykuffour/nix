@@ -19,13 +19,13 @@
 
   # Set your time zone.
   time.timeZone = "America/New_York";
+  i18n.defaultLocale = "en_US.UTF-8";
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
   # console = {
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
@@ -33,18 +33,31 @@
   # };
 
   # Enable the X11 windowing system.
-  services.xserver.desktopManager.plasma5.enable = true;
-  services.xserver= {
-	enable = true;
-	displayManager = {
-		startx.enable = true;
-		defaultSession = "plasma";
-		autoLogin = {
-			enable = true;
-			user = "morp";
-		};
-		sddm.enable = true;
-	};
+  services = {
+    xserver= {
+      desktopManage = {
+
+        plasma5 = {
+          enable = true;
+        };
+
+        # mate = {
+        #   enable = true;
+        # };
+        
+      };
+
+      enable = true;
+      displayManager = {
+          startx.enable = true;
+          defaultSession = "plasma";
+          autoLogin = {
+              enable = true;
+              user = "morp";
+          };
+          sddm.enable = true;
+      };
+    };
   };
 
   # Configure keymap in X11
