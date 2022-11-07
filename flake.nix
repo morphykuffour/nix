@@ -144,6 +144,35 @@
         specialArgs = inputs;
       };
 
+      optiplex-nixos = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/optiplex-nixos
+          nur.nixosModules.nur
+          {
+            environment.systemPackages = [
+              alejandra.defaultPackage.x86_64-linux
+            ];
+          }
+
+          # nixos-hardware.nixosModules.dell-xps-17-9700
+          # home-manager.nixosModules.home-manager
+          # {
+          #   home-manager = {
+          #     useGlobalPkgs = true;
+          #     useUserPackages = true;
+          #     users.morp = {
+          #       imports = [./home.nix];
+          #     };
+          #     extraSpecialArgs = {
+          #       plover = inputs.plover.packages."x86_64-linux".plover;
+          #     };
+          #   };
+          # }
+        ];
+        specialArgs = inputs;
+      };
+
       # xps17 WSL TODO fix
       win-wsl = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";

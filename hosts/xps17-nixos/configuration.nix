@@ -1,11 +1,5 @@
+{ config, current, lib, pkgs, home-manager, ... }:
 {
-  config,
-  current,
-  lib,
-  pkgs,
-  home-manager,
-  ...
-}: {
   imports = [
     <nixos-hardware/dell/xps/17-9710/intel>
     ./hardware-configuration.nix
@@ -31,7 +25,6 @@
 
   # Bootloader.
   boot = {
-    # kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     kernelParams = [ "nohibernate" ];
     initrd = {
       availableKernelModules = ["xhci_pci" "nvme" "usbhid" "uas" "sd_mod" "rtsx_pci_sdmmc"];
@@ -144,7 +137,6 @@
     ];
   };
 
-  # Allow unfree packages
   nixpkgs.config = {
     allowUnfree = true;
 
@@ -185,18 +177,6 @@
       package = pkgs.mysql80;
     };
 
-    # httpd = {
-    #   enable = true;
-    #   package = pkgs.apacheHttpd;
-    #   adminAddr = "morty@example.org";
-    #   user = "morp";
-    #   # extraConfig =
-    #   # ''
-    #   #   Listen 127.0.0.1:80
-    #   #   ServerName localhost
-    #   # '';
-    # };
-
     openssh.enable = true;
     clipmenu.enable = true;
     blueman.enable = true;
@@ -215,31 +195,25 @@
 
     flatpak.enable = true;
 
-    samba = {
-      enable = true;
-      shares = {
-        public = {
-          path = "/home/morp/Public";
-          "read only" = true;
-          browseable = "yes";
-          "guest ok" = "yes";
-          comment = "Public samba share.";
-        };
-      };
-    };
+    # samba = {
+    #   enable = true;
+    #   shares = {
+    #     public = {
+    #       path = "/home/morp/Public";
+    #       "read only" = true;
+    #       browseable = "yes";
+    #       "guest ok" = "yes";
+    #       comment = "Public samba share.";
+    #     };
+    #   };
+    # };
 
     xserver = {
       # Enable touchpad support (enabled default in most desktopManager).
       libinput.enable = true;
 
-      # nvidia gpu config
-      # videoDrivers = [ "nvidia" ];
-
       # Enable the X11 windowing system.
       enable = true;
-
-      # TODO fix this
-      # autorun = false;
 
       # Configure keymap in X11
       layout = "us";
@@ -264,8 +238,6 @@
           enable = false;
           user = "morp";
         };
-
-        # kde display manager
         sddm.enable = true;
       };
 
@@ -298,14 +270,12 @@
       enable = true;
     };
 
-    # fix flake build TODO
     libvirtd = {
       enable = true;
       qemu = {
         runAsRoot = true;
         ovmf = {
           enable = true;
-          # package = [ pkgs.OVMFFull ];
         };
         swtpm.enable = true;
       };
@@ -313,18 +283,6 @@
     };
   };
 
-  # Minimal configuration for NFS support with Vagrant.
-  # networking.firewall = {
-  #   enable = true;
-  #   allowedTCPPorts = [ 17500 111 2049 4000 4001 4002 20048 ];
-  #   allowedUDPPorts = [ 17500 111 2049 4000 4001 4002 20048 ];
-  #
-  #   extraCommands = ''
-  #     ip46tables -I INPUT 1 -i vboxnet+ -p tcp -m tcp --dport 2049 -j ACCEPT
-  #   '';
-  # };
-
-  # fonts
   fonts.fonts = with pkgs; [
     (nerdfonts.override {fonts = ["JetBrainsMono"];})
   ];
@@ -354,8 +312,6 @@
   system.stateVersion = "22.05";
 
   nix = {
-    # package = pkgs.nixFlakes;
-    # package = nixVersions.stable;
     extraOptions = "experimental-features = nix-command flakes";
     gc = {
       automatic = true;
@@ -382,8 +338,6 @@
     clipmenu
     playerctl
     xorg.xbacklight
-    # xorg.xorgserver
-    # dropbox-cli
     autorandr
     xdotool
     shared-mime-info
@@ -395,14 +349,9 @@
     ventoy-bin
     picom
     bluez
-    # logiops
     rustup
     brightnessctl
     xdragon
-    # keymapviz
-    # vial
-    # libusb1
-    # hidapi
     # nur.repos.foolnotion.keyd
     # nur.repos.meain.kmonad
     gnome.dconf-editor
@@ -424,7 +373,6 @@
     # nfs-utils
     zfs
     bashmount
-    # apacheHttpd
     vagrant
     grub2
     qemu
@@ -468,6 +416,5 @@
     # TODO change to wireguard kernel_module
     protonvpn-gui
     virtualbox
-    # flutter
   ];
 }
