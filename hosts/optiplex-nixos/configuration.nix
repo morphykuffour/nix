@@ -35,7 +35,7 @@
   # Enable the X11 windowing system.
   services = {
     xserver= {
-      desktopManage = {
+      desktopManager = {
 
         plasma5 = {
           enable = true;
