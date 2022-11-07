@@ -34,7 +34,7 @@ in {
     startMenuLaunchers = true;
 
     # Enable integration with Docker Desktop
-    docker-desktop.enable = true;
+    # docker-desktop.enable = true;
 
     # tailscale.enable = true;
   };
