@@ -1,4 +1,4 @@
 *~
 *.swp
 *.swo
-hosts/xps17-nixos/tailscale.nix
+modules/tailscale.nix
