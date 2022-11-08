@@ -131,6 +131,7 @@
           {
             environment.systemPackages = [
               alejandra.defaultPackage.x86_64-linux
+              agenix.defaultPackage.x86_64-linux
             ];
           }
 
@@ -160,6 +161,7 @@
           {
             environment.systemPackages = [
               alejandra.defaultPackage.x86_64-linux
+              agenix.defaultPackage.x86_64-linux
             ];
           }
 
