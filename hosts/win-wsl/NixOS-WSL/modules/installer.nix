@@ -1,11 +1,19 @@
-{ config, lib, pkgs, ... }:
-with builtins; with lib; {
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with builtins;
+with lib; {
   config = mkIf config.wsl.enable (
     let
       mkTarball = pkgs.callPackage "${lib.cleanSource pkgs.path}/nixos/lib/make-system-tarball.nix";
 
-      pkgs2storeContents = map (x: { object = x; symlink = "none"; });
+      pkgs2storeContents = map (x: {
+        object = x;
+        symlink = "none";
+      });
 
       rootfs = let tarball = config.system.build.tarball; in "${tarball}/tarball/${tarball.fileName}.tar${tarball.extension}";
 
@@ -39,23 +47,36 @@ with builtins; with lib; {
       passwd = pkgs.writeText "passwd" ''
         root:x:0:0:System administrator:/root:${installer}
       '';
-    in
-    {
-
+    in {
       system.build.installer = mkTarball {
         fileName = "nixos-wsl-installer";
         compressCommand = "gzip";
         compressionExtension = ".gz";
         extraArgs = "--hard-dereference";
 
-        storeContents = pkgs2storeContents [ installer ];
+        storeContents = pkgs2storeContents [installer];
 
         contents = [
-          { source = config.environment.etc."wsl.conf".source; target = "/etc/wsl.conf"; }
-          { source = config.environment.etc."fstab".source; target = "/etc/fstab"; }
-          { source = passwd; target = "/etc/passwd"; }
-          { source = "${pkgs.busybox}/bin/busybox"; target = "/bin/sh"; }
-          { source = "${pkgs.busybox}/bin/busybox"; target = "/bin/mount"; }
+          {
+            source = config.environment.etc."wsl.conf".source;
+            target = "/etc/wsl.conf";
+          }
+          {
+            source = config.environment.etc."fstab".source;
+            target = "/etc/fstab";
+          }
+          {
+            source = passwd;
+            target = "/etc/passwd";
+          }
+          {
+            source = "${pkgs.busybox}/bin/busybox";
+            target = "/bin/sh";
+          }
+          {
+            source = "${pkgs.busybox}/bin/busybox";
+            target = "/bin/mount";
+          }
         ];
 
         extraCommands = pkgs.writeShellScript "prepare" ''
@@ -64,8 +85,6 @@ with builtins; with lib; {
           ln -s /init bin/wslpath
         '';
       };
-
     }
   );
-
 }

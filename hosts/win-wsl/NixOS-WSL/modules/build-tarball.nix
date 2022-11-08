@@ -1,12 +1,22 @@
-{ config, pkgs, lib, ... }:
-with builtins; with lib;
-let
-  pkgs2storeContents = l: map (x: { object = x; symlink = "none"; }) l;
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+with builtins; with lib; let
+  pkgs2storeContents = l:
+    map (x: {
+      object = x;
+      symlink = "none";
+    })
+    l;
 
   nixpkgs = lib.cleanSource pkgs.path;
 
-  channelSources = pkgs.runCommand "nixos-${config.system.nixos.version}"
-    { preferLocalBuild = true; }
+  channelSources =
+    pkgs.runCommand "nixos-${config.system.nixos.version}"
+    {preferLocalBuild = true;}
     ''
       mkdir -p $out
       cp -prd ${nixpkgs.outPath} $out/nixos
@@ -58,10 +68,7 @@ let
       sed -i 's|import \./default\.nix|import \./nixos-wsl|' ./etc/nixos/configuration.nix
     ''}
   '';
-
-in
-{
-
+in {
   options.wsl.tarball = {
     includeConfig = mkOption {
       type = types.bool;
@@ -70,13 +77,12 @@ in
     };
   };
 
-
   config = mkIf config.wsl.enable {
     # These options make no sense without the wsl-distro module anyway
 
     system.build.tarball = pkgs.callPackage "${nixpkgs}/nixos/lib/make-system-tarball.nix" {
       # No contents, structure will be added by prepare script
-      contents = [ ];
+      contents = [];
 
       fileName = "nixos-wsl-${pkgs.hostPlatform.system}";
 
@@ -92,6 +98,5 @@ in
       compressCommand = "gzip";
       compressionExtension = ".gz";
     };
-
   };
 }

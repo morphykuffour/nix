@@ -25,8 +25,8 @@ in {
   };
 
   users = {
-      defaultUserShell = pkgs.zsh;
-      users.morp = {
+    defaultUserShell = pkgs.zsh;
+    users.morp = {
       isNormalUser = true;
       home = "/home/morp";
       shell = pkgs.zsh;
@@ -84,9 +84,8 @@ in {
     xclip
     nodejs
     ranger
-    gnumake 
+    gnumake
     ripgrep
     fzf
   ];
-
 }

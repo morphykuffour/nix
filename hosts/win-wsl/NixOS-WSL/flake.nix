@@ -11,9 +11,13 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
+  outputs = {
+    self,
+    nixpkgs,
+    flake-utils,
+    ...
+  }:
     {
-
       nixosModules.wsl = {
         imports = [
           ./modules/build-tarball.nix
@@ -32,35 +36,33 @@
           ./configuration.nix
         ];
       };
+    }
+    // flake-utils.lib.eachSystem
+    ["x86_64-linux" "aarch64-linux"]
+    (
+      system: let
+        pkgs = import nixpkgs {inherit system;};
+      in {
+        checks = {
+          check-format = pkgs.runCommand "check-format" {nativeBuildInputs = with pkgs; [nixpkgs-fmt shfmt];} ''
+            nixpkgs-fmt --check ${./.}
+            shfmt -i 2 -d ${./scripts}/*.sh
+            mkdir $out # success
+          '';
+        };
 
-    } //
-    flake-utils.lib.eachSystem
-      [ "x86_64-linux" "aarch64-linux" ]
-      (system:
-        let
-          pkgs = import nixpkgs { inherit system; };
-        in
-        {
-          checks = {
-            check-format = pkgs.runCommand "check-format" { nativeBuildInputs = with pkgs; [ nixpkgs-fmt shfmt ]; } ''
-              nixpkgs-fmt --check ${./.}
-              shfmt -i 2 -d ${./scripts}/*.sh
-              mkdir $out # success
-            '';
-          };
+        devShell = pkgs.mkShell {
+          RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
 
-          devShell = pkgs.mkShell {
-            RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
-
-            nativeBuildInputs = with pkgs; [
-              nixpkgs-fmt
-              shfmt
-              rustc
-              cargo
-              rustfmt
-              clippy
-            ];
-          };
-        }
-      );
+          nativeBuildInputs = with pkgs; [
+            nixpkgs-fmt
+            shfmt
+            rustc
+            cargo
+            rustfmt
+            clippy
+          ];
+        };
+      }
+    );
 }
