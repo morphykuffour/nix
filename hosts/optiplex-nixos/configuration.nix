@@ -87,6 +87,9 @@
         ];
       };
     };
+    vscode-server.enable = true;
+    # And then enable them for the relevant users:
+    # systemctl --user enable auto-fix-vscode-server.service
   };
 
   # Configure keymap in X11

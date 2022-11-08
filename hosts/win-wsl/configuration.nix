@@ -34,7 +34,12 @@ in {
     };
   };
 
-  services.openssh.enable = true;
+  services = {
+    openssh.enable = true;
+    # And then enable them for the relevant users:
+    # systemctl --user enable auto-fix-vscode-server.service
+    vscode-server.enable = true;
+  };
   wsl = {
     enable = true;
     wslConf.automount.root = "/mnt";

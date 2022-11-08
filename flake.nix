@@ -58,6 +58,8 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    vscode-server.url = "github:msteen/nixos-vscode-server";
   };
 
   outputs = {
@@ -72,6 +74,7 @@
     alejandra,
     nixos-wsl,
     agenix,
+    vscode-server,
     ...
   } @ inputs: {
     nixosConfigurations = let
@@ -158,14 +161,13 @@
         modules = [
           ./hosts/optiplex-nixos
           nur.nixosModules.nur
+          vscode-server.nixosModule
           {
             environment.systemPackages = [
               alejandra.defaultPackage.x86_64-linux
               agenix.defaultPackage.x86_64-linux
             ];
           }
-
-          # nixos-hardware.nixosModules.dell-xps-17-9700
           home-manager.nixosModules.home-manager
           {
             home-manager = {
@@ -188,6 +190,7 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/win-wsl
+          vscode-server.nixosModule
           {
             environment.systemPackages = [
               alejandra.defaultPackage.x86_64-linux
