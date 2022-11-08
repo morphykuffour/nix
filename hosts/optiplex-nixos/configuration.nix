@@ -172,7 +172,6 @@
     tailscale
   ];
   nix.settings.experimental-features = ["nix-command" "flakes"];
-<<<<<<< Updated upstream
 
   # tailscale
   # enable the tailscale service
