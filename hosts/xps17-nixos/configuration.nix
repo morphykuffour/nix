@@ -155,6 +155,11 @@
           inherit pkgs;
         };
     };
+
+    # insecure package needed for nixops
+    permittedInsecurePackages = [
+      "python2.7-pyjwt-1.7.1"
+    ];
   };
 
   xdg.portal.enable = true;
@@ -418,6 +423,8 @@
     protonvpn-gui
     virtualbox
     tailscale
+    nixops
+    gnomeExtensions.taildrop-send
   ];
 
   # tailscale
