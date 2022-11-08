@@ -201,7 +201,7 @@
       fi
 
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale up -authkey tskey-auth-kgVdsP4CNTRL-bbiZywNy4EdRgztF3x3DHdbxTQ5y3d8w
+      ${tailscale}/bin/tailscale up --authkey=${cfg.autoprovision.key}
     '';
   };
 
@@ -223,3 +223,5 @@
     allowedTCPPorts = [22];
   };
 }
+# private key for optiplex-nixos
+# tskey-auth-kgVdsP4CNTRL-bbiZywNy4EdRgztF3x3DHdbxTQ5y3d8w
