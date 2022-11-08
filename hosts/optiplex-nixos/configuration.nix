@@ -223,6 +223,4 @@
     # allow you to SSH in over the public internet
     allowedTCPPorts = [22];
   };
-=======
->>>>>>> Stashed changes
 }
