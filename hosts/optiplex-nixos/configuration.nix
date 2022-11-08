@@ -172,6 +172,7 @@
     tailscale
   ];
   nix.settings.experimental-features = ["nix-command" "flakes"];
+<<<<<<< Updated upstream
 
   # tailscale
   # enable the tailscale service
@@ -222,4 +223,6 @@
     # allow you to SSH in over the public internet
     allowedTCPPorts = [22];
   };
+=======
+>>>>>>> Stashed changes
 }
