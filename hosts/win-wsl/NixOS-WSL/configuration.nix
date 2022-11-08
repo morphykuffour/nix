@@ -1,9 +1,11 @@
-{ pkgs, config, modulesPath, ... }:
-
-let
-  nixos-wsl = import ./default.nix;
-in
 {
+  pkgs,
+  config,
+  modulesPath,
+  ...
+}: let
+  nixos-wsl = import ./default.nix;
+in {
   imports = [
     nixos-wsl.nixosModules.wsl
   ];
@@ -19,7 +21,6 @@ in
 
     # Enable integration with Docker Desktop (needs to be installed)
     # docker-desktop.enable = true;
-
   };
 
   # Enable nix flakes

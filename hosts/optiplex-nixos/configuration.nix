@@ -210,10 +210,9 @@
   };
 
   networking.firewall = {
-    
-    # warning: Strict reverse path filtering breaks Tailscale 
+    # warning: Strict reverse path filtering breaks Tailscale
     # exit node use and some subnet routing setups.
-  checkReversePath = "loose";
+    checkReversePath = "loose";
     # enable the firewall
     enable = true;
 
