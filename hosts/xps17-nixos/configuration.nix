@@ -264,9 +264,12 @@
 
     virtualbox = {
       host.package = pkgs.virtualbox;
-      host.headless = true;
+      host.headless = false;
       host.enable = true;
+      host.enableWebService = true;
+      host.enableExtensionPack = true;
       guest.enable = true;
+      guest.x11 = true;
     };
     spiceUSBRedirection.enable = true;
 
@@ -412,7 +415,6 @@
     android-udev-rules
     gradle
     zoom-us
-    protonmail-bridge
     # teams
     ffmpeg-full
     awscli
@@ -420,7 +422,6 @@
     vscode
     # TODO change to wireguard kernel_module
     wireguard-tools
-    protonvpn-gui
     virtualbox
     tailscale
     nixops
