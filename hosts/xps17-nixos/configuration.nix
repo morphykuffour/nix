@@ -371,7 +371,6 @@
     reptyr # TODO learn usuage
     wireshark
     tshark
-    rustdesk
     perf-tools
     procps
     zsync
