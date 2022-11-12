@@ -100,7 +100,6 @@
       sublime
       surfraw
       nix-index
-      vial
       redshift
       termite
       plover
