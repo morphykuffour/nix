@@ -122,6 +122,10 @@
       black
       rust-analyzer
       postman
+      openssl
+      protonvpn-gui
+      protonmail-bridge
+      play-with-mpv
       (python39.withPackages (pp:
         with pp; [
           pynvim
