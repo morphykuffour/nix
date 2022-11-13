@@ -1,5 +1,7 @@
 #
 # DSLR Camera as webcam
+# https://www.tomoliver.net/posts/using-an-slr-as-a-webcam-nixos
+# https://thesquareplanet.com/blog/camera-webcam-on-linux/
 #
 {
   config,
