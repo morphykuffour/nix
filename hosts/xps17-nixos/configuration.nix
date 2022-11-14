@@ -107,7 +107,7 @@ in {
         Type = "simple";
         ExecStart = "${pkgs.nur.repos.foolnotion.keyd}/bin/keyd";
       };
-      wantedBy = ["sysinit.target"];
+      # wantedBy = ["sysinit.target"];
     };
 
     # [Unit]
