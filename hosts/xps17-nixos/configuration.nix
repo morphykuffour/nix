@@ -39,7 +39,6 @@ in {
     ./hardware-configuration.nix
     ./picom.nix
     ./dslr.nix
-    # ./keyd.nix
     # ./forticlientsslvpn.nix
     # ./mongosh.nix
     # ./wireguard.nix
