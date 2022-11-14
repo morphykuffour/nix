@@ -5,8 +5,7 @@
   nixos-wsl,
   modulesPath,
   ...
-}:
-{
+}: {
   imports = [
     "${modulesPath}/profiles/minimal.nix"
     nixos-wsl.nixosModules.wsl
