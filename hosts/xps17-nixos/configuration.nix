@@ -5,12 +5,41 @@
   pkgs,
   home-manager,
   ...
-}: {
+}: let
+  keydConfig = ''
+    [ids]
+    *
+
+    [main]
+
+    capslock = overload(ctrl_vim, esc)
+
+    # ctrl_vim modifier layer; inherits from 'Ctrl' modifier layer
+
+    [ctrl_vim:C]
+
+    space = swap(vim_mode)
+
+    # vim_mode modifier layer; also inherits from 'Ctrl' modifier layer
+
+    [vim_mode:C]
+
+    h = left
+    j = down
+    k = up
+    l = right
+    # forward word
+    w = C-right
+    # backward word
+    b = C-left
+  '';
+in {
   imports = [
     <nixos-hardware/dell/xps/17-9710/intel>
     ./hardware-configuration.nix
     ./picom.nix
     ./dslr.nix
+    # ./keyd.nix
     # ./forticlientsslvpn.nix
     # ./mongosh.nix
     # ./wireguard.nix
@@ -81,6 +110,18 @@
       wantedBy = ["sysinit.target"];
     };
 
+    # [Unit]
+    # Description=key remapping daemon
+    # Requires=local-fs.target
+    # After=local-fs.target
+    #
+    # [Service]
+    # Type=simple
+    # ExecStart=/usr/bin/keyd
+    #
+    # [Install]
+    # WantedBy=sysinit.target
+
     # kmonad = {
     #   enable = false;
     #   unitConfig = {
@@ -95,6 +136,7 @@
     #   wantedBy = [ "default.target" ];
     # };
   };
+  environment.etc."keyd/default.conf".text = keydConfig;
 
   # locale
   time.timeZone = "America/New_York";
@@ -380,10 +422,6 @@
         "\${XDG_BIN_HOME}"
       ];
     };
-
-    # etc = {
-    #   keyd.source = ./keeb/keyd;
-    # };
 
     systemPackages = with pkgs; [
       wget
