@@ -126,6 +126,7 @@
       protonmail-bridge
       play-with-mpv
       rustdesk
+      python2
       (python39.withPackages (pp:
         with pp; [
           pynvim
