@@ -78,21 +78,6 @@
     ...
   } @ inputs: {
     nixosConfigurations = let
-      # config = {
-      #   allowBroken = true;
-      #   allowUnfree = true;
-      #   tarball-ttl = 0;
-      #   contentAddressedByDefault = false;
-      # };
-      #
-      # user = "morp";
-      #
-      # pkgsForSystem = system:
-      #   import nixpkgs {
-      #     config = {allowUnfree = true;};
-      #     inherit system;
-      #   };
-      #
       defaultModules = [
         home-manager.nixosModules.home-manager
         ({
@@ -185,7 +170,6 @@
         specialArgs = inputs;
       };
 
-      # xps17 WSL TODO fix
       win-wsl = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [

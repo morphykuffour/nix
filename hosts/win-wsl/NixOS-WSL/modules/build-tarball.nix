@@ -4,7 +4,8 @@
   lib,
   ...
 }:
-with builtins; with lib; let
+with builtins;
+with lib; let
   pkgs2storeContents = l:
     map (x: {
       object = x;
