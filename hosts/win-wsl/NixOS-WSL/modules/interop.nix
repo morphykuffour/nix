@@ -4,7 +4,8 @@
   config,
   ...
 }:
-with builtins; with lib; {
+with builtins;
+with lib; {
   imports = [
     (mkRenamedOptionModule ["wsl" "compatibility" "interopPreserveArgvZero"] ["wsl" "interop" "preserveArgvZero"])
   ];

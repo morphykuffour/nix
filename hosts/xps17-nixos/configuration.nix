@@ -16,20 +16,6 @@
     # ./wireguard.nix
   ];
 
-  environment.variables.EDITOR = "vim";
-
-  environment.sessionVariables = rec {
-    XDG_CACHE_HOME = "\${HOME}/.cache";
-    XDG_CONFIG_HOME = "\${HOME}/.config";
-    XDG_BIN_HOME = "\${HOME}/.local/bin";
-    XDG_DATA_HOME = "\${HOME}/.local/share";
-    ANDROID_HOME = "\${HOME}/Android/Sdk";
-    CHROME_EXECUTABLE = "/home/morp/.nix-profile/bin/google-chrome-stable";
-    PATH = [
-      "\${XDG_BIN_HOME}"
-    ];
-  };
-
   # Bootloader.
   boot = {
     kernelParams = ["nohibernate"];
@@ -80,35 +66,35 @@
     };
   };
 
-  # systemd.services = {
-  # keyd = {
-  #   enable = false;
-  #   description = "keyd key remapping daemon";
-  #   unitConfig = {
-  #     Requires = "local-fs.target";
-  #     After = "local-fs.target";
-  #   };
-  #   serviceConfig = {
-  #     Type = "simple";
-  #     ExecStart = "${pkgs.nur.repos.foolnotion.keyd}/bin/keyd";
-  #   };
-  #   wantedBy = [ "sysinit.target" ];
-  # };
+  systemd.services = {
+    keyd = {
+      enable = true;
+      description = "keyd key remapping daemon";
+      unitConfig = {
+        Requires = "local-fs.target";
+        After = "local-fs.target";
+      };
+      serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.nur.repos.foolnotion.keyd}/bin/keyd";
+      };
+      wantedBy = ["sysinit.target"];
+    };
 
-  # kmonad = {
-  #   enable = false;
-  #   unitConfig = {
-  #     description = "kmonad key remapping daemon";
-  #   };
-  #   serviceConfig = {
-  #     Restart = "always";
-  #     RestartSec = "3";
-  #     ExecStart = "${pkgs.nur.repos.meain.kmonad}/bin/kmonad ./keeb/colemak-dh-extend-ansi.kbd";
-  #     Nice = "-20";
-  #   };
-  #   wantedBy = [ "default.target" ];
-  # };
-  # };
+    # kmonad = {
+    #   enable = false;
+    #   unitConfig = {
+    #     description = "kmonad key remapping daemon";
+    #   };
+    #   serviceConfig = {
+    #     Restart = "always";
+    #     RestartSec = "3";
+    #     ExecStart = "${pkgs.nur.repos.meain.kmonad}/bin/kmonad ./keeb/colemak-dh-extend-ansi.kbd";
+    #     Nice = "-20";
+    #   };
+    #   wantedBy = [ "default.target" ];
+    # };
+  };
 
   # locale
   time.timeZone = "America/New_York";
@@ -148,7 +134,7 @@
         (import (
           builtins.fetchTarball {
             url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
-            sha256 = "0ayx0qam0xvjn693nh460h9w3ki2brgidq6yv1qyw8kymj08csj4";
+            sha256 = "0sc9b9iicllz0kfd8sy7zx8r2dbp4sz42accm3j2lylqypyn42zj";
           }
         ))
         {
@@ -315,7 +301,6 @@
     };
   };
 
-  environment.pathsToLink = ["/libexec"];
   system.stateVersion = "22.05";
 
   nix = {
@@ -326,106 +311,6 @@
     };
     optimise.automatic = true;
   };
-
-  environment.systemPackages = with pkgs; [
-    wget
-    xclip
-    git
-    stow
-    brave
-    sqlite
-    unzip
-    coreutils
-    binutils
-    gcc
-    flameshot
-    sxiv
-    polybar
-    gnumake
-    clipmenu
-    playerctl
-    xorg.xbacklight
-    autorandr
-    xdotool
-    shared-mime-info
-    xdg-user-dirs
-    bluedevil
-    plasma5Packages.kdeconnect-kde
-    pciutils
-    usbutils
-    ventoy-bin
-    picom
-    bluez
-    rustup
-    brightnessctl
-    xdragon
-    # nur.repos.foolnotion.keyd
-    # nur.repos.meain.kmonad
-    gnome.dconf-editor
-    mate.mate-power-manager
-    mate.mate-media
-    orchis-theme
-    tela-circle-icon-theme
-    docker
-    libreoffice
-    reptyr # TODO learn usuage
-    wireshark
-    tshark
-    perf-tools
-    procps
-    zsync
-    cdrkit
-    sqlitebrowser
-    # nfs-utils
-    zfs
-    bashmount
-    vagrant
-    grub2
-    qemu
-    libvirt
-    virt-manager
-    spice-gtk
-    quickemu
-    samba
-    OVMF
-    # openconnect
-    swtpm
-    gdb
-    libinput-gestures
-    wmctrl
-    fprintd
-    fwupd
-    mysql80
-    dbeaver
-    dig
-    psmisc
-    discord
-    neovim
-    mycli
-    grc
-    cmake
-    ninja
-    clang
-    yarn
-    firefox
-    mongodb
-    android-studio
-    android-tools
-    android-udev-rules
-    gradle
-    zoom-us
-    # teams
-    ffmpeg-full
-    awscli
-    vim
-    vscode
-    # TODO change to wireguard kernel_module
-    wireguard-tools
-    virtualbox
-    tailscale
-    nixops
-    gnomeExtensions.taildrop-send
-  ];
 
   # tailscale
   # enable the tailscale service
@@ -474,5 +359,124 @@
 
     # allow you to SSH in over the public internet
     allowedTCPPorts = [22];
+  };
+
+  environment = {
+    variables.EDITOR = "vim";
+    pathsToLink = ["/libexec"];
+    sessionVariables = rec {
+      XDG_CACHE_HOME = "\${HOME}/.cache";
+      XDG_CONFIG_HOME = "\${HOME}/.config";
+      XDG_BIN_HOME = "\${HOME}/.local/bin";
+      XDG_DATA_HOME = "\${HOME}/.local/share";
+      ANDROID_HOME = "\${HOME}/Android/Sdk";
+      CHROME_EXECUTABLE = "/home/morp/.nix-profile/bin/google-chrome-stable";
+      PATH = [
+        "\${XDG_BIN_HOME}"
+      ];
+    };
+
+    etc = {
+      keyd.source = ./keeb/keyd;
+    };
+
+    systemPackages = with pkgs; [
+      wget
+      xclip
+      git
+      stow
+      brave
+      sqlite
+      unzip
+      coreutils
+      binutils
+      gcc
+      flameshot
+      sxiv
+      polybar
+      gnumake
+      clipmenu
+      playerctl
+      xorg.xbacklight
+      autorandr
+      xdotool
+      shared-mime-info
+      xdg-user-dirs
+      bluedevil
+      plasma5Packages.kdeconnect-kde
+      pciutils
+      usbutils
+      ventoy-bin
+      picom
+      bluez
+      rustup
+      brightnessctl
+      xdragon
+      nur.repos.foolnotion.keyd
+      # nur.repos.meain.kmonad
+      gnome.dconf-editor
+      mate.mate-power-manager
+      mate.mate-media
+      orchis-theme
+      tela-circle-icon-theme
+      docker
+      libreoffice
+      reptyr # TODO learn usuage
+      wireshark
+      tshark
+      perf-tools
+      procps
+      zsync
+      cdrkit
+      sqlitebrowser
+      # nfs-utils
+      zfs
+      bashmount
+      vagrant
+      grub2
+      qemu
+      libvirt
+      virt-manager
+      spice-gtk
+      quickemu
+      samba
+      OVMF
+      # openconnect
+      swtpm
+      gdb
+      libinput-gestures
+      wmctrl
+      fprintd
+      fwupd
+      mysql80
+      dbeaver
+      dig
+      psmisc
+      discord
+      neovim
+      mycli
+      grc
+      cmake
+      ninja
+      clang
+      yarn
+      firefox
+      mongodb
+      android-studio
+      android-tools
+      android-udev-rules
+      gradle
+      zoom-us
+      # teams
+      ffmpeg-full
+      awscli
+      vim
+      vscode
+      # TODO change to wireguard kernel_module
+      wireguard-tools
+      virtualbox
+      tailscale
+      nixops
+    ];
   };
 }
