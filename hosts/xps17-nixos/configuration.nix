@@ -106,34 +106,7 @@ in {
         Type = "simple";
         ExecStart = "${pkgs.nur.repos.foolnotion.keyd}/bin/keyd";
       };
-      # wantedBy = ["sysinit.target"];
     };
-
-    # [Unit]
-    # Description=key remapping daemon
-    # Requires=local-fs.target
-    # After=local-fs.target
-    #
-    # [Service]
-    # Type=simple
-    # ExecStart=/usr/bin/keyd
-    #
-    # [Install]
-    # WantedBy=sysinit.target
-
-    # kmonad = {
-    #   enable = false;
-    #   unitConfig = {
-    #     description = "kmonad key remapping daemon";
-    #   };
-    #   serviceConfig = {
-    #     Restart = "always";
-    #     RestartSec = "3";
-    #     ExecStart = "${pkgs.nur.repos.meain.kmonad}/bin/kmonad ./keeb/colemak-dh-extend-ansi.kbd";
-    #     Nice = "-20";
-    #   };
-    #   wantedBy = [ "default.target" ];
-    # };
   };
   environment.etc."keyd/default.conf".text = keydConfig;
 
@@ -455,7 +428,6 @@ in {
       brightnessctl
       xdragon
       nur.repos.foolnotion.keyd
-      # nur.repos.meain.kmonad
       gnome.dconf-editor
       mate.mate-power-manager
       mate.mate-media
@@ -466,7 +438,7 @@ in {
       reptyr # TODO learn usuage
       wireshark
       tshark
-      perf-tools
+      # perf-tools
       procps
       zsync
       cdrkit
@@ -518,7 +490,8 @@ in {
       wireguard-tools
       virtualbox
       tailscale
-      nixops
+      # nixops
+      sshfs
     ];
   };
 }
