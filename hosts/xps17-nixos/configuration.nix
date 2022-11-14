@@ -362,7 +362,12 @@
   };
 
   environment = {
-    variables.EDITOR = "vim";
+    variables = {
+      EDITOR = "nvim";
+      TERMINAL = "kitty";
+      BROWSER = "brave";
+    };
+
     pathsToLink = ["/libexec"];
     sessionVariables = rec {
       XDG_CACHE_HOME = "\${HOME}/.cache";
@@ -376,9 +381,9 @@
       ];
     };
 
-    etc = {
-      keyd.source = ./keeb/keyd;
-    };
+    # etc = {
+    #   keyd.source = ./keeb/keyd;
+    # };
 
     systemPackages = with pkgs; [
       wget
