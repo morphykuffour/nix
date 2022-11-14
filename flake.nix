@@ -174,6 +174,7 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/win-wsl
+          nixos-wsl.nixosModules.wsl
           vscode-server.nixosModule
           {
             environment.systemPackages = [
