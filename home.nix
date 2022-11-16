@@ -138,6 +138,7 @@
           dbus-python
           html2text
           keymapviz
+          mysql-connector
         ]))
     ];
   };
