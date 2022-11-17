@@ -65,7 +65,6 @@
       jq
       curl
       fzf
-      # nodejs
       sbcl
       neomutt
       mu
@@ -74,7 +73,6 @@
       pass
       himalaya
       calibre
-      emacs
       slides
       sxhkd
       inkscape

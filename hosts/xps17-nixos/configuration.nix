@@ -186,8 +186,17 @@ in {
     };
 
     mysql = {
-      enable = true;
+      user = "morp";
       package = pkgs.mysql80;
+      group = "wheel";
+      enable = true;
+    };
+    longview.mysqlPasswordFile = "/run/keys/dbpassword";
+
+    emacs = {
+      enable = true;
+      package = pkgs.emacs;
+      install = true;
     };
 
     openssh.enable = true;
@@ -224,10 +233,8 @@ in {
     xserver = {
       # Enable touchpad support (enabled default in most desktopManager).
       libinput.enable = true;
-
       # Enable the X11 windowing system.
       enable = true;
-
       # Configure keymap in X11
       layout = "us";
       xkbVariant = "";
