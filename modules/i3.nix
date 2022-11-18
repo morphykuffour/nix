@@ -71,6 +71,7 @@ in {
         "${mod}+Shift+x" = "exec systemctl suspend";
         "${mod}+Shift+q" = "kill";
         "${mod}+b" = "exec ${pkgs.brave}/bin/brave";
+        "${mod}+Shift+b" = "exec ${pkgs.xdotool} type $(grep -v  '^#' ~/Dropbox/bookmarks/bookmarks.txt | dmenu -i -l 50 | cut -d' ' -f1)";
         # "${mod}+y"       = "exec ${pkgs.emacs}/bin/emacs";
         "${mod}+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";
         "Mod4+l" = "exec ${pkgs.systemd}/bin/loginctl lock-session";
