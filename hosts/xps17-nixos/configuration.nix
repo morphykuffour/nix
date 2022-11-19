@@ -506,7 +506,8 @@ in {
       virtualbox
       tailscale
       # nixops
-      sshfs
+      # sshfs
+      kitty
     ];
   };
 }

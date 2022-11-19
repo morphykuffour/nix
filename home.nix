@@ -13,7 +13,7 @@
     ./modules/pass.nix
     ./modules/fonts.nix
     ./modules/sxhkd.nix
-    ./modules/nvim.nix
+    # ./modules/nvim.nix
     # TODO make tailscale work
     # ./modules/tailscale.nix
     ./modules/picom.nix
@@ -43,7 +43,7 @@
     stateVersion = "22.05";
 
     packages = with pkgs; [
-      kitty
+      # kitty
       tmux
       zsh
       atuin
