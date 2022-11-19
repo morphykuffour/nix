@@ -46,7 +46,6 @@ in {
   imports = [
     <nixos-hardware/dell/xps/17-9710/intel>
     ./hardware-configuration.nix
-    ./picom.nix
     ./dslr.nix
     # ./forticlientsslvpn.nix
     # ./mongosh.nix
