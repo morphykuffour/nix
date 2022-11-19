@@ -1,20 +1,6 @@
 {pkgs, ...}: {
   services.picom = {
     enable = true;
-
-    # package = pkgs.picom.overrideAttrs (o: {
-    #   src = pkgs.fetchFromGitHub {
-    #     #repo = "picom";
-    #     #owner = "pijulius";
-    #     #rev = "982bb43e5d4116f1a37a0bde01c9bda0b88705b9";
-    #     #sha256 = "YiuLScDV9UfgI1MiYRtjgRkJ0VuA1TExATA2nJSJMhM=";
-    #     repo = "picom";
-    #     owner = "jonaburg";
-    #     rev = "e3c19cd7d1108d114552267f302548c113278d45";
-    #     sha256 = "4voCAYd0fzJHQjJo4x3RoWz5l3JJbRvgIXn1Kg6nz6Y=";
-    #   };
-    # });
-
     inactiveOpacity = 0.8;
     activeOpacity = 1.0;
     opacityRules = [

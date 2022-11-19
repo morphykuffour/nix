@@ -438,7 +438,7 @@ in {
       pciutils
       usbutils
       ventoy-bin
-      picom
+      # picom
       bluez
       rustup
       brightnessctl
