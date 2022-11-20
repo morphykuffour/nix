@@ -505,7 +505,7 @@ in {
       wireguard-tools
       virtualbox
       tailscale
-      # nixops
+      nixops
       # sshfs
       kitty
     ];
