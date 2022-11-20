@@ -271,6 +271,48 @@ in {
           sxhkd
         ];
       };
+
+      xserver = {
+        xrandrHeads = [
+          {
+            output = "HDMI-1";
+            primary = true;
+            monitorConfig = ''
+              Option "PreferredMode" "2560x1440"
+              Option "Position" "0 0"
+            '';
+          }
+          {
+            output = "eDP-1";
+            monitorConfig = ''
+              Option "PreferredMode" "3840x2160"
+              Option "Position" "0 0"
+            '';
+          }
+        ];
+        resolutions = [
+          {
+            x = 2048;
+            y = 1152;
+          }
+          {
+            x = 1920;
+            y = 1080;
+          }
+          {
+            x = 2560;
+            y = 1440;
+          }
+          {
+            x = 3072;
+            y = 1728;
+          }
+          {
+            x = 3840;
+            y = 2160;
+          }
+        ];
+      };
     };
   };
 
