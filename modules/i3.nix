@@ -72,7 +72,7 @@ in {
         "${mod}+Shift+q" = "kill";
         "${mod}+b" = "exec ${pkgs.brave}/bin/brave";
         "${mod}+Shift+b" = "exec ${pkgs.xdotool} type $(grep -v  '^#' ~/Dropbox/bookmarks/bookmarks.txt | dmenu -i -l 50 | cut -d' ' -f1)";
-        "${mod}+e"= "exec ${pkgs.emacs}/bin/emacsclient -c -a 'emacs'";
+        "${mod}+e" = "exec ${pkgs.emacs}/bin/emacsclient -c -a 'emacs'";
         "${mod}+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";
         "Mod4+l" = "exec ${pkgs.systemd}/bin/loginctl lock-session";
         "Mod4+v" = "exec ${pkgs.clipmenu}/bin/clipmenu -i -fn Terminus:size=13 -nb '#002b36' -nf '#839496' -sb '#073642' -sf '#93a1a1'";
