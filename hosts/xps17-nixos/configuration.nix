@@ -1,11 +1,11 @@
-{ config
-, current
-, lib
-, pkgs
-, home-manager
-, ...
-}:
-let
+{
+  config,
+  current,
+  lib,
+  pkgs,
+  home-manager,
+  ...
+}: let
   keydConfig = ''
     [ids]
     *
@@ -42,8 +42,7 @@ let
     # backward word
     b = C-left
   '';
-in
-{
+in {
   imports = [
     <nixos-hardware/dell/xps/17-9710/intel>
     ./hardware-configuration.nix
@@ -55,20 +54,20 @@ in
 
   # Bootloader.
   boot = {
-    kernelParams = [ "nohibernate" ];
+    kernelParams = ["nohibernate"];
     initrd = {
-      availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "uas" "sd_mod" "rtsx_pci_sdmmc" ];
-      kernelModules = [ ];
+      availableKernelModules = ["xhci_pci" "nvme" "usbhid" "uas" "sd_mod" "rtsx_pci_sdmmc"];
+      kernelModules = [];
     };
-    kernelModules = [ "kvm-intel" "wireguard" ];
-    extraModulePackages = [ ];
-    supportedFilesystems = [ "ntfs" ];
+    kernelModules = ["kvm-intel" "wireguard"];
+    extraModulePackages = [];
+    supportedFilesystems = ["ntfs"];
     loader = {
       systemd-boot.enable = false;
       grub = {
         version = 2;
         enable = true;
-        devices = [ "nodev" ];
+        devices = ["nodev"];
         efiSupport = true;
         useOSProber = true;
       };
@@ -87,7 +86,7 @@ in
 
   systemd.user.services.dropbox = {
     description = "Dropbox";
-    wantedBy = [ "graphical-session.target" ];
+    wantedBy = ["graphical-session.target"];
     environment = {
       QT_PLUGIN_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtPluginPrefix;
       QML2_IMPORT_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtQmlPrefix;
@@ -146,7 +145,7 @@ in
     isNormalUser = true;
     description = "default account for linux";
     shell = pkgs.zsh;
-    extraGroups = [ "uucp" "dialout" "networkmanager" "wheel" "docker" "video" "vboxusers" "libvirtd" "input" "adbusers" "wireshark" ];
+    extraGroups = ["uucp" "dialout" "networkmanager" "wheel" "docker" "video" "vboxusers" "libvirtd" "input" "adbusers" "wireshark"];
     # packages = with pkgs; [ ];
   };
 
@@ -160,9 +159,9 @@ in
             sha256 = "0sc9b9iicllz0kfd8sy7zx8r2dbp4sz42accm3j2lylqypyn42zj";
           }
         ))
-          {
-            inherit pkgs;
-          };
+        {
+          inherit pkgs;
+        };
     };
 
     # insecure package needed for nixops
@@ -342,12 +341,12 @@ in
         };
         swtpm.enable = true;
       };
-      allowedBridges = [ "virbr0" "virbr1" ];
+      allowedBridges = ["virbr0" "virbr1"];
     };
   };
 
   fonts.fonts = with pkgs; [
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    (nerdfonts.override {fonts = ["JetBrainsMono"];})
   ];
 
   # Programs
@@ -391,9 +390,9 @@ in
     description = "Automatic connection to Tailscale";
 
     # make sure tailscale is running before trying to connect to tailscale
-    after = [ "network-pre.target" "tailscale.service" ];
-    wants = [ "network-pre.target" "tailscale.service" ];
-    wantedBy = [ "multi-user.target" ];
+    after = ["network-pre.target" "tailscale.service"];
+    wants = ["network-pre.target" "tailscale.service"];
+    wantedBy = ["multi-user.target"];
 
     # set this service as a oneshot job
     serviceConfig.Type = "oneshot";
@@ -422,13 +421,13 @@ in
     enable = true;
 
     # always allow traffic from your Tailscale network
-    trustedInterfaces = [ "tailscale0" ];
+    trustedInterfaces = ["tailscale0"];
 
     # allow the Tailscale UDP port through the firewall
-    allowedUDPPorts = [ config.services.tailscale.port ];
+    allowedUDPPorts = [config.services.tailscale.port];
 
     # allow you to SSH in over the public internet
-    allowedTCPPorts = [ 22 ];
+    allowedTCPPorts = [22];
   };
 
   environment = {
@@ -438,7 +437,7 @@ in
       BROWSER = "brave";
     };
 
-    pathsToLink = [ "/libexec" ];
+    pathsToLink = ["/libexec"];
     sessionVariables = rec {
       XDG_CACHE_HOME = "\${HOME}/.cache";
       XDG_CONFIG_HOME = "\${HOME}/.config";
