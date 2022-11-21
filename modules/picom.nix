@@ -7,9 +7,9 @@
       "100:name = 'Picture in picture'"
       "100:name = 'Picture-in-Picture'"
       "100:class_i *= 'brave-browser'"
+      "100:class_g *= 'emacs'"
       "100:class_i = 'rofi'"
       "70:class_g = 'kitty'"
-      "80:class_g = 'emacs'"
       "70:class_g = 'nvim'"
       "70:class_g = 'vim'"
     ];
@@ -23,12 +23,16 @@
       blur-background = true;
       inactive-opacity-override = false;
       blur-kern = "7x7box";
-      blur-background-exclude = ["class_g = 'brave-browser'"];
+      blur-background-exclude = [
+        "class_g = 'brave-browser'"
+      ];
       inactiveDim = "0.2";
       focus-exclude = [
         "class_i = 'brave-browser'"
         "class_i = 'firefox'"
         "class_i = 'Google-chrome'"
+        "class_i = 'emacs'"
+        "class_i = 'Emacs'"
       ];
     };
     backend = "glx";

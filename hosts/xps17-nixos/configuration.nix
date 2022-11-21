@@ -489,15 +489,13 @@ in {
       tela-circle-icon-theme
       docker
       libreoffice
-      reptyr # TODO learn usuage
+      reptyr
       wireshark
       tshark
-      # perf-tools
       procps
       zsync
       cdrkit
       sqlitebrowser
-      # nfs-utils
       zfs
       bashmount
       vagrant
@@ -510,7 +508,7 @@ in {
       samba
       OVMF
       # openconnect
-      swtpm
+      # swtpm
       gdb
       libinput-gestures
       wmctrl
@@ -529,15 +527,11 @@ in {
       clang
       yarn
       firefox
-      mongodb
-      android-studio
-      android-tools
-      android-udev-rules
-      gradle
-      zoom-us
+      thunar
+      # mongodb
+      # zoom-us
       # teams
       ffmpeg-full
-      awscli
       vim
       vscode
       # TODO change to wireguard kernel_module
