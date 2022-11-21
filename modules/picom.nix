@@ -9,6 +9,7 @@
       "100:class_i *= 'brave-browser'"
       "100:class_i = 'rofi'"
       "70:class_g = 'kitty'"
+      "80:class_g = 'emacs'"
       "70:class_g = 'nvim'"
       "70:class_g = 'vim'"
     ];
