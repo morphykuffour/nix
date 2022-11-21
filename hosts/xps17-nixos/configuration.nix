@@ -156,7 +156,7 @@ in {
         (import (
           builtins.fetchTarball {
             url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
-            sha256 = "0sc9b9iicllz0kfd8sy7zx8r2dbp4sz42accm3j2lylqypyn42zj";
+            sha256 = "0xschfhp7cyd54i4i0a7v0lkdyzrp08l9p2xq9zqqp5mn0w3rrgk";
           }
         ))
         {
@@ -317,15 +317,15 @@ in {
   virtualisation = {
     # qemu.package = pkgs.qemu;
 
-    virtualbox = {
-      host.package = pkgs.virtualbox;
-      host.headless = false;
-      host.enable = true;
-      host.enableWebService = true;
-      host.enableExtensionPack = true;
-      guest.enable = true;
-      guest.x11 = true;
-    };
+    # virtualbox = {
+    #   host.package = pkgs.virtualbox;
+    #   host.headless = false;
+    #   host.enable = true;
+    #   host.enableWebService = true;
+    #   host.enableExtensionPack = true;
+    #   guest.enable = true;
+    #   guest.x11 = true;
+    # };
     spiceUSBRedirection.enable = true;
 
     docker = {
@@ -477,7 +477,6 @@ in {
       pciutils
       usbutils
       ventoy-bin
-      # picom
       bluez
       rustup
       brightnessctl
@@ -543,7 +542,7 @@ in {
       vscode
       # TODO change to wireguard kernel_module
       wireguard-tools
-      virtualbox
+      # virtualbox
       tailscale
       nixops
       # sshfs
