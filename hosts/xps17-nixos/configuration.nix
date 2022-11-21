@@ -507,8 +507,6 @@ in {
       quickemu
       samba
       OVMF
-      # openconnect
-      # swtpm
       gdb
       libinput-gestures
       wmctrl
@@ -534,14 +532,17 @@ in {
       ffmpeg-full
       vim
       vscode
-      # TODO change to wireguard kernel_module
       wireguard-tools
       # virtualbox
       tailscale
       nixops
       os-prober
-      # sshfs
       kitty
+
+      android-tools
+      android-studio
+      android-udev-rules
+
     ];
   };
 }
