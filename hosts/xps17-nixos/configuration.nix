@@ -285,7 +285,7 @@ in
         {
           output = "eDP-1";
           monitorConfig = ''
-            Option "PreferredMode" "3840x2160"
+            Option "PreferredMode" "2560x1600"
             Option "Position" "0 0"
           '';
         }
