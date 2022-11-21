@@ -156,7 +156,7 @@ in {
         (import (
           builtins.fetchTarball {
             url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
-            sha256 = "0xschfhp7cyd54i4i0a7v0lkdyzrp08l9p2xq9zqqp5mn0w3rrgk";
+            sha256 = "0nngvvn9zbmls57jpzpj0s9hkwb5j6m28hq6p74pb4l0gcgpngky";
           }
         ))
         {
@@ -527,7 +527,7 @@ in {
       clang
       yarn
       firefox
-      thunar
+      xfce.thunar
       # mongodb
       # zoom-us
       # teams
@@ -539,6 +539,7 @@ in {
       # virtualbox
       tailscale
       nixops
+      os-prober
       # sshfs
       kitty
     ];
