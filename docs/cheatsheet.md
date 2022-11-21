@@ -17,6 +17,7 @@ nixos-rebuild switch --rollback=2
 ```bash
 nix-collect-garbage -d
 ```
+
 - After removing appropriate old generations you can run the garbage collector as follows:
 ```bash
 nix-store --gc
@@ -49,6 +50,13 @@ The following shows how to list packages installed in your local user profile:
 ```bash
 nix-env --query
 ```
+
+The following removes list packages installed in your local user profile:
+
+```bash
+nix-env --uninstall <pkgname>
+```
+
 Running the same command as root will list packages installed in root's profile:
 
 ```bash
