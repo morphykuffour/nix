@@ -178,11 +178,6 @@ in {
           always = true;
           notification = false;
         }
-        # {
-        #   command = "${pkgs.pkgs.gnomeExtensions.taildrop-send}";
-        #   always = true;
-        #   notification = false;
-        # }
       ];
     };
 
