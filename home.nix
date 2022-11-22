@@ -126,6 +126,8 @@
       protonmail-bridge
       play-with-mpv
       rustdesk
+      file
+      fasd
       # python2
       (python39.withPackages (pp:
         with pp; [

@@ -156,7 +156,7 @@ in {
         (import (
           builtins.fetchTarball {
             url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
-            sha256 = "0nngvvn9zbmls57jpzpj0s9hkwb5j6m28hq6p74pb4l0gcgpngky";
+            sha256 = "114ykhkiasn29s68l81417vj94jdsz6fxf7r84lf2kqzl2fvkyfx";
           }
         ))
         {
@@ -538,11 +538,9 @@ in {
       nixops
       os-prober
       kitty
-
       android-tools
       android-studio
       android-udev-rules
-
     ];
   };
 }
