@@ -4,6 +4,7 @@
   lib,
   pkgs,
   home-manager,
+  agenix,
   ...
 }: let
   keyd = pkgs.callPackage ../../pkgs/keyd {};
@@ -389,7 +390,7 @@ in {
 
 
   # age encrypted file for tskey
-  age.secrets.tailscale.xps17-nixos.file = ../../../secrets/tailscale.xps17-nixos.age;
+  age.secrets.tailscale.xps17-nixos.file = ../../../secrets/ts-xps17-nixos.age;
   # create a oneshot job to authenticate to Tailscale
   systemd.services.tailscale-autoconnect = {
     description = "Automatic connection to Tailscale";
@@ -414,7 +415,7 @@ in {
       fi
 
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale up --authkey=${config.age.secrets.tailscale.xps17-nixos.path}
+      ${tailscale}/bin/tailscale up --authkey=$(cat ${config.age.secrets.ts-xps17-nixos.path})
     '';
   };
 
