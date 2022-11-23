@@ -176,6 +176,7 @@
     vscode
     rustup
     cargo
+    rage
   ];
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
