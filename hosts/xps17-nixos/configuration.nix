@@ -49,7 +49,7 @@ in {
     <nixos-hardware/dell/xps/17-9710/intel>
     ./hardware-configuration.nix
     ./dslr.nix
-    ../../pkgs/keyd/default.nix
+    # ../../pkgs/keyd/default.nix
     # ./forticlientsslvpn.nix
     # ./mongosh.nix
     # ./wireguard.nix
