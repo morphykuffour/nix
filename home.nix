@@ -33,18 +33,18 @@
         obs-gstreamer
       ];
     };
-  lazygit = {
-    enable = true;
-    settings = {
-      git = {
-        paging = {
-          colorArg = "always";
-          pager = "delta --color-only --dark --paging=never";
-          useConfig = false;
+    lazygit = {
+      enable = true;
+      settings = {
+        git = {
+          paging = {
+            colorArg = "always";
+            pager = "delta --color-only --dark --paging=never";
+            useConfig = false;
+          };
         };
       };
     };
-  };
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -53,6 +53,106 @@
     username = "morp";
     homeDirectory = "/home/morp";
     stateVersion = "22.05";
-    packages = (import ./packages.nix) { inherit pkgs; };
+    packages = with pkgs; [
+      # kitty
+      tmux
+      zsh
+      atuin
+      starship
+      exa
+      bat
+      tealdeer
+      fd
+      gh
+      clipmenu
+      delta
+      cscope
+      pastel
+      conda
+      jupyter
+      ruby
+      edir
+      ranger
+      stylua
+      cargo
+      jq
+      curl
+      fzf
+      sbcl
+      neomutt
+      mu
+      isync
+      msmtp
+      pass
+      himalaya
+      calibre
+      slides
+      sxhkd
+      inkscape
+      gimp
+      blender
+      # kicad
+      # ffmpeg
+      eva
+      aria2
+      hyperfine
+      hexyl
+      ripgrep
+      autojump
+      pandoc
+      croc
+      spotify
+      neofetch
+      zathura
+      go
+      viu
+      mpv
+      feh
+      sublime
+      surfraw
+      nix-index
+      redshift
+      termite
+      # plover
+      tree-sitter
+      rnix-lsp
+      gopls
+      ccls
+      fpp
+      tree-sitter-grammars.tree-sitter-markdown
+      sumneko-lua-language-server
+      nodePackages.typescript-language-server
+      nodePackages.insect
+      nodePackages.mermaid-cli
+      nodePackages.bash-language-server
+      nodePackages.pyright
+      nodePackages.typescript
+      nodePackages.prettier
+      mathpix-snipping-tool
+      black
+      rust-analyzer
+      postman
+      openssl
+      protonvpn-gui
+      protonmail-bridge
+      play-with-mpv
+      rustdesk
+      file
+      fasd
+      # python2
+      (python39.withPackages (pp:
+        with pp; [
+          pynvim
+          pandas
+          requests
+          pip
+          i3ipc
+          ipython
+          dbus-python
+          html2text
+          keymapviz
+          mysql-connector
+        ]))
+    ];
   };
 }

@@ -1,11 +1,11 @@
-{ stdenv
-, lib
-, fetchFromGitHub
-, cmake
-, pkg-config
-, systemd
+{
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  cmake,
+  pkg-config,
+  systemd,
 }:
-
 stdenv.mkDerivation rec {
   pname = "keyd";
   version = "2.4.2";
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
       --replace /usr/bin $out/bin
   '';
 
-  buildInputs = [ systemd ];
+  buildInputs = [systemd];
 
   enableParallelBuilding = true;
 
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     description = "A key remapping daemon for linux.";
     license = licenses.mit;
-    maintainers = with maintainers; [ peterhoeg ];
+    maintainers = with maintainers; [peterhoeg];
     platforms = platforms.linux;
   };
 }
