@@ -387,6 +387,9 @@ in {
   # enable the tailscale service
   services.tailscale.enable = true;
 
+
+  # age encrypted file for tskey
+  age.secrets.tailscale.xps17-nixos.file = ../../../secrets/tailscale.xps17-nixos.age;
   # create a oneshot job to authenticate to Tailscale
   systemd.services.tailscale-autoconnect = {
     description = "Automatic connection to Tailscale";
@@ -411,7 +414,7 @@ in {
       fi
 
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale up -authkey tskey-auth-kX3axB1CNTRL-fSTtKA9DYwVqHdTQdBUb1W9EYVPcp6Bv
+      ${tailscale}/bin/tailscale up --authkey=${config.age.secrets.tailscale.xps17-nixos.path}
     '';
   };
 
@@ -550,3 +553,5 @@ in {
     ];
   };
 }
+
+      # tskey-auth-kX3axB1CNTRL-fSTtKA9DYwVqHdTQdBUb1W9EYVPcp6Bv

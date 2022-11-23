@@ -138,6 +138,7 @@
         modules = [
           ./hosts/optiplex-nixos
           vscode-server.nixosModule
+          agenix.nixosModule
           {
             environment.systemPackages = [
               alejandra.defaultPackage.x86_64-linux
