@@ -49,6 +49,7 @@ in {
     <nixos-hardware/dell/xps/17-9710/intel>
     ./hardware-configuration.nix
     ./dslr.nix
+    # agenix.nixosModule
     # ../../pkgs/keyd/default.nix
     # ./forticlientsslvpn.nix
     # ./mongosh.nix
