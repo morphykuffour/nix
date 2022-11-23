@@ -545,6 +545,8 @@ in {
       android-tools
       android-studio
       android-udev-rules
+      age
+      rage
     ];
   };
 }

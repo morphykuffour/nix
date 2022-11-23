@@ -1,30 +1,23 @@
-# [hosts.itsuki]
-# network = "avalon"
-# ip_addr = "192.168.2.174"
-# ssh_pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP0eD0K2FqhkkIsUrYfmHigwbaUgOSotdSsNlLMRJiqx"
-# tailscale = "100.68.185.47"
-
 [hosts.xps17-nixos]
-network = "xps17-nixos"
-ip_addr = ""
-ssh_pubkey = ""
-tailscale = ""
+network = "tailc585e.ts.net"
+ip_addr = "192.168.4.105"
+ssh_pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAccbgX9JOk+fFGw36pMszoIh2Clh9NQyRml9GX692vC"
+tailscale = "100.111.21.45"
 
-# [hosts.mac-mini]
-# network = "mac-mini"
-# ip_addr = ""
-# ssh_pubkey = ""
-# tailscale = ""
-#
-# [hosts.optiplex-nixos]
-# network = "mac-mini"
-# ip_addr = ""
-# ssh_pubkey = ""
-# tailscale = ""
-#
+[hosts.optiplex-nixos]
+network = "tailc585e.ts.net"
+ip_addr = "137.99.128.114"
+ssh_pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP6O0OeAVYRMvydK7KA8OrF2oBHxh6woQ03EzEQ87OfC"
+tailscale = "100.122.39.78"
+
+[hosts.macmini-darwin]
+network = "tailc585e.ts.net"
+ip_addr = "137.99.128.105"
+ssh_pubkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBQtZsTzvsBJwoTKWrjlrWVX3L7uMOT/oZFwaihazKYd"
+tailscale = "100.75.193.90"
+
 # [hosts.win-wsl]
-# network = "mac-mini"
+# network = "tailc585e.ts.net"
 # ip_addr = ""
 # ssh_pubkey = ""
 # tailscale = ""
-#
