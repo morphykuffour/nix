@@ -7,9 +7,10 @@ MAKEFLAGS += --no-builtin-rules
 HOSTNAME ?= $(shell hostname)
 UNAME_S := $(shell uname -s)
 
+
 ifeq ($(UNAME_S),Linux)
-	SWITCH_CMD := nixos-rebuild --use-remote-sudo -I nixos-config="machines/$(HOSTNAME)/configuration.nix" switch --flake '.\#' --impure 
-	BUILD_CMD  := nixos-rebuild --use-remote-sudo -I nixos-config="machines/$(HOSTNAME)/configuration.nix" build --flake '.\#'
+	SWITCH_CMD := sudo nixos-rebuild --use-remote-sudo -I nixos-config="machines/$(HOSTNAME)/configuration.nix" switch --flake '.\#' --impure 
+	BUILD_CMD  := sudo nixos-rebuild --use-remote-sudo -I nixos-config="machines/$(HOSTNAME)/configuration.nix" build --flake '.\#'
 endif
 ifeq ($(UNAME_S),Darwin)
 	SWITCH_CMD := exec darwin-rebuild switch --flake .
@@ -28,4 +29,5 @@ fmt:
 	alejandra .
 
 clean:
+	sudo nix-collect-garbage --delete-older-than 14d
 	nix-collect-garbage --delete-older-than 14d
