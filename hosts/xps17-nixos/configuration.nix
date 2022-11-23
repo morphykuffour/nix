@@ -6,6 +6,8 @@
   home-manager,
   ...
 }: let
+
+  keyd = pkgs.callPackage ../../pkgs/keyd { };
   keydConfig = ''
     [ids]
     *
@@ -47,6 +49,7 @@ in {
     <nixos-hardware/dell/xps/17-9710/intel>
     ./hardware-configuration.nix
     ./dslr.nix
+    ../../pkgs/keyd/default.nix
     # ./forticlientsslvpn.nix
     # ./mongosh.nix
     # ./wireguard.nix
@@ -151,18 +154,18 @@ in {
 
   nixpkgs.config = {
     allowUnfree = true;
-    packageOverrides = pkgs: {
-      nur =
-        (import (
-          builtins.fetchTarball {
-            url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
-            sha256 = "114ykhkiasn29s68l81417vj94jdsz6fxf7r84lf2kqzl2fvkyfx";
-          }
-        ))
-        {
-          inherit pkgs;
-        };
-    };
+    # packageOverrides = pkgs: {
+    #   nur =
+    #     (import (
+    #       builtins.fetchTarball {
+    #         url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
+    #         sha256 = "0d0xz5hv1b0cnvj0dx9l6pd0v3nf3npiqqq0136b0radbxn4i4h0";
+    #       }
+    #     ))
+    #     {
+    #       inherit pkgs;
+    #     };
+    # };
 
     # insecure package needed for nixops
     permittedInsecurePackages = [
@@ -481,7 +484,8 @@ in {
       rustup
       brightnessctl
       xdragon
-      nur.repos.foolnotion.keyd
+      # nur.repos.foolnotion.keyd
+      keyd
       gnome.dconf-editor
       mate.mate-power-manager
       mate.mate-media
@@ -533,6 +537,8 @@ in {
       vim
       vscode
       wireguard-tools
+      libtool
+      libvterm
       # virtualbox
       tailscale
       nixops

@@ -95,7 +95,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.morp.imports = [./home.nix];
+              users.morp.imports = [./home-manager/home.nix];
             };
           };
         })
@@ -130,9 +130,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.morp = {
-                imports = [./home.nix];
-              };
+              users.morp.imports = [./home-manager/home.nix];
               extraSpecialArgs = {
                 plover = inputs.plover.packages."x86_64-linux".plover;
               };
@@ -159,9 +157,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.morp = {
-                imports = [./home.nix];
-              };
+              users.morp.imports = [./home-manager/home.nix];
               extraSpecialArgs = {
                 plover = inputs.plover.packages."x86_64-linux".plover;
               };
@@ -197,7 +193,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.morp = import ./home.nix;
+              home-manager.users.morp = import ./home-manager/home.nix;
             }
           ];
         };
