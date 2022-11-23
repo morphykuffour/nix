@@ -21,10 +21,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nur = {
-      url = "github:nix-community/NUR";
-    };
-
     # TODO get nvidia prime offloading to work
     # nixgl = {
     #   url = "github:guibou/nixGL";
@@ -68,7 +64,6 @@
     nixpkgs,
     home-manager,
     darwin,
-    nur,
     discord,
     nixos-hardware,
     plover,
@@ -107,7 +102,6 @@
           discord.overlays.default
           plover.overlay
           neovim.overlay
-          nur.overlay
         ];
 
       # xps17 NixOs
@@ -115,7 +109,6 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/xps17-nixos
-          nur.nixosModules.nur
           agenix.nixosModule
           {
             environment.systemPackages = [
@@ -144,7 +137,6 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/optiplex-nixos
-          nur.nixosModules.nur
           vscode-server.nixosModule
           {
             environment.systemPackages = [

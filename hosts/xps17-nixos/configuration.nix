@@ -6,8 +6,7 @@
   home-manager,
   ...
 }: let
-
-  keyd = pkgs.callPackage ../../pkgs/keyd { };
+  keyd = pkgs.callPackage ../../pkgs/keyd {};
   keydConfig = ''
     [ids]
     *
@@ -115,7 +114,7 @@ in {
       };
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.nur.repos.foolnotion.keyd}/bin/keyd";
+        ExecStart = "${pkgs.keyd}/bin/keyd";
       };
     };
   };
@@ -484,7 +483,6 @@ in {
       rustup
       brightnessctl
       xdragon
-      # nur.repos.foolnotion.keyd
       keyd
       gnome.dconf-editor
       mate.mate-power-manager
