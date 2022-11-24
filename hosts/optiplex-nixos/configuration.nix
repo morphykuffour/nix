@@ -181,7 +181,6 @@
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
 
-  # age encrypted file for tskey
   age.identityPaths = [ 
     "/home/morp/.ssh/id_ed25519"
   ];
