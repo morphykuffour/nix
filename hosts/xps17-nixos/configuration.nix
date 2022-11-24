@@ -391,7 +391,7 @@ in {
 
 
   # age encrypted file for tskey
-  age.secrets.ts-xps17-nixos.file = ../../../secrets/ts-xps17-nixos.age;
+  age.secrets.ts-xps17-nixos.file = ../../secrets/ts-xps17-nixos.age;
 
   # create a oneshot job to authenticate to Tailscale
   systemd.services.tailscale-autoconnect = {
