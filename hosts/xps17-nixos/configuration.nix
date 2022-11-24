@@ -330,6 +330,7 @@ in {
     #   guest.enable = true;
     #   guest.x11 = true;
     # };
+
     spiceUSBRedirection.enable = true;
 
     docker = {
