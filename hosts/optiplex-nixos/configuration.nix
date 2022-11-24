@@ -180,10 +180,15 @@
   ];
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
-  # tailscale
-  # enable the tailscale service
-  services.tailscale.enable = true;
 
+  # age encrypted file for tskey
+  age.identityPaths = [ 
+    "/home/morp/.ssh/id_ed25519"
+  ];
+  age.secrets.ts-optiplex-nixos.file = ../../secrets/ts-optiplex-nixos.age;
+
+  # tailscale
+  services.tailscale.enable = true;
   # create a oneshot job to authenticate to Tailscale
   systemd.services.tailscale-autoconnect = {
     description = "Automatic connection to Tailscale";
@@ -208,7 +213,7 @@
       fi
 
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale up --authkey=tskey-auth-kgVdsP4CNTRL-bbiZywNy4EdRgztF3x3DHdbxTQ5y3d8w
+      ${tailscale}/bin/tailscale up --authkey=$(cat ${config.age.secrets.ts-optiplex-nixos.path})
     '';
   };
 
