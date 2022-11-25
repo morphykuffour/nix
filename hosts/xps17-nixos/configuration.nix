@@ -15,11 +15,11 @@
     [main]
 
     # remaps all modifiers to 'oneshot' keys
-    shift = oneshot(shift)
-    meta = oneshot(meta)
-    control = oneshot(control)
-    leftalt = oneshot(alt)
-    rightalt = oneshot(altgr)
+    # shift = oneshot(shift)
+    # meta = oneshot(meta)
+    # control = oneshot(control)
+    # leftalt = oneshot(alt)
+    # rightalt = oneshot(altgr)
 
     # paste with insert
     insert = S-insert
