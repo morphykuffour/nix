@@ -16,6 +16,9 @@ ifeq ($(UNAME_S),Darwin)
 	SWITCH_CMD := exec darwin-rebuild switch --flake .
 endif
 
+edit:
+	nvim hosts/$(HOSTNAME)/configuration.nix
+
 switch:
 	$(SWITCH_CMD)
 
