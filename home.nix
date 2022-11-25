@@ -138,7 +138,8 @@
       play-with-mpv
       rustdesk
       file
-      fasd
+      # fasd
+      texlive.combined.scheme-full
       # python2
       (python39.withPackages (pp:
         with pp; [
