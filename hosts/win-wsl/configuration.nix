@@ -20,6 +20,7 @@
   nixpkgs.config.allowUnfree = true;
   networking = {
     hostName = "win-wsl";
+    dhcpcd.enable = false;
   };
 
   users = {
@@ -29,6 +30,11 @@
       home = "/home/morp";
       shell = pkgs.zsh;
       extraGroups = ["wheel"];
+    };
+
+    users.root = {
+      # Otherwise WSL fails to login as root with "initgroups failed 5"
+      extraGroups = ["root"];
     };
   };
 
