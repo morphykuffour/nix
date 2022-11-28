@@ -555,6 +555,7 @@ in {
       android-udev-rules
       age
       rage
+      uxplay
     ];
   };
 }
