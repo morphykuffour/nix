@@ -559,6 +559,7 @@ in {
       age
       rage
       uxplay
+      arandr
     ];
   };
 }
