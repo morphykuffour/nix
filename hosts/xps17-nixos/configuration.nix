@@ -213,9 +213,12 @@ in {
         pkgs.cnijfilter2
       ];
     };
+
     avahi = {
       enable = true;
       nssmdns = true;
+      reflector = true;
+      interfaces = ["wlp0s20f3"];
     };
 
     flatpak.enable = true;
