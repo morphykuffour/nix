@@ -27,7 +27,11 @@
   # networking.interfaces.docker0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  powerManagement = {
+    cpuFreqGovernor = lib.mkDefault "powersave";
+    # powerUpCommands = "";
+  };
+
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   # high-resolution display
   hardware.video.hidpi.enable = lib.mkDefault true;
