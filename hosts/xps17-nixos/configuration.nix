@@ -134,8 +134,9 @@ in {
   };
   environment.etc."keyd/default.conf".text = keydConfig;
 
-  # wakeup from sleep permanently
+  # wakeup from sleep permanently TODO: move to powerManagement.powerUpCommands
   environment.etc."rc.local".text = wakeupScript;
+
   # locale
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.utf8";
@@ -168,6 +169,8 @@ in {
     # packages = with pkgs; [ ];
   };
 
+
+  nix.settings.trusted-users = [ "root" "morp" ];
   nixpkgs.config = {
     allowUnfree = true;
     # packageOverrides = pkgs: {

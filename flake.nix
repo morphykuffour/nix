@@ -55,6 +55,8 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    devenv.url = "github:cachix/devenv/v0.4";
+
 
     vscode-server.url = "github:msteen/nixos-vscode-server";
   };
@@ -71,8 +73,10 @@
     nixos-wsl,
     agenix,
     vscode-server,
+    devenv,
     ...
   } @ inputs: {
+
     nixosConfigurations = let
       defaultModules = [
         home-manager.nixosModules.home-manager
@@ -86,7 +90,6 @@
             _module.args = {
               lib' = lib // import ./lib {inherit config lib;};
             };
-
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
@@ -114,6 +117,7 @@
             environment.systemPackages = [
               alejandra.defaultPackage.x86_64-linux
               agenix.defaultPackage.x86_64-linux
+              devenv.packages.x86_64-linux.devenv
             ];
           }
 
