@@ -44,6 +44,18 @@
     # backward word
     b = C-left
   '';
+
+  wakeupScript = ''
+    echo enabled |sudo tee /sys/bus/usb/devices/*/power/wakeup
+    '';
+
+  wakeup = ''
+
+    for i in `/bin/grep USB /proc/acpi/wakeup | /usr/bin/awk '{print $1}'`; 
+    do 
+        echo $i > /proc/acpi/wakeup; 
+    done
+    '';
 in {
   imports = [
     <nixos-hardware/dell/xps/17-9710/intel>
@@ -122,6 +134,8 @@ in {
   };
   environment.etc."keyd/default.conf".text = keydConfig;
 
+  # wakeup from sleep permanently
+  environment.etc."rc.local".text = wakeupScript;
   # locale
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.utf8";
@@ -560,6 +574,9 @@ in {
       rage
       uxplay
       arandr
+      libclang
+      libstdcxx5
+      ctags
     ];
   };
 }
