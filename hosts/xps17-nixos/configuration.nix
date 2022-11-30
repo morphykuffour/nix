@@ -144,7 +144,8 @@ in {
   security.rtkit.enable = true;
 
   # user account
-  users.defaultUserShell = pkgs.zsh;
+  users.defaultUserShell = pkgs.bash;
+  users.users.root = {shell = pkgs.zsh;};
   users.users.morp = {
     isNormalUser = true;
     description = "default account for linux";
@@ -392,8 +393,7 @@ in {
   # tailscale
   services.tailscale.enable = true;
 
-
-  age.identityPaths = [ 
+  age.identityPaths = [
     "/home/morp/.ssh/id_ed25519"
   ];
   age.secrets.ts-xps17-nixos.file = ../../secrets/ts-xps17-nixos.age;

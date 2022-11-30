@@ -180,8 +180,7 @@
   ];
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
-
-  age.identityPaths = [ 
+  age.identityPaths = [
     "/home/morp/.ssh/id_ed25519"
   ];
   age.secrets.ts-optiplex-nixos.file = ../../secrets/ts-optiplex-nixos.age;
