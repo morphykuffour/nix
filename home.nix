@@ -136,8 +136,9 @@
       protonvpn-gui
       protonmail-bridge
       play-with-mpv
-      rustdesk
+      # rustdesk
       file
+      newsboat
       # fasd
       texlive.combined.scheme-full
       # python2
