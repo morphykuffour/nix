@@ -128,6 +128,7 @@
       nodePackages.pyright
       nodePackages.typescript
       nodePackages.prettier
+      ccls
       mathpix-snipping-tool
       black
       rust-analyzer
