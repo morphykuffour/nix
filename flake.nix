@@ -21,12 +21,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # TODO get nvidia prime offloading to work
-    # nixgl = {
-    #   url = "github:guibou/nixGL";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-
     neovim = {
       url = "github:nix-community/neovim-nightly-overlay?ref=master";
     };
@@ -50,7 +44,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # TODO fix
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -82,26 +75,6 @@
         neovim.overlay
         discord.overlays.default
         plover.overlay
-      ];
-      defaultModules = [
-        home-manager.nixosModules.home-manager
-        ({
-          config,
-          lib,
-          lib',
-          ...
-        }: {
-          config = {
-            _module.args = {
-              lib' = lib // import ./lib {inherit config lib;};
-            };
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.morp.imports = [./home.nix];
-            };
-          };
-        })
       ];
     in {
       nixpkgs.overlays = overlays;
@@ -178,11 +151,10 @@
             ];
           }
         ];
-        # ++ defaultModules;
         specialArgs = inputs;
       };
 
-      # TODO: move nvme1n1 ==> WDS100T1XHE-00AFY0 to VisionFive 2 SBC
+      # TODO: move nvme1n1 ==> WDS100T1XHE-00AFY0 to VisionFive 2 SBC `lsblk -o name,model,serial`
       # TODO: install sbcl on SBC
       # TODO: install linux-kvm on SBC: https://github.com/kvm-riscv/howto/wiki/KVM-RISCV64-on-QEMU
       riscv-vm = nixpkgs.lib.nixosSystem {
