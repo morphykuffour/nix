@@ -68,6 +68,9 @@ in {
     # ./wireguard.nix
   ];
 
+  # system info
+  system.stateVersion = config.system.nixos.release;
+
   # Bootloader.
   boot = {
     kernelParams = ["nohibernate"];
