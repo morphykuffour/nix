@@ -182,6 +182,9 @@
         specialArgs = inputs;
       };
 
+      # TODO: move nvme1n1 ==> WDS100T1XHE-00AFY0 to VisionFive 2 SBC
+      # TODO: install sbcl on SBC
+      # TODO: install linux-kvm on SBC: https://github.com/kvm-riscv/howto/wiki/KVM-RISCV64-on-QEMU
       riscv-vm = nixpkgs.lib.nixosSystem {
         system = "riscv64-linux";
         modules = [
@@ -197,19 +200,6 @@
             };
           }
         ];
-        # modules = [
-        #   ./hosts/win-wsl
-        #   nixos-wsl.nixosModules.wsl
-        #   vscode-server.nixosModule
-        #   {
-        #     environment.systemPackages = [
-        #       alejandra.defaultPackage.x86_64-linux
-        #       neovim.packages.x86_64-linux.neovim
-        #     ];
-        #   }
-        # ];
-        # ++ defaultModules;
-        # specialArgs = inputs;
       };
 
       # mac_mini Mac Os Monterey TODO fix
