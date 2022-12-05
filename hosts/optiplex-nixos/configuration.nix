@@ -161,7 +161,6 @@
     stow
     zsh
     tmux
-    neovim
     starship
     atuin
     brave

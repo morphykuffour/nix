@@ -83,7 +83,6 @@
     wget
     vim
     zsh
-    neovim
     delta
     home-manager
     curl
