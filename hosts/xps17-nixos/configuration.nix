@@ -47,15 +47,15 @@
 
   wakeupScript = ''
     echo enabled |sudo tee /sys/bus/usb/devices/*/power/wakeup
-    '';
+  '';
 
   wakeup = ''
 
-    for i in `/bin/grep USB /proc/acpi/wakeup | /usr/bin/awk '{print $1}'`; 
-    do 
-        echo $i > /proc/acpi/wakeup; 
+    for i in `/bin/grep USB /proc/acpi/wakeup | /usr/bin/awk '{print $1}'`;
+    do
+        echo $i > /proc/acpi/wakeup;
     done
-    '';
+  '';
 in {
   imports = [
     <nixos-hardware/dell/xps/17-9710/intel>
@@ -169,8 +169,7 @@ in {
     # packages = with pkgs; [ ];
   };
 
-
-  nix.settings.trusted-users = [ "root" "morp" ];
+  nix.settings.trusted-users = ["root" "morp"];
   nixpkgs.config = {
     allowUnfree = true;
     # packageOverrides = pkgs: {
@@ -547,7 +546,6 @@ in {
       dig
       psmisc
       discord
-      neovim
       mycli
       grc
       cmake

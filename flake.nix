@@ -57,7 +57,6 @@
     };
     devenv.url = "github:cachix/devenv/v0.4";
 
-
     vscode-server.url = "github:msteen/nixos-vscode-server";
   };
 
@@ -74,10 +73,16 @@
     agenix,
     vscode-server,
     devenv,
+    neovim,
     ...
   } @ inputs: {
-
     nixosConfigurations = let
+      # overlays
+      overlays = [
+        neovim.overlay
+        discord.overlays.default
+        plover.overlay
+      ];
       defaultModules = [
         home-manager.nixosModules.home-manager
         ({
@@ -99,13 +104,7 @@
         })
       ];
     in {
-      # overlays
-      overlays.default = with inputs;
-        nixpkgs.lib.composeManyExtensions [
-          discord.overlays.default
-          plover.overlay
-          neovim.overlay
-        ];
+      nixpkgs.overlays = overlays;
 
       # xps17 NixOs
       xps17-nixos = nixpkgs.lib.nixosSystem {
@@ -118,6 +117,7 @@
               alejandra.defaultPackage.x86_64-linux
               agenix.defaultPackage.x86_64-linux
               devenv.packages.x86_64-linux.devenv
+              neovim.packages.x86_64-linux.neovim
             ];
           }
 
@@ -147,6 +147,7 @@
             environment.systemPackages = [
               alejandra.defaultPackage.x86_64-linux
               agenix.defaultPackage.x86_64-linux
+              neovim.packages.x86_64-linux.neovim
             ];
           }
           home-manager.nixosModules.home-manager
@@ -173,11 +174,42 @@
           {
             environment.systemPackages = [
               alejandra.defaultPackage.x86_64-linux
+              neovim.packages.x86_64-linux.neovim
             ];
           }
         ];
         # ++ defaultModules;
         specialArgs = inputs;
+      };
+
+      riscv-vm = nixpkgs.lib.nixosSystem {
+        system = "riscv64-linux";
+        modules = [
+          {
+            boot.supportedFilesystems = ["ext4"];
+            boot.loader.grub.devices = [
+              "/dev/disk/by-id/nvme-WDS100T1XHE-00AFY0_215070800985"
+            ];
+
+            fileSystems."/" = {
+              device = "/dev/disk/by-id/nvme-WDS100T1XHE-00AFY0_215070800985";
+              fsType = "ext4";
+            };
+          }
+        ];
+        # modules = [
+        #   ./hosts/win-wsl
+        #   nixos-wsl.nixosModules.wsl
+        #   vscode-server.nixosModule
+        #   {
+        #     environment.systemPackages = [
+        #       alejandra.defaultPackage.x86_64-linux
+        #       neovim.packages.x86_64-linux.neovim
+        #     ];
+        #   }
+        # ];
+        # ++ defaultModules;
+        # specialArgs = inputs;
       };
 
       # mac_mini Mac Os Monterey TODO fix
