@@ -70,6 +70,7 @@ in {
 
   # system info
   system.stateVersion = config.system.nixos.release;
+  # system.stateVersion = "22.05";
 
   # Bootloader.
   boot = {
@@ -398,7 +399,6 @@ in {
     };
   };
 
-  system.stateVersion = "22.05";
 
   nix = {
     extraOptions = "experimental-features = nix-command flakes";
