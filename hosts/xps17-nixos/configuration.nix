@@ -571,6 +571,7 @@ in {
       libstdcxx5
       ctags
 
+      # conda
       (pkgs.rWrapper.override {
         packages = with pkgs.rPackages; let
           llr = buildRPackage {
@@ -581,8 +582,8 @@ in {
               rev = "0a654d469af231e9017e1100f00df47bae212b2c";
               sha256 = "0ks96m35z73nf2sb1cb8d7dv8hq8dcmxxhc61dnllrwxqq9m36lr";
             };
-            propagatedBuildInputs = [rlang knitr];
-            nativeBuildInputs = [rlang knitr];
+            propagatedBuildInputs = [rlang knitr reticulate];
+            nativeBuildInputs = [rlang knitr reticulate];
           };
         in [
           knitr
