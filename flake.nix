@@ -69,6 +69,9 @@
     neovim,
     ...
   } @ inputs: {
+
+    devShell."x86_64-linux" = import ./shell.nix { inherit nixpkgs; };
+
     nixosConfigurations = let
       # overlays
       overlays = [
