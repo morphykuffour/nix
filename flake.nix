@@ -5,51 +5,41 @@
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     darwin = {
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     neovim = {
       url = "github:nix-community/neovim-nightly-overlay?ref=master";
     };
-
     discord = {
       url = "github:InternetUnexplorer/discord-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
     };
-
     plover = {
       url = "github:dnaq/plover-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     alejandra = {
       url = "github:kamadorueda/alejandra/3.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     devenv.url = "github:cachix/devenv/v0.4";
-
     vscode-server.url = "github:msteen/nixos-vscode-server";
   };
 
@@ -69,7 +59,7 @@
     neovim,
     ...
   } @ inputs: {
-
+    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
     nixosConfigurations = let
       # overlays
       overlays = [
@@ -174,21 +164,21 @@
           }
         ];
       };
+    };
 
-      # mac_mini Mac Os Monterey TODO fix
-      darwinConfigurations = {
-        mac_mini = darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          modules = [
-            ./hosts/mac-mini
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.morp = import ./home.nix;
-            }
-          ];
-        };
+    # mac_mini Mac Os Monterey TODO fix
+    darwinConfigurations."macmini-darwin" = {
+      mac_mini = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [
+          ./hosts/mac-mini
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.morp = import ./home.nix;
+          }
+        ];
       };
     };
   };
