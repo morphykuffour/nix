@@ -173,11 +173,16 @@ in {
           always = true;
           notification = false;
         }
-        {
-          command = "${home}/.config/polybar/launch.sh";
-          always = true;
-          notification = false;
-        }
+        # {
+        #   command = "${home}/.config/polybar/launch.sh";
+        #   always = true;
+        #   notification = false;
+        # }
+        # {
+        #   command = "${pkgs.play-with-mpv}/bin/play-with-mpv";
+        #   always = true;
+        #   notification = false;
+        # }
       ];
     };
 

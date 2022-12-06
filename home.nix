@@ -68,7 +68,6 @@
       delta
       cscope
       pastel
-      conda
       jupyter
       ruby
       edir
@@ -147,6 +146,8 @@
         with pp; [
           pynvim
           pandas
+          # reticulate needs conda
+          conda
           requests
           pip
           i3ipc
