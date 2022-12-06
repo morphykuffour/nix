@@ -44,18 +44,16 @@
     # backward word
     b = C-left
   '';
-
-  wakeupScript = ''
-    echo enabled |sudo tee /sys/bus/usb/devices/*/power/wakeup
-  '';
-
-  wakeup = ''
-
-    for i in `/bin/grep USB /proc/acpi/wakeup | /usr/bin/awk '{print $1}'`;
-    do
-        echo $i > /proc/acpi/wakeup;
-    done
-  '';
+  # wakeupScript = ''
+  #   echo enabled |sudo tee /sys/bus/usb/devices/*/power/wakeup
+  # '';
+  # wakeup = ''
+  #
+  #   for i in `/bin/grep USB /proc/acpi/wakeup | /usr/bin/awk '{print $1}'`;
+  #   do
+  #       echo $i > /proc/acpi/wakeup;
+  #   done
+  # '';
 in {
   imports = [
     <nixos-hardware/dell/xps/17-9710/intel>
@@ -136,10 +134,12 @@ in {
       };
     };
   };
+
   environment.etc."keyd/default.conf".text = keydConfig;
 
   # wakeup from sleep permanently TODO: move to powerManagement.powerUpCommands
-  environment.etc."rc.local".text = wakeupScript;
+  # FIXME: wakeupScript
+  # environment.etc."rc.local".text = wakeupScript;
 
   # locale
   time.timeZone = "America/New_York";
@@ -273,6 +273,18 @@ in {
         mate = {
           enable = true;
         };
+
+        # https://unix.stackexchange.com/questions/445048/configure-xfce-startup-commands-in-nixos
+        session = [
+          {
+            name = "play-with-mpv";
+            bgSupport = true;
+            start = ''
+              ${pkgs.runtimeShell} ${pkgs.play-with-mpv} &
+              waitPID=$!
+            '';
+          }
+        ];
       };
 
       displayManager = {
