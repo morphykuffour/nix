@@ -273,9 +273,6 @@ in {
         mate = {
           enable = true;
         };
-        gnome = {
-          enable = true;
-        };
       };
 
       displayManager = {
@@ -296,7 +293,6 @@ in {
           dmenu
           i3status
           i3lock
-          sxhkd
         ];
       };
 
@@ -343,18 +339,6 @@ in {
   };
 
   virtualisation = {
-    # qemu.package = pkgs.qemu;
-
-    # virtualbox = {
-    #   host.package = pkgs.virtualbox;
-    #   host.headless = false;
-    #   host.enable = true;
-    #   host.enableWebService = true;
-    #   host.enableExtensionPack = true;
-    #   guest.enable = true;
-    #   guest.x11 = true;
-    # };
-
     spiceUSBRedirection.enable = true;
 
     docker = {
@@ -397,8 +381,14 @@ in {
       enable = true;
       enableSSHSupport = true;
     };
+    thunar = {
+      enable = true;
+      plugins = with pkgs.xfce;[
+        thunar-archive-plugin
+        thunar-volman
+      ];
+    };
   };
-
 
   nix = {
     extraOptions = "experimental-features = nix-command flakes";
@@ -556,7 +546,6 @@ in {
       clang
       yarn
       firefox
-      xfce.thunar
       # mongodb
       # zoom-us
       # teams
@@ -581,6 +570,28 @@ in {
       libclang
       libstdcxx5
       ctags
+
+      (pkgs.rWrapper.override {
+        packages = with pkgs.rPackages; let
+          llr = buildRPackage {
+            name = "llr";
+            src = pkgs.fetchFromGitHub {
+              owner = "dirkschumacher";
+              repo = "llr";
+              rev = "0a654d469af231e9017e1100f00df47bae212b2c";
+              sha256 = "0ks96m35z73nf2sb1cb8d7dv8hq8dcmxxhc61dnllrwxqq9m36lr";
+            };
+            propagatedBuildInputs = [rlang knitr];
+            nativeBuildInputs = [rlang knitr];
+          };
+        in [
+          knitr
+          rlang
+          llr
+          tidyverse
+          devtools
+        ];
+      })
     ];
   };
 }
