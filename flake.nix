@@ -187,7 +187,5 @@
       };
     };
 
-    devShells = import ./shells.nix;
-
   };
 }
