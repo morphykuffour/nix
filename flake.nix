@@ -59,7 +59,11 @@
     neovim,
     ...
   } @ inputs: {
+
+    # nix formatter
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
+
+    # NixOS configurations
     nixosConfigurations = let
       # overlays
       overlays = [
@@ -167,6 +171,7 @@
     };
 
     # mac_mini Mac Os Monterey TODO fix
+    # Darwin configurations
     darwinConfigurations."macmini-darwin" = {
       mac_mini = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
@@ -181,5 +186,8 @@
         ];
       };
     };
+
+    devShells = import ./shells.nix;
+
   };
 }
