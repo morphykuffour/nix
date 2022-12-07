@@ -25,6 +25,9 @@ switch:
 build:
 	$(BUILD_CMD)
 
+action-build:
+	nixos-rebuild build --flake .#xps17-nixos --impure
+
 update:
 	sudo nix flake update
 
