@@ -84,7 +84,6 @@
         }
       ];
     };
-  };
 
   # nixpkgs.overlays = overlays;
 
@@ -198,4 +197,6 @@
     ];
     specialArgs = inputs;
   };
+  };
+
 }
