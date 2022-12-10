@@ -48,3 +48,5 @@ sudo nixos-rebuild switch --flake .#optiplex-nixos
 	    - https://x410.dev/cookbook/wsl/sharing-dbus-among-wsl2-consoles/
     - [ ] TODO fix openssh error
 - [ ] TODO get macos and nix working together
+- [ ] Install nix-darwin
+    [](https://github.com/MatthiasBenaets/nixos-config/blob/master/darwin.org) 
