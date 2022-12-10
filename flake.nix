@@ -85,7 +85,7 @@
       ];
     };
 
-    # nixpkgs.overlays = overlays;
+    nixpkgs.overlays = overlays;
 
     # xps17 NixOs
     nixosConfigurations.xps17-nixos = inputs.nixpkgs.lib.nixosSystem {
