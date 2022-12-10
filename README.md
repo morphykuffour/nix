@@ -23,9 +23,12 @@ Build nixos and switch to new configuration. `<flake-uri> = pwd`
 sudo nixos-rebuild switch --flake .#xps17-nixos
 ```
 
+- TODO: make switching to new configuration easier.
+- https://github.com/LnL7/nix-darwin#manual-install
 Build darwin and switch to new configuration. `<flake-uri> = pwd`
 ```bash
-sudo darwin-rebuild switch --flake .#mac_mini
+nix build .#darwinConfigurations.macmini-darwin.system
+sudo ./result/sw/bin/darwin-rebuild switch --flake .
 ```
 
 Build wsl and switch to new configuration. `<flake-uri> = pwd`
@@ -47,6 +50,6 @@ sudo nixos-rebuild switch --flake .#optiplex-nixos
     - [ ] TODO fix DBus error
 	    - https://x410.dev/cookbook/wsl/sharing-dbus-among-wsl2-consoles/
     - [ ] TODO fix openssh error
-- [ ] TODO get macos and nix working together
-- [ ] Install nix-darwin
+- [x] TODO get macos and nix working together
+- [x] Install nix-darwin
     [](https://github.com/MatthiasBenaets/nixos-config/blob/master/darwin.org) 
