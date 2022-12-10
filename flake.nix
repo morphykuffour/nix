@@ -64,17 +64,16 @@
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
 
     # mac_mini Mac Os Monterey TODO fix
-    darwinConfigurations."macmini-darwin" = {
-      mac_mini = darwin.lib.darwinSystem {
+    darwinConfigurations."macmini-darwin" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
           ./hosts/mac-mini
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.morp = import ./home.nix;
-          }
+          # home-manager.darwinModules.home-manager
+          # {
+          #   home-manager.useGlobalPkgs = true;
+          #   home-manager.useUserPackages = true;
+          #   home-manager.users.morp = import ./home.nix;
+          # }
         ];
       };
     };
