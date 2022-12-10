@@ -14,6 +14,8 @@ ifeq ($(UNAME_S),Linux)
 endif
 ifeq ($(UNAME_S),Darwin)
 	SWITCH_CMD := exec darwin-rebuild switch --flake .
+	nix build .#darwinConfigurations.macmini-darwin.system
+	sudo ./result/sw/bin/darwin-rebuild switch --flake .
 endif
 
 edit:
