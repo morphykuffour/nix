@@ -186,7 +186,6 @@
     };
 
     # mac_mini Mac Os Monterey TODO fix
-    # Darwin configurations
     darwinConfigurations."macmini-darwin" = {
       mac_mini = darwin.lib.darwinSystem {
         system = "aarch64-darwin";

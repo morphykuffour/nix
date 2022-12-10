@@ -1,11 +1,3 @@
-#
-#  Specific system configuration settings for macbook
-#
-#  flake.nix
-#   └─ ./darwin
-#       ├─ ./default.nix
-#       └─ ./configuration.nix *
-#
 {
   config,
   pkgs,
