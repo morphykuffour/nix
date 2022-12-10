@@ -185,16 +185,18 @@
 
     nixosConfigurations.rpi3b-nixos = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
+      specialArgs = inputs;
       modules = [
         ./hosts/rpi3b-nixos
+        agenix.nixosModule
         {
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux
+            agenix.defaultPackage.x86_64-linux
             neovim.packages.x86_64-linux.neovim
           ];
         }
       ];
-      specialArgs = inputs;
     };
   };
 }
