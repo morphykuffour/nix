@@ -86,114 +86,115 @@
     };
   };
 
-  nixpkgs.overlays = overlays;
-
-  # xps17 NixOs
-  nixosConfigurations.xps17-nixos = nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    modules = [
-      ./hosts/xps17-nixos
-      agenix.nixosModule
-      {
-        environment.systemPackages = [
-          alejandra.defaultPackage.x86_64-linux
-          agenix.defaultPackage.x86_64-linux
-          devenv.packages.x86_64-linux.devenv
-          neovim.packages.x86_64-linux.neovim
-        ];
-      }
-
-      # nixos-hardware.nixosModules.dell-xps-17-9700
-      home-manager.nixosModules.home-manager
-      {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          users.morp.imports = [./home.nix];
-          extraSpecialArgs = {
-            plover = inputs.plover.packages."x86_64-linux".plover;
-          };
-        };
-      }
-    ];
-    specialArgs = inputs;
-  };
-
-  nixosConfigurations.optiplex-nixos = nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    modules = [
-      ./hosts/optiplex-nixos
-      vscode-server.nixosModule
-      agenix.nixosModule
-      {
-        environment.systemPackages = [
-          alejandra.defaultPackage.x86_64-linux
-          agenix.defaultPackage.x86_64-linux
-          neovim.packages.x86_64-linux.neovim
-        ];
-      }
-      home-manager.nixosModules.home-manager
-      {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          users.morp.imports = [./home.nix];
-          extraSpecialArgs = {
-            plover = inputs.plover.packages."x86_64-linux".plover;
-          };
-        };
-      }
-    ];
-    specialArgs = inputs;
-  };
-
-  nixosConfigurations.win-wsl = nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    modules = [
-      ./hosts/win-wsl
-      nixos-wsl.nixosModules.wsl
-      vscode-server.nixosModule
-      {
-        environment.systemPackages = [
-          alejandra.defaultPackage.x86_64-linux
-          neovim.packages.x86_64-linux.neovim
-        ];
-      }
-    ];
-    specialArgs = inputs;
-  };
-
-  # TODO: move nvme1n1 ==> WDS100T1XHE-00AFY0 to VisionFive 2 SBC `lsblk -o name,model,serial`
-  # TODO: install sbcl on SBC
-  # TODO: install linux-kvm on SBC: https://github.com/kvm-riscv/howto/wiki/KVM-RISCV64-on-QEMU
-  nixosConfigurations.riscv-vm = nixpkgs.lib.nixosSystem {
-    system = "riscv64-linux";
-    modules = [
-      {
-        boot.supportedFilesystems = ["ext4"];
-        boot.loader.grub.devices = [
-          "/dev/disk/by-id/nvme-WDS100T1XHE-00AFY0_215070800985"
-        ];
-
-        fileSystems."/" = {
-          device = "/dev/disk/by-id/nvme-WDS100T1XHE-00AFY0_215070800985";
-          fsType = "ext4";
-        };
-      }
-    ];
-  };
-
-  nixosConfigurations.rpi3b-nixos = nixpkgs.lib.nixosSystem {
-    system = "aarch64-linux";
-    modules = [
-      ./hosts/rpi3b-nixos
-      {
-        environment.systemPackages = [
-          alejandra.defaultPackage.x86_64-linux
-          neovim.packages.x86_64-linux.neovim
-        ];
-      }
-    ];
-    specialArgs = inputs;
-  };
+  # # nixpkgs.overlays = overlays;
+  #
+  # # xps17 NixOs
+  # nixosConfigurations.xps17-nixos = nixpkgs.lib.nixosSystem {
+  #   # inherit overlays;
+  #   system = "x86_64-linux";
+  #   modules = [
+  #     ./hosts/xps17-nixos
+  #     agenix.nixosModule
+  #     {
+  #       environment.systemPackages = [
+  #         alejandra.defaultPackage.x86_64-linux
+  #         agenix.defaultPackage.x86_64-linux
+  #         devenv.packages.x86_64-linux.devenv
+  #         neovim.packages.x86_64-linux.neovim
+  #       ];
+  #     }
+  #
+  #     # nixos-hardware.nixosModules.dell-xps-17-9700
+  #     home-manager.nixosModules.home-manager
+  #     {
+  #       home-manager = {
+  #         useGlobalPkgs = true;
+  #         useUserPackages = true;
+  #         users.morp.imports = [./home.nix];
+  #         extraSpecialArgs = {
+  #           plover = inputs.plover.packages."x86_64-linux".plover;
+  #         };
+  #       };
+  #     }
+  #   ];
+  #   specialArgs = inputs;
+  # };
+  #
+  # nixosConfigurations.optiplex-nixos = nixpkgs.lib.nixosSystem {
+  #   system = "x86_64-linux";
+  #   modules = [
+  #     ./hosts/optiplex-nixos
+  #     vscode-server.nixosModule
+  #     agenix.nixosModule
+  #     {
+  #       environment.systemPackages = [
+  #         alejandra.defaultPackage.x86_64-linux
+  #         agenix.defaultPackage.x86_64-linux
+  #         neovim.packages.x86_64-linux.neovim
+  #       ];
+  #     }
+  #     home-manager.nixosModules.home-manager
+  #     {
+  #       home-manager = {
+  #         useGlobalPkgs = true;
+  #         useUserPackages = true;
+  #         users.morp.imports = [./home.nix];
+  #         extraSpecialArgs = {
+  #           plover = inputs.plover.packages."x86_64-linux".plover;
+  #         };
+  #       };
+  #     }
+  #   ];
+  #   specialArgs = inputs;
+  # };
+  #
+  # nixosConfigurations.win-wsl = nixpkgs.lib.nixosSystem {
+  #   system = "x86_64-linux";
+  #   modules = [
+  #     ./hosts/win-wsl
+  #     nixos-wsl.nixosModules.wsl
+  #     vscode-server.nixosModule
+  #     {
+  #       environment.systemPackages = [
+  #         alejandra.defaultPackage.x86_64-linux
+  #         neovim.packages.x86_64-linux.neovim
+  #       ];
+  #     }
+  #   ];
+  #   specialArgs = inputs;
+  # };
+  #
+  # # TODO: move nvme1n1 ==> WDS100T1XHE-00AFY0 to VisionFive 2 SBC `lsblk -o name,model,serial`
+  # # TODO: install sbcl on SBC
+  # # TODO: install linux-kvm on SBC: https://github.com/kvm-riscv/howto/wiki/KVM-RISCV64-on-QEMU
+  # nixosConfigurations.riscv-vm = nixpkgs.lib.nixosSystem {
+  #   system = "riscv64-linux";
+  #   modules = [
+  #     {
+  #       boot.supportedFilesystems = ["ext4"];
+  #       boot.loader.grub.devices = [
+  #         "/dev/disk/by-id/nvme-WDS100T1XHE-00AFY0_215070800985"
+  #       ];
+  #
+  #       fileSystems."/" = {
+  #         device = "/dev/disk/by-id/nvme-WDS100T1XHE-00AFY0_215070800985";
+  #         fsType = "ext4";
+  #       };
+  #     }
+  #   ];
+  # };
+  #
+  # nixosConfigurations.rpi3b-nixos = nixpkgs.lib.nixosSystem {
+  #   system = "aarch64-linux";
+  #   modules = [
+  #     ./hosts/rpi3b-nixos
+  #     {
+  #       environment.systemPackages = [
+  #         alejandra.defaultPackage.x86_64-linux
+  #         neovim.packages.x86_64-linux.neovim
+  #       ];
+  #     }
+  #   ];
+  #   specialArgs = inputs;
+  # };
 }
