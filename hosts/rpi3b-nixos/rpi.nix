@@ -53,4 +53,5 @@
       size = 1024;
     }
   ];
+  system.stateVersion = config.system.nixos.release;
 }
