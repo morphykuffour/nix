@@ -168,6 +168,21 @@
           }
         ];
       };
+
+      rpi3b-nixos = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          ./hosts/rpi3b-nixos
+          {
+            environment.systemPackages = [
+              alejandra.defaultPackage.x86_64-linux
+              neovim.packages.x86_64-linux.neovim
+            ];
+          }
+        ];
+        specialArgs = inputs;
+      };
+
     };
 
     # mac_mini Mac Os Monterey TODO fix
