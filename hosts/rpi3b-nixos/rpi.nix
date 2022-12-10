@@ -20,7 +20,7 @@
   '';
 
   environment.systemPackages = with pkgs; [
-    raspberrypi-tools
+    libraspberrypi
   ];
 
   # File systems configuration for using the installer's partition layout
@@ -36,7 +36,7 @@
   };
 
   # Preserve space by sacrificing documentation and history
-  services.nixosManual.enable = false;
+  documentation.nixos.enable = true;
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 30d";
   boot.cleanTmpDir = true;
