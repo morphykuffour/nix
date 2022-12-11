@@ -176,6 +176,7 @@ in {
   nix.settings.trusted-users = ["root" "morp"];
   nixpkgs.config = {
     allowUnfree = true;
+    allowUnsupportedSystem = true;
     # packageOverrides = pkgs: {
     #   nur =
     #     (import (
@@ -582,7 +583,7 @@ in {
       libclang
       libstdcxx5
       ctags
-
+      # avrlibc
       # conda
       (pkgs.rWrapper.override {
         packages = with pkgs.rPackages; let
