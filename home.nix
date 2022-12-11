@@ -142,6 +142,15 @@
       # fasd
       texlive.combined.scheme-full
       # python2
+
+      # keeb packages
+      via
+      qmk
+      qmk-udev-rules
+      # gcc_multi
+      # avrlibc
+
+      # python packages
       (python39.withPackages (pp:
         with pp; [
           pynvim
