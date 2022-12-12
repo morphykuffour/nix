@@ -13,9 +13,9 @@ ifeq ($(UNAME_S),Linux)
 	BUILD_CMD  := sudo nixos-rebuild --use-remote-sudo -I nixos-config="machines/$(HOSTNAME)/configuration.nix" build --flake '.\#'
 endif
 ifeq ($(UNAME_S),Darwin)
-	SWITCH_CMD := exec darwin-rebuild switch --flake .
-	nix build .#darwinConfigurations.macmini-darwin.system
-	sudo ./result/sw/bin/darwin-rebuild switch --flake .
+	BUILD_CMD  := nix build .#darwinConfigurations.macmini-darwin.system
+	SWITCH_CMD := sudo ./result/sw/bin/darwin-rebuild switch --flake .
+	# SWITCH_CMD := exec darwin-rebuild switch --flake .
 endif
 
 edit:
