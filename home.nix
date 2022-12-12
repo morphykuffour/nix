@@ -150,6 +150,9 @@
       # gcc_multi
       # avrlibc
 
+      # documents packages
+p7zip
+
       # python packages
       (python39.withPackages (pp:
         with pp; [
