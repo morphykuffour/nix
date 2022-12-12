@@ -151,7 +151,7 @@
       # avrlibc
 
       # documents packages
-p7zip
+      p7zip
 
       # python packages
       (python39.withPackages (pp:
