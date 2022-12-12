@@ -1,18 +1,16 @@
 {
   config,
   pkgs,
-  user,
   ...
 }: {
-  users.users."${user}" = {
-    # macOS user
-    home = "/Users/${user}";
-    shell = pkgs.zsh; # Default shell
+  users.users.morp = {
+    home = "/Users/morp";
+    shell = pkgs.zsh;
   };
 
   networking = {
-    computerName = "MacBook"; # Host name
-    hostName = "MacBook";
+    computerName = "macmini-darwin";
+    hostName = "macmini-darwin";
   };
 
   fonts = {
@@ -24,13 +22,14 @@
       (nerdfonts.override {
         fonts = [
           "FiraCode"
+          "JetBrainsMono"
         ];
       })
     ];
   };
 
   environment = {
-    shells = with pkgs; [zsh]; # Default shell
+    shells = with pkgs; [zsh];
     variables = {
       # System variables
       EDITOR = "nvim";
@@ -41,9 +40,7 @@
       # Terminal
       git
       ranger
-
-      # Doom Emacs
-      emacs
+      # emacs
       fd
       ripgrep
     ];
@@ -144,17 +141,17 @@
     };
   };
 
-  homebrew = {
-    # Declare Homebrew using Nix-Darwin
-    enable = true;
-    autoUpdate = true; # Auto update packages
-    cleanup = "zap"; # Uninstall not listed packages and casks
-    brews = [
-    ];
-    casks = [
-      "plex-media-player"
-    ];
-  };
+  # homebrew = {
+  #   # Declare Homebrew using Nix-Darwin
+  #   enable = true;
+  #   autoUpdate = true; # Auto update packages
+  #   cleanup = "zap"; # Uninstall not listed packages and casks
+  #   brews = [
+  #   ];
+  #   casks = [
+  #     "plex-media-player"
+  #   ];
+  # };
 
   nix = {
     package = pkgs.nix;
