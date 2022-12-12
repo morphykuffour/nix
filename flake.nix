@@ -69,13 +69,19 @@
   in {
     # nix formatter
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
-    formatter.aarch64-linux = nixpkgs.legacyPackages.aarch64-linux.alejandra;
+    formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
 
     # mac_mini Mac Os Monterey TODO fix
     darwinConfigurations."macmini-darwin" = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       modules = [
         ./hosts/mac-mini
+        {
+          environment.systemPackages = [
+            alejandra.defaultPackage.aarch64-darwin
+            neovim.packages.aarch64-darwin.neovim
+          ];
+        }
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
