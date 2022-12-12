@@ -166,6 +166,7 @@
     # TODO: move nvme1n1 ==> WDS100T1XHE-00AFY0 to VisionFive 2 SBC `lsblk -o name,model,serial`
     # TODO: install sbcl on SBC
     # TODO: install linux-kvm on SBC: https://github.com/kvm-riscv/howto/wiki/KVM-RISCV64-on-QEMU
+    # https://github.com/NixOS/nixos-hardware/blob/9d87bc030a0bf3f00e953dbf095a7d8e852dab6b/starfive/visionfive/v1/README.md
     nixosConfigurations.riscv-vm = nixpkgs.lib.nixosSystem {
       system = "riscv64-linux";
       modules = [

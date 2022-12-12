@@ -2,3 +2,6 @@
 *.swp
 *.swo
 result
+.DS_Store
+hosts/.DS_Store
+modules/.DS_Store
