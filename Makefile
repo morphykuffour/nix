@@ -17,8 +17,20 @@ ifeq ($(UNAME_S),Darwin)
 	SWITCH_CMD := ./result/sw/bin/darwin-rebuild switch --flake .
 endif
 
-edit:
-	nvim hosts/$(HOSTNAME)/configuration.nix
+
+ifeq ($(UNAME_S),Linux)
+	EDIT_HOME := nvim hosts/$(HOSTNAME)/configuration.nix
+	EDIT_CONF := nvim home.nix
+endif
+ifeq ($(UNAME_S),Darwin)
+	EDIT_HOME := nvim hosts/$(HOSTNAME)/configuration.nix
+	EDIT_CONF := nvim hosts/$(HOSTNAME)/home.nix
+endif
+
+ec:
+	$(EDIT_CONF)
+eh:
+	$(EDIT_HOME)
 
 switch:
 	$(SWITCH_CMD)
