@@ -167,6 +167,15 @@
     '';
   };
 
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnsupportedSystem = true;
+    # # insecure package needed for nixops
+    # permittedInsecurePackages = [
+    #   "python2.7-pyjwt-1.7.1"
+    # ];
+  };
+
   system = {
     defaults = {
       NSGlobalDomain = {
