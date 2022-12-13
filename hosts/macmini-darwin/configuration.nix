@@ -13,20 +13,20 @@
     hostName = "macmini-darwin";
   };
 
-  fonts = {
-    # Fonts
-    fontDir.enable = true;
-    fonts = with pkgs; [
-      source-code-pro
-      font-awesome
-      (nerdfonts.override {
-        fonts = [
-          "FiraCode"
-          "JetBrainsMono"
-        ];
-      })
-    ];
-  };
+  # fonts = {
+  #   # Fonts
+  #   fontDir.enable = true;
+  #   fonts = with pkgs; [
+  #     source-code-pro
+  #     font-awesome
+  #     (nerdfonts.override {
+  #       fonts = [
+  #         "FiraCode"
+  #         "JetBrainsMono"
+  #       ];
+  #     })
+  #   ];
+  # };
 
   environment = {
     shells = with pkgs; [zsh];
