@@ -75,7 +75,7 @@
     darwinConfigurations."macmini-darwin" = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       modules = [
-        ./hosts/mac-mini
+        ./hosts/macmini-darwin
         {
           environment.systemPackages = [
             alejandra.defaultPackage.aarch64-darwin
@@ -86,7 +86,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.morp = import ./hosts/mac-mini/home.nix;
+          home-manager.users.morp = import ./hosts/macmini-darwin/home.nix;
         }
       ];
     };
