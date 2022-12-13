@@ -11,18 +11,12 @@ UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
 	SWITCH_CMD := sudo nixos-rebuild --use-remote-sudo -I nixos-config="machines/$(HOSTNAME)/configuration.nix" switch --flake '.\#' --impure 
 	BUILD_CMD  := sudo nixos-rebuild --use-remote-sudo -I nixos-config="machines/$(HOSTNAME)/configuration.nix" build --flake '.\#'
-endif
-ifeq ($(UNAME_S),Darwin)
-	BUILD_CMD  := nix build --experimental-features 'nix-command flakes' '.\#darwinConfigurations.macmini-darwin.system' --impure
-	SWITCH_CMD := ./result/sw/bin/darwin-rebuild switch --flake .
-endif
-
-
-ifeq ($(UNAME_S),Linux)
 	EDIT_HOME := nvim hosts/$(HOSTNAME)/configuration.nix
 	EDIT_CONF := nvim home.nix
 endif
 ifeq ($(UNAME_S),Darwin)
+	BUILD_CMD  := nix build --experimental-features 'nix-command flakes' '.\#darwinConfigurations.macmini-darwin.system' --impure
+	SWITCH_CMD := ./result/sw/bin/darwin-rebuild switch --flake .
 	EDIT_HOME := nvim hosts/$(HOSTNAME)/configuration.nix
 	EDIT_CONF := nvim hosts/$(HOSTNAME)/home.nix
 endif

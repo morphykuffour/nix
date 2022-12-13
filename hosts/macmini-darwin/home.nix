@@ -29,21 +29,22 @@
 
       # utilities packages
       p7zip
-      # eva
-      # # mail packages
-      # # himalaya
-      # # neomutt
-      # # aria2
-      # # isync
-      # # msmtp
-      # # pass
-      # # mu
-      # ripgrep
-      # autojump
-      # pandoc
-      # croc
-      # mpv
-      # feh
+      eva
+
+      # mail packages
+      # himalaya
+      # neomutt
+      # aria2
+      # isync
+      # msmtp
+      # pass
+      # mu
+      ripgrep
+      autojump
+      pandoc
+      croc
+      mpv
+      feh
 
       # # edit packages
       # tree-sitter-grammars.tree-sitter-markdown
