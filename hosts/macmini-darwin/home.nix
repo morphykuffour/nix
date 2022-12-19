@@ -1,8 +1,5 @@
 {pkgs, ...}: {
-
-
   programs = {
-
     home-manager = {
       enable = true;
     };
@@ -26,7 +23,6 @@
     username = "morp";
     stateVersion = "22.05";
     packages = with pkgs; [
-
       # utilities packages
       p7zip
       eva
