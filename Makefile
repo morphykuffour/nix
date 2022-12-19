@@ -21,9 +21,9 @@ ifeq ($(UNAME_S),Darwin)
 	EDIT_CONF := nvim hosts/$(HOSTNAME)/home.nix
 endif
 
-ec:
-	$(EDIT_CONF)
 eh:
+	$(EDIT_CONF)
+ec:
 	$(EDIT_HOME)
 
 switch:
