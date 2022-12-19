@@ -54,7 +54,6 @@
     homeDirectory = "/home/morp";
     stateVersion = "22.05";
     packages = with pkgs; [
-      # kitty
       tmux
       zsh
       atuin
@@ -66,8 +65,8 @@
       gh
       clipmenu
       delta
-      cscope
-      pastel
+      # cscope
+      # pastel
       jupyter
       ruby
       edir
@@ -83,59 +82,58 @@
       isync
       msmtp
       pass
-      himalaya
-      calibre
-      slides
-      sxhkd
-      inkscape
-      gimp
-      blender
+      # calibre
+      # slides
+      # sxhkd
+      # inkscape
+      # gimp
+      # blender
       # kicad
       # ffmpeg
       eva
-      aria2
-      hyperfine
+      # aria2
+      # hyperfine
       hexyl
       ripgrep
       autojump
       pandoc
       croc
       spotify
-      neofetch
+      # neofetch
       zathura
       go
-      viu
+      # viu
       mpv
       feh
       sublime
       surfraw
       nix-index
       redshift
-      termite
+      # termite
       # plover
       tree-sitter
       rnix-lsp
       gopls
       ccls
       fpp
-      tree-sitter-grammars.tree-sitter-markdown
-      sumneko-lua-language-server
-      nodePackages.typescript-language-server
+      # tree-sitter-grammars.tree-sitter-markdown
+      # sumneko-lua-language-server
+      # nodePackages.typescript-language-server
       nodePackages.insect
-      nodePackages.mermaid-cli
-      nodePackages.bash-language-server
-      nodePackages.pyright
-      nodePackages.typescript
+      # nodePackages.mermaid-cli
+      # nodePackages.bash-language-server
+      # nodePackages.pyright
+      # nodePackages.typescript
       nodePackages.prettier
-      ccls
-      mathpix-snipping-tool
+      # ccls
+      # mathpix-snipping-tool
       black
-      rust-analyzer
+      # rust-analyzer
       postman
       openssl
-      protonvpn-gui
-      protonmail-bridge
-      play-with-mpv
+      # protonvpn-gui
+      # protonmail-bridge
+      # play-with-mpv
       # rustdesk
       file
       newsboat
