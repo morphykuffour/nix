@@ -150,6 +150,7 @@
 
       # documents packages
       p7zip
+      neovim
 
       # python packages
       (python39.withPackages (pp:
