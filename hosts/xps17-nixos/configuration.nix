@@ -72,7 +72,6 @@ in {
 
   # Bootloader.
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = ["nohibernate"];
     initrd = {
       availableKernelModules = ["xhci_pci" "nvme" "usbhid" "uas" "sd_mod" "rtsx_pci_sdmmc"];
