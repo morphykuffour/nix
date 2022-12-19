@@ -159,20 +159,20 @@ in {
           notification = false;
         }
         {
-          command = "${pkgs.feh}/bin/feh --bg-scale --randomize ~/Pictures/wallpapers/*";
-          always = true;
-          notification = false;
-        }
-        {
           command = "nm-applet";
           always = true;
           notification = false;
         }
-        {
-          command = "exec sxhkd -c /home/morp/.config/sxhkd/sxhkdrc";
-          always = true;
-          notification = false;
-        }
+        # {
+        #   command = "${pkgs.feh}/bin/feh --bg-scale --randomize ~/Pictures/wallpapers/*";
+        #   always = true;
+        #   notification = false;
+        # }
+        # {
+        #   command = "exec sxhkd -c /home/morp/.config/sxhkd/sxhkdrc";
+        #   always = true;
+        #   notification = false;
+        # }
         # {
         #   command = "${home}/.config/polybar/launch.sh";
         #   always = true;
