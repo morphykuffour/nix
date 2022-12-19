@@ -583,6 +583,18 @@ in {
       libclang
       libstdcxx5
       ctags
+
+      # vpn
+      # openconnect_openssl
+      openconnect_unstable
+      networkmanager
+      networkmanager-vpnc
+      networkmanager_dmenu
+      networkmanager-openconnect
+      networkmanager-fortisslvpn
+
+      # gaming
+      chiaki
       # avrlibc
       # conda
       (pkgs.rWrapper.override {
