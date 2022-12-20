@@ -17,9 +17,9 @@
       url = "github:nix-community/nixos-wsl";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    neovim = {
-      url = "github:nix-community/neovim-nightly-overlay?ref=master";
-    };
+    # neovim = {
+    #   url = "github:nix-community/neovim-nightly-overlay?ref=master";
+    # };
     discord = {
       url = "github:InternetUnexplorer/discord-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -56,13 +56,13 @@
     agenix,
     vscode-server,
     devenv,
-    neovim,
+    # neovim,
     ...
   } @ inputs: let
     user = "morp";
 
     overlays = [
-      neovim.overlay
+      # neovim.overlay
       discord.overlays.default
       plover.overlay
     ];
@@ -79,7 +79,7 @@
         {
           environment.systemPackages = [
             alejandra.defaultPackage.aarch64-darwin
-            neovim.packages.aarch64-darwin.neovim
+            # neovim.packages.aarch64-darwin.neovim
           ];
         }
         home-manager.darwinModules.home-manager
@@ -106,7 +106,7 @@
             alejandra.defaultPackage.x86_64-linux
             agenix.defaultPackage.x86_64-linux
             devenv.packages.x86_64-linux.devenv
-            neovim.packages.x86_64-linux.neovim
+            # neovim.packages.x86_64-linux.neovim
           ];
         }
 
@@ -135,7 +135,7 @@
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux
             agenix.defaultPackage.x86_64-linux
-            neovim.packages.x86_64-linux.neovim
+            # neovim.packages.x86_64-linux.neovim
           ];
         }
         home-manager.nixosModules.home-manager
@@ -162,7 +162,7 @@
         {
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux
-            neovim.packages.x86_64-linux.neovim
+            # neovim.packages.x86_64-linux.neovim
           ];
         }
       ];
@@ -202,7 +202,7 @@
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux
             agenix.defaultPackage.x86_64-linux
-            neovim.packages.x86_64-linux.neovim
+            # neovim.packages.x86_64-linux.neovim
           ];
         }
       ];

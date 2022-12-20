@@ -164,7 +164,7 @@ in {
 
   # user account
   users.defaultUserShell = pkgs.bash;
-  users.users.root = {shell = pkgs.zsh;};
+  # users.users.root = {shell = pkgs.zsh;};
   users.users.morp = {
     isNormalUser = true;
     description = "default account for linux";
@@ -583,6 +583,7 @@ in {
       libclang
       libstdcxx5
       ctags
+      zsh-completions
 
       # vpn
       # openconnect_openssl
