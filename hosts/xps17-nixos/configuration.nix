@@ -199,7 +199,10 @@ in {
   xdg.portal.enable = true;
   services = {
     fwupd.enable = true;
-    fprintd.enable = true;
+    fprintd = {
+      enable = true;
+      package = (pkgs.callPackage ../../pkgs/fprintd/fprintd.nix {});
+    };
 
     qemuGuest.enable = true;
 
@@ -545,7 +548,6 @@ in {
       gdb
       libinput-gestures
       wmctrl
-      fprintd
       fwupd
       mysql80
       dbeaver
