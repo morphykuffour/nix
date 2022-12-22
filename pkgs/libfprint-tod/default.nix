@@ -1,4 +1,3 @@
-#libfprint-tod.nix
 { stdenv
 , pkgs
 , fetchFromGitLab
@@ -19,20 +18,20 @@
 , gtk-doc
 , docbook_xsl
 , docbook_xml_dtd_43
-, libfprint-tod-goodix ? (pkgs.callPackage ./libfprint-tod-goodix.nix {})
+, libfprint
 }:
 
 stdenv.mkDerivation rec {
   pname = "libfprint";
-  version = "1.90.2";
+  version = "${libfprint.version}+tod1";
   outputs = [ "out" "devdoc" ];
 
   src = fetchFromGitLab {
     domain = "gitlab.freedesktop.org";
     owner = "3v1n0";
     repo = "libfprint";
-    rev = "0e123d0752538d834ee2cca8b471373369ad5e89";
-    sha256 = "11yl3nikdyykamafqf3ys1wg7zx3rb81lf11ndd8sf9rkwwfgpn6";
+    rev = "v${version}";
+    sha256 = "sha256-xt7nOJ85OY1asyE4GtDKo//zeNB+OOxUVdP7NqMd1Ic=";
   };
 
   checkInputs = [ (python3.withPackages (ps: with ps; [ pycairo gobject ])) umockdev ]; 
@@ -54,7 +53,6 @@ stdenv.mkDerivation rec {
     glib
     nss
     gtk3
-    libfprint-tod-goodix
   ];
 
   mesonFlags = [
@@ -73,18 +71,12 @@ stdenv.mkDerivation rec {
       --replace /bin/echo ${coreutils}/bin/echo
   '';
 
-  postInstall = ''
-    mkdir -p $out/lib/libfprint-2/tod-1/
-    ln -s ${libfprint-tod-goodix}/usr/lib/libfprint-2/tod-1/libfprint-tod-goodix-53xc-0.0.6.so $out/lib/libfprint-2/tod-1/ 
-    ln -s ${libfprint-tod-goodix}/lib/udev/rules.d/60-libfprint-2-tod1-goodix.rules $out/lib/udev/rules.d/ 
-
-  '';
 
   meta = with stdenv.lib; {
-    homepage = https://fprint.freedesktop.org/;
+    homepage = "https://fprint.freedesktop.org/";
     description = "A library designed to make it easy to add support for consumer fingerprint readers";
     license = licenses.lgpl21;
     platforms = platforms.linux;
-    maintainers = with maintainers; [ jobojeha ];
+    maintainers = with maintainers; [ jobojeha hmenke ];
   };
 }
