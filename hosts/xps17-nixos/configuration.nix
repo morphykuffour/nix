@@ -201,8 +201,8 @@ in {
     fwupd.enable = true;
     fprintd = {
       enable = true;
+      package = pkgs.callPackage ../../pkgs/fprintd {};
       # package = (pkgs.callPackage ../../pkgs/fprintd/fprintd.nix {});
-      package = (pkgs.callPackage ../../modules/libfprint-tod/module.nix {});
     };
 
     qemuGuest.enable = true;
