@@ -101,6 +101,7 @@
       modules = [
         ./hosts/xps17-nixos
         agenix.nixosModule
+
         {
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux
