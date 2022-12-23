@@ -3,7 +3,7 @@
 , pkgs
 , fetchFromGitLab
 , fetchurl
-, pkgconfig
+, pkg-config
 , meson
 , ninja
 , libusb
@@ -38,7 +38,7 @@ stdenv.mkDerivation rec {
   checkInputs = [ (python3.withPackages (ps: with ps; [ pycairo gobject ])) umockdev ]; 
 
   nativeBuildInputs = [
-    pkgconfig
+    pkg-config
     meson
     gobject-introspection
     ninja
