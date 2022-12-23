@@ -5,7 +5,8 @@
   lib,
   fetchFromGitLab,
   fetchpatch,
-  pkgconfig,
+  pkg-config,
+  gobject-introspection,
   meson,
   ninja,
   perl,
@@ -58,7 +59,7 @@ stdenv.mkDerivation rec {
   ];
 
   nativeBuildInputs = [
-    pkgconfig
+    pkg-config
     meson
     ninja
     perl
@@ -81,11 +82,13 @@ stdenv.mkDerivation rec {
   ];
 
   checkInputs = with python3.pkgs; [
+    gobject-introspection
     python-dbusmock
     dbus-python
     pygobject3
     pycairo
     pypamtest
+   # gusb
   ];
 
   mesonFlags = [

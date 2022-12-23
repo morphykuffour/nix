@@ -56,7 +56,8 @@
   # '';
 in {
   imports = [
-    <nixos-hardware/dell/xps/17-9710/intel>
+    <nixos-hardware/dell/xps/17-9700/intel>
+    <nixos-hardware/dell/xps/17-9700/nvidia>
     ./hardware-configuration.nix
     ./dslr.nix
     # agenix.nixosModule
@@ -201,8 +202,7 @@ in {
     fwupd.enable = true;
     fprintd = {
       enable = true;
-      package = pkgs.callPackage ../../pkgs/fprintd {};
-      # package = (pkgs.callPackage ../../pkgs/fprintd/fprintd.nix {});
+      # package = pkgs.callPackage ../../pkgs/fprintd {};
     };
 
     qemuGuest.enable = true;
