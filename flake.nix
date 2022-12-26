@@ -60,11 +60,13 @@
     ...
   } @ inputs: let
     user = "morp";
+    openconnectOverlay = import "${builtins.fetchTarball https://github.com/vlaci/openconnect-sso/archive/master.tar.gz}/overlay.nix";
 
     overlays = [
       # neovim.overlay
-      discord.overlays.default
-      plover.overlay
+      # discord.overlays.default
+      # plover.overlay
+      openconnectOverlay
     ];
   in {
     # nix formatter
