@@ -56,8 +56,8 @@
   # '';
 in {
   imports = [
-    <nixos-hardware/dell/xps/17-9700/intel>
-    <nixos-hardware/dell/xps/17-9700/nvidia>
+    # <nixos-hardware/dell/xps/17-9700/intel>
+    # <nixos-hardware/dell/xps/17-9700/nvidia>
     ./hardware-configuration.nix
     ./dslr.nix
     # agenix.nixosModule
