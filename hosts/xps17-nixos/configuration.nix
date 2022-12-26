@@ -54,6 +54,15 @@
   #       echo $i > /proc/acpi/wakeup;
   #   done
   # '';
+
+  openconnectOverlay = import "${builtins.fetchTarball https://github.com/vlaci/openconnect-sso/archive/master.tar.gz}/overlay.nix";
+
+  overlays = [
+    # neovim.overlay
+    # discord.overlays.default
+    # plover.overlay
+    openconnectOverlay
+  ];
 in {
   imports = [
     # <nixos-hardware/dell/xps/17-9700/intel>
@@ -67,9 +76,10 @@ in {
     # ./wireguard.nix
   ];
 
+  nixpkgs.overlays = overlays;
+
   # system info
   system.stateVersion = config.system.nixos.release;
-  # system.stateVersion = "22.05";
 
   # Bootloader.
   boot = {
@@ -218,7 +228,7 @@ in {
       user = "morp";
       package = pkgs.mysql80;
       group = "wheel";
-      enable = true;
+      enable = false;
     };
     longview.mysqlPasswordFile = "/run/keys/dbpassword";
 
@@ -280,16 +290,16 @@ in {
         };
 
         # https://unix.stackexchange.com/questions/445048/configure-xfce-startup-commands-in-nixos
-        session = [
-          {
-            name = "play-with-mpv";
-            bgSupport = true;
-            start = ''
-              ${pkgs.runtimeShell} ${pkgs.play-with-mpv} &
-              waitPID=$!
-            '';
-          }
-        ];
+        # session = [
+        #   # {
+        #   #   name = "play-with-mpv";
+        #   #   bgSupport = true;
+        #   #   start = ''
+        #   #     ${pkgs.runtimeShell} ${pkgs.play-with-mpv} &
+        #   #     waitPID=$!
+        #   #   '';
+        #   # }
+        # ];
       };
 
       displayManager = {
@@ -589,13 +599,13 @@ in {
       zsh-completions
 
       # vpn
-      # openconnect_openssl
-      openconnect_unstable
+      openconnect_openssl
+      # openconnect_unstable
       networkmanager
-      networkmanager-vpnc
-      networkmanager_dmenu
-      networkmanager-openconnect
-      networkmanager-fortisslvpn
+      # networkmanager-vpnc
+      # networkmanager_dmenu
+      # networkmanager-openconnect
+      # networkmanager-fortisslvpn
 
       # gaming
       chiaki
