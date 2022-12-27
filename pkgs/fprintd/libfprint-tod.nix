@@ -1,31 +1,31 @@
 #libfprint-tod.nix
-{ stdenv
-, pkgs
-, fetchFromGitLab
-, fetchurl
-, pkg-config
-, meson
-, ninja
-, libusb
-, gusb
-, pixman
-, gobject-introspection
-, glib
-, nss
-, gtk3
-, python3
-, umockdev
-, coreutils
-, gtk-doc
-, docbook_xsl
-, docbook_xml_dtd_43
-, libfprint-tod-goodix ? (pkgs.callPackage ./libfprint-tod-goodix.nix {})
+{
+  stdenv,
+  pkgs,
+  fetchFromGitLab,
+  fetchurl,
+  pkg-config,
+  meson,
+  ninja,
+  libusb,
+  gusb,
+  pixman,
+  gobject-introspection,
+  glib,
+  nss,
+  gtk3,
+  python3,
+  umockdev,
+  coreutils,
+  gtk-doc,
+  docbook_xsl,
+  docbook_xml_dtd_43,
+  libfprint-tod-goodix ? (pkgs.callPackage ./libfprint-tod-goodix.nix {}),
 }:
-
 stdenv.mkDerivation rec {
   pname = "libfprint";
   version = "1.90.2";
-  outputs = [ "out" "devdoc" ];
+  outputs = ["out" "devdoc"];
 
   src = fetchFromGitLab {
     domain = "gitlab.freedesktop.org";
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
     sha256 = "11yl3nikdyykamafqf3ys1wg7zx3rb81lf11ndd8sf9rkwwfgpn6";
   };
 
-  checkInputs = [ (python3.withPackages (ps: with ps; [ pycairo gobject ])) umockdev ]; 
+  checkInputs = [(python3.withPackages (ps: with ps; [pycairo gobject])) umockdev];
 
   nativeBuildInputs = [
     pkg-config
@@ -75,8 +75,8 @@ stdenv.mkDerivation rec {
 
   postInstall = ''
     mkdir -p $out/lib/libfprint-2/tod-1/
-    ln -s ${libfprint-tod-goodix}/usr/lib/libfprint-2/tod-1/libfprint-tod-goodix-53xc-0.0.6.so $out/lib/libfprint-2/tod-1/ 
-    ln -s ${libfprint-tod-goodix}/lib/udev/rules.d/60-libfprint-2-tod1-goodix.rules $out/lib/udev/rules.d/ 
+    ln -s ${libfprint-tod-goodix}/usr/lib/libfprint-2/tod-1/libfprint-tod-goodix-53xc-0.0.6.so $out/lib/libfprint-2/tod-1/
+    ln -s ${libfprint-tod-goodix}/lib/udev/rules.d/60-libfprint-2-tod1-goodix.rules $out/lib/udev/rules.d/
 
   '';
 
@@ -85,6 +85,6 @@ stdenv.mkDerivation rec {
     description = "A library designed to make it easy to add support for consumer fingerprint readers";
     license = licenses.lgpl21;
     platforms = platforms.linux;
-    maintainers = with maintainers; [ jobojeha ];
+    maintainers = with maintainers; [jobojeha];
   };
 }

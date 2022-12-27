@@ -167,6 +167,8 @@
           html2text
           keymapviz
           mysql-connector
+          pipx
+          pyqt5
         ]))
     ];
   };

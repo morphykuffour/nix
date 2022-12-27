@@ -54,15 +54,6 @@
   #       echo $i > /proc/acpi/wakeup;
   #   done
   # '';
-
-  openconnectOverlay = import "${builtins.fetchTarball https://github.com/vlaci/openconnect-sso/archive/master.tar.gz}/overlay.nix";
-
-  overlays = [
-    # neovim.overlay
-    # discord.overlays.default
-    # plover.overlay
-    openconnectOverlay
-  ];
 in {
   imports = [
     # <nixos-hardware/dell/xps/17-9700/intel>
@@ -76,7 +67,7 @@ in {
     # ./wireguard.nix
   ];
 
-  nixpkgs.overlays = overlays;
+  # nixpkgs.overlays = [ ];
 
   # system info
   system.stateVersion = config.system.nixos.release;
@@ -599,12 +590,13 @@ in {
       zsh-completions
 
       # vpn
-      openconnect_openssl
+      # openconnect_openssl
       # openconnect_unstable
       networkmanager
       # networkmanager-vpnc
       # networkmanager_dmenu
       # networkmanager-openconnect
+      networkmanagerapplet
       # networkmanager-fortisslvpn
 
       # gaming

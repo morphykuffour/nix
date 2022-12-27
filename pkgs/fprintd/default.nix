@@ -88,7 +88,7 @@ stdenv.mkDerivation rec {
     pygobject3
     pycairo
     pypamtest
-   # gusb
+    # gusb
   ];
 
   mesonFlags = [

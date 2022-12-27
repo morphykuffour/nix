@@ -1,13 +1,13 @@
 #libfprint-tod-goodix.nix
-{ stdenv
-, pkgs
-, fetchgit 
-, libfprint-tod ? (pkgs.callPackage ./libfprint-tod-clean.nix {})
-, git
-, autoPatchelfHook
-, libusb
-, glibc
-,
+{
+  stdenv,
+  pkgs,
+  fetchgit,
+  libfprint-tod ? (pkgs.callPackage ./libfprint-tod-clean.nix {}),
+  git,
+  autoPatchelfHook,
+  libusb,
+  glibc,
 }:
 stdenv.mkDerivation rec {
   pname = "libfprint-2-tod1-xps9300-bin";
@@ -43,6 +43,6 @@ stdenv.mkDerivation rec {
     description = "Goodix driver module for libfprint-2 Touch OEM Driver";
     license = licenses.unfreeRedistributable;
     platforms = platforms.linux;
-    maintainers = with maintainers; [ jobojeha ];
+    maintainers = with maintainers; [jobojeha];
   };
 }
