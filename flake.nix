@@ -39,6 +39,10 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # openconnect-sso = {
+    #   url = "github:vlaci/openconnect-sso/flake";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     devenv.url = "github:cachix/devenv/v0.4";
     vscode-server.url = "github:msteen/nixos-vscode-server";
   };
@@ -56,18 +60,16 @@
     agenix,
     vscode-server,
     devenv,
+    # openconnect-sso,
     # neovim,
     ...
   } @ inputs: let
     user = "morp";
-    openconnectOverlay = import "${builtins.fetchTarball https://github.com/vlaci/openconnect-sso/archive/master.tar.gz}/overlay.nix";
-
-    overlays = [
-      # neovim.overlay
-      # discord.overlays.default
-      # plover.overlay
-      openconnectOverlay
-    ];
+    # overlays = [
+    #   # neovim.overlay
+    #   # discord.overlays.default
+    #   # plover.overlay
+    # ];
   in {
     # nix formatter
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
@@ -93,7 +95,7 @@
       ];
     };
 
-    nixpkgs.overlays = overlays;
+    # nixpkgs.overlays = overlays;
 
     # xps17 NixOs
     nixosConfigurations.xps17-nixos = inputs.nixpkgs.lib.nixosSystem {
@@ -103,16 +105,15 @@
       modules = [
         ./hosts/xps17-nixos
         agenix.nixosModule
-
         {
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux
             agenix.defaultPackage.x86_64-linux
-            devenv.packages.x86_64-linux.devenv
+            # openconnect-sso.defaultPackage.x86_64-linux
+            # devenv.packages.x86_64-linux.devenv
             # neovim.packages.x86_64-linux.neovim
           ];
         }
-
         # nixos-hardware.nixosModules.dell-xps-17-9700
         home-manager.nixosModules.home-manager
         {
