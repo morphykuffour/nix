@@ -579,7 +579,7 @@ in {
       libtool
       libvterm
       # virtualbox
-      # tailscale
+      tailscale
       nixops
       os-prober
       kitty

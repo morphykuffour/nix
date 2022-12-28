@@ -109,8 +109,7 @@
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux
             agenix.defaultPackage.x86_64-linux
-            tailscale.packages.x86_64-linux.tailscale
-            tailscale.packages.x86_64-linux.tailscale-go
+            # tailscale.packages.x86_64-linux.tailscale
             # devenv.packages.x86_64-linux.devenv
             # neovim.packages.x86_64-linux.neovim
           ];
