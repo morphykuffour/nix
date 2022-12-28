@@ -4,6 +4,6 @@
   ...
 }: {
   imports = [
-    ./rpi.nix
+    ./configuration.nix
   ];
 }
