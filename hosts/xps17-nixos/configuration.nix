@@ -362,8 +362,6 @@ in {
     # };
   };
 
-  age.secrets.sync-xps17-nixos.file = ../../secrets/sync-xps17-nixos.age;
-
   services.syncthing = {
     enable = true;
     dataDir = "/home/morp";
@@ -375,8 +373,7 @@ in {
     overrideDevices = true;
     overrideFolders = true;
     devices = {
-      "xps17-nixos" = {id = "$(cat ${config.age.secrets.sync-xps17-nixos.path})";};
-      # "coredns-server" = {id = "REALLY-LONG-COREDNS-SERVER-SYNCTHING-KEY-HERE";};
+      "xps17-nixos" = {id = "44LYB6O-ELZWVNP-5R576R3-MRD3MM2-FXORGWG-WRC26ZQ-JAMWKRS-5SCNUAY";};
     };
 
     folders = {
@@ -391,16 +388,18 @@ in {
           };
         };
       };
-      # "coredns-config" = {
-      #   path = "/data/coredns-config";
-      #   devices = ["coredns-server"];
-      #   versioning = {
-      #     type = "simple";
-      #     params = {
-      #       keep = "10";
-      #     };
-      #   };
-      # };
+
+      "Org" = {
+        path = "/home/morp/Dropbox/Zettelkasten/";
+        devices = ["xps17-nixos"];
+        versioning = {
+          type = "staggered";
+          params = {
+            cleanInterval = "3600";
+            maxAge = "15768000";
+          };
+        };
+      };
     };
   };
 
