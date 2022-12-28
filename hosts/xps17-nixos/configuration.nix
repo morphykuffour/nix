@@ -350,6 +350,58 @@ in {
         }
       ];
     };
+
+    # syncthing = {
+    #   enable = true;
+    #   user = "morp";
+    #   group = "syncthing";
+    #   package = pkgs.syncthing;
+    #   #use tailscale https://init8.lol/syncthing-anywhere-with-tailscale/
+    #   relay.enable = false;
+    #   systemService = true;
+    # };
+  };
+
+  age.secrets.sync-xps17-nixos.file = ../../secrets/sync-xps17-nixos.age;
+
+  services.syncthing = {
+    enable = true;
+    dataDir = "/home/morp";
+    openDefaultPorts = true;
+    configDir = "/home/morp/.config/syncthing";
+    user = "morp";
+    group = "users";
+    guiAddress = "127.0.0.1:8384";
+    overrideDevices = true;
+    overrideFolders = true;
+    devices = {
+      "xps17-nixos" = {id = "$(cat ${config.age.secrets.sync-xps17-nixos.path})";};
+      # "coredns-server" = {id = "REALLY-LONG-COREDNS-SERVER-SYNCTHING-KEY-HERE";};
+    };
+
+    folders = {
+      "Dropbox" = {
+        path = "/home/morp/Dropbox";
+        devices = ["xps17-nixos"];
+        versioning = {
+          type = "staggered";
+          params = {
+            cleanInterval = "3600";
+            maxAge = "15768000";
+          };
+        };
+      };
+      # "coredns-config" = {
+      #   path = "/data/coredns-config";
+      #   devices = ["coredns-server"];
+      #   versioning = {
+      #     type = "simple";
+      #     params = {
+      #       keep = "10";
+      #     };
+      #   };
+      # };
+    };
   };
 
   virtualisation = {
