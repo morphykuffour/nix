@@ -298,11 +298,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1671966569,
-        "narHash": "sha256-jbLgfSnmLchARBNFRvCic63CFQ9LAyvlXnBpc2kwjQc=",
+        "lastModified": 1672266037,
+        "narHash": "sha256-IgzQJm5khTpmqRRu6RoXZuBHSr1VAR9cruHJ499CJ0Q=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "c55fa26ce05fee8e063db22918d05a73d430b2ea",
+        "rev": "fa1bc088ea7b20c0204e8d5c20fec4be938bd5eb",
         "type": "github"
       },
       "original": {
@@ -508,11 +508,11 @@
         "rtf-tokenize": "rtf-tokenize"
       },
       "locked": {
-        "lastModified": 1672117245,
-        "narHash": "sha256-ukoVYCZy8BMya/kbqRiAWPEr9CPqQE+kGYXFzFHYm1E=",
+        "lastModified": 1672258920,
+        "narHash": "sha256-WNmQuXCSAROUt3k6whGLSer2PiXka+NYt6FSrmBpXBI=",
         "owner": "dnaq",
         "repo": "plover-flake",
-        "rev": "0d13e91403d0283b0d40c3130df388771968cd36",
+        "rev": "4a904babfc9fee1a674fb72ad12c8c5722d52650",
         "type": "github"
       },
       "original": {
