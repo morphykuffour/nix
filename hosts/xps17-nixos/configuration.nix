@@ -89,7 +89,7 @@ in {
         enable = true;
         devices = ["nodev"];
         efiSupport = true;
-        useOSProber = true;
+        useOSProber = false;
       };
 
       efi = {
@@ -98,11 +98,6 @@ in {
       };
     };
   };
-
-  # networking
-  networking.hostName = "xps17-nixos";
-  # networking.wireless.enable = true;
-  networking.networkmanager.enable = true;
 
   systemd.user.services.dropbox = {
     description = "Dropbox";
@@ -195,6 +190,7 @@ in {
     # insecure package needed for nixops
     permittedInsecurePackages = [
       "python2.7-pyjwt-1.7.1"
+      "python2.7-certifi-2021.10.8"
     ];
   };
 
@@ -453,21 +449,31 @@ in {
     '';
   };
 
-  networking.firewall = {
-    # warning: Strict reverse path filtering breaks Tailscale
-    # exit node use and some subnet routing setups.
-    checkReversePath = "loose";
-    # enable the firewall
-    enable = true;
+  # networking
+  # networking.hostName = "xps17-nixos";
+  # networking.wireless.enable = true;
+  # networking.networkmanager.enable = true;
+  networking = {
+    hostName = "xps17-nixos";
+    networkmanager.enable = true;
+    firewall = {
+      # warning: Strict reverse path filtering breaks Tailscale
+      # exit node use and some subnet routing setups.
+      checkReversePath = "loose";
+      # enable the firewall
+      enable = true;
 
-    # always allow traffic from your Tailscale network
-    trustedInterfaces = ["tailscale0"];
+      # always allow traffic from your Tailscale network
+      trustedInterfaces = ["tailscale0"];
 
-    # allow the Tailscale UDP port through the firewall
-    allowedUDPPorts = [config.services.tailscale.port];
+      # allow the Tailscale UDP port through the firewall
+      allowedUDPPorts = [config.services.tailscale.port];
 
-    # allow you to SSH in over the public internet
-    allowedTCPPorts = [22];
+      # allow you to SSH in over the public internet
+      allowedTCPPorts = [22];
+    };
+    nameservers = ["100.100.100.100" "8.8.8.8" "1.1.1.1"];
+    search = ["tailc585e.ts.net"];
   };
 
   environment = {
@@ -573,7 +579,7 @@ in {
       libtool
       libvterm
       # virtualbox
-      tailscale
+      # tailscale
       nixops
       os-prober
       kitty

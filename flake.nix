@@ -39,10 +39,10 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # openconnect-sso = {
-    #   url = "github:vlaci/openconnect-sso/flake";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    tailscale = {
+      url = "github:tailscale/tailscale";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     devenv.url = "github:cachix/devenv/v0.4";
     vscode-server.url = "github:msteen/nixos-vscode-server";
   };
@@ -60,16 +60,16 @@
     agenix,
     vscode-server,
     devenv,
-    # openconnect-sso,
+    tailscale,
     # neovim,
     ...
   } @ inputs: let
     user = "morp";
-    # overlays = [
-    #   # neovim.overlay
-    #   # discord.overlays.default
-    #   # plover.overlay
-    # ];
+    overlays = [
+      # neovim.overlay
+      discord.overlays.default
+      plover.overlay
+    ];
   in {
     # nix formatter
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
@@ -109,7 +109,8 @@
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux
             agenix.defaultPackage.x86_64-linux
-            # openconnect-sso.defaultPackage.x86_64-linux
+            tailscale.packages.x86_64-linux.tailscale
+            tailscale.packages.x86_64-linux.tailscale-go
             # devenv.packages.x86_64-linux.devenv
             # neovim.packages.x86_64-linux.neovim
           ];
