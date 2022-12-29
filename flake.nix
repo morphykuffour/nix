@@ -17,9 +17,9 @@
       url = "github:nix-community/nixos-wsl";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # neovim = {
-    #   url = "github:nix-community/neovim-nightly-overlay?ref=master";
-    # };
+    neovim = {
+      url = "github:nix-community/neovim-nightly-overlay?ref=master";
+    };
     discord = {
       url = "github:InternetUnexplorer/discord-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -61,7 +61,7 @@
     vscode-server,
     devenv,
     tailscale,
-    # neovim,
+    neovim,
     ...
   } @ inputs: let
     user = "morp";
@@ -166,7 +166,7 @@
         {
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux
-            # neovim.packages.x86_64-linux.neovim
+            neovim.packages.x86_64-linux.neovim
           ];
         }
       ];

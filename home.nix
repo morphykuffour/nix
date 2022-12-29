@@ -151,6 +151,7 @@
 
       # documents packages
       p7zip
+      ruby
 
       # python packages
       (python39.withPackages (pp:
