@@ -8,42 +8,7 @@
   ...
 }: let
   keyd = pkgs.callPackage ../../pkgs/keyd {};
-  keydConfig = ''
-    [ids]
-    *
-
-    [main]
-
-    # remaps all modifiers to 'oneshot' keys
-    # shift = oneshot(shift)
-    # meta = oneshot(meta)
-    # control = oneshot(control)
-    # leftalt = oneshot(alt)
-    # rightalt = oneshot(altgr)
-
-    # paste with insert
-    insert = S-insert
-
-    capslock = overload(ctrl_vim, esc)
-
-    # ctrl_vim modifier layer; inherits from 'Ctrl' modifier layer
-    [ctrl_vim:C]
-
-    space = swap(vim_mode)
-
-    # vim_mode modifier layer; also inherits from 'Ctrl' modifier layer
-
-    [vim_mode:C]
-
-    h = left
-    j = down
-    k = up
-    l = right
-    # forward word
-    w = C-right
-    # backward word
-    b = C-left
-  '';
+  keydConfig = builtins.readFile ../../pkgs/keyd/keymaps.conf;
   # wakeupScript = ''
   #   echo enabled |sudo tee /sys/bus/usb/devices/*/power/wakeup
   # '';
