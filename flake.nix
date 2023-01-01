@@ -66,7 +66,6 @@
   } @ inputs: let
     user = "morp";
     overlays = [
-      # neovim.overlay
       discord.overlays.default
       plover.overlay
     ];
@@ -83,7 +82,7 @@
         {
           environment.systemPackages = [
             alejandra.defaultPackage.aarch64-darwin
-            # neovim.packages.aarch64-darwin.neovim
+            neovim.packages.aarch64-darwin.neovim
           ];
         }
         home-manager.darwinModules.home-manager
@@ -94,8 +93,6 @@
         }
       ];
     };
-
-    # nixpkgs.overlays = overlays;
 
     # xps17 NixOs
     nixosConfigurations.xps17-nixos = inputs.nixpkgs.lib.nixosSystem {
@@ -109,12 +106,9 @@
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux
             agenix.defaultPackage.x86_64-linux
-            # tailscale.packages.x86_64-linux.tailscale
-            # devenv.packages.x86_64-linux.devenv
-            # neovim.packages.x86_64-linux.neovim
+            # neovim.packages.x86_64-linux.neovim # NVIM v0.9-dev
           ];
         }
-        # nixos-hardware.nixosModules.dell-xps-17-9700
         home-manager.nixosModules.home-manager
         {
           home-manager = {
@@ -133,13 +127,12 @@
       system = "x86_64-linux";
       modules = [
         ./hosts/optiplex-nixos
-        vscode-server.nixosModule
         agenix.nixosModule
         {
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux
             agenix.defaultPackage.x86_64-linux
-            # neovim.packages.x86_64-linux.neovim
+            neovim.packages.x86_64-linux.neovim
           ];
         }
         home-manager.nixosModules.home-manager
@@ -148,9 +141,9 @@
             useGlobalPkgs = true;
             useUserPackages = true;
             users.morp.imports = [./home.nix];
-            extraSpecialArgs = {
-              plover = inputs.plover.packages."x86_64-linux".plover;
-            };
+            # extraSpecialArgs = {
+            #   plover = inputs.plover.packages."x86_64-linux".plover;
+            # };
           };
         }
       ];
