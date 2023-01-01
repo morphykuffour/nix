@@ -9,16 +9,6 @@
 }: let
   keyd = pkgs.callPackage ../../pkgs/keyd {};
   keydConfig = builtins.readFile ../../pkgs/keyd/keymaps.conf;
-  # wakeupScript = ''
-  #   echo enabled |sudo tee /sys/bus/usb/devices/*/power/wakeup
-  # '';
-  # wakeup = ''
-  #
-  #   for i in `/bin/grep USB /proc/acpi/wakeup | /usr/bin/awk '{print $1}'`;
-  #   do
-  #       echo $i > /proc/acpi/wakeup;
-  #   done
-  # '';
 in {
   imports = [
     # <nixos-hardware/dell/xps/17-9700/intel>
