@@ -94,21 +94,21 @@
       # jq
       # go
 
-      # # python packages
-      # # (python39.withPackages (pp:
-      # #   with pp; [
-      # #     mysql-connector
-      # #     pynvim
-      # #     pandas
-      # #     conda
-      # #     requests
-      # #     pip
-      # #     i3ipc
-      # #     ipython
-      # #     dbus-python
-      # #     html2text
-      # #     keymapviz
-      # #   ]))
+      # python packages
+      # (python39.withPackages (pp:
+      #   with pp; [
+      #     mysql-connector
+      #     pynvim
+      #     pandas
+      #     conda
+      #     requests
+      #     pip
+      #     i3ipc
+      #     ipython
+      #     dbus-python
+      #     html2text
+      #     keymapviz
+      #   ]))
     ];
   };
 }
