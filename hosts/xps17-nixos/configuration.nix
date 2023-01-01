@@ -11,18 +11,9 @@
   keydConfig = builtins.readFile ../../pkgs/keyd/keymaps.conf;
 in {
   imports = [
-    # <nixos-hardware/dell/xps/17-9700/intel>
-    # <nixos-hardware/dell/xps/17-9700/nvidia>
     ./hardware-configuration.nix
     ./dslr.nix
-    # agenix.nixosModule
-    # ../../pkgs/keyd/default.nix
-    # ./forticlientsslvpn.nix
-    # ./mongosh.nix
-    # ./wireguard.nix
   ];
-
-  # nixpkgs.overlays = [ ];
 
   # system info
   system.stateVersion = config.system.nixos.release;
@@ -129,18 +120,6 @@ in {
   nixpkgs.config = {
     allowUnfree = true;
     allowUnsupportedSystem = true;
-    # packageOverrides = pkgs: {
-    #   nur =
-    #     (import (
-    #       builtins.fetchTarball {
-    #         url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
-    #         sha256 = "0d0xz5hv1b0cnvj0dx9l6pd0v3nf3npiqqq0136b0radbxn4i4h0";
-    #       }
-    #     ))
-    #     {
-    #       inherit pkgs;
-    #     };
-    # };
 
     # insecure package needed for nixops
     permittedInsecurePackages = [
@@ -515,14 +494,13 @@ in {
       gcc
       flameshot
       sxiv
-      polybar
       gnumake
       clipmenu
       playerctl
       xorg.xbacklight
       autorandr
       xdotool
-      shared-mime-info
+      # shared-mime-info
       xdg-user-dirs
       bluedevil
       plasma5Packages.kdeconnect-kde
@@ -586,8 +564,8 @@ in {
       libvterm
       # virtualbox
       tailscale
-      nixops
-      os-prober
+      # nixops
+      # os-prober
       kitty
       android-tools
       android-studio
@@ -603,13 +581,8 @@ in {
 
       # vpn
       # openconnect_openssl
-      # openconnect_unstable
       networkmanager
-      # networkmanager-vpnc
-      # networkmanager_dmenu
-      # networkmanager-openconnect
       networkmanagerapplet
-      # networkmanager-fortisslvpn
 
       # gaming
       chiaki
