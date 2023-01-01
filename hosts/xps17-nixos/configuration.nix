@@ -133,6 +133,7 @@ in {
     fwupd.enable = true;
     fprintd = {
       enable = true;
+      # TODO
       # package = pkgs.callPackage ../../pkgs/fprintd {};
     };
 
@@ -180,28 +181,11 @@ in {
 
     flatpak.enable = true;
 
-    # samba = {
-    #   enable = true;
-    #   shares = {
-    #     public = {
-    #       path = "/home/morp/Public";
-    #       "read only" = true;
-    #       browseable = "yes";
-    #       "guest ok" = "yes";
-    #       comment = "Public samba share.";
-    #     };
-    #   };
-    # };
-
     xserver = {
-      # Enable touchpad support (enabled default in most desktopManager).
       libinput.enable = true;
-      # Enable the X11 windowing system.
       enable = true;
-      # Configure keymap in X11
       layout = "us";
       xkbVariant = "";
-
       desktopManager = {
         xterm = {
           enable = false;
@@ -209,18 +193,6 @@ in {
         mate = {
           enable = true;
         };
-
-        # https://unix.stackexchange.com/questions/445048/configure-xfce-startup-commands-in-nixos
-        # session = [
-        #   # {
-        #   #   name = "play-with-mpv";
-        #   #   bgSupport = true;
-        #   #   start = ''
-        #   #     ${pkgs.runtimeShell} ${pkgs.play-with-mpv} &
-        #   #     waitPID=$!
-        #   #   '';
-        #   # }
-        # ];
       };
 
       displayManager = {
@@ -294,43 +266,43 @@ in {
     #   relay.enable = false;
     #   systemService = true;
     # };
-  };
 
-  services.syncthing = {
-    enable = true;
-    dataDir = "/home/morp";
-    openDefaultPorts = true;
-    configDir = "/home/morp/.config/syncthing";
-    user = "morp";
-    group = "users";
-    guiAddress = "127.0.0.1:8384";
-    overrideDevices = true;
-    overrideFolders = true;
-    devices = {
-      "xps17-nixos" = {id = "44LYB6O-ELZWVNP-5R576R3-MRD3MM2-FXORGWG-WRC26ZQ-JAMWKRS-5SCNUAY";};
-    };
-
-    folders = {
-      "Dropbox" = {
-        path = "/home/morp/Dropbox";
-        devices = ["xps17-nixos"];
-        versioning = {
-          type = "staggered";
-          params = {
-            cleanInterval = "3600";
-            maxAge = "15768000";
-          };
-        };
+    syncthing = {
+      enable = true;
+      dataDir = "/home/morp";
+      openDefaultPorts = true;
+      configDir = "/home/morp/.config/syncthing";
+      user = "morp";
+      group = "users";
+      guiAddress = "127.0.0.1:8384";
+      overrideDevices = true;
+      overrideFolders = true;
+      devices = {
+        "xps17-nixos" = {id = "44LYB6O-ELZWVNP-5R576R3-MRD3MM2-FXORGWG-WRC26ZQ-JAMWKRS-5SCNUAY";};
       };
 
-      "Org" = {
-        path = "/home/morp/Dropbox/Zettelkasten/";
-        devices = ["xps17-nixos"];
-        versioning = {
-          type = "staggered";
-          params = {
-            cleanInterval = "3600";
-            maxAge = "15768000";
+      folders = {
+        "Dropbox" = {
+          path = "/home/morp/Dropbox";
+          devices = ["xps17-nixos"];
+          versioning = {
+            type = "staggered";
+            params = {
+              cleanInterval = "3600";
+              maxAge = "15768000";
+            };
+          };
+        };
+
+        "Org" = {
+          path = "/home/morp/Dropbox/Zettelkasten/";
+          devices = ["xps17-nixos"];
+          versioning = {
+            type = "staggered";
+            params = {
+              cleanInterval = "3600";
+              maxAge = "15768000";
+            };
           };
         };
       };
