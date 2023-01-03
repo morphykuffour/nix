@@ -193,13 +193,12 @@
       system = "aarch64-linux";
       specialArgs = inputs;
       modules = [
+        "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
         ./hosts/rpi3b-nixos
         agenix.nixosModule
         {
           environment.systemPackages = [
-            alejandra.defaultPackage.x86_64-linux
             agenix.defaultPackage.x86_64-linux
-            # neovim.packages.x86_64-linux.neovim
           ];
         }
       ];
