@@ -11,6 +11,7 @@
     ./modules/redshift.nix
     ./modules/pass.nix
     ./modules/fonts.nix
+    ./modules/zathura
     # ./modules/nvim.nix
     ./modules/picom.nix
   ];
