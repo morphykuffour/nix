@@ -1,7 +1,5 @@
 # TODO: create vscode-server following
 # https://tailscale.com/kb/1166/vscode-ipad/
-# TODO: create pi-hole following
-# https://tailscale.com/kb/1114/pi-hole/
 {
   config,
   pkgs,
