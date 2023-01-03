@@ -26,6 +26,7 @@ in {
       kernelModules = [];
     };
     kernelModules = ["kvm-amd" "kvm-intel" "wireguard"];
+    binfmt.emulatedSystems = ["aarch64-linux"];
     extraModulePackages = [];
     supportedFilesystems = ["ntfs"];
     loader = {
@@ -117,15 +118,20 @@ in {
   };
 
   nix.settings.trusted-users = ["root" "morp"];
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnsupportedSystem = true;
+  nixpkgs = {
+    # crossSystem.system = "aarch64-linux";
+    # buildPlatform.system = "x86_64-linux";
+    # hostPlatform.system = "aarch64-linux";
+    config = {
+      allowUnfree = true;
+      allowUnsupportedSystem = true;
 
-    # insecure package needed for nixops
-    permittedInsecurePackages = [
-      "python2.7-pyjwt-1.7.1"
-      "python2.7-certifi-2021.10.8"
-    ];
+      # insecure package needed for nixops
+      permittedInsecurePackages = [
+        "python2.7-pyjwt-1.7.1"
+        "python2.7-certifi-2021.10.8"
+      ];
+    };
   };
 
   xdg.portal.enable = true;
@@ -424,7 +430,7 @@ in {
       zsync
       cdrkit
       sqlitebrowser
-      zfs
+      # zfs
       bashmount
       vagrant
       grub2
@@ -481,6 +487,10 @@ in {
       # openconnect_openssl
       networkmanager
       networkmanagerapplet
+
+      # backup
+      borgbackup
+      borgmatic
 
       # gaming
       chiaki

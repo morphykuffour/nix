@@ -194,7 +194,7 @@
       specialArgs = inputs;
       modules = [
         "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-        ./hosts/rpi3b-nixos
+        # ./hosts/rpi3b-nixos
         agenix.nixosModule
         {
           environment.systemPackages = [
