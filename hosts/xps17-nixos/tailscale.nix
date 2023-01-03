@@ -4,7 +4,6 @@
   agenix,
   ...
 }: {
-
   # tailscale
   services.tailscale.enable = true;
 
