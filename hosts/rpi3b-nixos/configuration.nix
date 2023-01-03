@@ -1,5 +1,3 @@
-# TODO: create vscode-server following
-# https://tailscale.com/kb/1166/vscode-ipad/
 {
   config,
   pkgs,
