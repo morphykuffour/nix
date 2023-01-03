@@ -7,7 +7,9 @@
   imports = [
     ./configuration.nix
     ./hardware-configuration.nix
-    ./zfs.nix
+    ./backup.nix
     ./tailscale.nix
+    # TODO: move drive to zfs
+    # ./zfs.nix
   ];
 }
