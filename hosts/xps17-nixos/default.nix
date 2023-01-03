@@ -7,7 +7,8 @@
   imports = [
     ./configuration.nix
     ./hardware-configuration.nix
-    ./backup.nix
+    # TODO: fix backup with borg
+    # ./backup.nix
     ./tailscale.nix
     # TODO: move drive to zfs
     # ./zfs.nix
