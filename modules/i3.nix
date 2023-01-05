@@ -163,6 +163,11 @@ in {
           always = true;
           notification = false;
         }
+{
+          command = "${home}/.config/polybar/launch.sh";
+          always = true;
+          notification = false;
+        }
         # {
         #   command = "${pkgs.feh}/bin/feh --bg-scale --randomize ~/Pictures/wallpapers/*";
         #   always = true;
@@ -173,11 +178,7 @@ in {
         #   always = true;
         #   notification = false;
         # }
-        # {
-        #   command = "${home}/.config/polybar/launch.sh";
-        #   always = true;
-        #   notification = false;
-        # }
+        
       ];
     };
 
