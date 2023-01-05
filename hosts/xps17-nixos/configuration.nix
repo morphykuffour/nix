@@ -499,6 +499,8 @@ in {
 
       # i3 rice
       polybar
+      viu
+      ueberzug
 
       # R packages for data science
       (pkgs.rWrapper.override {

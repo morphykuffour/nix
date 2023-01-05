@@ -165,6 +165,7 @@
           mysql-connector
           pipx
           pyqt5
+          ueberzug
         ]))
     ];
   };
