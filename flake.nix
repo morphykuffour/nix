@@ -189,6 +189,7 @@
 
     # TODO: create vscode-server following
     # https://tailscale.com/kb/1166/vscode-ipad/
+    # https://myme.no/posts/2022-12-01-nixos-on-raspberrypi.html
     nixosConfigurations.rpi3b-nixos = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
       specialArgs = inputs;

@@ -496,6 +496,11 @@ in {
       chiaki
       # avrlibc
       # conda
+
+      # i3 rice
+      polybar
+
+      # R packages for data science
       (pkgs.rWrapper.override {
         packages = with pkgs.rPackages; let
           llr = buildRPackage {
