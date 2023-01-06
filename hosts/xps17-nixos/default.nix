@@ -12,5 +12,6 @@
     ./tailscale.nix
     # TODO: move drive to zfs
     # ./zfs.nix
+    ../../modules/emacs
   ];
 }
