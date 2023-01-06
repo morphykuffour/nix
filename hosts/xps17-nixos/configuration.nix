@@ -162,11 +162,11 @@ in {
     };
     longview.mysqlPasswordFile = "/run/keys/dbpassword";
 
-    emacs = {
-      enable = true;
-      package = pkgs.emacs;
-      install = true;
-    };
+    # emacs = {
+    #   enable = true;
+    #   package = pkgs.emacs;
+    #   install = true;
+    # };
 
     openssh.enable = true;
     clipmenu.enable = true;
