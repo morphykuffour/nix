@@ -20,13 +20,13 @@
     neovim = {
       url = "github:nix-community/neovim-nightly-overlay?ref=master";
     };
-    discord = {
-      url = "github:InternetUnexplorer/discord-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware";
-    };
+    # discord = {
+    #   url = "github:InternetUnexplorer/discord-overlay";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+    # nixos-hardware = {
+    #   url = "github:NixOS/nixos-hardware";
+    # };
     plover = {
       url = "github:dnaq/plover-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -43,6 +43,10 @@
       url = "github:tailscale/tailscale";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     devenv.url = "github:cachix/devenv/v0.4";
     vscode-server.url = "github:msteen/nixos-vscode-server";
   };
@@ -52,23 +56,24 @@
     nixpkgs,
     home-manager,
     darwin,
-    discord,
-    nixos-hardware,
     plover,
     alejandra,
     nixos-wsl,
     agenix,
-    vscode-server,
     devenv,
     tailscale,
     neovim,
+    emacs-overlay,
+    vscode-server,
+    # discord,
+    # nixos-hardware,
     ...
   } @ inputs: let
     user = "morp";
-    overlays = [
-      discord.overlays.default
-      plover.overlay
-    ];
+    # overlays = [
+    #   discord.overlays.default
+    #   plover.overlay
+    # ];
   in {
     # nix formatter
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
@@ -107,6 +112,10 @@
             alejandra.defaultPackage.x86_64-linux
             agenix.defaultPackage.x86_64-linux
             # neovim.packages.x86_64-linux.neovim # NVIM v0.9-dev
+          ];
+          nixpkgs.overlays = [
+            # self.overlay
+            inputs.emacs-overlay.overlay
           ];
         }
         home-manager.nixosModules.home-manager
@@ -160,6 +169,11 @@
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux
             neovim.packages.x86_64-linux.neovim
+          ];
+
+          nixpkgs.overlays = [
+            # self.overlay
+            inputs.emacs-overlay.overlay
           ];
         }
       ];
