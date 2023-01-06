@@ -5,5 +5,6 @@
 }: {
   imports = [
     ./configuration.nix
+    ../../modules/emacs
   ];
 }
