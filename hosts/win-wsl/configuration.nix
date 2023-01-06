@@ -59,6 +59,7 @@
 
   # Enable nix flakes
   nix.package = pkgs.nixFlakes;
+  nix.settings.trusted-users = ["root" "morp"];
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
@@ -78,12 +79,12 @@
   # Don't allow emergency mode, because we don't have a console.
   systemd.enableEmergencyMode = false;
 
-    systemd.services.nixs-wsl-systemd-fix = {
+  systemd.services.nixs-wsl-systemd-fix = {
     description = "Fix the /dev/shm symlink to be a mount";
     unitConfig = {
       DefaultDependencies = "no";
       # Before = "sysinit.target";
-      Before = [ "sysinit.target" "systemd-tmpfiles-setup-dev.service" "systemd-tmpfiles-setup.service" "systemd-sysctl.service" ];
+      Before = ["sysinit.target" "systemd-tmpfiles-setup-dev.service" "systemd-tmpfiles-setup.service" "systemd-sysctl.service"];
       ConditionPathExists = "/dev/shm";
       ConditionPathIsSymbolicLink = "/dev/shm";
       ConditionPathIsMountPoint = "/run/shm";
@@ -95,8 +96,21 @@
         "/run/wrappers/bin/mount --bind -o X-mount.mkdir /run/shm /dev/shm"
       ];
     };
-    wantedBy = [ "sysinit.target" ];
+    wantedBy = ["sysinit.target"];
   };
+
+  # emacs package
+  services.emacs = {
+    enable = true;
+    package = pkgs.emacsGit;
+    install = true;
+  };
+
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    }))
+  ];
 
   environment.systemPackages = with pkgs; [
     git

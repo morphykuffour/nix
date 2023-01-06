@@ -137,6 +137,20 @@ in {
     package = pkgs.pulseaudioFull;
   };
 
+  # TODO: eventually move to emacsGit using overlay and flake input
+  # https://github.com/nix-community/emacs-overlay
+  services.emacs = {
+    enable = true;
+    package = pkgs.emacsUnstable;
+    install = true;
+  };
+
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    }))
+  ];
+
   services = {
     fwupd.enable = true;
     fprintd = {
@@ -161,12 +175,6 @@ in {
       enable = false;
     };
     longview.mysqlPasswordFile = "/run/keys/dbpassword";
-
-    # emacs = {
-    #   enable = true;
-    #   package = pkgs.emacs;
-    #   install = true;
-    # };
 
     openssh.enable = true;
     clipmenu.enable = true;
