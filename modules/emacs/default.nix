@@ -1,7 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
-
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   home.file.".emacs.d/init.el".source = ./init.el;
 
   home.packages = with pkgs; [
@@ -34,5 +36,4 @@
   # };
 
   services.emacs.enable = ! pkgs.stdenv.isDarwin;
-
 }
