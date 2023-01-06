@@ -129,10 +129,8 @@ in {
         "${mod}+Shift+e" = ''exec "${pkgs.i3}/bin/i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' '${pkgs.i3}/bin/i3-msg exit'"'';
         "${mod}+r" = ''mode "resize"'';
 
-        "${mod}+Shift+n" = "exec kitty --title notetaker_window --config ${home}/.config/kitty/notetaker.conf ${local_bin}/notetaker";
+        "${mod}+Shift+n" = "exec kitty --title notetaker_window --config ${home}/.config/kitty/config/notetaker.conf ${local_bin}/notetaker";
         "${mod}+Shift+m" = "exec kitty --title floatimage_window ${local_bin}/floatimage";
-
-        # run scripts TODO move to sxhkd when working
         "${mod}+ g" = "exec --no-startup-id ${local_bin}/google-search.sh";
         "${mod}+ Shift + g" = "exec --no-startup-id ${local_bin}/nixpkg-search.sh";
       };
@@ -149,36 +147,40 @@ in {
           notification = false;
         }
         {
-          command = "blueman-applet";
-          always = true;
-          notification = false;
-        }
-        {
           command = "flameshot";
           always = true;
           notification = false;
         }
         {
-          command = "nm-applet";
+          command = "polybar";
           always = true;
           notification = false;
         }
         {
-          command = "${home}/.config/polybar/launch.sh";
+          command = "redshift";
           always = true;
           notification = false;
         }
+        # {
+        #   command = "sxhkd -c /home/morp/.config/sxhkd/sxhkdrc";
+        #   always = true;
+        #   notification = false;
+        # }
+        # {
+        #   command = "blueman-applet";
+        #   always = true;
+        #   notification = false;
+        # }
+        # {
+        #   command = "nm-applet";
+        #   always = true;
+        #   notification = false;
+        # }
         # {
         #   command = "${pkgs.feh}/bin/feh --bg-scale --randomize ~/Pictures/wallpapers/*";
         #   always = true;
         #   notification = false;
         # }
-        # {
-        #   command = "exec sxhkd -c /home/morp/.config/sxhkd/sxhkdrc";
-        #   always = true;
-        #   notification = false;
-        # }
-        
       ];
     };
 

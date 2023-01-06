@@ -89,9 +89,6 @@ in {
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.utf8";
 
-  # Enable sound with pipewire.
-  # hardware.bluetooth.enable = true;
-
   hardware.bluetooth = {
     enable = true;
     # hsphfpd.enable = true; # HSP & HFP daemon
@@ -102,8 +99,6 @@ in {
     };
   };
 
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
 
   # user account
@@ -135,6 +130,13 @@ in {
   };
 
   xdg.portal.enable = true;
+
+  sound.enable = true;
+  hardware.pulseaudio = {
+    enable = true;
+    package = pkgs.pulseaudioFull;
+  };
+
   services = {
     fwupd.enable = true;
     fprintd = {
@@ -145,12 +147,12 @@ in {
 
     qemuGuest.enable = true;
 
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-    };
+    # pipewire = {
+    #   enable = true;
+    #   alsa.enable = true;
+    #   alsa.support32Bit = true;
+    #   pulse.enable = true;
+    # };
 
     mysql = {
       user = "morp";
@@ -222,45 +224,23 @@ in {
         ];
       };
 
-      xrandrHeads = [
-        {
-          output = "HDMI-1";
-          primary = true;
-          monitorConfig = ''
-            Option "PreferredMode" "2560x1440"
-            Option "Position" "0 0"
-          '';
-        }
-        {
-          output = "eDP-1";
-          monitorConfig = ''
-            Option "PreferredMode" "2560x1600"
-            Option "Position" "0 0"
-          '';
-        }
-      ];
-      resolutions = [
-        {
-          x = 2048;
-          y = 1152;
-        }
-        {
-          x = 1920;
-          y = 1080;
-        }
-        {
-          x = 2560;
-          y = 1440;
-        }
-        {
-          x = 3072;
-          y = 1728;
-        }
-        {
-          x = 3840;
-          y = 2160;
-        }
-      ];
+      # xrandrHeads = [
+      #   {
+      #     output = "HDMI-1";
+      #     primary = true;
+      #     monitorConfig = ''
+      #       Option "PreferredMode" "2560x1440"
+      #       Option "Position" "0 0"
+      #     '';
+      #   }
+      #   {
+      #     output = "eDP-1";
+      #     monitorConfig = ''
+      #       Option "PreferredMode" "2560x1600"
+      #       Option "Position" "0 0"
+      #     '';
+      #   }
+      # ];
     };
 
     syncthing = {
