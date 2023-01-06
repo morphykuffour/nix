@@ -47,7 +47,7 @@ sudo nixos-rebuild switch --flake .#optiplex-nixos
 - [x] TODO test on Linux on ZFS #works
 - [x] TODO test on WSL #works
     - [x] TODO add wsl github repo as a submodule without nix complaining
-    - [ ] TODO fix DBus error
+    - [x] TODO fix DBus error
 	    - https://x410.dev/cookbook/wsl/sharing-dbus-among-wsl2-consoles/
     - [ ] TODO fix openssh error
 - [x] TODO get macos and nix working together
