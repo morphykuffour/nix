@@ -58,7 +58,9 @@
   };
 
   # Enable nix flakes
-  nix.package = pkgs.nixFlakes;
+  nix = {
+    package = pkgs.nixFlakes;
+  };
   nix.settings.trusted-users = ["root" "morp"];
   nix.extraOptions = ''
     experimental-features = nix-command flakes
