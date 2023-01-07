@@ -1,0 +1,15 @@
+name: Cache on Cachix
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install cachix
+        uses: cachix/install-cachix@v12
+        with:
+          cachix-bin: /usr/local/bin/cachix
+      - name: Create cache
+        run: cachix create my-cache --auth=${{ secrets.CACHIX_AUTH_TOKEN }}
+      - name: Push to cache
+        run: cachix push my-cache https://github.com/morphykuffour/nix.git
+
