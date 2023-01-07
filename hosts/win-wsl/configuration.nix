@@ -18,6 +18,7 @@
   system.stateVersion = "unstable";
   hardware.opengl.enable = true;
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowBroken = true;
   networking = {
     hostName = "win-wsl";
     dhcpcd.enable = false;
@@ -60,11 +61,20 @@
   # Enable nix flakes
   nix = {
     package = pkgs.nixFlakes;
+    autoOptimiseStore = true;
+    useSandbox = true;
+    settings.trusted-users = ["root" "morp" "@wheel"];
+
+    binaryCaches = [
+      "https://nix-community.cachix.org"
+    ];
+    binaryCachePublicKeys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
   };
-  nix.settings.trusted-users = ["root" "morp"];
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
 
   security.sudo.wheelNeedsPassword = false;
 
