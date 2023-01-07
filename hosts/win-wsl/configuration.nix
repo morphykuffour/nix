@@ -61,16 +61,17 @@
   # Enable nix flakes
   nix = {
     package = pkgs.nixFlakes;
-    autoOptimiseStore = true;
-    useSandbox = true;
-    settings.trusted-users = ["root" "morp" "@wheel"];
+    settings = {
+      auto-optimise-store = true;
+      sandbox = true;
+      trusted-users = ["root" "morp" "@wheel"];
 
-    binaryCaches = [
-      "https://nix-community.cachix.org"
-    ];
-    binaryCachePublicKeys = [
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
+      substituters = [
+        "https://nix-community.cachix.org"
+      ];
+      trusted-public-keys = ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="];
+    };
+
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -112,19 +113,28 @@
   };
 
   # emacs package
-  services.emacs = {
-    enable = true;
-    package = pkgs.emacsGit;
-    install = true;
-  };
+  # services.emacs = {
+  #   enable = true;
+  #   package = pkgs.emacs;
+  #   # package = pkgs.emacsUnstable;
+  #   # package = pkgs.emacs-overlay;
+  #   install = true;
+  # };
 
   # import emacs config as a submodule
-  nixpkgs.overlays = [
-    (import ../../third_party/emacs-overlay)
-    # (import (builtins.fetchTarball {
-    #   url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    # }))
-  ];
+  # nixpkgs.overlays = [
+  #   # (import ../../third_party/emacs-overlay)
+  #   (import (builtins.fetchTarball {
+  #     url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+  #   }))
+  # ];
+
+  # packageOverrides = pkgs: {
+  #   emacs-overlay = pkgs.buildEnv {
+  #     name = "emacs-overlay-env";
+  #     paths = [(import (builtins.fetchTarball "https://cachix.org/api/v1/cache/emacs-overlay"))];
+  #   };
+  # };
 
   environment.systemPackages = with pkgs; [
     git
