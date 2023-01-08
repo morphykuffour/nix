@@ -141,15 +141,16 @@ in {
   # https://github.com/nix-community/emacs-overlay
   services.emacs = {
     enable = true;
-    package = pkgs.emacsUnstable;
+    # package = pkgs.emacsUnstable;
+    package = pkgs.emacs;
     install = true;
   };
 
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    }))
-  ];
+  # nixpkgs.overlays = [
+  #   (import (builtins.fetchTarball {
+  #     url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+  #   }))
+  # ];
 
   services = {
     fwupd.enable = true;
@@ -161,12 +162,12 @@ in {
 
     qemuGuest.enable = true;
 
-    # pipewire = {
-    #   enable = true;
-    #   alsa.enable = true;
-    #   alsa.support32Bit = true;
-    #   pulse.enable = true;
-    # };
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
 
     mysql = {
       user = "morp";
@@ -227,7 +228,7 @@ in {
 
         extraPackages = with pkgs; [
           dmenu
-          i3status
+          # i3status
           i3lock
         ];
       };
