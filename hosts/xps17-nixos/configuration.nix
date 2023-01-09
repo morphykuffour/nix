@@ -133,7 +133,7 @@ in {
 
   sound.enable = true;
   hardware.pulseaudio = {
-    enable = true;
+    enable = false;
     package = pkgs.pulseaudioFull;
   };
 
@@ -222,34 +222,16 @@ in {
         sddm.enable = true;
       };
 
-      windowManager.i3 = {
-        enable = true;
-        package = pkgs.i3-gaps;
+      # windowManager.i3 = {
+      #   enable = true;
+      #   package = pkgs.i3-gaps;
 
-        extraPackages = with pkgs; [
-          dmenu
-          # i3status
-          i3lock
-        ];
-      };
+      #   # extraPackages = with pkgs; [
+      #   #   # i3status
+      #   #   # i3lock
+      #   # ];
+      # };
 
-      # xrandrHeads = [
-      #   {
-      #     output = "HDMI-1";
-      #     primary = true;
-      #     monitorConfig = ''
-      #       Option "PreferredMode" "2560x1440"
-      #       Option "Position" "0 0"
-      #     '';
-      #   }
-      #   {
-      #     output = "eDP-1";
-      #     monitorConfig = ''
-      #       Option "PreferredMode" "2560x1600"
-      #       Option "Position" "0 0"
-      #     '';
-      #   }
-      # ];
     };
 
     syncthing = {
@@ -490,7 +472,7 @@ in {
       polybar
       viu
       ueberzug
-
+      dmenu
       # R packages for data science
       (pkgs.rWrapper.override {
         packages = with pkgs.rPackages; let
