@@ -8,7 +8,7 @@
     ./configuration.nix
     ./hardware-configuration.nix
     # TODO: fix backup with borg
-    ./backup.nix
+    # ./backup.nix
     ./tailscale.nix
     # TODO: move drive to zfs
     # ./zfs.nix
