@@ -231,7 +231,6 @@ in {
       #   #   # i3lock
       #   # ];
       # };
-
     };
 
     syncthing = {
