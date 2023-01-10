@@ -114,7 +114,7 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.morp.imports = [./home.nix];
+            users.morp.imports = [./hosts/xps17-nixos/home.nix];
             extraSpecialArgs = {
               plover = inputs.plover.packages."x86_64-linux".plover;
             };
@@ -140,7 +140,7 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.morp.imports = [./home.nix];
+            users.morp.imports = [./hosts/xps17-nixos/home.nix];
             # extraSpecialArgs = {
             #   plover = inputs.plover.packages."x86_64-linux".plover;
             # };
@@ -162,17 +162,17 @@
             neovim.packages.x86_64-linux.neovim
           ];
         }
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.morp.imports = [./home.nix];
-            # extraSpecialArgs = {
-            #   plover = inputs.plover.packages."x86_64-linux".plover;
-            # };
-          };
-        }
+        # home-manager.nixosModules.home-manager
+        # {
+        #   home-manager = {
+        #     useGlobalPkgs = true;
+        #     useUserPackages = true;
+        #     users.morp.imports = [./home.nix];
+        #     # extraSpecialArgs = {
+        #     #   plover = inputs.plover.packages."x86_64-linux".plover;
+        #     # };
+        #   };
+        # }
       ];
       specialArgs = inputs;
     };
