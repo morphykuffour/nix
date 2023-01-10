@@ -162,7 +162,7 @@
     zsh
     tmux
     starship
-    atuin
+    # atuin
     brave
     kitty
     ranger

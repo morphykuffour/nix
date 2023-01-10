@@ -52,7 +52,8 @@
     packages = with pkgs; [
       tmux
       zsh
-      atuin
+      # atuin
+      mcfly
       starship
       exa
       bat
