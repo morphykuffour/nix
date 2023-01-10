@@ -4,6 +4,7 @@
   config,
   nixos-wsl,
   modulesPath,
+  callPackage,
   ...
 }: {
   imports = [
@@ -65,7 +66,7 @@
       auto-optimise-store = true;
       sandbox = true;
       trusted-users = ["root" "morp" "@wheel"];
-
+      # binaryCache = ["https://cache.nixos.org" "https://nix-community.cachix.org"];
       substituters = [
         "https://nix-community.cachix.org"
       ];
@@ -115,8 +116,8 @@
   # emacs package
   # services.emacs = {
   #   enable = true;
-  #   package = pkgs.emacs;
-  #   # package = pkgs.emacsUnstable;
+  #   # package = pkgs.emacs;
+  #   package = pkgs.emacsGit;
   #   # package = pkgs.emacs-overlay;
   #   install = true;
   # };
@@ -164,5 +165,6 @@
     gnumake
     ripgrep
     fzf
+    mcfly
   ];
 }
