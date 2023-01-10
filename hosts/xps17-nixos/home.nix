@@ -7,14 +7,14 @@
   ...
 }: {
   imports = [
-    ./modules/i3.nix
-    ./modules/redshift.nix
-    ./modules/pass.nix
-    ./modules/fonts.nix
-    ./modules/zathura
+    ../../modules/i3.nix
+    ../../modules/redshift.nix
+    ../../modules/pass.nix
+    ../../modules/fonts.nix
+    ../../modules/zathura
     # ./modules/nvim.nix
     # ./modules/emacs
-    ./modules/picom.nix
+    ../../modules/picom.nix
   ];
 
   services.clipmenu.enable = true;
