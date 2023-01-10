@@ -22,13 +22,13 @@
     home-manager = {
       enable = true;
     };
-    obs-studio = {
-      enable = true;
-      plugins = with pkgs.obs-studio-plugins; [
-        wlrobs
-        obs-gstreamer
-      ];
-    };
+    # obs-studio = {
+    #   enable = true;
+    #   plugins = with pkgs.obs-studio-plugins; [
+    #     wlrobs
+    #     obs-gstreamer
+    #   ];
+    # };
     lazygit = {
       enable = true;
       settings = {
@@ -100,7 +100,7 @@
       zathura
       go
       # viu
-      mpv
+      # mpv
       feh
       sublime
       surfraw
@@ -140,7 +140,7 @@
       # python2
 
       # keeb packages
-      via
+      # via
       qmk
       qmk-udev-rules
       # gcc_multi
