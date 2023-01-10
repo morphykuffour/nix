@@ -162,6 +162,17 @@
             neovim.packages.x86_64-linux.neovim
           ];
         }
+        home-manager.nixosModules.home-manager
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            users.morp.imports = [./home.nix];
+            # extraSpecialArgs = {
+            #   plover = inputs.plover.packages."x86_64-linux".plover;
+            # };
+          };
+        }
       ];
       specialArgs = inputs;
     };
