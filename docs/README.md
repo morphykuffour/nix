@@ -114,13 +114,8 @@ ln -s /my/sources/nixpkgs ~/.nix-defexpr/nixpkgs
 ```
 You may want to delete the symlink ~/.nix-defexpr/channels_root to prevent root’s NixOS channel from clashing with your own tree (this may break the command-not-found utility though). If you want to go back to the default state, you may just remove the ~/.nix-defexpr directory completely, log out and log in again and it should have been recreated with a link to the root channels.
 
+To enable hard linking when running nixos-collect-garbage, you can use the --use-hard-links option. For example:
 
-
-```python
-import pprint
-def p(a):
-    pprint.pprint( a + "hello world")
-    
+```nix
+nix-collect-garbage --use-hard-links
 ```
-
-
