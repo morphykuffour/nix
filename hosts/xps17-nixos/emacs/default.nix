@@ -4,7 +4,8 @@
   pkgs,
   ...
 }: let
-  emacs-overlay = import <emacs-overlay> {};
+  # emacs-overlay = import <emacs-overlay> {};
+  # emacsGit = ../../../emacs-overlay/result/bin/emacs;
 in {
   # home.file.".emacs.d/init.el".source = ./init.el;
 
@@ -19,15 +20,10 @@ in {
   services.emacs = {
     enable = true;
     # package = pkgs.emacsUnstable;
-    package = pkgs.emacs-overlay.emacsGit;
+    package = emacsGit;
     install = true;
   };
 
-  # nixpkgs.overlays = [
-  #   (import (builtins.fetchTarball {
-  #     url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-  #   }))
-  # ];
   # home.sessionVariables = rec {
   #   EDITOR = ''emacsclient -nw -a \"\"'';
   #   GIT_EDITOR = EDITOR;
@@ -36,7 +32,7 @@ in {
 
   # programs.emacs = {
   #   enable = true;
-  #   package = pkgs.emacsWithPackagesFromUsePackage {
+  #   package = emacs-overlay.emacsWithPackagesFromUsePackage {
   #     alwaysEnsure = true;
   #     config = ./init.el;
   #     # override = epkgs: epkgs // {
@@ -51,5 +47,5 @@ in {
   #   et = "emacsclient -nw -a \"\"";
   # };
 
-  services.emacs.enable = ! pkgs.stdenv.isDarwin;
+  # services.emacs.enable = ! pkgs.stdenv.isDarwin;
 }
