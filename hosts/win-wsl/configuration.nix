@@ -166,5 +166,6 @@
     ripgrep
     fzf
     mcfly
+    cargo
   ];
 }
