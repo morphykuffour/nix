@@ -369,6 +369,7 @@ in {
       ventoy-bin
       bluez
       rustup
+      rustc
       brightnessctl
       xdragon
       keyd

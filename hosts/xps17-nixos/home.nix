@@ -150,6 +150,9 @@
       p7zip
       ruby
 
+      # csv
+      xsv
+
       # python packages
       (python39.withPackages (pp:
         with pp; [
