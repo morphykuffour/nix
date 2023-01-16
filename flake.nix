@@ -82,7 +82,7 @@
         {
           environment.systemPackages = [
             alejandra.defaultPackage.aarch64-darwin
-            neovim.packages.aarch64-darwin.neovim
+            # neovim.packages.aarch64-darwin.neovim
           ];
         }
         home-manager.darwinModules.home-manager
