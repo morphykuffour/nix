@@ -453,6 +453,7 @@ in {
       chiaki
       # avrlibc
       # conda
+      mcfly
 
       # i3 rice
       polybar
