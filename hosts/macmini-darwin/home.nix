@@ -42,7 +42,7 @@
       mpv
       feh
 
-      # # edit packages
+      # edit packages not working use xps17-nixos
       # tree-sitter-grammars.tree-sitter-markdown
       # nodePackages.typescript-language-server
       # nodePackages.bash-language-server
@@ -58,40 +58,37 @@
       # gopls
       # ccls
 
-      # # reading packages
-      # newsboat
+      # reading packages
+      newsboat
 
-      # # keeb packages
-      # qmk-udev-rules
-      # via
-      # qmk
-
-      # # dev packages
+      # dev packages
       # # gcc_multi
       # # avrlibc
       # # python2
-      # starship
-      # tealdeer
-      # jupyter
-      # ranger
-      # stylua
-      # cscope
-      # delta
-      # cargo
-      # atuin
-      # kitty
-      # tmux
-      # ruby
-      # edir
-      # curl
-      # sbcl
-      # zsh
-      # exa
-      # fzf
-      # bat
-      # fd
-      # gh
-      # jq
+      starship
+      tealdeer
+      jupyter
+      ranger
+      stylua
+      cscope
+      delta
+      cargo
+      atuin
+      kitty
+      tmux
+      ruby
+      edir
+      curl
+      sbcl
+      # stow
+      zsh
+      # qmk
+      exa
+      fzf
+      bat
+      fd
+      gh
+      jq
       # go
 
       # python packages
