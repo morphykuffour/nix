@@ -88,6 +88,7 @@
       # kicad
       # ffmpeg
       eva
+      mcfly
       # aria2
       # hyperfine
       hexyl
@@ -149,6 +150,7 @@
       # documents packages
       p7zip
       ruby
+      emacs
 
       # csv
       xsv
