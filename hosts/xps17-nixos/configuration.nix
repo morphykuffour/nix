@@ -108,7 +108,7 @@ in {
     isNormalUser = true;
     description = "default account for linux";
     shell = pkgs.zsh;
-    extraGroups = ["uucp" "dialout" "networkmanager" "wheel" "docker" "video" "vboxusers" "libvirtd" "input" "adbusers" "wireshark"];
+    extraGroups = ["uucp" "dialout" "networkmanager" "wheel" "docker" "audio" "video" "vboxusers" "libvirtd" "input" "adbusers" "wireshark"];
     # packages = with pkgs; [ ];
   };
 
@@ -134,9 +134,8 @@ in {
   sound.enable = true;
   hardware.pulseaudio = {
     enable = false;
-    package = pkgs.pulseaudioFull;
+    # package = pkgs.pulseaudioFull;
   };
-
 
   services = {
     fwupd.enable = true;
@@ -231,6 +230,8 @@ in {
       overrideFolders = true;
       devices = {
         "xps17-nixos" = {id = "44LYB6O-ELZWVNP-5R576R3-MRD3MM2-FXORGWG-WRC26ZQ-JAMWKRS-5SCNUAY";};
+        "rpi3b-ubuntu" = {id = "TTEQED5-YB5HDQQ-4OYRRUE-PQMO7XF-TWCNSQ7-4SFRM5X-N6C3IBY-ELN2XQV";};
+        "macmini-darwin" = {id = "OK4365M-ZZC4CDT-A6W2YF2-MPIX3GR-FYZIWWJ-5QS6RYM-5KYU35K-SLYBHQO";};
       };
 
       folders = {
@@ -247,8 +248,20 @@ in {
         };
 
         "Org" = {
-          path = "/home/morp/Dropbox/Zettelkasten/";
+          path = "/home/morp/Org/";
           devices = ["xps17-nixos"];
+          versioning = {
+            type = "staggered";
+            params = {
+              cleanInterval = "3600";
+              maxAge = "15768000";
+            };
+          };
+        };
+
+        "iCloud" = {
+          path = "/home/morp/iCloud/";
+          devices = ["xps17-nixos" "rpi3b-ubuntu" "macmini-darwin"];
           versioning = {
             type = "staggered";
             params = {
