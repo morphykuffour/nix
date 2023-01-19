@@ -1,5 +1,5 @@
 {
-  description = "My Personal NixOS, Darwin, and WSL";
+  description = "Configurations targeting NixOS, Darwin, and WSL";
 
   inputs = {
     nixpkgs = {
@@ -24,9 +24,6 @@
     #   url = "github:InternetUnexplorer/discord-overlay";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
-    # nixos-hardware = {
-    #   url = "github:NixOS/nixos-hardware";
-    # };
     plover = {
       url = "github:dnaq/plover-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -43,7 +40,6 @@
       url = "github:tailscale/tailscale";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    devenv.url = "github:cachix/devenv/v0.4";
     vscode-server.url = "github:msteen/nixos-vscode-server";
   };
 
@@ -56,12 +52,10 @@
     alejandra,
     nixos-wsl,
     agenix,
-    devenv,
     tailscale,
     neovim,
     vscode-server,
     # discord,
-    # nixos-hardware,
     ...
   } @ inputs: let
     user = "morp";
@@ -95,7 +89,7 @@
     };
 
     # xps17 NixOs
-    nixosConfigurations.xps17-nixos = inputs.nixpkgs.lib.nixosSystem {
+    nixosConfigurations.xps17-nixos = nixpkgs.lib.nixosSystem {
       # inherit overlays;
       system = "x86_64-linux";
       specialArgs = inputs;
