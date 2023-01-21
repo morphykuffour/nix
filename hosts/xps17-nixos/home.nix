@@ -13,7 +13,6 @@
     ../../modules/fonts.nix
     ../../modules/zathura
     # ./modules/nvim.nix
-    # ./modules/emacs
     ../../modules/picom.nix
   ];
 
