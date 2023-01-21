@@ -151,16 +151,16 @@ in {
           always = true;
           notification = false;
         }
-        # {
-        #   command = "polybar";
-        #   always = true;
-        #   notification = false;
-        # }
         {
           command = "redshift";
           always = true;
           notification = false;
         }
+        # {
+        #   command = "polybar";
+        #   always = true;
+        #   notification = false;
+        # }
         # {
         #   command = "sxhkd -c /home/morp/.config/sxhkd/sxhkdrc";
         #   always = true;
