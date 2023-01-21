@@ -53,7 +53,6 @@
       tmux
       zsh
       # atuin
-      mcfly
       starship
       exa
       bat
