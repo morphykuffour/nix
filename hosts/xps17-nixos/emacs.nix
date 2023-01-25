@@ -4,7 +4,7 @@
   ...
 }: {
   services.emacs = {
-    package = pkgs.emacs;
+    package = pkgs.emacsNativeComp;
     install = true;
     enable = true;
   };
