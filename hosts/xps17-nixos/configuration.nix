@@ -7,6 +7,7 @@
   agenix,
   ...
 }: let
+  ms-edge = pkgs.callPackage ../../pkgs/ms-edge {};
   keyd = pkgs.callPackage ../../pkgs/keyd {};
   keydConfig = builtins.readFile ../../pkgs/keyd/keymaps.conf;
 in {
@@ -17,6 +18,9 @@ in {
 
   # system info
   system.stateVersion = config.system.nixos.release;
+
+  # sudoless
+  security.sudo.wheelNeedsPassword = false;
 
   # Bootloader.
   boot = {
@@ -386,6 +390,7 @@ in {
       brightnessctl
       xdragon
       keyd
+      ms-edge
       gnome.dconf-editor
       mate.mate-power-manager
       mate.mate-media
