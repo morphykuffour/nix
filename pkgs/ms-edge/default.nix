@@ -1,35 +1,33 @@
 # source: https://gitlab.com/kritoke/overlays/-/blob/master/microsoft-edge-dev/default.nix
-{ stdenv
-, fetchurl
-, lib
-
-, binutils-unwrapped
-, xz
-, gnutar
-, file
-
-, glibc
-, glib
-, nss
-, nspr
-, atk
-, at_spi2_atk
-, xorg
-, cups
-, dbus_libs
-, expat
-, libdrm
-, libxkbcommon
-, gnome3
-, gnome2
-, cairo
-, gdk-pixbuf
-, mesa
-, alsaLib
-, at_spi2_core
-, libuuid
+{
+  stdenv,
+  fetchurl,
+  lib,
+  binutils-unwrapped,
+  xz,
+  gnutar,
+  file,
+  glibc,
+  glib,
+  nss,
+  nspr,
+  atk,
+  at_spi2_atk,
+  xorg,
+  cups,
+  dbus_libs,
+  expat,
+  libdrm,
+  libxkbcommon,
+  gnome3,
+  gnome2,
+  cairo,
+  gdk-pixbuf,
+  mesa,
+  alsaLib,
+  at_spi2_core,
+  libuuid,
 }:
-
 stdenv.mkDerivation rec {
   pname = "microsoft-edge-dev";
   version = "90.0.782.0";
@@ -82,24 +80,49 @@ stdenv.mkDerivation rec {
   preFixup = let
     libPath = {
       msedge = lib.makeLibraryPath [
-        glibc glib nss nspr atk at_spi2_atk xorg.libX11
-        xorg.libxcb cups.lib dbus_libs.lib expat libdrm
-        xorg.libXcomposite xorg.libXdamage xorg.libXext
-        xorg.libXfixes xorg.libXrandr libxkbcommon
-        gnome3.gtk gnome2.pango cairo gdk-pixbuf mesa
-        alsaLib at_spi2_core xorg.libxshmfence
+        glibc
+        glib
+        nss
+        nspr
+        atk
+        at_spi2_atk
+        xorg.libX11
+        xorg.libxcb
+        cups.lib
+        dbus_libs.lib
+        expat
+        libdrm
+        xorg.libXcomposite
+        xorg.libXdamage
+        xorg.libXext
+        xorg.libXfixes
+        xorg.libXrandr
+        libxkbcommon
+        gnome3.gtk
+        gnome2.pango
+        cairo
+        gdk-pixbuf
+        mesa
+        alsaLib
+        at_spi2_core
+        xorg.libxshmfence
       ];
       naclHelper = lib.makeLibraryPath [
         glib
       ];
       libwidevinecdm = lib.makeLibraryPath [
-        glib nss nspr
+        glib
+        nss
+        nspr
       ];
       libGLESv2 = lib.makeLibraryPath [
-        xorg.libX11 xorg.libXext xorg.libxcb
+        xorg.libX11
+        xorg.libXext
+        xorg.libxcb
       ];
       libsmartscreen = lib.makeLibraryPath [
-        libuuid stdenv.cc.cc.lib
+        libuuid
+        stdenv.cc.cc.lib
       ];
     };
   in ''
@@ -138,10 +161,12 @@ stdenv.mkDerivation rec {
     homepage = "https://www.microsoftedgeinsider.com/en-us/";
     description = "Microsoft's fork of Chromium web browser";
     license = licenses.unfree;
-    platforms = [ "x86_64-linux" ];
+    platforms = ["x86_64-linux"];
     maintainers = [
-      { name = "Azure Zanculmarktum";
-        email = "zanculmarktum@gmail.com"; }
+      {
+        name = "Azure Zanculmarktum";
+        email = "zanculmarktum@gmail.com";
+      }
     ];
   };
 }
