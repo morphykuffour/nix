@@ -110,7 +110,8 @@
     #   folders = {
     #     "Dropbox" = {
     #       path = "/home/morp/Dropbox";
-    #       devices = ["xps17-nixos"];
+    #     id = "Dropbox";
+    #       devices = ["xps17-nixos" "rpi3b-ubuntu" "macmini-darwin"];
     #       versioning = {
     #         type = "staggered";
     #         params = {
@@ -122,7 +123,8 @@
 
     #     "Org" = {
     #       path = "/home/morp/Org/";
-    #       devices = ["xps17-nixos"];
+    #       id = "prsu2-hrpwq";
+    #       devices = ["xps17-nixos" "rpi3b-ubuntu" "macmini-darwin"];
     #       versioning = {
     #         type = "staggered";
     #         params = {
@@ -134,6 +136,7 @@
 
     #     "iCloud" = {
     #       path = "/home/morp/iCloud/";
+    #       id = "iCloud";
     #       devices = ["xps17-nixos" "rpi3b-ubuntu" "macmini-darwin"];
     #       versioning = {
     #         type = "staggered";
