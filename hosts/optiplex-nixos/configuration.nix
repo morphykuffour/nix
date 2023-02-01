@@ -90,6 +90,61 @@
     # vscode-server.enable = true;
     # And then enable them for the relevant users:
     # systemctl --user enable auto-fix-vscode-server.service
+
+    # syncthing = {
+    #   enable = true;
+    #   dataDir = "/home/morp";
+    #   openDefaultPorts = true;
+    #   configDir = "/home/morp/.config/syncthing";
+    #   user = "morp";
+    #   group = "users";
+    #   guiAddress = "127.0.0.1:8384";
+    #   overrideDevices = true;
+    #   overrideFolders = true;
+    #   devices = {
+    #     "xps17-nixos" = {id = "44LYB6O-ELZWVNP-5R576R3-MRD3MM2-FXORGWG-WRC26ZQ-JAMWKRS-5SCNUAY";};
+    #     "rpi3b-ubuntu" = {id = "TTEQED5-YB5HDQQ-4OYRRUE-PQMO7XF-TWCNSQ7-4SFRM5X-N6C3IBY-ELN2XQV";};
+    #     "macmini-darwin" = {id = "OK4365M-ZZC4CDT-A6W2YF2-MPIX3GR-FYZIWWJ-5QS6RYM-5KYU35K-SLYBHQO";};
+    #   };
+
+    #   folders = {
+    #     "Dropbox" = {
+    #       path = "/home/morp/Dropbox";
+    #       devices = ["xps17-nixos"];
+    #       versioning = {
+    #         type = "staggered";
+    #         params = {
+    #           cleanInterval = "3600";
+    #           maxAge = "15768000";
+    #         };
+    #       };
+    #     };
+
+    #     "Org" = {
+    #       path = "/home/morp/Org/";
+    #       devices = ["xps17-nixos"];
+    #       versioning = {
+    #         type = "staggered";
+    #         params = {
+    #           cleanInterval = "3600";
+    #           maxAge = "15768000";
+    #         };
+    #       };
+    #     };
+
+    #     "iCloud" = {
+    #       path = "/home/morp/iCloud/";
+    #       devices = ["xps17-nixos" "rpi3b-ubuntu" "macmini-darwin"];
+    #       versioning = {
+    #         type = "staggered";
+    #         params = {
+    #           cleanInterval = "3600";
+    #           maxAge = "15768000";
+    #         };
+    #       };
+    #     };
+    #   };
+    # };
   };
 
   # Configure keymap in X11

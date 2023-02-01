@@ -7,7 +7,7 @@
   agenix,
   ...
 }: let
-  ms-edge = pkgs.callPackage ../../pkgs/ms-edge {};
+  # ms-edge = pkgs.callPackage ../../pkgs/ms-edge {};
   keyd = pkgs.callPackage ../../pkgs/keyd {};
   keydConfig = builtins.readFile ../../pkgs/keyd/keymaps.conf;
 in {
@@ -241,7 +241,7 @@ in {
       folders = {
         "Dropbox" = {
           path = "/home/morp/Dropbox";
-          devices = ["xps17-nixos"];
+          devices = ["xps17-nixos" "rpi3b-ubuntu" "macmini-darwin"];
           versioning = {
             type = "staggered";
             params = {
@@ -253,7 +253,8 @@ in {
 
         "Org" = {
           path = "/home/morp/Org/";
-          devices = ["xps17-nixos"];
+          id = "prsu2-hrpwq";
+          devices = ["xps17-nixos" "rpi3b-ubuntu" "macmini-darwin"];
           versioning = {
             type = "staggered";
             params = {
@@ -390,7 +391,7 @@ in {
       brightnessctl
       xdragon
       keyd
-      ms-edge
+      # ms-edge
       gnome.dconf-editor
       mate.mate-power-manager
       mate.mate-media
