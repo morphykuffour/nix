@@ -95,11 +95,12 @@
       specialArgs = inputs;
       modules = [
         ./hosts/xps17-nixos
-        agenix.nixosModule
+        agenix.nixosModules.default
         {
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux
-            agenix.defaultPackage.x86_64-linux
+            # agenix.defaultPackage.x86_64-linux
+            agenix.packages.x86_64-linux.default
             # neovim.packages.x86_64-linux.neovim # NVIM v0.9-dev
           ];
         }
@@ -121,11 +122,12 @@
       system = "x86_64-linux";
       modules = [
         ./hosts/optiplex-nixos
-        agenix.nixosModule
+        agenix.nixosModules.default
         {
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux
-            agenix.defaultPackage.x86_64-linux
+            # agenix.defaultPackage.x86_64-linux
+            agenix.packages.x86_64-linux.default
             # neovim.packages.x86_64-linux.neovim
           ];
         }
@@ -201,10 +203,11 @@
       modules = [
         "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
         # ./hosts/rpi3b-nixos
-        agenix.nixosModule
+        agenix.nixosModules.default
         {
           environment.systemPackages = [
-            agenix.defaultPackage.x86_64-linux
+            # agenix.defaultPackage.x86_64-linux
+            agenix.packages.x86_64-linux.default
           ];
         }
       ];

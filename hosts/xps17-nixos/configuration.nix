@@ -426,7 +426,7 @@ in {
       dig
       psmisc
       discord
-      mycli
+      # mycli
       grc
       cmake
       ninja
@@ -448,7 +448,7 @@ in {
       # os-prober
       kitty
       android-tools
-      android-studio
+      # android-studio
       android-udev-rules
       age
       rage
@@ -498,6 +498,7 @@ in {
           llr
           tidyverse
           devtools
+          bookdown
         ];
       })
     ];
