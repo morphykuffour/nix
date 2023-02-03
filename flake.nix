@@ -155,7 +155,7 @@
         {
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux
-            neovim.packages.x86_64-linux.neovim
+            # neovim.packages.x86_64-linux.neovim
           ];
         }
         # home-manager.nixosModules.home-manager
