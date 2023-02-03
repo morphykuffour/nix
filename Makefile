@@ -35,6 +35,9 @@ build:
 action-build:
 	nixos-rebuild build --flake .#xps17-nixos --impure
 
+push-cachix:
+	$(BUILD_CMD) | cachix push jedimaster
+
 update:
 	sudo nix flake update
 
