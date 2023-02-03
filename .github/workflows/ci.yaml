@@ -1,34 +1,3 @@
-# name: "Cache nixpkgs build"
-# on:
-#   push:
-# jobs:
-#   nixpkgs-cache:
-#     runs-on: ubuntu-latest
-#     steps:
-
-#     - name: Install Nix
-#     - uses: cachix/install-nix-action@v17
-#       with:
-#         nix_path: nixpkgs=channel:nixos-unstable
-
-#     - uses: actions/checkout@v3.0.1
-
-#     - name: Add my binary cachix 
-#     - uses: cachix/cachix-action@v11
-#       with:
-#         name: jedimaster
-#         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-
-#     - name: Run build
-#       run: nix-build --no-out-link .
-#     - name: Create artifact
-#       run: cp $(nix-build --no-out-link . -A deb) nix-multi-user.deb
-#     - uses: actions/upload-artifact@v3
-#       with:
-#         name: nix-multi-user.deb
-#         path: nix-multi-user.deb
-#         retention-days: 1
-
 name: "CI"
 on:
   pull_request:
