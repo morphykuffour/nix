@@ -1,9 +1,8 @@
-name: "Test"
+name: "Cache nixpkgs build"
 on:
-  pull_request:
   push:
 jobs:
-  tests:
+  nixpkgs-cache:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -13,9 +12,8 @@ jobs:
     - uses: cachix/cachix-action@v11
       with:
         name: jedimaster
-        # If you chose signing key for write access
-        # signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
-        # If you chose API tokens for write access OR if you have a private cache
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-    - run: nix-build
-    - run: nix-shell --run "echo OK"
+    - name: Prefetch shell.nix
+      run: 'nix-shell --run true'
+    - name: Build
+      run: 'nix-build'
