@@ -24,6 +24,14 @@
     #   url = "github:InternetUnexplorer/discord-overlay";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
+    flake-utils.url = "github:numtide/flake-utils";
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
     plover = {
       url = "github:dnaq/plover-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -53,16 +61,19 @@
     nixos-wsl,
     agenix,
     tailscale,
+    emacs-overlay,
+    flake-utils,
     neovim,
     vscode-server,
     # discord,
     ...
   } @ inputs: let
     user = "morp";
-    # overlays = [
-    #   discord.overlays.default
-    #   plover.overlay
-    # ];
+    overlays = [
+      # discord.overlays.default
+      # plover.overlay
+      emacs-overlay.overlay
+    ];
   in {
     # nix formatter
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;

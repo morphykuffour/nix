@@ -191,10 +191,14 @@ in {
     };
 
     avahi = {
-      enable = true;
       nssmdns = true;
-      reflector = true;
-      interfaces = ["wlp0s20f3"];
+      enable = true;
+      publish = {
+        enable = true;
+        userServices = true;
+        domain = true;
+      };
+      interfaces = ["wlp0s20f3" "tailscale0"];
     };
 
     flatpak.enable = true;
@@ -490,6 +494,8 @@ in {
       viu
       ueberzug
       dmenu
+      gimp
+      avahi
       # R packages for data science
       (pkgs.rWrapper.override {
         packages = with pkgs.rPackages; let
@@ -511,6 +517,7 @@ in {
           tidyverse
           devtools
           bookdown
+          VennDiagram
         ];
       })
     ];
