@@ -69,6 +69,9 @@ in {
   # };
 
   systemd.services = {
+    # https://github.com/NixOS/nixpkgs/issues/59603#issuecomment-1356844284
+    NetworkManager-wait-online.enable = false;
+
     keyd = {
       enable = true;
       description = "keyd key remapping daemon";
