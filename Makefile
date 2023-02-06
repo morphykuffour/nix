@@ -32,8 +32,10 @@ switch:
 build:
 	$(BUILD_CMD)
 
-action-build:
-	nixos-rebuild build --flake .#xps17-nixos --impure
+wsl-build:
+	nix build .#nixosConfigurations.win-wsl.config.system.build.installer
+	echo "The rootfs tarball can then be found under ./result/tarball/nixos-wsl-x86_64-linux.tar.gz"
+	echo "send with croc send ./result/tarball/nixos-wsl-x86_64-linux.tar.gz"
 
 push-cachix:
 	$(BUILD_CMD) | cachix push jedimaster
