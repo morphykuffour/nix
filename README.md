@@ -14,8 +14,6 @@ Build nixos and switch to new configuration. `<flake-uri> = pwd`
 sudo nixos-rebuild switch --flake .#xps17-nixos
 ```
 
-- TODO: make switching to new configuration easier.
-- https://github.com/LnL7/nix-darwin#manual-install
 Build darwin and switch to new configuration. `<flake-uri> = pwd`
 ```bash
 nix build .#darwinConfigurations.macmini-darwin.system
