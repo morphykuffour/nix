@@ -42,13 +42,35 @@
     };
   };
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    config.allowUnfree = true;
+    # overlays = [ (import emacs-overlay) ];
+  };
 
   home = {
     username = "morp";
     homeDirectory = "/home/morp";
     stateVersion = "22.05";
     packages = with pkgs; [
+      # emacs packages
+      # emacs-all-the-icons-fonts
+
+      # (pkgs.emacsWithPackagesFromUsePackage {
+      #   config = ./dot/emacs.el;
+      #   defaultInitFile = true;
+      #   alwaysEnsure = true;
+      #   package = pkgs.emacsPgtk;
+
+      #   override = epkgs:
+      #     epkgs
+      #     // {
+      #       tree-sitter-langs = epkgs.tree-sitter-langs.withPlugins (
+      #         # Install all tree sitter grammars available from nixpkgs
+      #         grammars: builtins.filter lib.isDerivation (lib.attrValues grammars)
+      #       );
+      #     };
+      # })
+
       tmux
       zsh
       # atuin
