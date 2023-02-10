@@ -7,7 +7,6 @@
   agenix,
   ...
 }: let
-  # ms-edge = pkgs.callPackage ../../pkgs/ms-edge {};
   keyd = pkgs.callPackage ../../pkgs/keyd {};
   keydConfig = builtins.readFile ../../pkgs/keyd/keymaps.conf;
 in {

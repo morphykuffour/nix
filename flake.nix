@@ -20,18 +20,17 @@
     neovim = {
       url = "github:nix-community/neovim-nightly-overlay?ref=master";
     };
-    # discord = {
-    #   url = "github:InternetUnexplorer/discord-overlay";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    discord = {
+      url = "github:InternetUnexplorer/discord-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-utils.url = "github:numtide/flake-utils";
+
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
+      # nixpkgs.follows = "nixpkgs";
     };
+
     plover = {
       url = "github:dnaq/plover-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -65,14 +64,15 @@
     flake-utils,
     neovim,
     vscode-server,
-    # discord,
+    discord,
     ...
   } @ inputs: let
     user = "morp";
     overlays = [
-      # discord.overlays.default
+      discord.overlays.default
       # plover.overlay
       emacs-overlay.overlay
+      #   (import ./third_party/emacs-overlay)
     ];
   in {
     # nix formatter
@@ -101,16 +101,17 @@
 
     # xps17 NixOs
     nixosConfigurations.xps17-nixos = nixpkgs.lib.nixosSystem {
-      # inherit overlays;
       system = "x86_64-linux";
       specialArgs = inputs;
       modules = [
         ./hosts/xps17-nixos
         agenix.nixosModules.default
         {
+          nixpkgs.overlays = overlays;
+        }
+        {
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux
-            # agenix.defaultPackage.x86_64-linux
             agenix.packages.x86_64-linux.default
             # neovim.packages.x86_64-linux.neovim # NVIM v0.9-dev
           ];
@@ -137,7 +138,6 @@
         {
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux
-            # agenix.defaultPackage.x86_64-linux
             agenix.packages.x86_64-linux.default
             # neovim.packages.x86_64-linux.neovim
           ];
@@ -196,7 +196,6 @@
           boot.loader.grub.devices = [
             "/dev/disk/by-id/nvme-WDS100T1XHE-00AFY0_215070800985"
           ];
-
           fileSystems."/" = {
             device = "/dev/disk/by-id/nvme-WDS100T1XHE-00AFY0_215070800985";
             fsType = "ext4";
@@ -217,7 +216,6 @@
         agenix.nixosModules.default
         {
           environment.systemPackages = [
-            # agenix.defaultPackage.x86_64-linux
             agenix.packages.x86_64-linux.default
           ];
         }
