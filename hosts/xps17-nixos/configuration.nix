@@ -532,7 +532,7 @@ in {
       })
 
       # emacs packages
-      {emacsWithPackagesFromUsePackage}: (emacsWithPackagesFromUsePackage {
+      (emacsWithPackagesFromUsePackage {
         # package = pkgs.emacsNativeComp.override {
         #   toolkit = "lucid";
         #   withGTK3 = false;
