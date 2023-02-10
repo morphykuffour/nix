@@ -170,7 +170,7 @@
       # documents packages
       p7zip
       ruby
-      emacs
+      # emacs
 
       # csv
       xsv

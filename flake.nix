@@ -71,8 +71,11 @@
     overlays = [
       discord.overlays.default
       # plover.overlay
-      emacs-overlay.overlay
-      #   (import ./third_party/emacs-overlay)
+      # emacs-overlay.overlay
+      # (import ./third_party/emacs-overlay)
+      (import (builtins.fetchTarball {
+        url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+      }))
     ];
   in {
     # nix formatter
