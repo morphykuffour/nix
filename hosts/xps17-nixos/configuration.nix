@@ -156,12 +156,6 @@ in {
   };
 
   services = {
-    emacs = {
-      package = pkgs.emacsGit;
-      install = true;
-      enable = true;
-    };
-
     fwupd.enable = true;
     fprintd = {
       enable = true;
@@ -529,28 +523,6 @@ in {
           bookdown
           VennDiagram
         ];
-      })
-
-      # emacs packages
-      (emacsWithPackagesFromUsePackage {
-        # package = pkgs.emacsNativeComp.override {
-        #   toolkit = "lucid";
-        #   withGTK3 = false;
-        #   withXinput2 = true;
-        # };
-
-        package = pkgs.emacsGit;
-        config = ../../modules/emacs/emacs.el;
-        alwaysEnsure = true;
-
-        override = epkgs:
-          epkgs
-          // {
-            tree-sitter-langs = epkgs.tree-sitter-langs.withPlugins (
-              # Install all tree sitter grammars available from nixpkgs
-              grammars: builtins.filter lib.isDerivation (lib.attrValues grammars)
-            );
-          };
       })
     ];
   };
