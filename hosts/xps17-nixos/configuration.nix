@@ -499,6 +499,7 @@ in {
       dmenu
       gimp
       avahi
+      zotero
 
       # R packages for data science
       (pkgs.rWrapper.override {
