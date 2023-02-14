@@ -47,7 +47,7 @@
       url = "github:tailscale/tailscale";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    vscode-server.url = "github:msteen/nixos-vscode-server";
+    # vscode-server.url = "github:msteen/nixos-vscode-server";
   };
 
   outputs = {
@@ -63,8 +63,8 @@
     emacs-overlay,
     flake-utils,
     neovim,
-    vscode-server,
     discord,
+    # vscode-server,
     ...
   } @ inputs: let
     user = "morp";
@@ -165,7 +165,7 @@
       modules = [
         ./hosts/win-wsl
         nixos-wsl.nixosModules.wsl
-        vscode-server.nixosModule
+        # vscode-server.nixosModule
         {
           environment.systemPackages = [
             alejandra.defaultPackage.x86_64-linux

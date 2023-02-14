@@ -457,7 +457,6 @@ in {
       # teams
       ffmpeg-full
       vim
-      vscode
       wireguard-tools
       libtool
       libvterm
