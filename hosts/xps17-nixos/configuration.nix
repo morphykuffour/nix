@@ -499,6 +499,7 @@ in {
       gimp
       avahi
       zotero
+      hledger
 
       # R packages for data science
       (pkgs.rWrapper.override {
