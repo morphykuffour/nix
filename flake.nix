@@ -5,6 +5,10 @@
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -103,35 +107,44 @@
     };
 
     # xps17 NixOs
-    nixosConfigurations.xps17-nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = inputs;
-      modules = [
-        ./hosts/xps17-nixos
-        agenix.nixosModules.default
-        {
-          nixpkgs.overlays = overlays;
-        }
-        {
-          environment.systemPackages = [
-            alejandra.defaultPackage.x86_64-linux
-            agenix.packages.x86_64-linux.default
-            # neovim.packages.x86_64-linux.neovim # NVIM v0.9-dev
-          ];
-        }
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.morp.imports = [./hosts/xps17-nixos/home.nix];
-            extraSpecialArgs = {
-              plover = inputs.plover.packages."x86_64-linux".plover;
-            };
-          };
-        }
-      ];
-    };
+    nixosConfigurations.xps17-nixos = (
+      # NixOS configurations
+      import ./hosts {
+        # Imports ./hosts/default.nix
+        system = "x86_64-linux";
+        inherit nixpkgs self inputs user;
+      }
+    );
+
+    # nixosConfigurations.xps17-nixos = nixpkgs.lib.nixosSystem {
+    #   system = "x86_64-linux";
+    #   specialArgs = inputs;
+    #   modules = [
+    #     ./hosts/xps17-nixos
+    #     agenix.nixosModules.default
+    #     {
+    #       nixpkgs.overlays = overlays;
+    #     }
+    #     {
+    #       environment.systemPackages = [
+    #         alejandra.defaultPackage.x86_64-linux
+    #         agenix.packages.x86_64-linux.default
+    #         # neovim.packages.x86_64-linux.neovim # NVIM v0.9-dev
+    #       ];
+    #     }
+    #     home-manager.nixosModules.home-manager
+    #     {
+    #       home-manager = {
+    #         useGlobalPkgs = true;
+    #         useUserPackages = true;
+    #         users.morp.imports = [./hosts/xps17-nixos/home.nix];
+    #         extraSpecialArgs = {
+    #           plover = inputs.plover.packages."x86_64-linux".plover;
+    #         };
+    #       };
+    #     }
+    #   ];
+    # };
 
     nixosConfigurations.optiplex-nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
