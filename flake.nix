@@ -89,7 +89,7 @@
 
     # mac_mini Mac Os Monterey TODO fix
     darwinConfigurations.macmini-darwin = import ./hosts/macmini-darwin {
-      inherit self nixpkgs darwin inputs user overlays alejandra;
+      inherit self nixpkgs darwin inputs user overlays home-manager alejandra;
     };
 
     # darwinConfigurations."macmini-darwin" = darwin.lib.darwinSystem {
