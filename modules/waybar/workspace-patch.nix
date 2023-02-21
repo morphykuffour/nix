@@ -1,4 +1,8 @@
-{ pkgs ? null, hyprctl ? null, ... }:
+{
+  pkgs ? null,
+  hyprctl ? null,
+  ...
+}:
 pkgs.writeTextFile {
   name = "waybar-hyprctl.diff";
   text = ''

@@ -21,19 +21,10 @@ nixpkgs.lib.nixosSystem {
     # TODO: move drive to zfs
     # ./zfs.nix
     # ../../modules/emacs
+    ../../modules/hyprland
     inputs.hyprland.nixosModules.default
-    agenix.nixosModules.default
-    {
-      nixpkgs.overlays = overlays;
-    }
-    {
-      environment.systemPackages = [
-        alejandra.defaultPackage.x86_64-linux
-        agenix.packages.x86_64-linux.default
-        # neovim.packages.x86_64-linux.neovim # NVIM v0.9-dev
-      ];
-    }
     home-manager.nixosModules.home-manager
+    agenix.nixosModules.default
     {
       home-manager = {
         useGlobalPkgs = true;
@@ -41,13 +32,20 @@ nixpkgs.lib.nixosSystem {
         users.${user}.imports = [
           ./home.nix
           inputs.hyprland.homeManagerModules.default
-          ../../modules/hyprland
         ];
         extraSpecialArgs = {
           plover = inputs.plover.packages."x86_64-linux".plover;
           inherit user;
         };
       };
+
+      nixpkgs.overlays = overlays;
+
+      environment.systemPackages = [
+        alejandra.defaultPackage.x86_64-linux
+        agenix.packages.x86_64-linux.default
+        # neovim.packages.x86_64-linux.neovim # NVIM v0.9-dev
+      ];
     }
   ];
 }
