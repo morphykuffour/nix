@@ -34,7 +34,6 @@
       url = "github:nix-community/emacs-overlay";
       # nixpkgs.follows = "nixpkgs";
     };
-
     plover = {
       url = "github:dnaq/plover-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -79,16 +78,15 @@
       # (import ./third_party/emacs-overlay)
       (import (builtins.fetchTarball {
         url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-        sha256 = "18mgdb2hhhak6s9xb3smw9rzw77x36wrpibdv9l088p6fv0rv6qp";
+        sha256 = "05l3rhjays0vkrx3mgcg0vawqsqgjdvj2m52kckbvhr6sxh4b9yr";
       }))
     ];
   in {
-
     # nix formatter
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
     formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
 
-    # mac_mini MacOs 
+    # mac_mini MacOs
     darwinConfigurations.macmini-darwin = import ./hosts/macmini-darwin {
       inherit self nixpkgs darwin inputs user overlays home-manager alejandra;
     };
