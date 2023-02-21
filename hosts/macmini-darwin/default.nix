@@ -4,6 +4,7 @@
   nixpkgs,
   darwin,
   inputs,
+  home-manager,
   ...
 }:
 darwin.lib.darwinSystem {
