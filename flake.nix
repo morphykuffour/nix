@@ -103,32 +103,9 @@
       inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
     };
 
-    # TODO: Refactor
-    nixosConfigurations.win-wsl = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./hosts/win-wsl
-        nixos-wsl.nixosModules.wsl
-        # vscode-server.nixosModule
-        {
-          environment.systemPackages = [
-            alejandra.defaultPackage.x86_64-linux
-            # neovim.packages.x86_64-linux.neovim
-          ];
-        }
-        # home-manager.nixosModules.home-manager
-        # {
-        #   home-manager = {
-        #     useGlobalPkgs = true;
-        #     useUserPackages = true;
-        #     users.morp.imports = [./home.nix];
-        #     # extraSpecialArgs = {
-        #     #   plover = inputs.plover.packages."x86_64-linux".plover;
-        #     # };
-        #   };
-        # }
-      ];
-      specialArgs = inputs;
+    # win-wsl NixOs
+    nixosConfigurations.win-wsl = import ./hosts/win-wsl {
+      inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
     };
 
     # TODO: move nvme1n1 ==> WDS100T1XHE-00AFY0 to VisionFive 2 SBC `lsblk -o name,model,serial`
