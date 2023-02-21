@@ -13,7 +13,6 @@ nixpkgs.lib.nixosSystem {
   system = "x86_64-linux";
   specialArgs = inputs;
   modules = [
-    # ./hosts/xps17-nixos
     ./configuration.nix
     ./hardware-configuration.nix
     # TODO: fix backup with borg
@@ -22,6 +21,7 @@ nixpkgs.lib.nixosSystem {
     # TODO: move drive to zfs
     # ./zfs.nix
     # ../../modules/emacs
+    inputs.hyprland.nixosModules.default
     agenix.nixosModules.default
     {
       nixpkgs.overlays = overlays;
@@ -41,6 +41,7 @@ nixpkgs.lib.nixosSystem {
         users.${user}.imports = [
           ./home.nix
           inputs.hyprland.homeManagerModules.default
+          ../../modules/hyprland
         ];
         extraSpecialArgs = {
           plover = inputs.plover.packages."x86_64-linux".plover;
