@@ -1,4 +1,8 @@
 {
+  home-manager,
+  alejandra,
+  agenix,
+  system,
   self,
   nixpkgs,
   inputs,
@@ -29,15 +33,16 @@ in {
       home-manager.nixosModules.home-manager
       {
         home-manager = {
-          useGlobalPkgs = true;
+          # useGlobalPkgs = false;
           useUserPackages = true;
           users.${user} = {
             imports =
               [
-                (import ./hosts/xps17-nixos/home.nix)
+                (import ./xps17-nixos/home.nix)
               ]
               ++ [
                 inputs.hyprland.homeManagerModules.default
+                inputs.home-manager.nixosModules.home-manager
               ];
           };
           extraSpecialArgs = {

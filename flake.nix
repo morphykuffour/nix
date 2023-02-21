@@ -79,6 +79,7 @@
       # (import ./third_party/emacs-overlay)
       (import (builtins.fetchTarball {
         url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+        sha256 = "18mgdb2hhhak6s9xb3smw9rzw77x36wrpibdv9l088p6fv0rv6qp";
       }))
     ];
   in {
@@ -87,65 +88,36 @@
     formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
 
     # mac_mini Mac Os Monterey TODO fix
-    darwinConfigurations."macmini-darwin" = darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      modules = [
-        ./hosts/macmini-darwin
-        {
-          environment.systemPackages = [
-            alejandra.defaultPackage.aarch64-darwin
-            # neovim.packages.aarch64-darwin.neovim
-          ];
-        }
-        home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.morp = import ./hosts/macmini-darwin/home.nix;
-        }
-      ];
+    darwinConfigurations.macmini-darwin = import ./hosts/macmini-darwin {
+      inherit self nixpkgs darwin inputs user overlays alejandra;
     };
 
-    # xps17 NixOs
-    nixosConfigurations.xps17-nixos = (
-      # NixOS configurations
-      import ./hosts {
-        # Imports ./hosts/default.nix
-        system = "x86_64-linux";
-        inherit nixpkgs self inputs user;
-      }
-    );
-
-    # nixosConfigurations.xps17-nixos = nixpkgs.lib.nixosSystem {
-    #   system = "x86_64-linux";
-    #   specialArgs = inputs;
+    # darwinConfigurations."macmini-darwin" = darwin.lib.darwinSystem {
+    #   system = "aarch64-darwin";
     #   modules = [
-    #     ./hosts/xps17-nixos
-    #     agenix.nixosModules.default
-    #     {
-    #       nixpkgs.overlays = overlays;
-    #     }
+    #     ./hosts/macmini-darwin
     #     {
     #       environment.systemPackages = [
-    #         alejandra.defaultPackage.x86_64-linux
-    #         agenix.packages.x86_64-linux.default
-    #         # neovim.packages.x86_64-linux.neovim # NVIM v0.9-dev
+    #         alejandra.defaultPackage.aarch64-darwin
+    #         # neovim.packages.aarch64-darwin.neovim
     #       ];
     #     }
-    #     home-manager.nixosModules.home-manager
+    #     home-manager.darwinModules.home-manager
     #     {
-    #       home-manager = {
-    #         useGlobalPkgs = true;
-    #         useUserPackages = true;
-    #         users.morp.imports = [./hosts/xps17-nixos/home.nix];
-    #         extraSpecialArgs = {
-    #           plover = inputs.plover.packages."x86_64-linux".plover;
-    #         };
-    #       };
+    #       home-manager.useGlobalPkgs = true;
+    #       home-manager.useUserPackages = true;
+    #       home-manager.users.morp = import ./hosts/macmini-darwin/home.nix;
     #     }
     #   ];
     # };
 
+    # TODO: Refactor
+    # xps17 NixOs
+    nixosConfigurations.xps17-nixos = import ./hosts/xps17-nixos {
+      inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
+    };
+
+    # TODO: Refactor
     nixosConfigurations.optiplex-nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -173,6 +145,7 @@
       specialArgs = inputs;
     };
 
+    # TODO: Refactor
     nixosConfigurations.win-wsl = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
