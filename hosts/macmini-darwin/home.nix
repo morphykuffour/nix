@@ -91,6 +91,7 @@
       jq
       # go
 
+      python3
       # python packages
       # (python39.withPackages (pp:
       #   with pp; [
