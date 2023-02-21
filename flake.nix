@@ -76,12 +76,13 @@
       # plover.overlay
       # emacs-overlay.overlay
       # (import ./third_party/emacs-overlay)
-      (import (builtins.fetchTarball {
-        url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-        sha256 = "05l3rhjays0vkrx3mgcg0vawqsqgjdvj2m52kckbvhr6sxh4b9yr";
-      }))
+      # (import (builtins.fetchTarball {
+      #   url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+      #   sha256 = "05l3rhjays0vkrx3mgcg0vawqsqgjdvj2m52kckbvhr6sxh4b9yr";
+      # }))
     ];
   in {
+
     # nix formatter
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
     formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
@@ -106,10 +107,7 @@
       inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
     };
 
-    # TODO: move nvme1n1 ==> WDS100T1XHE-00AFY0 to VisionFive 2 SBC `lsblk -o name,model,serial`
-    # TODO: install sbcl on SBC
-    # TODO: install linux-kvm on SBC: https://github.com/kvm-riscv/howto/wiki/KVM-RISCV64-on-QEMU
-    # https://github.com/NixOS/nixos-hardware/blob/9d87bc030a0bf3f00e953dbf095a7d8e852dab6b/starfive/visionfive/v1/README.md
+    # riscv-vm NixOS
     nixosConfigurations.riscv-vm = nixpkgs.lib.nixosSystem {
       system = "riscv64-linux";
       modules = [
@@ -126,9 +124,7 @@
       ];
     };
 
-    # TODO: create vscode-server following
-    # https://tailscale.com/kb/1166/vscode-ipad/
-    # https://myme.no/posts/2022-12-01-nixos-on-raspberrypi.html
+    # rpi3b NixOS
     nixosConfigurations.rpi3b-nixos = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
       specialArgs = inputs;
