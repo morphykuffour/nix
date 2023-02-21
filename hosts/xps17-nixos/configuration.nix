@@ -217,6 +217,9 @@ in {
         mate = {
           enable = true;
         };
+        gnome = {
+          enable = true;
+        };
       };
 
       displayManager = {
@@ -229,15 +232,15 @@ in {
         sddm.enable = true;
       };
 
-      # windowManager.i3 = {
-      #   enable = true;
-      #   package = pkgs.i3-gaps;
+      windowManager.i3 = {
+        enable = true;
+        package = pkgs.i3-gaps;
 
-      #   # extraPackages = with pkgs; [
-      #   #   # i3status
-      #   #   # i3lock
-      #   # ];
-      # };
+        # extraPackages = with pkgs; [
+        #   # i3status
+        #   # i3lock
+        # ];
+      };
     };
 
     syncthing = {
@@ -258,17 +261,17 @@ in {
       };
 
       folders = {
-        "Dropbox" = {
-          path = "/home/morp/Dropbox";
-          devices = ["xps17-nixos" "rpi3b-ubuntu" "macmini-darwin" "workstation-windows"];
-          versioning = {
-            type = "staggered";
-            params = {
-              cleanInterval = "3600";
-              maxAge = "15768000";
-            };
-          };
-        };
+        # "Dropbox" = {
+        #   path = "/home/morp/Dropbox";
+        #   devices = ["xps17-nixos" "rpi3b-ubuntu" "macmini-darwin" "workstation-windows"];
+        #   versioning = {
+        #     type = "staggered";
+        #     params = {
+        #       cleanInterval = "3600";
+        #       maxAge = "15768000";
+        #     };
+        #   };
+        # };
 
         "Org" = {
           path = "/home/morp/Org/";
@@ -523,6 +526,7 @@ in {
           devtools
           bookdown
           VennDiagram
+          DiagrammeR
         ];
       })
     ];
