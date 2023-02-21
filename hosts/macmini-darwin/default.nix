@@ -22,7 +22,7 @@ darwin.lib.darwinSystem {
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.users.morp = import ./hosts/macmini-darwin/home.nix;
+      home-manager.users.morp = import ./home.nix;
     }
   ];
 }
