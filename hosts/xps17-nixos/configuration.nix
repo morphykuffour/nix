@@ -105,13 +105,11 @@ in {
 
   # user account
   users.defaultUserShell = pkgs.bash;
-  # users.users.root = {shell = pkgs.zsh;};
   users.users.morp = {
     isNormalUser = true;
     description = "default account for linux";
     shell = pkgs.zsh;
     extraGroups = ["uucp" "dialout" "networkmanager" "wheel" "docker" "audio" "video" "vboxusers" "libvirtd" "input" "adbusers" "wireshark"];
-    # packages = with pkgs; [ ];
   };
 
   nix = {
@@ -124,7 +122,6 @@ in {
         "jedimaster.cachix.org-1:d3z8VEyrrqcYEe/9wOhla6iXb4ArWUoQLB5tz1b+CZA="
       ];
     };
-    # registry = {nixpkgs.flake = nixpkgs;};
   };
 
   nixpkgs = {
