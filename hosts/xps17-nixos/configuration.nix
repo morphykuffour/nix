@@ -159,8 +159,8 @@ in {
     fwupd.enable = true;
     fprintd = {
       enable = true;
-      # TODO
-      # package = pkgs.callPackage ../../pkgs/fprintd {};
+      tod.enable = true;
+      tod.driver = pkgs.libfprint-2-tod1-goodix;
     };
 
     qemuGuest.enable = true;
