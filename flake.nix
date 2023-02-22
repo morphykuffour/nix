@@ -51,6 +51,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # vscode-server.url = "github:msteen/nixos-vscode-server";
+  nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs = {
@@ -67,6 +68,7 @@
     flake-utils,
     neovim,
     discord,
+    nixos-hardware,
     # vscode-server,
     ...
   } @ inputs: let
@@ -104,6 +106,24 @@
     # win-wsl NixOs
     nixosConfigurations.win-wsl = import ./hosts/win-wsl {
       inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
+    };
+
+    # visionfive2 NixOs
+    # https://github.com/NixOS/nixos-hardware/tree/master/starfive/visionfive/v1
+    nixosConfigurations.visionfive2 = nixpkgs.lib.nixosSystem {
+      system = "riscv64-linux";
+      modules = [
+        nixos-hardware.nixosModules.starfive-visionfive-v1
+        {
+          # with nix channel
+          # imports = [<nixos-hardware/starfive/visionfive/v1/sd-image-installer.nix>];
+
+          nixpkgs.crossSystem = {
+            config = "riscv64-unknown-linux-gnu";
+            system = "riscv64-linux";
+          };
+        }
+      ];
     };
 
     # riscv-vm NixOS
