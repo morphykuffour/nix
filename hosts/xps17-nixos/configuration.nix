@@ -87,10 +87,6 @@ in {
 
   environment.etc."keyd/default.conf".text = keydConfig;
 
-  # wakeup from sleep permanently TODO: move to powerManagement.powerUpCommands
-  # FIXME: wakeupScript
-  # environment.etc."rc.local".text = wakeupScript;
-
   # locale
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.utf8";
