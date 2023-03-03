@@ -498,6 +498,7 @@ in {
       avahi
       zotero
       hledger
+      tio
 
       # R packages for data science
       (pkgs.rWrapper.override {

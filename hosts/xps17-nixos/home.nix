@@ -164,6 +164,9 @@
       # csv
       xsv
 
+      # finance
+      ledger
+
       # python packages
       (python39.withPackages (pp:
         with pp; [
