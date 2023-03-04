@@ -138,7 +138,7 @@
       # rust-analyzer
       postman
       openssl
-      # protonvpn-gui
+      protonvpn-gui
       # protonmail-bridge
       # play-with-mpv
       # rustdesk
