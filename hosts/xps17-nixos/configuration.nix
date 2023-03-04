@@ -225,15 +225,15 @@ in {
         sddm.enable = true;
       };
 
-      # windowManager.i3 = {
-      #   enable = true;
-      #   package = pkgs.i3-gaps;
+      windowManager.i3 = {
+        enable = true;
+        package = pkgs.i3-gaps;
 
-      #   # extraPackages = with pkgs; [
-      #   #   # i3status
-      #   #   # i3lock
-      #   # ];
-      # };
+        # extraPackages = with pkgs; [
+        #   # i3status
+        #   # i3lock
+        # ];
+      };
     };
 
     syncthing = {
@@ -322,29 +322,19 @@ in {
 
   # Programs
 
-  programs.mako = {
-    enable = true;
-    backgroundColor = "#2b3339";
-    borderSize = 1;
-    borderColor = "#83b6af";
-    defaultTimeout = 5000;
-    font = "JetBrainsMono Nerd Font 12";
-  };
+  # programs.mako = {
+  #   enable = true;
+  #   backgroundColor = "#2b3339";
+  #   borderSize = 1;
+  #   borderColor = "#83b6af";
+  #   defaultTimeout = 5000;
+  #   font = "JetBrainsMono Nerd Font 12";
+  # };
 
-  programs.obs-studio = {
-    enable = true;
-    plugins = with pkgs; [ obs-studio-plugins.wlrobs ];
-  };
-
-  programs.bash = {
-    enable = true;
-    initExtra = ''
-      if test $(id --user $USER) = 1000 && test $(tty) = "/dev/tty1"
-      then
-        exec Hyprland
-      fi
-    '';
-  };
+  # programs.obs-studio = {
+  #   enable = true;
+  #   plugins = with pkgs; [ obs-studio-plugins.wlrobs ];
+  # };
 
   programs = {
     adb.enable = true;
