@@ -14,7 +14,7 @@ nixpkgs.lib.nixosSystem {
   modules = [
     # ./hosts/win-wsl
     ./configuration.nix
-    nixos-wsl.nixosModules.wsl
+    inputs.nixos-wsl.nixosModules.wsl
     # vscode-server.nixosModule
     {
       environment.systemPackages = [
