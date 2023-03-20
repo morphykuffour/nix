@@ -336,6 +336,8 @@ in {
   #   plugins = with pkgs; [ obs-studio-plugins.wlrobs ];
   # };
 
+  programs.waybar.enable = true;
+
   programs = {
     adb.enable = true;
     dconf = {
