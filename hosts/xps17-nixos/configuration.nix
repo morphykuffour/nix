@@ -112,6 +112,9 @@ in {
     extraGroups = ["uucp" "dialout" "networkmanager" "wheel" "docker" "audio" "video" "vboxusers" "libvirtd" "input" "adbusers" "wireshark"];
   };
 
+  # virtualbox
+  # users.extraGroups.vboxusers.members = ["morp"];
+
   nix = {
     settings = {
       auto-optimise-store = true;
@@ -297,6 +300,12 @@ in {
   };
 
   virtualisation = {
+    # virtualbox install
+    # virtualbox.host.enable = true;
+    # virtualbox.host.enableExtensionPack = true;
+    # virtualbox.guest.enable = true;
+    # virtualbox.guest.x11 = true;
+
     spiceUSBRedirection.enable = true;
 
     docker = {
