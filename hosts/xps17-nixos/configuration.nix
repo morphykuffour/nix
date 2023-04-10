@@ -527,6 +527,7 @@ in {
       tio
 
       # R packages for data science
+      rstudio
       (pkgs.rWrapper.override {
         packages = with pkgs.rPackages; let
           llr = buildRPackage {
