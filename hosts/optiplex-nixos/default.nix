@@ -27,7 +27,7 @@ nixpkgs.lib.nixosSystem {
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
-        users.${user}.imports = [./hosts/xps17-nixos/home.nix];
+        # users.${user}.imports = [./home.nix];
         # extraSpecialArgs = {
         #   plover = inputs.plover.packages."x86_64-linux".plover;
         # };
