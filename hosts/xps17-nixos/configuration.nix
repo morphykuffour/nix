@@ -550,6 +550,8 @@ in {
           bookdown
           VennDiagram
           DiagrammeR
+
+          networkD3
         ];
       })
     ];
