@@ -12,3 +12,4 @@
       TODO: move drive to zfs
       ./zfs.nix
       ../../modules/emacs
+  - [ ] have to get webshot::install_phantomjs() to work for R mermaid docs
