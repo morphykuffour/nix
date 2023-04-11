@@ -550,7 +550,7 @@ in {
           bookdown
           VennDiagram
           DiagrammeR
-
+          webshot
           networkD3
         ];
       })
