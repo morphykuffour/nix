@@ -119,3 +119,9 @@ To enable hard linking when running nixos-collect-garbage, you can use the --use
 ```nix
 nix-collect-garbage --use-hard-links
 ```
+
+
+Install default.nix in cwd to nix env
+```nix
+nix-env -if default.nix
+```
