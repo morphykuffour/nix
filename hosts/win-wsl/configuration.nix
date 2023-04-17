@@ -25,6 +25,7 @@
     dhcpcd.enable = false;
   };
 
+  programs.zsh.enable = true;
   users = {
     defaultUserShell = pkgs.zsh;
     users.morp = {
@@ -167,5 +168,34 @@
     fzf
     mcfly
     cargo
+
+    # R packages for data science
+    rstudio
+    (pkgs.rWrapper.override {
+      packages = with pkgs.rPackages; let
+        llr = buildRPackage {
+          name = "llr";
+          src = pkgs.fetchFromGitHub {
+            owner = "dirkschumacher";
+            repo = "llr";
+            rev = "0a654d469af231e9017e1100f00df47bae212b2c";
+            sha256 = "0ks96m35z73nf2sb1cb8d7dv8hq8dcmxxhc61dnllrwxqq9m36lr";
+          };
+          propagatedBuildInputs = [rlang knitr reticulate];
+          nativeBuildInputs = [rlang knitr reticulate];
+        };
+      in [
+        knitr
+        rlang
+        llr
+        tidyverse
+        devtools
+        bookdown
+        VennDiagram
+        DiagrammeR
+        webshot
+        networkD3
+      ];
+    })
   ];
 }
