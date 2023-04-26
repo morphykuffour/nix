@@ -111,7 +111,7 @@ in {
     shell = pkgs.zsh;
     extraGroups = ["uucp" "dialout" "networkmanager" "wheel" "docker" "audio" "video" "vboxusers" "libvirtd" "input" "adbusers" "wireshark"];
   };
-
+  programs.zsh.enable = true;
   # virtualbox
   # users.extraGroups.vboxusers.members = ["morp"];
 
@@ -168,13 +168,13 @@ in {
       pulse.enable = true;
     };
 
-    mysql = {
-      user = "morp";
-      package = pkgs.mysql80;
-      group = "wheel";
-      enable = false;
-    };
-    longview.mysqlPasswordFile = "/run/keys/dbpassword";
+    # mysql = {
+    #   user = "morp";
+    #   package = pkgs.mysql80;
+    #   group = "wheel";
+    #   enable = false;
+    # };
+    # longview.mysqlPasswordFile = "/run/keys/dbpassword";
 
     openssh.enable = true;
     clipmenu.enable = true;
@@ -196,7 +196,7 @@ in {
         userServices = true;
         domain = true;
       };
-      interfaces = ["wlp0s20f3" "tailscale0"];
+      allowInterfaces = ["wlp0s20f3" "tailscale0"];
     };
 
     flatpak.enable = true;
@@ -464,7 +464,7 @@ in {
       libinput-gestures
       wmctrl
       fwupd
-      mysql80
+      # mysql80
       dbeaver
       dig
       psmisc
@@ -544,7 +544,8 @@ in {
         in [
           knitr
           rlang
-          llr
+          # llr
+          reticulate
           tidyverse
           devtools
           bookdown
@@ -552,6 +553,7 @@ in {
           DiagrammeR
           webshot
           networkD3
+          knitcitations
         ];
       })
     ];
