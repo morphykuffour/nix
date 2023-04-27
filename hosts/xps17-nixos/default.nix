@@ -6,6 +6,7 @@
   nixpkgs,
   inputs,
   user,
+  # neovim,
   overlays,
   ...
 }:
@@ -38,7 +39,7 @@ nixpkgs.lib.nixosSystem {
       environment.systemPackages = [
         alejandra.defaultPackage.x86_64-linux
         agenix.packages.x86_64-linux.default
-        # neovim.packages.x86_64-linux.neovim # NVIM v0.9-dev
+        inputs.neovim.packages.x86_64-linux.neovim # NVIM v0.9-dev
       ];
     }
   ];
