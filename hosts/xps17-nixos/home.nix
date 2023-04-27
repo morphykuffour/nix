@@ -145,7 +145,7 @@
       # rustdesk
       file
       newsboat
-      neovim
+      # neovim
       # fasd
       texlive.combined.scheme-full
       # python2
