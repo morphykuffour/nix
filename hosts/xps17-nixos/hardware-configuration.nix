@@ -30,29 +30,29 @@
   powerManagement = {
     cpuFreqGovernor = lib.mkDefault "powersave";
     # powerUpCommands = "";
-    powerDownCommands = "
-echo enabled > /sys/bus/usb/devices/1-1/power/wakeup
-echo enabled > /sys/bus/usb/devices/1-2.3.3.2/power/wakeup
-echo enabled > /sys/bus/usb/devices/1-2.3.3.3/power/wakeup
-echo enabled > /sys/bus/usb/devices/1-2.3.3.4/power/wakeup
-echo enabled > /sys/bus/usb/devices/1-2.3.3/power/wakeup
-echo enabled > /sys/bus/usb/devices/1-2.3/power/wakeup
-echo enabled > /sys/bus/usb/devices/1-2.4/power/wakeup
-echo enabled > /sys/bus/usb/devices/1-2/power/wakeup
-echo enabled > /sys/bus/usb/devices/1-14/power/wakeup
-echo enabled > /sys/bus/usb/devices/8-2.2/power/wakeup
-echo enabled > /sys/bus/usb/devices/8-2.3.3/power/wakeup
-echo enabled > /sys/bus/usb/devices/8-2.3/power/wakeup
-echo enabled > /sys/bus/usb/devices/8-2/power/wakeup
-echo enabled > /sys/bus/usb/devices/usb1/power/wakeup
-echo enabled > /sys/bus/usb/devices/usb2/power/wakeup
-echo enabled > /sys/bus/usb/devices/usb3/power/wakeup
-echo enabled > /sys/bus/usb/devices/usb4/power/wakeup
-echo enabled > /sys/bus/usb/devices/usb5/power/wakeup
-echo enabled > /sys/bus/usb/devices/usb6/power/wakeup
-echo enabled > /sys/bus/usb/devices/usb7/power/wakeup
-echo enabled > /sys/bus/usb/devices/usb8/power/wakeup
-    ";
+    # powerDownCommands = "
+    # echo enabled > /sys/bus/usb/devices/1-1/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/1-2.3.3.2/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/1-2.3.3.3/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/1-2.3.3.4/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/1-2.3.3/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/1-2.3/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/1-2.4/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/1-2/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/1-14/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/8-2.2/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/8-2.3.3/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/8-2.3/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/8-2/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/usb1/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/usb2/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/usb3/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/usb4/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/usb5/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/usb6/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/usb7/power/wakeup
+    # echo enabled > /sys/bus/usb/devices/usb8/power/wakeup
+    # ";
   };
 
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
