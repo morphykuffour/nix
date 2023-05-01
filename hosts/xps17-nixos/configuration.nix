@@ -451,7 +451,7 @@ in {
       sqlitebrowser
       # zfs
       bashmount
-      vagrant
+      # vagrant
       grub2
       qemu
       libvirt
