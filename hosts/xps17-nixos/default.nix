@@ -6,8 +6,8 @@
   nixpkgs,
   inputs,
   user,
-  # neovim,
   overlays,
+  # neovim,
   ...
 }:
 nixpkgs.lib.nixosSystem {

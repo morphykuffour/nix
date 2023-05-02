@@ -387,7 +387,8 @@ in {
     variables = {
       EDITOR = "nvim";
       TERMINAL = "kitty";
-      BROWSER = "brave";
+      # BROWSER = "brave";
+      BROWSER = "brave-nightly";
     };
 
     pathsToLink = ["/libexec"];
@@ -403,12 +404,14 @@ in {
       ];
     };
 
+    # systemPackages = [ (pkgs.brave.override {version = "1.50.125";}) ];
     systemPackages = with pkgs; [
       wget
       xclip
       git
       stow
-      brave
+      brave-nightly
+      # brave.override {version = "1.50.125";}
       sqlite
       unzip
       coreutils
@@ -436,7 +439,7 @@ in {
       keyd
       # ms-edge
       gnome.dconf-editor
-      mate.mate-power-manager
+      # mate.mate-power-manager
       mate.mate-media
       orchis-theme
       tela-circle-icon-theme
