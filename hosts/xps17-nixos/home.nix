@@ -61,6 +61,21 @@
     homeDirectory = "/home/morp";
     stateVersion = "22.05";
     packages = with pkgs; [
+      brave
+      # TODO get latest brave
+      # ((brave.override {
+      #     # version = "1.50.125";
+      #     commandLineArgs = [
+      #       "--enable-wayland-ime"
+      #       "--ozone-platform=wayland"
+      #       "--enable-features=UseOzonePlatform"
+      #       # "--enable-unsafe-webgpu"
+      #       # "--use-gl=egl"
+      #     ];
+      #   })
+      #   .overrideAttrs (old: {
+      #     inherit (pkgs.guangtao-sources.brave) src pname version;
+      #   }))
       tmux
       zsh
       # atuin

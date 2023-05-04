@@ -387,8 +387,8 @@ in {
     variables = {
       EDITOR = "nvim";
       TERMINAL = "kitty";
-      # BROWSER = "brave";
-      BROWSER = "brave-nightly";
+      BROWSER = "brave";
+      # BROWSER = "brave-nightly";
     };
 
     pathsToLink = ["/libexec"];
@@ -405,13 +405,13 @@ in {
     };
 
     # systemPackages = [ (pkgs.brave.override {version = "1.50.125";}) ];
+    # brave.override {version = "1.50.125";}
     systemPackages = with pkgs; [
       wget
       xclip
       git
       stow
-      brave-nightly
-      # brave.override {version = "1.50.125";}
+      # brave
       sqlite
       unzip
       coreutils
