@@ -91,12 +91,14 @@ in {
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.utf8";
 
-  hardware.bluetooth = {
-    enable = true;
-    # hsphfpd.enable = true; # HSP & HFP daemon
-    settings = {
-      General = {
-        Enable = "Source,Sink,Media,Socket";
+  hardware = {
+    bluetooth = {
+      enable = true;
+      # hsphfpd.enable = true; # HSP & HFP daemon
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+        };
       };
     };
   };
@@ -204,6 +206,7 @@ in {
     xserver = {
       libinput.enable = true;
       enable = true;
+
       layout = "us";
       xkbVariant = "";
       desktopManager = {
@@ -220,12 +223,16 @@ in {
 
       displayManager = {
         startx.enable = true;
-        defaultSession = "mate";
+        # defaultSession = "mate";
+        gdm = {
+          enable = true;
+          wayland = true;
+        };
         autoLogin = {
           enable = false;
           user = "morp";
         };
-        sddm.enable = true;
+        # sddm.enable = true;
       };
 
       windowManager.i3 = {
@@ -348,6 +355,12 @@ in {
   programs.waybar.enable = true;
 
   programs = {
+    # hyprland
+    hyprland = {
+      enable = true;
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      xwayland.enable = true;
+    };
     adb.enable = true;
     dconf = {
       enable = true;

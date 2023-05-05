@@ -27,6 +27,7 @@ nixpkgs.lib.nixosSystem {
         users.${user}.imports = [
           ./home.nix
           inputs.hyprland.homeManagerModules.default
+        {wayland.windowManager.hyprland.enable = true;}
         ];
         extraSpecialArgs = {
           plover = inputs.plover.packages."x86_64-linux".plover;
