@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   current,
   lib,
@@ -235,14 +236,16 @@ in {
         # sddm.enable = true;
       };
 
-      windowManager.i3 = {
-        enable = true;
-        package = pkgs.i3-gaps;
+      windowManager = {
+        i3 = {
+          enable = true;
+          package = pkgs.i3-gaps;
 
-        # extraPackages = with pkgs; [
-        #   # i3status
-        #   # i3lock
-        # ];
+          # extraPackages = with pkgs; [
+          #   # i3status
+          #   # i3lock
+          # ];
+        };
       };
     };
 
@@ -355,12 +358,13 @@ in {
   programs.waybar.enable = true;
 
   programs = {
-    # hyprland
+
     hyprland = {
       enable = true;
-      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      package = inputs.hyprland.packages.${pkgs.system}.default;
       xwayland.enable = true;
     };
+
     adb.enable = true;
     dconf = {
       enable = true;
