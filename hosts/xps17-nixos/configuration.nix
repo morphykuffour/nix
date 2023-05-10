@@ -212,9 +212,9 @@ in {
         xterm = {
           enable = true;
         };
-        # mate = {
-        #   enable = true;
-        # };
+         mate = {
+           enable = true;
+         };
         gnome = {
           enable = true;
         };
@@ -431,7 +431,7 @@ in {
       # ms-edge
       gnome.dconf-editor
       # mate.mate-power-manager
-      # mate.mate-media
+      mate.mate-media
       orchis-theme
       tela-circle-icon-theme
       docker

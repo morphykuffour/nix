@@ -3,12 +3,12 @@
   inputs,
   config,
   lib,
-  agenix,
+  pkgs,
   ...
 }: {
   services.xserver = {
     enable = true;
-    videosDrivers = ["nvidia"];
+    # videosDrivers = ["nvidia"];
     displayManager.gdm = {
       enable = true;
       wayland = true;

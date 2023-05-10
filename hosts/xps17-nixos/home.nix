@@ -175,6 +175,7 @@
       p7zip
       ruby
       emacs
+signal-desktop
 
       # csv
       xsv
