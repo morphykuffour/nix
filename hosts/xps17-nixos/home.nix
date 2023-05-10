@@ -12,6 +12,7 @@
     ../../modules/pass.nix
     ../../modules/fonts.nix
     ../../modules/zathura
+    ../../modules/waybar
     # ../../modules/nvim.nix
     ../../modules/picom.nix
   ];
