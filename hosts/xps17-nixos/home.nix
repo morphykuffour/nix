@@ -12,8 +12,7 @@
     ../../modules/pass.nix
     ../../modules/fonts.nix
     ../../modules/zathura
-    # ../../modules/hyprland
-    # ./modules/nvim.nix
+    # ../../modules/nvim.nix
     ../../modules/picom.nix
   ];
 

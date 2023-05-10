@@ -14,6 +14,7 @@ in {
   imports = [
     ./hardware-configuration.nix
     ./dslr.nix
+    ./hyprland.nix
   ];
 
   # system info
@@ -114,9 +115,6 @@ in {
     shell = pkgs.zsh;
     extraGroups = ["uucp" "dialout" "networkmanager" "wheel" "docker" "audio" "video" "vboxusers" "libvirtd" "input" "adbusers" "wireshark"];
   };
-  programs.zsh.enable = true;
-  # virtualbox
-  # users.extraGroups.vboxusers.members = ["morp"];
 
   nix = {
     settings = {
@@ -212,11 +210,11 @@ in {
       xkbVariant = "";
       desktopManager = {
         xterm = {
-          enable = false;
-        };
-        mate = {
           enable = true;
         };
+        # mate = {
+        #   enable = true;
+        # };
         gnome = {
           enable = true;
         };
@@ -224,7 +222,9 @@ in {
 
       displayManager = {
         startx.enable = true;
-        # defaultSession = "mate";
+        # sddm = {
+        #   enable = true;
+        # };
         gdm = {
           enable = true;
           wayland = true;
@@ -233,18 +233,12 @@ in {
           enable = false;
           user = "morp";
         };
-        # sddm.enable = true;
       };
 
       windowManager = {
         i3 = {
-          enable = true;
+          enable = false;
           package = pkgs.i3-gaps;
-
-          # extraPackages = with pkgs; [
-          #   # i3status
-          #   # i3lock
-          # ];
         };
       };
     };
@@ -310,12 +304,6 @@ in {
   };
 
   virtualisation = {
-    # virtualbox install
-    # virtualbox.host.enable = true;
-    # virtualbox.host.enableExtensionPack = true;
-    # virtualbox.guest.enable = true;
-    # virtualbox.guest.x11 = true;
-
     spiceUSBRedirection.enable = true;
 
     docker = {
@@ -341,29 +329,15 @@ in {
 
   # Programs
 
-  # programs.mako = {
-  #   enable = true;
-  #   backgroundColor = "#2b3339";
-  #   borderSize = 1;
-  #   borderColor = "#83b6af";
-  #   defaultTimeout = 5000;
-  #   font = "JetBrainsMono Nerd Font 12";
-  # };
-
-  # programs.obs-studio = {
-  #   enable = true;
-  #   plugins = with pkgs; [ obs-studio-plugins.wlrobs ];
-  # };
-
-  programs.waybar.enable = true;
-
   programs = {
+    # obs-studio = {
+    #   enable = true;
+    #   plugins = with pkgs; [ obs-studio-plugins.wlrobs ];
+    # };
 
-    hyprland = {
-      enable = true;
-      package = inputs.hyprland.packages.${pkgs.system}.default;
-      xwayland.enable = true;
-    };
+    waybar.enable = true;
+
+    zsh.enable = true;
 
     adb.enable = true;
     dconf = {
@@ -457,7 +431,7 @@ in {
       # ms-edge
       gnome.dconf-editor
       # mate.mate-power-manager
-      mate.mate-media
+      # mate.mate-media
       orchis-theme
       tela-circle-icon-theme
       docker
