@@ -212,9 +212,9 @@ in {
         xterm = {
           enable = true;
         };
-         mate = {
-           enable = true;
-         };
+        mate = {
+          enable = true;
+        };
         gnome = {
           enable = true;
         };
