@@ -14,7 +14,7 @@ in {
   imports = [
     ./hardware-configuration.nix
     ./dslr.nix
-    ./hyprland.nix
+    # ./hyprland.nix
   ];
 
   # system info
@@ -189,16 +189,16 @@ in {
       ];
     };
 
-    avahi = {
-      nssmdns = true;
-      enable = true;
-      publish = {
-        enable = true;
-        userServices = true;
-        domain = true;
-      };
-      allowInterfaces = ["wlp0s20f3" "tailscale0"];
-    };
+    # avahi = {
+    #   nssmdns = true;
+    #   enable = true;
+    #   publish = {
+    #     enable = true;
+    #     userServices = true;
+    #     domain = true;
+    #   };
+    #   allowInterfaces = ["wlp0s20f3" "tailscale0"];
+    # };
 
     flatpak.enable = true;
 
@@ -212,9 +212,9 @@ in {
         xterm = {
           enable = true;
         };
-         # mate = {
-         #   enable = true;
-         # };
+         mate = {
+           enable = true;
+         };
         gnome = {
           enable = true;
         };
@@ -237,7 +237,7 @@ in {
 
       windowManager = {
         i3 = {
-          enable = false;
+          enable = true;
           package = pkgs.i3-gaps;
         };
       };
@@ -276,7 +276,8 @@ in {
 
         "Org" = {
           path = "/home/morp/Org/";
-          id = "Org";
+          # id = "Org";
+          id = "prsu2-hrpwq";
           devices = ["xps17-nixos" "ubuntu" "macmini-darwin" "workstation-windows"];
           versioning = {
             type = "staggered";
