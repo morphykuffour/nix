@@ -18,7 +18,7 @@ nixpkgs.lib.nixosSystem {
     ./configuration.nix
     ./hardware-configuration.nix
     ./tailscale.nix
-    inputs.hyprland.nixosModules.default
+    # inputs.hyprland.nixosModules.default
     home-manager.nixosModules.home-manager
     agenix.nixosModules.default
     {
@@ -27,8 +27,8 @@ nixpkgs.lib.nixosSystem {
         useUserPackages = true;
         users.${user}.imports = [
           ./home.nix
-          inputs.hyprland.homeManagerModules.default
-          {wayland.windowManager.hyprland.enable = true;}
+          # inputs.hyprland.homeManagerModules.default
+          # {wayland.windowManager.hyprland.enable = true;}
         ];
         extraSpecialArgs = {
           plover = inputs.plover.packages."x86_64-linux".plover;
