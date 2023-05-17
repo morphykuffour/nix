@@ -7,6 +7,7 @@ MAKEFLAGS += --no-builtin-rules
 HOSTNAME ?= $(shell hostname)
 UNAME_S := $(shell uname -s)
 
+EDIT_FLAKE := nvim flake.nix
 
 ifeq ($(UNAME_S),Linux)
 	SWITCH_CMD := sudo nixos-rebuild --use-remote-sudo -I nixos-config="machines/$(HOSTNAME)/configuration.nix" switch --flake '.\#' --impure 
@@ -22,6 +23,9 @@ ifeq ($(UNAME_S),Darwin)
 	EDIT_CONF := nvim hosts/$(HOSTNAME)/home.nix
 	EDIT_DEF := nvim hosts/$(HOSTNAME)/default.nix
 endif
+
+ef:
+	$(EDIT_FLAKE)
 
 ed:
 	$(EDIT_DEF)
