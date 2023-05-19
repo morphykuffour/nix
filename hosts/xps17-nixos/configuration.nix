@@ -7,13 +7,11 @@
   home-manager,
   agenix,
   ...
-}: let
-  keyd = pkgs.callPackage ../../pkgs/keyd {};
-  keydConfig = builtins.readFile ../../pkgs/keyd/keymaps.conf;
-in {
+}: {
   imports = [
     ./hardware-configuration.nix
     ./dslr.nix
+    ./keyd.nix
     # ./hyprland.nix
   ];
 
@@ -69,26 +67,6 @@ in {
   #   };
   # };
 
-  systemd.services = {
-    # https://github.com/NixOS/nixpkgs/issues/59603#issuecomment-1356844284
-    NetworkManager-wait-online.enable = false;
-
-    keyd = {
-      enable = true;
-      description = "keyd key remapping daemon";
-      unitConfig = {
-        Requires = "local-fs.target";
-        After = "local-fs.target";
-      };
-      serviceConfig = {
-        Type = "simple";
-        ExecStart = "${pkgs.keyd}/bin/keyd";
-      };
-    };
-  };
-
-  environment.etc."keyd/default.conf".text = keydConfig;
-
   # locale
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.utf8";
@@ -129,14 +107,9 @@ in {
   };
 
   nixpkgs = {
-    # crossSystem.system = "aarch64-linux";
-    # buildPlatform.system = "x86_64-linux";
-    # hostPlatform.system = "aarch64-linux";
     config = {
       allowUnfree = true;
       allowUnsupportedSystem = true;
-
-      # insecure package needed for nixops
       permittedInsecurePackages = [
         "python2.7-pyjwt-1.7.1"
         "python2.7-certifi-2021.10.8"
