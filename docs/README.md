@@ -8,6 +8,12 @@ sudo nixos-rebuild switch
 sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 ```
 
+To delete all old (non-current) generations of your current profile:
+
+```bash
+nix-env --delete-generations old
+```
+
 - change to a generation
 ```bash
 nixos-rebuild switch --rollback=2
