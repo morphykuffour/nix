@@ -110,6 +110,7 @@ in {
   # user account
   users.defaultUserShell = pkgs.bash;
   # users.users.root = {shell = pkgs.zsh;};
+  programs.zsh.enable = true;
   users.users.morp = {
     isNormalUser = true;
     description = "default account for linux";
