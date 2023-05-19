@@ -183,10 +183,10 @@
       xkbVariant = "";
       desktopManager = {
         xterm = {
-          enable = true;
+          enable = false;
         };
         mate = {
-          enable = true;
+          enable = false;
         };
         gnome = {
           enable = true;
@@ -194,7 +194,7 @@
       };
 
       displayManager = {
-        startx.enable = true;
+        startx.enable = false;
         # sddm = {
         #   enable = true;
         # };
@@ -493,6 +493,7 @@
       zotero
       hledger
       tio
+      slack
 
       # R packages for data science
       rstudio
