@@ -5,10 +5,10 @@
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # hyprland = {
+    #   url = "github:hyprwm/Hyprland";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -69,26 +69,16 @@
     neovim,
     discord,
     nixos-hardware,
-    # vscode-server,
     ...
   } @ inputs: let
     user = "morp";
-    # https://github.com/fortuneteller2k/nix-config/blob/master/flake.nix
-    importNixFiles = path: with nixpkgs.lib; map import (__filter (hasSuffix "nix") (filesystem.listFilesRecursive path));
-    overlays = with inputs;
-      [
-        # Overlays provided by inputs
-        emacs-overlay.overlay
-        # (import ./third_party/emacs-overlay)
-        # (import (builtins.fetchTarball {
-        #   url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-        #   sha256 = "05l3rhjays0vkrx3mgcg0vawqsqgjdvj2m52kckbvhr6sxh4b9yr";
-        # }))
-        discord.overlays.default
-        # plover.overlay
-      ]
-      # Overlays from ./overlays directory
-      ++ (importNixFiles ./overlays);
+    # Overlays provided by inputs
+    overlays = [
+      emacs-overlay.overlay
+      discord.overlays.default
+      (import ./overlays/brave-nightly.nix)
+      # plover.overlay
+    ];
   in {
     # nix formatter
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
