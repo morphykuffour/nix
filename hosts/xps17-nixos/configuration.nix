@@ -35,7 +35,6 @@
     loader = {
       systemd-boot.enable = false;
       grub = {
-        version = 2;
         enable = true;
         devices = ["nodev"];
         efiSupport = true;
@@ -183,11 +182,11 @@
       xkbVariant = "";
       desktopManager = {
         xterm = {
-          enable = false;
+          enable = true;
         };
-        mate = {
-          enable = false;
-        };
+        # mate = {
+        #   enable = false;
+        # };
         gnome = {
           enable = true;
         };
@@ -195,13 +194,13 @@
 
       displayManager = {
         startx.enable = false;
-        # sddm = {
-        #   enable = true;
-        # };
-        gdm = {
+        sddm = {
           enable = true;
-          wayland = true;
         };
+        # gdm = {
+        #   enable = true;
+        #   wayland = true;
+        # };
         autoLogin = {
           enable = false;
           user = "morp";
@@ -226,14 +225,14 @@
       guiAddress = "127.0.0.1:8384";
       overrideDevices = true;
       overrideFolders = true;
-      devices = {
+      settings.devices = {
         "xps17-nixos" = {id = "44LYB6O-ELZWVNP-5R576R3-MRD3MM2-FXORGWG-WRC26ZQ-JAMWKRS-5SCNUAY";};
         "ubuntu" = {id = "TTEQED5-YB5HDQQ-4OYRRUE-PQMO7XF-TWCNSQ7-4SFRM5X-N6C3IBY-ELN2XQV";};
         "macmini-darwin" = {id = "OK4365M-ZZC4CDT-A6W2YF2-MPIX3GR-FYZIWWJ-5QS6RYM-5KYU35K-SLYBHQO";};
         "workstation-windows" = {id = "OT562TI-J4NCYP6-7SCXJL6-PWDVBGX-EJA5G7S-3Q4G4TG-UR7RN3F-V3OVAAH";};
       };
 
-      folders = {
+      settings.folders = {
         "Dropbox" = {
           path = "/home/morp/Dropbox";
           id = "Dropbox";
