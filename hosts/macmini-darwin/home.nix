@@ -73,7 +73,7 @@
       cscope
       delta
       cargo
-      atuin
+      # atuin
       kitty
       tmux
       ruby
