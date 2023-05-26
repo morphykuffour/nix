@@ -97,11 +97,11 @@
     settings = {
       auto-optimise-store = true;
       sandbox = false;
-      substituters = ["https://jedimaster.cachix.org"];
+      # substituters = ["https://jedimaster.cachix.org"];
       trusted-users = ["root" "morp"];
-      trusted-public-keys = [
-        "jedimaster.cachix.org-1:d3z8VEyrrqcYEe/9wOhla6iXb4ArWUoQLB5tz1b+CZA="
-      ];
+      # trusted-public-keys = [
+      #   "jedimaster.cachix.org-1:d3z8VEyrrqcYEe/9wOhla6iXb4ArWUoQLB5tz1b+CZA="
+      # ];
     };
   };
 
