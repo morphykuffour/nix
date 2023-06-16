@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   current,
   pkgs,
@@ -12,9 +13,16 @@
     ../../modules/pass.nix
     ../../modules/fonts.nix
     ../../modules/zathura
-    ../../modules/waybar
     # ../../modules/nvim.nix
     ../../modules/picom.nix
+
+    #hyprland test
+    ../../modules/hyprland/waybar.nix
+    ../../modules/hyprland/hyprpaper.nix
+    ../../modules/hyprland/waybar.nix
+    ../../modules/hyprland/anyrun.nix
+    ../../modules/hyprland/dunst.nix
+    inputs.hyprland.homeManagerModules.default
   ];
 
   services.clipmenu.enable = true;
@@ -56,10 +64,36 @@
     config.allowUnfree = true;
   };
 
+  wayland.windowManager.hyprland = {
+    enable = true;
+    extraConfig = builtins.readFile ../dotfiles/extrahypr.conf;
+  };
+  wayland.windowManager.sway = {
+    enable = true;
+    config = rec {
+      modifier = "Mod4";
+      terminal = "kitty";
+      startup = [
+        { command = "kitty"; }
+      ];
+    };
+  };
+
   home = {
     username = "morp";
     homeDirectory = "/home/morp";
     stateVersion = "22.05";
+    sessionVariables = {
+      GDK_BACKEND = "wayland,x11";
+      QT_QPA_PLATFORM = "wayland;xcb";
+      #SDL_VIDEODRIVER = "x11";
+      CLUTTER_BACKEND = "wayland";
+      XDG_CURRENT_DESKTOP = "Hyprland";
+      XDG_SESSION_TYPE = "wayland";
+      XDG_SESSION_DESKTOP = "Hyprland";
+      WLR_NO_HARDWARE_CURSORS = "1";
+      QT_STYLE_OVERRIDE = "kvantum";
+    };
     packages = with pkgs; [
       brave
       # TODO get latest brave
@@ -204,6 +238,10 @@
           pyqt5
           ueberzug
         ]))
+
+      pkgs.hyprland-share-picker
+      inputs.hyprwm-contrib.packages.${system}.grimblast
+      hyprpaper
     ];
   };
 }
