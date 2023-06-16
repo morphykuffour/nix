@@ -32,7 +32,7 @@ nixpkgs.lib.nixosSystem {
         ];
         extraSpecialArgs = {
           plover = inputs.plover.packages."x86_64-linux".plover;
-          inherit user;
+          inherit inputs user;
         };
       };
 
