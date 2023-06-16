@@ -74,7 +74,7 @@
       modifier = "Mod4";
       terminal = "kitty";
       startup = [
-        { command = "kitty"; }
+        {command = "kitty";}
       ];
     };
   };
