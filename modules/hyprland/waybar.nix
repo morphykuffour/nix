@@ -7,7 +7,7 @@
   programs.waybar = {
     enable = true;
     package = inputs.hyprland.packages."x86_64-linux".waybar-hyprland;
-    "style" = ../dotfiles/style.css;
+    "style" = ../../modules/hyprland/style.css;
     settings = [
       {
         layer = "top";
