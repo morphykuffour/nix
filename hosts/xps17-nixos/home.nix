@@ -66,7 +66,7 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    extraConfig = builtins.readFile ../dotfiles/extrahypr.conf;
+    extraConfig = builtins.readFile ../../modules/hyprland/hyprland.conf;
   };
   wayland.windowManager.sway = {
     enable = true;
