@@ -12,7 +12,7 @@
     ./hardware-configuration.nix
     ./dslr.nix
     ./keyd.nix
-    inputs.hyprland.nixosModules.default
+    # inputs.hyprland.nixosModules.default
     # ./hyprland.nix
   ];
 
@@ -117,11 +117,11 @@
     };
   };
 
-  xdg.portal = with pkgs; {
-    enable = true;
-    wlr.enable = true;
-    extraPortals = [inputs.xdph.packages.x86_64-linux.xdg-desktop-portal-hyprland];
-  };
+  # xdg.portal = with pkgs; {
+  #   enable = true;
+  #   wlr.enable = true;
+  #   extraPortals = [inputs.xdph.packages.x86_64-linux.xdg-desktop-portal-hyprland];
+  # };
 
   sound.enable = true;
   hardware.pulseaudio = {
@@ -190,11 +190,11 @@
           enable = true;
         };
         mate = {
-          enable = false;
-        };
-        gnome = {
           enable = true;
         };
+        # gnome = {
+        #   enable = true;
+        # };
       };
 
       displayManager = {
@@ -212,12 +212,12 @@
         };
       };
 
-      windowManager = {
-        i3 = {
-          enable = true;
-          package = pkgs.i3-gaps;
-        };
-      };
+      # windowManager = {
+      #   i3 = {
+      #     enable = true;
+      #     package = pkgs.i3-gaps;
+      #   };
+      # };
     };
 
     syncthing = {
@@ -457,7 +457,7 @@
       libtool
       libvterm
       # virtualbox
-      tailscale
+      # tailscale
       # nixops
       # os-prober
       kitty
