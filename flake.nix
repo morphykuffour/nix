@@ -97,6 +97,23 @@
       discord.overlays.default
       (import ./overlays/brave-nightly.nix)
       # plover.overlay
+
+
+      # (final: prev: {
+      #   flameshot-notshit = pkgs.flameshot.overrideAttrs (finalAttrs: previousAttrs: {
+      #     cmakeFlags = [
+      #       "-DUSE_WAYLAND_GRIM=1"
+      #     ];
+      #     src = pkgs.fetchFromGitHub {
+      #       owner = "repomansez";
+      #       fetchSubmodules = true;
+      #       repo = "flameshot";
+      #       rev = "583e5dcddc9b6f8e70fa6a9069d64dbd74b3c97d";
+      #       sha256 = "r81JZf5waFHY72eX/JkCY7rsNea9oTVtrs5PPDD9UWo=";
+      #     };
+      #   });
+      # })
+      inputs.anyrun.overlay
     ];
   in {
     # nix formatter
