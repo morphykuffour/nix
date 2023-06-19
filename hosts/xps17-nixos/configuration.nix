@@ -122,6 +122,7 @@
   #   wlr.enable = true;
   #   extraPortals = [inputs.xdph.packages.x86_64-linux.xdg-desktop-portal-hyprland];
   # };
+  xdg.portal.enable = true;
 
   sound.enable = true;
   hardware.pulseaudio = {
