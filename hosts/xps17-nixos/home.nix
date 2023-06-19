@@ -9,7 +9,7 @@
 }: {
   imports = [
     ../../modules/i3.nix
-    # ../../modules/redshift.nix
+    ../../modules/redshift.nix
     ../../modules/pass.nix
     ../../modules/fonts.nix
     ../../modules/zathura
@@ -165,7 +165,7 @@
       sublime
       surfraw
       nix-index
-      redshift
+      # redshift
       # termite
       # plover
       tree-sitter
