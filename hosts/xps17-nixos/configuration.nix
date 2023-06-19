@@ -87,7 +87,7 @@
 
   # user account
   users.defaultUserShell = pkgs.bash;
-  users.users.morp = {
+  users.users.morph = {
     isNormalUser = true;
     description = "default account for linux";
     shell = pkgs.zsh;
@@ -99,7 +99,7 @@
       auto-optimise-store = true;
       sandbox = false;
       # substituters = ["https://jedimaster.cachix.org"];
-      trusted-users = ["root" "morp"];
+      trusted-users = ["root" "morph"];
       # trusted-public-keys = [
       #   "jedimaster.cachix.org-1:d3z8VEyrrqcYEe/9wOhla6iXb4ArWUoQLB5tz1b+CZA="
       # ];
@@ -148,7 +148,7 @@
     };
 
     # mysql = {
-    #   user = "morp";
+    #   user = "morph";
     #   package = pkgs.mysql80;
     #   group = "wheel";
     #   enable = false;
@@ -190,26 +190,26 @@
         xterm = {
           enable = true;
         };
-        mate = {
-          enable = true;
-        };
-        # gnome = {
+        # mate = {
         #   enable = true;
         # };
+        gnome = {
+          enable = true;
+        };
       };
 
       displayManager = {
         startx.enable = false;
-        sddm = {
-          enable = true;
-        };
-        # gdm = {
+        # sddm = {
         #   enable = true;
-        #   wayland = true;
         # };
+        gdm = {
+          enable = true;
+          wayland = true;
+        };
         autoLogin = {
           enable = false;
-          user = "morp";
+          user = "morph";
         };
       };
 
@@ -223,10 +223,10 @@
 
     syncthing = {
       enable = true;
-      dataDir = "/home/morp";
+      dataDir = "/home/morph";
       openDefaultPorts = true;
-      configDir = "/home/morp/.config/syncthing";
-      user = "morp";
+      configDir = "/home/morph/.config/syncthing";
+      user = "morph";
       group = "users";
       guiAddress = "127.0.0.1:8384";
       overrideDevices = true;
@@ -240,7 +240,7 @@
 
       folders = {
         "Dropbox" = {
-          path = "/home/morp/Dropbox";
+          path = "/home/morph/Dropbox";
           id = "Dropbox";
           devices = ["xps17-nixos" "ubuntu" "macmini-darwin" "workstation-windows"];
           versioning = {
@@ -253,7 +253,7 @@
         };
 
         "Org" = {
-          path = "/home/morp/Org/";
+          path = "/home/morph/Org/";
           # id = "Org";
           id = "prsu2-hrpwq";
           devices = ["xps17-nixos" "ubuntu" "macmini-darwin" "workstation-windows"];
@@ -267,7 +267,7 @@
         };
 
         "iCloud" = {
-          path = "/home/morp/iCloud/";
+          path = "/home/morph/iCloud/";
           id = "iCloud";
           devices = ["xps17-nixos" "ubuntu" "macmini-darwin" "workstation-windows"];
           versioning = {
@@ -368,7 +368,7 @@
       XDG_BIN_HOME = "\${HOME}/.local/bin";
       XDG_DATA_HOME = "\${HOME}/.local/share";
       ANDROID_HOME = "\${HOME}/Android/Sdk";
-      CHROME_EXECUTABLE = "/home/morp/.nix-profile/bin/google-chrome-stable";
+      CHROME_EXECUTABLE = "/home/morph/.nix-profile/bin/google-chrome-stable";
       PATH = [
         "\${XDG_BIN_HOME}"
       ];

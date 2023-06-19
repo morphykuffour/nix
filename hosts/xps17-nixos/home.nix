@@ -17,12 +17,12 @@
     ../../modules/picom.nix
 
     #hyprland test
-    # ../../modules/hyprland/waybar.nix
-    # ../../modules/hyprland/hyprpaper.nix
-    # ../../modules/hyprland/waybar.nix
-    # ../../modules/hyprland/anyrun.nix
-    # ../../modules/hyprland/dunst.nix
-    # inputs.hyprland.homeManagerModules.default
+    ../../modules/hyprland/waybar.nix
+    ../../modules/hyprland/hyprpaper.nix
+    ../../modules/hyprland/waybar.nix
+    ../../modules/hyprland/anyrun.nix
+    ../../modules/hyprland/dunst.nix
+    inputs.hyprland.homeManagerModules.default
   ];
 
   services.clipmenu.enable = true;
@@ -64,24 +64,24 @@
     config.allowUnfree = true;
   };
 
-  # wayland.windowManager.hyprland = {
-  #   enable = true;
-  #   extraConfig = builtins.readFile ../../modules/hyprland/hyprland.conf;
-  # };
-  # wayland.windowManager.sway = {
-  #   enable = true;
-  #   config = rec {
-  #     modifier = "Mod4";
-  #     terminal = "kitty";
-  #     startup = [
-  #       {command = "kitty";}
-  #     ];
-  #   };
-  # };
+  wayland.windowManager.hyprland = {
+    enable = true;
+    extraConfig = builtins.readFile ../../modules/hyprland/hyprland.conf;
+  };
+  wayland.windowManager.sway = {
+    enable = true;
+    config = rec {
+      modifier = "Mod4";
+      terminal = "kitty";
+      startup = [
+        {command = "kitty";}
+      ];
+    };
+  };
 
   home = {
-    username = "morp";
-    homeDirectory = "/home/morp";
+    username = "morph";
+    homeDirectory = "/home/morph";
     stateVersion = "22.05";
     sessionVariables = {
       GDK_BACKEND = "wayland,x11";
