@@ -27,7 +27,7 @@ nixpkgs.lib.nixosSystem {
         useUserPackages = true;
         users.${user}.imports = [
           ./home.nix
-          # inputs.hyprland.homeManagerModules.default
+          inputs.hyprland.homeManagerModules.default
           # {wayland.windowManager.hyprland.enable = true;}
         ];
         extraSpecialArgs = {

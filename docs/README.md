@@ -134,6 +134,6 @@ nix-env -if default.nix
 
 Fix `error: getting status of '/nix/store/3357ihxq6fb46pbjacbln38mcl4krx5v-source': No such file or directory`
 ```bash
-sudo nix-store --repair --verify --check-contents solved the issue !
+sudo nix-store --repair --verify --check-contents #solved the issue !
 ```
 

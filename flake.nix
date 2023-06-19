@@ -90,7 +90,7 @@
     anyrun,
     ...
   } @ inputs: let
-    user = "morp";
+    user = "morph";
     # Overlays provided by inputs
     overlays = [
       emacs-overlay.overlay
