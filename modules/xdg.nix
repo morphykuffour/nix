@@ -11,7 +11,7 @@
     <home-manager/modules/home-environment.nix>
   ];
   ### A tidy $HOME is a tidy mind
-  home-manager.users.morp.xdg.enable = true;
+  home-manager.users.${user}.xdg.enable = true;
 
   environment = {
     sessionVariables = {

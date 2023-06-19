@@ -28,9 +28,9 @@
   programs.zsh.enable = true;
   users = {
     defaultUserShell = pkgs.zsh;
-    users.morp = {
+    users.${user} = {
       isNormalUser = true;
-      home = "/home/morp";
+      home = "/home/${user}";
       shell = pkgs.zsh;
       extraGroups = ["wheel"];
     };
@@ -51,7 +51,7 @@
   wsl = {
     enable = true;
     wslConf.automount.root = "/mnt";
-    defaultUser = "morp";
+    defaultUser = "${user}";
     startMenuLaunchers = true;
 
     # Enable integration with Docker Desktop
@@ -66,7 +66,7 @@
     settings = {
       auto-optimise-store = true;
       sandbox = true;
-      trusted-users = ["root" "morp" "@wheel"];
+      trusted-users = ["root" "${user}" "@wheel"];
       # binaryCache = ["https://cache.nixos.org" "https://nix-community.cachix.org"];
       substituters = [
         "https://nix-community.cachix.org"

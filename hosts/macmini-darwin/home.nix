@@ -20,7 +20,7 @@
 
   # TODO remove homebrew packages
   home = {
-    username = "morp";
+    username = "${user}";
     stateVersion = "22.05";
     packages = with pkgs; [
       # utilities packages

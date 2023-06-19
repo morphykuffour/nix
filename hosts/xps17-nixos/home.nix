@@ -5,6 +5,7 @@
   pkgs,
   lib,
   plover,
+  user,
   ...
 }: {
   imports = [
@@ -14,12 +15,11 @@
     ../../modules/fonts.nix
     ../../modules/zathura
     # ../../modules/nvim.nix
-    ../../modules/picom.nix
+    # ../../modules/picom.nix
 
     #hyprland test
     ../../modules/hyprland/waybar.nix
     ../../modules/hyprland/hyprpaper.nix
-    ../../modules/hyprland/waybar.nix
     ../../modules/hyprland/anyrun.nix
     ../../modules/hyprland/dunst.nix
     inputs.hyprland.homeManagerModules.default
@@ -64,10 +64,11 @@
     config.allowUnfree = true;
   };
 
-  wayland.windowManager.hyprland = {
-    enable = true;
-    extraConfig = builtins.readFile ../../modules/hyprland/hyprland.conf;
-  };
+  # wayland.windowManager.hyprland = {
+  #   enable = true;
+  #   extraConfig = builtins.readFile ../../modules/hyprland/hyprland.conf;
+  # };
+
   wayland.windowManager.sway = {
     enable = true;
     config = rec {
@@ -80,8 +81,8 @@
   };
 
   home = {
-    username = "morph";
-    homeDirectory = "/home/morph";
+    username = "${user}";
+    homeDirectory = "/home/${user}";
     stateVersion = "22.05";
     sessionVariables = {
       GDK_BACKEND = "wayland,x11";

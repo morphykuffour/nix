@@ -6,6 +6,7 @@
   pkgs,
   home-manager,
   agenix,
+  user,
   ...
 }: {
   imports = [

@@ -57,8 +57,8 @@
   };
 
   home = {
-    username = "morp";
-    homeDirectory = "/home/morp";
+    username = "${user}";
+    homeDirectory = "/home/${user}";
     stateVersion = "22.05";
     packages = with pkgs; [
       tmux
