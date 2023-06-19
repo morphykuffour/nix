@@ -70,7 +70,7 @@
         defaultSession = "plasma";
         autoLogin = {
           enable = true;
-          user = "morp";
+          user = "${user}";
         };
         sddm.enable = true;
       };
@@ -93,10 +93,10 @@
 
     # syncthing = {
     #   enable = true;
-    #   dataDir = "/home/morp";
+    #   dataDir = "/home/${user}";
     #   openDefaultPorts = true;
-    #   configDir = "/home/morp/.config/syncthing";
-    #   user = "morp";
+    #   configDir = "/home/${user}/.config/syncthing";
+    #   user = "${user}";
     #   group = "users";
     #   guiAddress = "127.0.0.1:8384";
     #   overrideDevices = true;
@@ -109,7 +109,7 @@
 
     #   folders = {
     #     "Dropbox" = {
-    #       path = "/home/morp/Dropbox";
+    #       path = "/home/${user}/Dropbox";
     #     id = "Dropbox";
     #       devices = ["xps17-nixos" "rpi3b-ubuntu" "macmini-darwin"];
     #       versioning = {
@@ -122,7 +122,7 @@
     #     };
 
     #     "Org" = {
-    #       path = "/home/morp/Org/";
+    #       path = "/home/${user}/Org/";
     #       id = "prsu2-hrpwq";
     #       devices = ["xps17-nixos" "rpi3b-ubuntu" "macmini-darwin"];
     #       versioning = {
@@ -135,7 +135,7 @@
     #     };
 
     #     "iCloud" = {
-    #       path = "/home/morp/iCloud/";
+    #       path = "/home/${user}/iCloud/";
     #       id = "iCloud";
     #       devices = ["xps17-nixos" "rpi3b-ubuntu" "macmini-darwin"];
     #       versioning = {
@@ -167,7 +167,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
     defaultUserShell = pkgs.zsh;
-    users.morp = {
+    users.${user} = {
       isNormalUser = true;
       extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
       shell = pkgs.zsh;
@@ -238,7 +238,7 @@
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   age.identityPaths = [
-    "/home/morp/.ssh/id_ed25519"
+    "/home/${user}/.ssh/id_ed25519"
   ];
   age.secrets.ts-optiplex-nixos.file = ../../secrets/ts-optiplex-nixos.age;
 

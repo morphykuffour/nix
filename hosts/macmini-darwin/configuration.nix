@@ -3,8 +3,8 @@
   pkgs,
   ...
 }: {
-  users.users.morp = {
-    home = "/Users/morp";
+  users.users.${user} = {
+    home = "/Users/${user}";
     shell = pkgs.zsh;
   };
 

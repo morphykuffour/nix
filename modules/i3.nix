@@ -1,12 +1,13 @@
 {
   pkgs,
   lib,
+  user,
   ...
 }: let
   # variables
   mod = "Mod1";
-  local_bin = "/home/morp/.local/bin";
-  home = "/home/morp/";
+  local_bin = "/home/${user}/.local/bin";
+  home = "/home/${user}/";
 in {
   xsession.windowManager.i3 = {
     enable = true;
@@ -162,7 +163,7 @@ in {
         #   notification = false;
         # }
         # {
-        #   command = "sxhkd -c /home/morp/.config/sxhkd/sxhkdrc";
+        #   command = "sxhkd -c /home/${user}/.config/sxhkd/sxhkdrc";
         #   always = true;
         #   notification = false;
         # }
