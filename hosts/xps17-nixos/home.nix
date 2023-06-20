@@ -16,13 +16,6 @@
     ../../modules/zathura
     # ../../modules/nvim.nix
     # ../../modules/picom.nix
-
-    # hyprland test
-    # ../../modules/hyprland/waybar.nix
-    # ../../modules/hyprland/hyprpaper.nix
-    # ../../modules/hyprland/anyrun.nix
-    # ../../modules/hyprland/dunst.nix
-    # inputs.hyprland.homeManagerModules.default
   ];
 
   services.clipmenu.enable = true;
@@ -63,11 +56,6 @@
   nixpkgs = {
     config.allowUnfree = true;
   };
-
-  # wayland.windowManager.hyprland = {
-  #   enable = true;
-  #   extraConfig = builtins.readFile ../../modules/hyprland/hyprland.conf;
-  # };
 
   # wayland.windowManager.sway = {
   #   enable = true;
@@ -214,10 +202,6 @@
           pyqt5
           ueberzug
         ]))
-
-      # pkgs.hyprland-share-picker
-      # inputs.hyprwm-contrib.packages.${system}.grimblast
-      # hyprpaper
     ];
   };
 }
