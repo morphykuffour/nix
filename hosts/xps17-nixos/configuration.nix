@@ -13,301 +13,99 @@
     ./hardware-configuration.nix
     ./dslr.nix
     ./keyd.nix
-    # inputs.hyprland.nixosModules.default
     # ./hyprland.nix
   ];
 
-  # system info
-  system.stateVersion = config.system.nixos.release;
-
-  # sudoless
-  security.sudo.wheelNeedsPassword = false;
-
   # Bootloader.
-  boot = {
-    kernelParams = ["nohibernate"];
-    initrd = {
-      availableKernelModules = ["xhci_pci" "nvme" "usbhid" "uas" "sd_mod" "rtsx_pci_sdmmc"];
-      kernelModules = [];
-    };
-    kernelModules = ["kvm-amd" "kvm-intel" "wireguard"];
-    binfmt.emulatedSystems = ["aarch64-linux"];
-    extraModulePackages = [];
-    supportedFilesystems = ["ntfs"];
-    loader = {
-      systemd-boot.enable = false;
-      grub = {
-        enable = true;
-        devices = ["nodev"];
-        efiSupport = true;
-        useOSProber = false;
-      };
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-      efi = {
-        efiSysMountPoint = "/boot/efi";
-        canTouchEfiVariables = true;
-      };
-    };
-  };
+  networking.hostName = "xps17-nixos"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  # systemd.user.services.dropbox = {
-  #   description = "Dropbox";
-  #   wantedBy = ["graphical-session.target"];
-  #   environment = {
-  #     QT_PLUGIN_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtPluginPrefix;
-  #     QML2_IMPORT_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtQmlPrefix;
-  #   };
-  #   serviceConfig = {
-  #     ExecStart = "${pkgs.dropbox.out}/bin/dropbox";
-  #     ExecReload = "${pkgs.coreutils.out}/bin/kill -HUP $MAINPID";
-  #     KillMode = "control-group"; # upstream recommends process
-  #     Restart = "on-failure";
-  #     PrivateTmp = true;
-  #     ProtectSystem = "full";
-  #     Nice = 10;
-  #   };
-  # };
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # locale
+  # Enable networking
+  networking.networkmanager.enable = true;
+
+  # Set your time zone.
   time.timeZone = "America/New_York";
-  i18n.defaultLocale = "en_US.utf8";
 
-  hardware = {
-    bluetooth = {
-      enable = true;
-      # hsphfpd.enable = true; # HSP & HFP daemon
-      settings = {
-        General = {
-          Enable = "Source,Sink,Media,Socket";
-        };
-      };
-    };
-  };
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
 
-  security.rtkit.enable = true;
-
-  # user account
-  users.defaultUserShell = pkgs.bash;
-  users.users.morph = {
-    isNormalUser = true;
-    description = "default account for linux";
-    shell = pkgs.zsh;
-    extraGroups = ["uucp" "dialout" "networkmanager" "wheel" "docker" "audio" "video" "vboxusers" "libvirtd" "input" "adbusers" "wireshark"];
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_MEASUREMENT = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
+    LC_PAPER = "en_US.UTF-8";
+    LC_TELEPHONE = "en_US.UTF-8";
+    LC_TIME = "en_US.UTF-8";
   };
 
   nix = {
-    settings = {
-      auto-optimise-store = true;
-      sandbox = false;
-      # substituters = ["https://jedimaster.cachix.org"];
-      trusted-users = ["root" "morph"];
-      # trusted-public-keys = [
-      #   "jedimaster.cachix.org-1:d3z8VEyrrqcYEe/9wOhla6iXb4ArWUoQLB5tz1b+CZA="
-      # ];
+    extraOptions = "experimental-features = nix-command flakes";
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 14d";
     };
+    optimise.automatic = true;
   };
 
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-      allowUnsupportedSystem = true;
-      permittedInsecurePackages = [
-        "python2.7-pyjwt-1.7.1"
-        "python2.7-certifi-2021.10.8"
-      ];
-    };
-  };
+  services.xserver = {
+    libinput.enable = true;
+    enable = true;
 
-  # xdg.portal = with pkgs; {
-  #   enable = true;
-  #   wlr.enable = true;
-  #   extraPortals = [inputs.xdph.packages.x86_64-linux.xdg-desktop-portal-hyprland];
-  # };
-  xdg.portal.enable = true;
-
-  sound.enable = true;
-  hardware.pulseaudio = {
-    enable = false;
-    # package = pkgs.pulseaudioFull;
-  };
-
-  services = {
-    fwupd.enable = true;
-    fprintd = {
-      enable = true;
-      tod.enable = true;
-      tod.driver = pkgs.libfprint-2-tod1-goodix;
-    };
-
-    qemuGuest.enable = true;
-
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-    };
-
-    # mysql = {
-    #   user = "morph";
-    #   package = pkgs.mysql80;
-    #   group = "wheel";
-    #   enable = false;
-    # };
-    # longview.mysqlPasswordFile = "/run/keys/dbpassword";
-
-    openssh.enable = true;
-    clipmenu.enable = true;
-    blueman.enable = true;
-
-    # Enable CUPS to print documents.
-    printing = {
-      enable = true;
-      drivers = [
-        pkgs.cnijfilter2
-      ];
-    };
-
-    # avahi = {
-    #   nssmdns = true;
-    #   enable = true;
-    #   publish = {
-    #     enable = true;
-    #     userServices = true;
-    #     domain = true;
-    #   };
-    #   allowInterfaces = ["wlp0s20f3" "tailscale0"];
-    # };
-
-    flatpak.enable = true;
-
-    xserver = {
-      libinput.enable = true;
-      enable = true;
-
-      layout = "us";
-      xkbVariant = "";
-      desktopManager = {
-        xterm = {
-          enable = true;
-        };
-        # mate = {
-        #   enable = true;
-        # };
-        gnome = {
-          enable = true;
-        };
+    layout = "us";
+    xkbVariant = "";
+    desktopManager = {
+      xterm = {
+        enable = true;
       };
-
-      displayManager = {
-        startx.enable = false;
-        # sddm = {
-        #   enable = true;
-        # };
-        gdm = {
-          enable = true;
-          wayland = true;
-        };
-        autoLogin = {
-          enable = false;
-          user = "morph";
-        };
-      };
-
-      # windowManager = {
-      #   i3 = {
-      #     enable = true;
-      #     package = pkgs.i3-gaps;
-      #   };
+      # mate = {
+      #   enable = true;
       # };
+      gnome = {
+        enable = true;
+      };
     };
 
-    syncthing = {
-      enable = true;
-      dataDir = "/home/morph";
-      openDefaultPorts = true;
-      configDir = "/home/morph/.config/syncthing";
-      user = "morph";
-      group = "users";
-      guiAddress = "127.0.0.1:8384";
-      overrideDevices = true;
-      overrideFolders = true;
-      devices = {
-        "xps17-nixos" = {id = "44LYB6O-ELZWVNP-5R576R3-MRD3MM2-FXORGWG-WRC26ZQ-JAMWKRS-5SCNUAY";};
-        "ubuntu" = {id = "TTEQED5-YB5HDQQ-4OYRRUE-PQMO7XF-TWCNSQ7-4SFRM5X-N6C3IBY-ELN2XQV";};
-        "macmini-darwin" = {id = "OK4365M-ZZC4CDT-A6W2YF2-MPIX3GR-FYZIWWJ-5QS6RYM-5KYU35K-SLYBHQO";};
-        "workstation-windows" = {id = "OT562TI-J4NCYP6-7SCXJL6-PWDVBGX-EJA5G7S-3Q4G4TG-UR7RN3F-V3OVAAH";};
+    displayManager = {
+      startx.enable = false;
+      # sddm = {
+      #   enable = true;
+      # };
+      gdm = {
+        enable = true;
+        wayland = true;
       };
+      autoLogin = {
+        enable = false;
+        user = "morph";
+      };
+    };
 
-      folders = {
-        "Dropbox" = {
-          path = "/home/morph/Dropbox";
-          id = "Dropbox";
-          devices = ["xps17-nixos" "ubuntu" "macmini-darwin" "workstation-windows"];
-          versioning = {
-            type = "staggered";
-            params = {
-              cleanInterval = "3600";
-              maxAge = "15768000";
-            };
-          };
-        };
-
-        "Org" = {
-          path = "/home/morph/Org/";
-          # id = "Org";
-          id = "prsu2-hrpwq";
-          devices = ["xps17-nixos" "ubuntu" "macmini-darwin" "workstation-windows"];
-          versioning = {
-            type = "staggered";
-            params = {
-              cleanInterval = "3600";
-              maxAge = "15768000";
-            };
-          };
-        };
-
-        "iCloud" = {
-          path = "/home/morph/iCloud/";
-          id = "iCloud";
-          devices = ["xps17-nixos" "ubuntu" "macmini-darwin" "workstation-windows"];
-          versioning = {
-            type = "staggered";
-            params = {
-              cleanInterval = "3600";
-              maxAge = "15768000";
-            };
-          };
-        };
+    windowManager = {
+      i3 = {
+        enable = true;
+        package = pkgs.i3-gaps;
       };
     };
   };
 
-  virtualisation = {
-    spiceUSBRedirection.enable = true;
-
-    docker = {
-      enable = true;
-    };
-
-    libvirtd = {
-      enable = true;
-      qemu = {
-        runAsRoot = true;
-        ovmf = {
-          enable = true;
-        };
-        swtpm.enable = true;
-      };
-      allowedBridges = ["virbr0" "virbr1"];
-    };
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.morph = {
+    isNormalUser = true;
+    shell = pkgs.zsh;
+    description = "Morphy Kuffour";
+    extraGroups = ["networkmanager" "wheel"];
+    packages = with pkgs; [];
   };
-
-  fonts.fonts = with pkgs; [
-    (nerdfonts.override {fonts = ["JetBrainsMono"];})
-  ];
-
-  # Programs
 
   programs = {
     # obs-studio = {
@@ -315,17 +113,17 @@
     #   plugins = with pkgs; [ obs-studio-plugins.wlrobs ];
     # };
 
-    waybar.enable = true;
+    # waybar.enable = true;
 
     zsh.enable = true;
 
-    adb.enable = true;
-    dconf = {
-      enable = true;
-    };
-    kdeconnect = {
-      enable = true;
-    };
+    # adb.enable = true;
+    # dconf = {
+    #   enable = true;
+    # };
+    # kdeconnect = {
+    #   enable = true;
+    # };
     mtr = {
       enable = true;
     };
@@ -344,193 +142,190 @@
       ];
     };
   };
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
-  nix = {
-    extraOptions = "experimental-features = nix-command flakes";
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 14d";
-    };
-    optimise.automatic = true;
-  };
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
 
-  environment = {
-    variables = {
-      EDITOR = "nvim";
-      TERMINAL = "kitty";
-      BROWSER = "brave";
-      # BROWSER = "brave-nightly";
-    };
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
 
-    pathsToLink = ["/libexec"];
-    sessionVariables = rec {
-      XDG_CACHE_HOME = "\${HOME}/.cache";
-      XDG_CONFIG_HOME = "\${HOME}/.config";
-      XDG_BIN_HOME = "\${HOME}/.local/bin";
-      XDG_DATA_HOME = "\${HOME}/.local/share";
-      ANDROID_HOME = "\${HOME}/Android/Sdk";
-      CHROME_EXECUTABLE = "/home/morph/.nix-profile/bin/google-chrome-stable";
-      PATH = [
-        "\${XDG_BIN_HOME}"
-      ];
-    };
+  # List services that you want to enable:
 
-    # systemPackages = [ (pkgs.brave.override {version = "1.50.125";}) ];
-    # brave.override {version = "1.50.125";}
-    systemPackages = with pkgs; [
-      wget
-      xclip
-      git
-      stow
-      # brave
-      sqlite
-      unzip
-      coreutils
-      binutils
-      gcc
-      flameshot
-      sxiv
-      gnumake
-      clipmenu
-      playerctl
-      xorg.xbacklight
-      autorandr
-      xdotool
-      xdg-user-dirs
-      bluedevil
-      plasma5Packages.kdeconnect-kde
-      pciutils
-      usbutils
-      ventoy-bin
-      bluez
-      rustup
-      rustc
-      brightnessctl
-      xdragon
-      keyd
-      # ms-edge
-      gnome.dconf-editor
-      mate.mate-power-manager
-      mate.mate-media
-      orchis-theme
-      tela-circle-icon-theme
-      docker
-      libreoffice
-      reptyr
-      wireshark
-      tshark
-      procps
-      zsync
-      cdrkit
-      sqlitebrowser
-      # zfs
-      bashmount
-      # vagrant
-      grub2
-      qemu
-      libvirt
-      virt-manager
-      spice-gtk
-      quickemu
-      samba
-      OVMF
-      gdb
-      libinput-gestures
-      wmctrl
-      fwupd
-      # mysql80
-      dbeaver
-      dig
-      psmisc
-      discord
-      # mycli
-      grc
-      cmake
-      ninja
-      clang
-      yarn
-      firefox
-      # mongodb
-      # zoom-us
-      # teams
-      ffmpeg-full
-      vim
-      wireguard-tools
-      libtool
-      libvterm
-      # virtualbox
-      # tailscale
-      # nixops
-      # os-prober
-      kitty
-      android-tools
-      # android-studio
-      android-udev-rules
-      age
-      rage
-      uxplay
-      arandr
-      libclang
-      libstdcxx5
-      ctags
-      zsh-completions
+  # Enable the OpenSSH daemon.
+  # services.openssh.enable = true;
 
-      # vpn
-      # openconnect_openssl
-      networkmanager
-      networkmanagerapplet
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
 
-      # backup
-      borgbackup
-      borgmatic
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "23.05"; # Did you read the comment?
+  # system.stateVersion = config.system.nixos.release;
+  # sudoless
+  security.sudo.wheelNeedsPassword = false;
 
-      # gaming
-      chiaki
-      # avrlibc
-      # conda
+  environment.systemPackages = with pkgs; [
+    wget
+    xclip
+    git
+    stow
+    # brave
+    sqlite
+    unzip
+    coreutils
+    binutils
+    gcc
+    flameshot
+    sxiv
+    gnumake
+    clipmenu
+    playerctl
+    xorg.xbacklight
+    autorandr
+    xdotool
+    xdg-user-dirs
+    bluedevil
+    plasma5Packages.kdeconnect-kde
+    pciutils
+    usbutils
+    ventoy-bin
+    bluez
+    rustup
+    rustc
+    brightnessctl
+    xdragon
+    keyd
+    # ms-edge
+    gnome.dconf-editor
+    mate.mate-power-manager
+    mate.mate-media
+    orchis-theme
+    tela-circle-icon-theme
+    docker
+    libreoffice
+    reptyr
+    wireshark
+    tshark
+    procps
+    zsync
+    cdrkit
+    sqlitebrowser
+    # zfs
+    bashmount
+    # vagrant
+    grub2
+    qemu
+    libvirt
+    virt-manager
+    spice-gtk
+    quickemu
+    samba
+    OVMF
+    gdb
+    libinput-gestures
+    wmctrl
+    fwupd
+    # mysql80
+    dbeaver
+    dig
+    psmisc
+    discord
+    # mycli
+    grc
+    cmake
+    ninja
+    clang
+    yarn
+    firefox
+    # mongodb
+    # zoom-us
+    # teams
+    ffmpeg-full
+    vim
+    wireguard-tools
+    libtool
+    libvterm
+    # virtualbox
+    # tailscale
+    # nixops
+    # os-prober
+    kitty
+    android-tools
+    # android-studio
+    android-udev-rules
+    age
+    rage
+    uxplay
+    arandr
+    libclang
+    libstdcxx5
+    ctags
+    zsh-completions
 
-      # i3 rice
-      # polybar
-      viu
-      ueberzug
-      dmenu
-      gimp
-      avahi
-      zotero
-      hledger
-      tio
-      slack
+    # vpn
+    # openconnect_openssl
+    networkmanager
+    networkmanagerapplet
 
-      # R packages for data science
-      rstudio
-      (pkgs.rWrapper.override {
-        packages = with pkgs.rPackages; let
-          llr = buildRPackage {
-            name = "llr";
-            src = pkgs.fetchFromGitHub {
-              owner = "dirkschumacher";
-              repo = "llr";
-              rev = "0a654d469af231e9017e1100f00df47bae212b2c";
-              sha256 = "0ks96m35z73nf2sb1cb8d7dv8hq8dcmxxhc61dnllrwxqq9m36lr";
-            };
-            propagatedBuildInputs = [rlang knitr reticulate];
-            nativeBuildInputs = [rlang knitr reticulate];
+    # backup
+    borgbackup
+    borgmatic
+
+    # gaming
+    # chiaki
+    # avrlibc
+    # conda
+
+    # i3 rice
+    # polybar
+    viu
+    ueberzug
+    dmenu
+    gimp
+    avahi
+    zotero
+    hledger
+    tio
+    slack
+
+    # R packages for data science
+    rstudio
+    (pkgs.rWrapper.override {
+      packages = with pkgs.rPackages; let
+        llr = buildRPackage {
+          name = "llr";
+          src = pkgs.fetchFromGitHub {
+            owner = "dirkschumacher";
+            repo = "llr";
+            rev = "0a654d469af231e9017e1100f00df47bae212b2c";
+            sha256 = "0ks96m35z73nf2sb1cb8d7dv8hq8dcmxxhc61dnllrwxqq9m36lr";
           };
-        in [
-          knitr
-          rlang
-          # llr
-          reticulate
-          tidyverse
-          devtools
-          bookdown
-          VennDiagram
-          DiagrammeR
-          webshot
-          networkD3
-          knitcitations
-        ];
-      })
-    ];
-  };
+          propagatedBuildInputs = [rlang knitr reticulate];
+          nativeBuildInputs = [rlang knitr reticulate];
+        };
+      in [
+        knitr
+        rlang
+        # llr
+        reticulate
+        tidyverse
+        devtools
+        bookdown
+        VennDiagram
+        DiagrammeR
+        webshot
+        networkD3
+        knitcitations
+      ];
+    })
+  ];
 }

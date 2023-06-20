@@ -152,13 +152,13 @@ in {
           always = true;
           notification = false;
         }
+        {
+          command = "polybar";
+          always = true;
+          notification = false;
+        }
         # {
         #   command = "redshift";
-        #   always = true;
-        #   notification = false;
-        # }
-        # {
-        #   command = "polybar";
         #   always = true;
         #   notification = false;
         # }
