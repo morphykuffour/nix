@@ -8,24 +8,31 @@
 }: {
   services.xserver = {
     enable = true;
-    # videosDrivers = ["nvidia"];
     displayManager.gdm = {
       enable = true;
       wayland = true;
     };
   };
 
-  hardware = {
-    opengl.enable = true;
-    nvidia.modesetting.enable = true;
-  };
+  # hardware = {
+  #   opengl.enable = true;
+  #   nvidia.modesetting.enable = true;
+  # };
 
   # hyprland
-  programs = {
-    hyprland = {
+  programs.hyprland = {
       enable = true;
       package = inputs.hyprland.packages.${pkgs.system}.default;
-      xwayland.enable = true;
+      xwayland = {
+        enable = true;
+        hidpi = true;
+      };
+      nvidiaPatches  = false;
     };
-  };
+
+    environment.systemPackages = with pkgs; [
+      wofi
+      hyprpaper
+      waybar
+    ];
 }
