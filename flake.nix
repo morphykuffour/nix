@@ -42,8 +42,6 @@
       url = "github:InternetUnexplorer/discord-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-utils.url = "github:numtide/flake-utils";
-
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       # nixpkgs.follows = "nixpkgs";
@@ -79,7 +77,6 @@
     agenix,
     tailscale,
     emacs-overlay,
-    flake-utils,
     neovim,
     discord,
     nixos-hardware,
@@ -97,7 +94,6 @@
       discord.overlays.default
       (import ./overlays/brave-nightly.nix)
       # plover.overlay
-
 
       # (final: prev: {
       #   flameshot-notshit = pkgs.flameshot.overrideAttrs (finalAttrs: previousAttrs: {

@@ -10,19 +10,19 @@
 }: {
   imports = [
     ../../modules/i3.nix
-    ../../modules/redshift.nix
+    # ../../modules/redshift.nix
     ../../modules/pass.nix
     ../../modules/fonts.nix
     ../../modules/zathura
     # ../../modules/nvim.nix
     # ../../modules/picom.nix
 
-    #hyprland test
-    ../../modules/hyprland/waybar.nix
-    ../../modules/hyprland/hyprpaper.nix
-    ../../modules/hyprland/anyrun.nix
-    ../../modules/hyprland/dunst.nix
-    inputs.hyprland.homeManagerModules.default
+    # hyprland test
+    # ../../modules/hyprland/waybar.nix
+    # ../../modules/hyprland/hyprpaper.nix
+    # ../../modules/hyprland/anyrun.nix
+    # ../../modules/hyprland/dunst.nix
+    # inputs.hyprland.homeManagerModules.default
   ];
 
   services.clipmenu.enable = true;
@@ -69,48 +69,23 @@
   #   extraConfig = builtins.readFile ../../modules/hyprland/hyprland.conf;
   # };
 
-  wayland.windowManager.sway = {
-    enable = true;
-    config = rec {
-      modifier = "Mod4";
-      terminal = "kitty";
-      startup = [
-        {command = "kitty";}
-      ];
-    };
-  };
+  # wayland.windowManager.sway = {
+  #   enable = true;
+  #   config = rec {
+  #     modifier = "Mod4";
+  #     terminal = "kitty";
+  #     startup = [
+  #       {command = "kitty";}
+  #     ];
+  #   };
+  # };
 
   home = {
     username = "${user}";
     homeDirectory = "/home/${user}";
     stateVersion = "22.05";
-    sessionVariables = {
-      GDK_BACKEND = "wayland,x11";
-      QT_QPA_PLATFORM = "wayland;xcb";
-      #SDL_VIDEODRIVER = "x11";
-      CLUTTER_BACKEND = "wayland";
-      XDG_CURRENT_DESKTOP = "Hyprland";
-      XDG_SESSION_TYPE = "wayland";
-      XDG_SESSION_DESKTOP = "Hyprland";
-      WLR_NO_HARDWARE_CURSORS = "1";
-      QT_STYLE_OVERRIDE = "kvantum";
-    };
     packages = with pkgs; [
       brave
-      # TODO get latest brave
-      # ((brave.override {
-      #     # version = "1.50.125";
-      #     commandLineArgs = [
-      #       "--enable-wayland-ime"
-      #       "--ozone-platform=wayland"
-      #       "--enable-features=UseOzonePlatform"
-      #       # "--enable-unsafe-webgpu"
-      #       # "--use-gl=egl"
-      #     ];
-      #   })
-      #   .overrideAttrs (old: {
-      #     inherit (pkgs.guangtao-sources.brave) src pname version;
-      #   }))
       tmux
       zsh
       # atuin
@@ -240,9 +215,9 @@
           ueberzug
         ]))
 
-      pkgs.hyprland-share-picker
-      inputs.hyprwm-contrib.packages.${system}.grimblast
-      hyprpaper
+      # pkgs.hyprland-share-picker
+      # inputs.hyprwm-contrib.packages.${system}.grimblast
+      # hyprpaper
     ];
   };
 }
