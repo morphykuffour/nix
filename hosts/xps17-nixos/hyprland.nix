@@ -21,19 +21,19 @@
 
   # hyprland
   programs.hyprland = {
+    enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.default;
+    xwayland = {
       enable = true;
-      package = inputs.hyprland.packages.${pkgs.system}.default;
-      xwayland = {
-        enable = true;
-        hidpi = true;
-      };
-      nvidiaPatches  = false;
+      hidpi = true;
     };
+    nvidiaPatches = false;
+  };
 
-    environment.systemPackages = with pkgs; [
-      wofi
-      hyprpaper
-      waybar
-      wl-clipboard
-    ];
+  environment.systemPackages = with pkgs; [
+    wofi
+    hyprpaper
+    waybar
+    wl-clipboard
+  ];
 }
