@@ -15,6 +15,7 @@
     ./keyd.nix
     ./hyprland.nix
     ./tailscale.nix
+    ./syncthing.nix
   ];
 
   # Bootloader.
