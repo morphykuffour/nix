@@ -2,14 +2,13 @@
   config,
   pkgs,
   agenix,
-  user,
   ...
 }: {
   # tailscale
   services.tailscale.enable = true;
 
   age.identityPaths = [
-    "/home/${user}/.ssh/id_ed25519"
+    "/home/morph/.ssh/id_ed25519"
   ];
   age.secrets.ts-xps17-nixos.file = ../../secrets/ts-xps17-nixos.age;
 
