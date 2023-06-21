@@ -15,7 +15,7 @@
     overrideDevices = true;
     overrideFolders = true;
     devices = {
-      "xps17-nixos" = {id = "44LYB6O-ELZWVNP-5R576R3-MRD3MM2-FXORGWG-WRC26ZQ-JAMWKRS-5SCNUAY";};
+      "xps17-nixos" = {id = "7AB6YRE-AYP7FOX-7PWJLDV-TRMJ6B6-S5OGOD3-GQ5HFPT-DCPMHYS-IBQKJQK"; };
       "ubuntu" = {id = "TTEQED5-YB5HDQQ-4OYRRUE-PQMO7XF-TWCNSQ7-4SFRM5X-N6C3IBY-ELN2XQV";};
       "macmini-darwin" = {id = "OK4365M-ZZC4CDT-A6W2YF2-MPIX3GR-FYZIWWJ-5QS6RYM-5KYU35K-SLYBHQO";};
       "workstation-windows" = {id = "OT562TI-J4NCYP6-7SCXJL6-PWDVBGX-EJA5G7S-3Q4G4TG-UR7RN3F-V3OVAAH";};
