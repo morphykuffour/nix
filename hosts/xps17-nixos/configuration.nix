@@ -113,7 +113,7 @@
     #   plugins = with pkgs; [ obs-studio-plugins.wlrobs ];
     # };
 
-    # waybar.enable = true;
+    waybar.enable = true;
 
     zsh.enable = true;
 

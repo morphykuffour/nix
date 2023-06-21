@@ -34,5 +34,6 @@
       wofi
       hyprpaper
       waybar
+      wl-clipboard
     ];
 }
