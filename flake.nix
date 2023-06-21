@@ -21,8 +21,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.hyprland-protocols.follows = "hyprland-protocols";
     };
-    anyrun.url = "github:Kirottu/anyrun";
-    anyrun.inputs.nixpkgs.follows = "nixpkgs";
+    # anyrun.url = "github:Kirottu/anyrun";
+    # anyrun.inputs.nixpkgs.follows = "nixpkgs";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -84,7 +84,6 @@
     hyprwm-contrib,
     hyprland-protocols,
     xdph,
-    anyrun,
     ...
   } @ inputs: let
     user = "morph";
@@ -109,7 +108,6 @@
       #     };
       #   });
       # })
-      inputs.anyrun.overlay
     ];
   in {
     # nix formatter

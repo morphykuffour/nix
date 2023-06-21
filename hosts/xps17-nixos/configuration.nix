@@ -14,6 +14,7 @@
     ./dslr.nix
     ./keyd.nix
     ./hyprland.nix
+    ./tailscale.nix
   ];
 
   # Bootloader.
