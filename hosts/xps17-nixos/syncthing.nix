@@ -6,10 +6,10 @@
 }: {
   services. syncthing = {
     enable = true;
-    dataDir = "/home/${user}";
+    dataDir = "/home/morph";
     openDefaultPorts = true;
-    configDir = "/home/${user}/.config/syncthing";
-    user = "${user}";
+    configDir = "/home/morph/.config/syncthing";
+    user = "morph";
     group = "users";
     guiAddress = "127.0.0.1:8384";
     overrideDevices = true;
@@ -23,7 +23,7 @@
 
     folders = {
       "Dropbox" = {
-        path = "/home/${user}/Dropbox";
+        path = "/home/morph/Dropbox";
         id = "Dropbox";
         devices = ["xps17-nixos" "ubuntu" "macmini-darwin" "workstation-windows"];
         versioning = {
@@ -36,7 +36,7 @@
       };
 
       "Org" = {
-        path = "/home/${user}/Org/";
+        path = "/home/morph/Org/";
         # id = "Org";
         id = "prsu2-hrpwq";
         devices = ["xps17-nixos" "ubuntu" "macmini-darwin" "workstation-windows"];
@@ -50,7 +50,7 @@
       };
 
       "iCloud" = {
-        path = "/home/${user}/iCloud/";
+        path = "/home/morph/iCloud/";
         id = "iCloud";
         devices = ["xps17-nixos" "ubuntu" "macmini-darwin" "workstation-windows"];
         versioning = {
