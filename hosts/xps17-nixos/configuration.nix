@@ -59,47 +59,62 @@
     optimise.automatic = true;
   };
 
-  services.xserver = {
-    libinput.enable = true;
-    enable = true;
+  services = {
+    xserver = {
+      libinput.enable = true;
+      enable = true;
 
-    layout = "us";
-    xkbVariant = "";
-    desktopManager = {
-      xterm = {
-        enable = true;
+      layout = "us";
+      xkbVariant = "";
+      desktopManager = {
+        # xterm = {
+        #   enable = true;
+        # };
+        # mate = {
+        #   enable = true;
+        # };
+        gnome = {
+          enable = true;
+        };
       };
-      # mate = {
-      #   enable = true;
-      # };
-      gnome = {
-        enable = true;
+
+      displayManager = {
+        startx.enable = false;
+        # sddm = {
+        #   enable = true;
+        # };
+        gdm = {
+          enable = true;
+          wayland = true;
+        };
+        autoLogin = {
+          enable = false;
+          user = "morph";
+        };
+      };
+
+      windowManager = {
+        i3 = {
+          enable = true;
+          package = pkgs.i3-gaps;
+        };
       };
     };
 
-    displayManager = {
-      startx.enable = false;
-      # sddm = {
-      #   enable = true;
-      # };
-      gdm = {
+    # printing
+    printing.enable = true;
+    avahi = {
+      nssmdns = true;
+      enable = true;
+      openFirewall = true;
+      publish = {
         enable = true;
-        wayland = true;
+        userServices = true;
+        domain = true;
       };
-      autoLogin = {
-        enable = false;
-        user = "morph";
-      };
-    };
-
-    windowManager = {
-      i3 = {
-        enable = true;
-        package = pkgs.i3-gaps;
-      };
+      allowInterfaces = ["wlp0s20f3" "tailscale0"];
     };
   };
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.morph = {
     isNormalUser = true;
