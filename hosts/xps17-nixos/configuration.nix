@@ -16,6 +16,7 @@
     ./hyprland.nix
     ./tailscale.nix
     ./syncthing.nix
+    ./b2-backup.nix
   ];
 
   # Bootloader.
