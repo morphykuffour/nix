@@ -6,7 +6,7 @@
 }: {
   # use agenix for passwordFile
   age.identityPaths = [
-    "/root/.ssh/id_ed25519"
+    "/home/morph/.ssh/id_ed25519"
   ];
   age.secrets.b2-backup-xps17-nixos.file = ../../secrets/b2-backup-xps17-nixos.age;
 
