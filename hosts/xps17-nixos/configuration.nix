@@ -13,7 +13,7 @@
     ./hardware-configuration.nix
     ./dslr.nix
     ./keyd.nix
-    ./hyprland.nix
+    # ./hyprland.nix
     ./tailscale.nix
     ./syncthing.nix
     ./b2-backup.nix
