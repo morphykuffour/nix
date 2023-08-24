@@ -71,9 +71,10 @@
         # xterm = {
         #   enable = true;
         # };
-        # mate = {
-        #   enable = true;
-        # };
+        mate = {
+          enable = true;
+          # excludePackages = [ pkgs.mate.mate-terminal pkgs.mate.pluma ];
+        };
         gnome = {
           enable = true;
         };
