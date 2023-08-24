@@ -18,14 +18,14 @@
       "xps17-nixos" = {id = "7AB6YRE-AYP7FOX-7PWJLDV-TRMJ6B6-S5OGOD3-GQ5HFPT-DCPMHYS-IBQKJQK";};
       "ubuntu" = {id = "TTEQED5-YB5HDQQ-4OYRRUE-PQMO7XF-TWCNSQ7-4SFRM5X-N6C3IBY-ELN2XQV";};
       "macmini-darwin" = {id = "OK4365M-ZZC4CDT-A6W2YF2-MPIX3GR-FYZIWWJ-5QS6RYM-5KYU35K-SLYBHQO";};
-      "workstation-windows" = {id = "OT562TI-J4NCYP6-7SCXJL6-PWDVBGX-EJA5G7S-3Q4G4TG-UR7RN3F-V3OVAAH";};
+      # "workstation-windows" = {id = "OT562TI-J4NCYP6-7SCXJL6-PWDVBGX-EJA5G7S-3Q4G4TG-UR7RN3F-V3OVAAH";};
     };
 
     folders = {
       "Dropbox" = {
         path = "/home/morph/Dropbox";
         id = "Dropbox";
-        devices = ["xps17-nixos" "ubuntu" "macmini-darwin" "workstation-windows"];
+        devices = ["xps17-nixos" "ubuntu" "macmini-darwin"];
         versioning = {
           type = "staggered";
           params = {
@@ -38,7 +38,7 @@
       "Org" = {
         path = "/home/morph/Org/";
         id = "Org";
-        devices = ["xps17-nixos" "ubuntu" "macmini-darwin" "workstation-windows"];
+        devices = ["xps17-nixos" "ubuntu" "macmini-darwin"];
         versioning = {
           type = "staggered";
           params = {
@@ -51,7 +51,7 @@
       "iCloud" = {
         path = "/home/morph/iCloud/";
         id = "iCloud";
-        devices = ["xps17-nixos" "ubuntu" "macmini-darwin" "workstation-windows"];
+        devices = ["xps17-nixos" "ubuntu" "macmini-darwin"];
         versioning = {
           type = "staggered";
           params = {
