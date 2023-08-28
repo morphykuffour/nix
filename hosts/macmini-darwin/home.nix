@@ -4,18 +4,18 @@
       enable = true;
     };
 
-    lazygit = {
-      enable = true;
-      settings = {
-        git = {
-          paging = {
-            colorArg = "always";
-            pager = "delta --color-only --dark --paging=never";
-            useConfig = false;
-          };
-        };
-      };
-    };
+    # lazygit = {
+    #   enable = true;
+    #   settings = {
+    #     git = {
+    #       paging = {
+    #         colorArg = "always";
+    #         pager = "delta --color-only --dark --paging=never";
+    #         useConfig = false;
+    #       };
+    #     };
+    #   };
+    # };
   };
 
   # TODO remove homebrew packages
@@ -29,7 +29,7 @@
       autojump
       pandoc
       croc
-      mpv
+      # mpv
       # tree-sitter-grammars.tree-sitter-markdown
       # nodePackages.typescript-language-server
       # nodePackages.bash-language-server
@@ -56,14 +56,14 @@
       stylua
       cscope
       delta
-      cargo
+      # cargo
       # atuin
       kitty
       tmux
       ruby
       edir
       curl
-      sbcl
+      # sbcl
       # stow
       zsh
       # qmk
