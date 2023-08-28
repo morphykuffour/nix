@@ -11,7 +11,8 @@ darwin.lib.darwinSystem {
   system = "aarch64-darwin";
   modules = [
     # ./hosts/macmini-darwin
-    ./darwin-configuration.nix
+    # ./darwin-configuration.nix
+    ./configuration.nix
     {
       environment.systemPackages = [
         alejandra.defaultPackage.aarch64-darwin
