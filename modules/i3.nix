@@ -66,13 +66,13 @@ in {
         # Application keybindings
         "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
         "${mod}+Shift+d" = "exec ${pkgs.rofi}/bin/rofi -modi drun -show drun";
-        "${mod}+s" = "exec flameshot gui --clipboard --path ${home}/Dropbox/screenshots/";
-        "Print" = "exec flameshot full --clipboard --path ${home}/Dropbox/screenshots/";
+        "${mod}+s" = "exec flameshot gui --clipboard --path ${home}/iCloud/screenshots/";
+        "Print" = "exec flameshot full --clipboard --path ${home}/iCloud/screenshots/";
         "${mod}+w" = "exec ${pkgs.rofi}/bin/rofi -show window";
         "${mod}+Shift+x" = "exec systemctl suspend";
         "${mod}+Shift+q" = "kill";
         "${mod}+b" = "exec ${pkgs.brave}/bin/brave";
-        "${mod}+Shift+b" = "exec ${pkgs.xdotool} type $(grep -v  '^#' ~/Dropbox/bookmarks/bookmarks.txt | dmenu -i -l 50 | cut -d' ' -f1)";
+        "${mod}+Shift+b" = "exec ${pkgs.xdotool} type $(grep -v  '^#' ~/iCloud/bookmarks/bookmarks.txt | dmenu -i -l 50 | cut -d' ' -f1)";
         "${mod}+e" = "exec ${pkgs.emacs}/bin/emacsclient -c -a 'emacs'";
         "${mod}+d" = "exec ${pkgs.dmenu}/bin/dmenu_run";
         "Mod4+l" = "exec ${pkgs.systemd}/bin/loginctl lock-session";
