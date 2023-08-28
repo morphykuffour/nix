@@ -18,24 +18,6 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
 
-  # systemd.user.services.dropbox = {
-  #   description = "Dropbox";
-  #   wantedBy = ["graphical-session.target"];
-  #   environment = {
-  #     QT_PLUGIN_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtPluginPrefix;
-  #     QML2_IMPORT_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtQmlPrefix;
-  #   };
-  #   serviceConfig = {
-  #     ExecStart = "${pkgs.dropbox.out}/bin/dropbox";
-  #     ExecReload = "${pkgs.coreutils.out}/bin/kill -HUP $MAINPID";
-  #     KillMode = "control-group"; # upstream recommends process
-  #     Restart = "on-failure";
-  #     PrivateTmp = true;
-  #     ProtectSystem = "full";
-  #     Nice = 10;
-  #   };
-  # };
-
   # Set your time zone.
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -108,19 +90,6 @@
     #   };
 
     #   folders = {
-    #     "Dropbox" = {
-    #       path = "/home/${user}/Dropbox";
-    #     id = "Dropbox";
-    #       devices = ["xps17-nixos" "rpi3b-ubuntu" "macmini-darwin"];
-    #       versioning = {
-    #         type = "staggered";
-    #         params = {
-    #           cleanInterval = "3600";
-    #           maxAge = "15768000";
-    #         };
-    #       };
-    #     };
-
     #     "Org" = {
     #       path = "/home/${user}/Org/";
     #       id = "prsu2-hrpwq";

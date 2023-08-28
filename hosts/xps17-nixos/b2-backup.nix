@@ -52,7 +52,6 @@
     #   passwordFile = config.age.secrets.b2-backup-xps17-nixos.path;
     #   paths = [
     #     "/home/morph/Org"
-    #     "/home/morph/Dropbox"
     #     "/home/morph/iCloud"
     #   ];
     #   repository = "b2:xps17-nixos-backup";

@@ -13,7 +13,7 @@
   services.borgbackup.jobs = {
     dropbox_backup = {
       user = "root";
-      paths = ["/home/${user}/Dropbox/"];
+      paths = ["/home/${user}/iCloud/"];
       exclude = ["'**/.cache'"];
       repo = "r0el6zc7@r0el6zc7.repo.borgbase.com:repo";
       encryption.mode = "none";
