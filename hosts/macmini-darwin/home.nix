@@ -23,26 +23,13 @@
     username = "morp";
     stateVersion = "22.05";
     packages = with pkgs; [
-      # utilities packages
       p7zip
       eva
-
-      # mail packages
-      # himalaya
-      # neomutt
-      # aria2
-      # isync
-      # msmtp
-      # pass
-      # mu
       ripgrep
       autojump
       pandoc
       croc
       mpv
-      feh
-
-      # edit packages not working use xps17-nixos
       # tree-sitter-grammars.tree-sitter-markdown
       # nodePackages.typescript-language-server
       # nodePackages.bash-language-server
@@ -57,10 +44,7 @@
       # black
       # gopls
       # ccls
-
-      # reading packages
       newsboat
-
       # dev packages
       # # gcc_multi
       # # avrlibc
@@ -90,7 +74,6 @@
       gh
       jq
       # go
-
       python3
       # python packages
       # (python39.withPackages (pp:
