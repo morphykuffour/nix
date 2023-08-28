@@ -22,18 +22,6 @@
     };
 
     folders = {
-      "Dropbox" = {
-        path = "/home/morph/Dropbox";
-        id = "Dropbox";
-        devices = ["xps17-nixos" "ubuntu" "macmini-darwin"];
-        versioning = {
-          type = "staggered";
-          params = {
-            cleanInterval = "3600";
-            maxAge = "15768000";
-          };
-        };
-      };
 
       "Org" = {
         path = "/home/morph/Org/";
