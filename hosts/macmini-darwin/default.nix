@@ -10,8 +10,6 @@
 darwin.lib.darwinSystem {
   system = "aarch64-darwin";
   modules = [
-    # ./hosts/macmini-darwin
-    # ./darwin-configuration.nix
     ./configuration.nix
     {
       environment.systemPackages = [

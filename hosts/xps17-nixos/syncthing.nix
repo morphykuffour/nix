@@ -22,7 +22,6 @@
     };
 
     folders = {
-
       "Org" = {
         path = "/home/morph/Org/";
         id = "Org";
