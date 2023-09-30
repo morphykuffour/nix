@@ -7,7 +7,6 @@
   core = with pkgs;
     [
       entr
-      exa
       fd
       git
       gnupg
