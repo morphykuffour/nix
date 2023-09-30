@@ -192,6 +192,10 @@
   # sudoless
   security.sudo.wheelNeedsPassword = false;
 
+  environment.interactiveShellInit = ''
+    alias c99='gcc'
+  '';
+
   environment.systemPackages = with pkgs; [
     wget
     xclip
