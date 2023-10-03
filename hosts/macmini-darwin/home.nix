@@ -20,11 +20,12 @@
 
   # TODO remove homebrew packages
   home = {
+    # username = "morph";
     username = "morp";
     stateVersion = "22.05";
     packages = with pkgs; [
       p7zip
-      eva
+      # eva
       ripgrep
       autojump
       pandoc
