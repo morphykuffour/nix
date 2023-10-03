@@ -3,7 +3,9 @@
   pkgs,
   ...
 }: {
+  # users.users.morph = {
   users.users.morp = {
+    # home = "/Users/morph";
     home = "/Users/morp";
     shell = pkgs.zsh;
   };
@@ -93,6 +95,7 @@
     #   skhdConfig = ''
     #     # Open Terminal
     #     # alt - return : /Applications/Alacritty.App/Contents/MacOS/alacritty
+    #     alt - return : /Users/morph/Applications/Home\ Manager\ Apps/kitty.app/Contents/MacOS/kitty
     #     alt - return : /Users/morp/Applications/Home\ Manager\ Apps/kitty.app/Contents/MacOS/kitty
     #
     #     # Toggle Window
