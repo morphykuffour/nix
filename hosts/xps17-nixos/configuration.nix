@@ -319,6 +319,7 @@
     hledger
     tio
     slack
+    exa
 
     # R packages for data science
     rstudio
