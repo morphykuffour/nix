@@ -150,7 +150,7 @@
       # mathpix-snipping-tool
       black
       # rust-analyzer
-      postman
+      # postman
       openssl
       protonvpn-gui
       # protonmail-bridge

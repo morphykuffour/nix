@@ -149,12 +149,12 @@
     jq
     # emacs
     file
-    exa
+    eza
     bat
     rsync
     stow
     binutils
-    exa
+    eza
     autojump
     atuin
     starship

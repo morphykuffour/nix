@@ -193,7 +193,7 @@
     brave
     kitty
     ranger
-    exa
+    eza
     autojump
     bat
     which
