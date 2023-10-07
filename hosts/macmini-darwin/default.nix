@@ -21,7 +21,7 @@ darwin.lib.darwinSystem {
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.users.morp = import ./home.nix;
+      home-manager.users.morph = import ./home.nix;
     }
   ];
 }
