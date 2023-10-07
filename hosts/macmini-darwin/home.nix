@@ -20,8 +20,7 @@
 
   # TODO remove homebrew packages
   home = {
-    # username = "morph";
-    username = "morp";
+    username = "morph";
     stateVersion = "22.05";
     packages = with pkgs; [
       p7zip
@@ -68,7 +67,8 @@
       # stow
       zsh
       # qmk
-      exa
+      # exa
+      eza
       fzf
       bat
       fd
@@ -76,6 +76,7 @@
       jq
       # go
       python3
+      opam
       # python packages
       # (python39.withPackages (pp:
       #   with pp; [

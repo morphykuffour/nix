@@ -3,10 +3,8 @@
   pkgs,
   ...
 }: {
-  # users.users.morph = {
-  users.users.morp = {
-    # home = "/Users/morph";
-    home = "/Users/morp";
+  users.users.morph = {
+    home = "/Users/morph";
     shell = pkgs.zsh;
   };
 
@@ -96,7 +94,6 @@
     #     # Open Terminal
     #     # alt - return : /Applications/Alacritty.App/Contents/MacOS/alacritty
     #     alt - return : /Users/morph/Applications/Home\ Manager\ Apps/kitty.app/Contents/MacOS/kitty
-    #     alt - return : /Users/morp/Applications/Home\ Manager\ Apps/kitty.app/Contents/MacOS/kitty
     #
     #     # Toggle Window
     #     lalt - t : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2

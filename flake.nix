@@ -94,6 +94,17 @@
       (import ./overlays/brave-nightly.nix)
       # plover.overlay
     ];
+    commonInputs = {
+      inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
+    };
+
+    # List of unix configurations
+    configurations = [
+      "xps17-nixos"    # xps17 NixOs
+      "optiplex-nixos" # optiplex NixOs
+      "win-wsl"        # win-wsl NixOs
+    ];
+
   in {
     # nix formatter
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
@@ -104,20 +115,26 @@
       inherit self nixpkgs darwin inputs user overlays home-manager alejandra;
     };
 
-    # xps17 NixOs
-    nixosConfigurations.xps17-nixos = import ./hosts/xps17-nixos {
-      inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
-    };
+    # Generate nixosConfigurations dynamically
+    nixosConfigurations = builtins.listToAttrs (
+      map (name: name + "-nixos") configurations
+      // { inherit (commonInputs); }
+    );
 
-    # optiplex NixOs
-    nixosConfigurations.optiplex-nixos = import ./hosts/optiplex-nixos {
-      inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
-    };
-
-    # win-wsl NixOs
-    nixosConfigurations.win-wsl = import ./hosts/win-wsl {
-      inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
-    };
+    # # xps17 NixOs
+    # nixosConfigurations.xps17-nixos = import ./hosts/xps17-nixos {
+    #   inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
+    # };
+    #
+    # # optiplex NixOs
+    # nixosConfigurations.optiplex-nixos = import ./hosts/optiplex-nixos {
+    #   inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
+    # };
+    #
+    # # win-wsl NixOs
+    # nixosConfigurations.win-wsl = import ./hosts/win-wsl {
+    #   inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
+    # };
 
     # visionfive2 NixOs
     # https://github.com/NixOS/nixos-hardware/tree/master/starfive/visionfive/v1
