@@ -315,7 +315,7 @@
     dmenu
     gimp
     avahi
-    zotero
+    # zotero
     hledger
     tio
     slack
