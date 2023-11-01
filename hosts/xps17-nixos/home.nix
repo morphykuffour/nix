@@ -6,6 +6,7 @@
   lib,
   plover,
   user,
+  agenix,
   ...
 }: {
   imports = [
