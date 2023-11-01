@@ -1,4 +1,5 @@
 # source: https://raw.githubusercontent.com/emmanuelrosa/erosanix/master/modules/protonvpn.nix
+# https://www.reddit.com/r/NixOS/comments/12ibbl9/comment/jg6zjhw/?utm_source=share&utm_medium=web2x&context=3
 {
   config,
   pkgs,
