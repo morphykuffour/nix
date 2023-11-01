@@ -26,7 +26,7 @@ nixpkgs.lib.nixosSystem {
         useUserPackages = true;
         users.${user}.imports = [
           ./home.nix
-          ./modules/protonvpn.nix
+          ../../modules/protonvpn.nix
           # inputs.hyprland.homeManagerModules.default
           # {wayland.windowManager.hyprland.enable = true;}
         ];
