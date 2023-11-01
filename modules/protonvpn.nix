@@ -9,15 +9,6 @@
 with lib; let
   cfg = config.services.protonvpn;
 in {
-
-  age.identityPaths = [
-    "/home/morph/.ssh/id_ed25519"
-  ];
-
-  age.secrets.xps17-nixos-vpn.file = ../../secrets/xps17-nixos-vpn.age;
-  age.secrets.xps17-nixos-vpn-pub.file = ../../secrets/xps17-nixos-vpn-pub.age;
-
-
   options = {
     services.protonvpn = {
       enable = mkEnableOption "Enable ProtonVPN (using Wireguard).";
@@ -98,6 +89,13 @@ in {
   };
 
   config = mkIf cfg.enable {
+    age.identityPaths = [
+      "/home/morph/.ssh/id_ed25519"
+    ];
+
+    age.secrets.xps17-nixos-vpn.file = ../../secrets/xps17-nixos-vpn.age;
+    age.secrets.xps17-nixos-vpn-pub.file = ../../secrets/xps17-nixos-vpn-pub.age;
+
     networking.wg-quick.interfaces."${cfg.interface.name}" = {
       autostart = cfg.autostart;
       dns =
