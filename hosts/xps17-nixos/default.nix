@@ -16,7 +16,7 @@ nixpkgs.lib.nixosSystem {
   specialArgs = {inherit inputs;};
   modules = [
     ./configuration.nix
-    nixosModules.protonvpn = import ./modules/protonvpn.nix;
+    # nixosModules.protonvpn = import ./modules/protonvpn.nix;
     inputs.hyprland.nixosModules.default
     home-manager.nixosModules.home-manager
     agenix.nixosModules.default
@@ -26,6 +26,7 @@ nixpkgs.lib.nixosSystem {
         useUserPackages = true;
         users.${user}.imports = [
           ./home.nix
+          ./modules/protonvpn.nix
           # inputs.hyprland.homeManagerModules.default
           # {wayland.windowManager.hyprland.enable = true;}
         ];
