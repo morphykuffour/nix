@@ -12,7 +12,7 @@
   imports = [
     ../../modules/i3.nix
     # ../../modules/redshift.nix
-    ../../modules/protonvpn.nix
+    # ../../modules/protonvpn.nix
     ../../modules/pass.nix
     ../../modules/fonts.nix
     ../../modules/zathura
