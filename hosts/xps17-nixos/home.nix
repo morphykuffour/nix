@@ -11,6 +11,7 @@
   imports = [
     ../../modules/i3.nix
     # ../../modules/redshift.nix
+    ../../modules/protonvpn.nix
     ../../modules/pass.nix
     ../../modules/fonts.nix
     ../../modules/zathura
@@ -152,7 +153,7 @@
       # rust-analyzer
       # postman
       openssl
-      protonvpn-gui
+      # protonvpn-gui
       # protonmail-bridge
       # play-with-mpv
       # rustdesk

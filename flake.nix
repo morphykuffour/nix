@@ -95,18 +95,17 @@
       # plover.overlay
     ];
 
-    commonInputs = {
-      inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
-    };
 
     # List of unix configurations
     configurations = [
-      "xps17-nixos"    # xps17 NixOs
+      "xps17-nixos" # xps17 NixOs
       "optiplex-nixos" # optiplex NixOs
-      "win-wsl"        # win-wsl NixOs
+      "win-wsl" # win-wsl NixOs
     ];
-
   in {
+
+    # nixosModules.protonvpn = import ./modules/protonvpn.nix;
+
     # nix formatter
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
     formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
@@ -115,12 +114,6 @@
     darwinConfigurations.macmini-darwin = import ./hosts/macmini-darwin {
       inherit self nixpkgs darwin inputs user overlays home-manager alejandra;
     };
-
-    # Generate nixosConfigurations dynamically
-    # nixosConfigurations = builtins.listToAttrs (
-    #   map (name: name + "-nixos") configurations
-    #   // { inherit (commonInputs); }
-    # );
 
     # xps17 NixOs
     nixosConfigurations.xps17-nixos = import ./hosts/xps17-nixos {
