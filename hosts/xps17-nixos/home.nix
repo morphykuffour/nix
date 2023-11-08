@@ -175,15 +175,15 @@
       # documents packages
       p7zip
       ruby
-      emacs
-      signal-desktop
-      slack
-
+      # emacs
+      zip
+      # signal-desktop
+      # slack
       # csv
-      xsv
-
+      # xsv
       # finance
-      ledger
+      # ledger
+      zip
 
       # python packages
       (python39.withPackages (pp:
