@@ -89,7 +89,7 @@
     user = "morph";
     # Overlays provided by inputs
     overlays = [
-      emacs-overlay.overlay
+      # emacs-overlay.overlay
       discord.overlays.default
       (import ./overlays/brave-nightly.nix)
       # plover.overlay
