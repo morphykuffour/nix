@@ -20,8 +20,14 @@
   ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # boot.loader.systemd-boot.enable = true;
+  # boot.loader.efi.canTouchEfiVariables = true;
+
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "nodev";
+  boot.loader.grub.useOSProber = true;
+
+
 
   networking.hostName = "xps17-nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -75,9 +81,9 @@
           enable = true;
           # excludePackages = [ pkgs.mate.mate-terminal pkgs.mate.pluma ];
         };
-        gnome = {
-          enable = true;
-        };
+        # gnome = {
+        #   enable = true;
+        # };
       };
 
       displayManager = {
@@ -210,14 +216,14 @@
     flameshot
     sxiv
     gnumake
-    clipmenu
-    playerctl
+    # clipmenu
+    # playerctl
     xorg.xbacklight
     autorandr
     xdotool
     xdg-user-dirs
     bluedevil
-    plasma5Packages.kdeconnect-kde
+    # plasma5Packages.kdeconnect-kde
     pciutils
     usbutils
     ventoy-bin
@@ -235,7 +241,7 @@
     tela-circle-icon-theme
     docker
     libreoffice
-    reptyr
+    # reptyr
     wireshark
     tshark
     procps
@@ -280,7 +286,7 @@
     # virtualbox
     # tailscale
     # nixops
-    # os-prober
+    os-prober
     kitty
     android-tools
     # android-studio
@@ -300,8 +306,8 @@
     networkmanagerapplet
 
     # backup
-    borgbackup
-    borgmatic
+    # borgbackup
+    # borgmatic
 
     # gaming
     # chiaki
@@ -310,15 +316,15 @@
 
     # i3 rice
     # polybar
-    viu
-    ueberzug
+    # viu
+    # ueberzug
     dmenu
-    gimp
+    # gimp
     avahi
     # zotero
-    hledger
-    tio
-    slack
+    # hledger
+    # tio
+    # slack
     # exa
     eza
 

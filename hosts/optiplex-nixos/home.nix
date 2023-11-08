@@ -139,15 +139,15 @@
       # rust-analyzer
       postman
       openssl
-      protonvpn-gui
+      # protonvpn-gui
       # protonmail-bridge
       # play-with-mpv
       # rustdesk
       file
-      newsboat
+      # newsboat
       neovim
       # fasd
-      texlive.combined.scheme-full
+      # texlive.combined.scheme-full
       # python2
 
       # keeb packages
@@ -160,10 +160,9 @@
       # documents packages
       p7zip
       ruby
-      emacs
-
+      # emacs
       # csv
-      xsv
+      # xsv
 
       # finance
       ledger
