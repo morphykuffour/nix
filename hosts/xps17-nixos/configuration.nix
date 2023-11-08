@@ -27,8 +27,6 @@
   boot.loader.grub.device = "nodev";
   boot.loader.grub.useOSProber = true;
 
-
-
   networking.hostName = "xps17-nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -108,6 +106,8 @@
         };
       };
     };
+
+    emacs.package = pkgs.emacs-unstable;
 
     # printing
     printing.enable = true;

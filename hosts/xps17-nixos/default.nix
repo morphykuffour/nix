@@ -6,7 +6,7 @@
   nixpkgs,
   inputs,
   user,
-  overlays,
+  # overlays,
   # neovim,
   ...
 }:
@@ -36,7 +36,14 @@ nixpkgs.lib.nixosSystem {
         };
       };
 
-      nixpkgs.overlays = overlays;
+      nixpkgs.overlays = [
+        # discord.overlays.default
+        (import ./overlays/brave-nightly.nix)
+        (import (builtins.fetchTarball {
+          url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+        }))
+        # plover.overlay
+      ];
 
       environment.systemPackages = [
         alejandra.defaultPackage.x86_64-linux
