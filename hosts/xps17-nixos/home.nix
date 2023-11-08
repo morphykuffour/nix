@@ -80,7 +80,7 @@
       zsh
       # atuin
       starship
-      exa
+      eza
       bat
       tealdeer
       fd
