@@ -11,12 +11,12 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    ./dslr.nix
     ./keyd.nix
-    # ./hyprland.nix
     ./tailscale.nix
     ./syncthing.nix
-    ./b2-backup.nix
+    # ./dslr.nix
+    # ./hyprland.nix
+    # ./b2-backup.nix
   ];
 
   # Bootloader.
@@ -29,10 +29,6 @@
 
   networking.hostName = "xps17-nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -91,7 +87,7 @@
         # };
         gdm = {
           enable = true;
-          wayland = true;
+          wayland = false;
         };
         autoLogin = {
           enable = false;
@@ -149,6 +145,7 @@
     # kdeconnect = {
     #   enable = true;
     # };
+
     mtr = {
       enable = true;
     };
