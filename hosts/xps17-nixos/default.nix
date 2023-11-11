@@ -16,7 +16,7 @@ nixpkgs.lib.nixosSystem {
   specialArgs = {inherit inputs;};
   modules = [
     ./configuration.nix
-    ../../modules/protonvpn.nix
+    ../../modules/mullvad.nix
     # nixosModules.protonvpn = import ./modules/protonvpn.nix;
     inputs.hyprland.nixosModules.default
     home-manager.nixosModules.home-manager
