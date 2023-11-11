@@ -1,14 +1,8 @@
 {
   pkgs,
   config,
-  agenix,
   ...
 }: {
-
-  age.identityPaths = [
-    "/home/morph/.ssh/id_ed25519"
-  ];
-  age.secrets.mullvadvpn-xps17-nixos.file = ../../secrets/mullvadvpn-xps17-nixos.age;
 
   environment.systemPackages = [pkgs.mullvad-vpn pkgs.mullvad];
   services.mullvad-vpn = {
@@ -25,5 +19,3 @@
         --block-ads --block-trackers --block-malware
   '';
 }
-
-    # ${mullvad} account login $(cat ${config.age.secrets.mullvadvpn-xps17-nixos.path})
