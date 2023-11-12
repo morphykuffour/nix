@@ -58,6 +58,11 @@
   };
 
   services = {
+    emacs = {
+      package = pkgs.emacs-unstable;
+      enable = true;
+      install = true;
+    };
     xserver = {
       libinput.enable = true;
       enable = true;
@@ -100,10 +105,8 @@
       };
     };
 
-    emacs.package = pkgs.emacs-unstable;
+    # printing.enable = true;
 
-    # printing
-    printing.enable = true;
     avahi = {
       nssmdns = true;
       enable = true;
@@ -132,23 +135,9 @@
     # };
 
     waybar.enable = true;
-
     zsh.enable = true;
-
-    # adb.enable = true;
-    # dconf = {
-    #   enable = true;
-    # };
-    # kdeconnect = {
-    #   enable = true;
-    # };
-
-    mtr = {
-      enable = true;
-    };
-    autojump = {
-      enable = true;
-    };
+    mtr.enable = true;
+    autojump.enable = true;
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
@@ -189,14 +178,11 @@
     flameshot
     sxiv
     gnumake
-    # clipmenu
-    # playerctl
     xorg.xbacklight
     autorandr
     xdotool
     xdg-user-dirs
     bluedevil
-    # plasma5Packages.kdeconnect-kde
     pciutils
     usbutils
     ventoy-bin
@@ -206,7 +192,6 @@
     brightnessctl
     xdragon
     keyd
-    # ms-edge
     gnome.dconf-editor
     mate.mate-power-manager
     mate.mate-media
@@ -221,7 +206,6 @@
     zsync
     cdrkit
     sqlitebrowser
-    # zfs
     bashmount
     # vagrant
     grub2

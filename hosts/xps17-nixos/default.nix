@@ -6,6 +6,7 @@
   nixpkgs,
   inputs,
   user,
+  pkgs,
   # overlays,
   # neovim,
   ...
@@ -17,7 +18,6 @@ nixpkgs.lib.nixosSystem {
   modules = [
     ./configuration.nix
     ../../modules/mullvad.nix
-    # nixosModules.protonvpn = import ./modules/protonvpn.nix;
     inputs.hyprland.nixosModules.default
     home-manager.nixosModules.home-manager
     agenix.nixosModules.default
@@ -27,8 +27,6 @@ nixpkgs.lib.nixosSystem {
         useUserPackages = true;
         users.${user}.imports = [
           ./home.nix
-          # inputs.hyprland.homeManagerModules.default
-          # {wayland.windowManager.hyprland.enable = true;}
         ];
         extraSpecialArgs = {
           plover = inputs.plover.packages."x86_64-linux".plover;
@@ -37,12 +35,10 @@ nixpkgs.lib.nixosSystem {
       };
 
       nixpkgs.overlays = [
-        # discord.overlays.default
         (import ./overlays/brave-nightly.nix)
         (import (builtins.fetchTarball {
           url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
         }))
-        # plover.overlay
       ];
 
       environment.systemPackages = [
