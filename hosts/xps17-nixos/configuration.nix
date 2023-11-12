@@ -77,9 +77,6 @@
           enable = true;
           # excludePackages = [ pkgs.mate.mate-terminal pkgs.mate.pluma ];
         };
-        # gnome = {
-        #   enable = true;
-        # };
       };
 
       displayManager = {
@@ -192,7 +189,7 @@
     brightnessctl
     xdragon
     keyd
-    gnome.dconf-editor
+    # gnome.dconf-editor
     mate.mate-power-manager
     mate.mate-media
     orchis-theme
@@ -232,22 +229,13 @@
     clang
     yarn
     firefox
-    # mongodb
-    # zoom-us
-    # teams
     ffmpeg-full
     vim
     wireguard-tools
     libtool
     libvterm
-    # virtualbox
-    # tailscale
-    # nixops
     os-prober
     kitty
-    android-tools
-    # android-studio
-    android-udev-rules
     age
     rage
     uxplay
@@ -256,33 +244,10 @@
     libstdcxx5
     ctags
     zsh-completions
-
-    # vpn
-    # openconnect_openssl
     networkmanager
     networkmanagerapplet
-
-    # backup
-    # borgbackup
-    # borgmatic
-
-    # gaming
-    # chiaki
-    # avrlibc
-    # conda
-
-    # i3 rice
-    # polybar
-    # viu
-    # ueberzug
     dmenu
-    # gimp
     avahi
-    # zotero
-    # hledger
-    # tio
-    # slack
-    # exa
     eza
 
     # R packages for data science

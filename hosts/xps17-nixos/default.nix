@@ -6,7 +6,6 @@
   nixpkgs,
   inputs,
   user,
-  # overlays,
   # neovim,
   ...
 }:
@@ -34,7 +33,6 @@ nixpkgs.lib.nixosSystem {
       };
 
       nixpkgs.overlays = [
-        (import ./overlays/brave-nightly.nix)
         (import (builtins.fetchTarball {
           url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
         }))
