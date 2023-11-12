@@ -6,7 +6,6 @@
   nixpkgs,
   inputs,
   user,
-  pkgs,
   # overlays,
   # neovim,
   ...
