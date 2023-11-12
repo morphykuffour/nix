@@ -20,9 +20,6 @@
   ];
 
   # Bootloader.
-  # boot.loader.systemd-boot.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
-
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "nodev";
   boot.loader.grub.useOSProber = true;
@@ -119,7 +116,7 @@
       allowInterfaces = ["wlp0s20f3" "tailscale0"];
     };
   };
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+
   users.users.morph = {
     isNormalUser = true;
     shell = pkgs.zsh;
@@ -167,33 +164,12 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
   # system.stateVersion = config.system.nixos.release;
+
   # sudoless
-  security.sudo.wheelNeedsPassword = false;
+  # security.sudo.wheelNeedsPassword = false;
 
   environment.interactiveShellInit = ''
     alias c99='gcc'
@@ -204,7 +180,7 @@
     xclip
     git
     stow
-    # brave
+    brave
     sqlite
     unzip
     coreutils
