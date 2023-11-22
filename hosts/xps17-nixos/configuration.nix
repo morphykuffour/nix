@@ -221,7 +221,7 @@
     dbeaver
     dig
     psmisc
-    discord
+    # discord
     # mycli
     grc
     cmake

@@ -5,24 +5,6 @@
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hyprwm-contrib = {
-      url = "github:hyprwm/contrib";
-    };
-    hyprland-protocols = {
-      url = "github:hyprwm/hyprland-protocols";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    xdph = {
-      url = "github:hyprwm/xdg-desktop-portal-hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.hyprland-protocols.follows = "hyprland-protocols";
-    };
-    # anyrun.url = "github:Kirottu/anyrun";
-    # anyrun.inputs.nixpkgs.follows = "nixpkgs";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -80,18 +62,11 @@
     neovim,
     discord,
     nixos-hardware,
-    hyprland,
-    hyprwm-contrib,
-    hyprland-protocols,
-    xdph,
     ...
   } @ inputs: let
     user = "morph";
-    # Overlays provided by inputs
     overlays = [
-      # emacs-overlay.overlay
       discord.overlays.default
-      (import ./overlays/brave-nightly.nix)
       # plover.overlay
     ];
 
@@ -108,22 +83,22 @@
 
     # mac_mini MacOs
     darwinConfigurations.macmini-darwin = import ./hosts/macmini-darwin {
-      inherit self nixpkgs darwin inputs user overlays home-manager alejandra;
+      inherit self nixpkgs darwin inputs user home-manager alejandra;
     };
 
     # xps17 NixOs
     nixosConfigurations.xps17-nixos = import ./hosts/xps17-nixos {
-      inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
+      inherit nixpkgs self inputs user home-manager alejandra agenix ;
     };
 
     # optiplex NixOs
     nixosConfigurations.optiplex-nixos = import ./hosts/optiplex-nixos {
-      inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
+      inherit nixpkgs self inputs user home-manager alejandra agenix ;
     };
 
     # win-wsl NixOs
     nixosConfigurations.win-wsl = import ./hosts/win-wsl {
-      inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
+      inherit nixpkgs self inputs user home-manager alejandra agenix ;
     };
 
     # visionfive2 NixOs
