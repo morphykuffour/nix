@@ -28,7 +28,7 @@ in
 
  systemd.services."mullvad-daemon".postStart = ''
     while ! ${mullvad} status >/dev/null; do sleep 1; done
-    ID=`head -n1 ${config.age.secrets.mullvad-xps17-nixos.path}`
+    ID=`head -n1 ${config.age.secrets.mullvadvpn-xps17-nixos.path}`
     ${mullvad} account login "$ID"
     ${mullvad} auto-connect set on
     ${mullvad} relay set location us
