@@ -45,7 +45,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # vscode-server.url = "github:msteen/nixos-vscode-server";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    # nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs = {
@@ -61,7 +61,7 @@
     emacs-overlay,
     neovim,
     discord,
-    nixos-hardware,
+    # nixos-hardware,
     ...
   } @ inputs: let
     user = "morph";
@@ -103,21 +103,21 @@
 
     # visionfive2 NixOs
     # https://github.com/NixOS/nixos-hardware/tree/master/starfive/visionfive/v1
-    nixosConfigurations.visionfive2 = nixpkgs.lib.nixosSystem {
-      system = "riscv64-linux";
-      modules = [
-        nixos-hardware.nixosModules.starfive-visionfive-v1
-        {
-          # with nix channel
-          # imports = [<nixos-hardware/starfive/visionfive/v1/sd-image-installer.nix>];
-
-          nixpkgs.crossSystem = {
-            config = "riscv64-unknown-linux-gnu";
-            system = "riscv64-linux";
-          };
-        }
-      ];
-    };
+    # nixosConfigurations.visionfive2 = nixpkgs.lib.nixosSystem {
+    #   system = "riscv64-linux";
+    #   modules = [
+    #     nixos-hardware.nixosModules.starfive-visionfive-v1
+    #     {
+    #       # with nix channel
+    #       # imports = [<nixos-hardware/starfive/visionfive/v1/sd-image-installer.nix>];
+    #
+    #       nixpkgs.crossSystem = {
+    #         config = "riscv64-unknown-linux-gnu";
+    #         system = "riscv64-linux";
+    #       };
+    #     }
+    #   ];
+    # };
 
     # riscv-vm NixOS
     nixosConfigurations.riscv-vm = nixpkgs.lib.nixosSystem {
