@@ -60,7 +60,7 @@
   services = {
     emacs = {
       # package = pkgs.emacs-unstable;
-      package = pkgs.emacsGit;
+      package = pkgs.emacs-git;
       enable = true;
       install = true;
     };
