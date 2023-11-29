@@ -14,7 +14,7 @@
     ../../modules/pass.nix
     ../../modules/fonts.nix
     ../../modules/zathura
-    # ../../modules/lf
+    ../../modules/lf
     # ../../modules/nvim.nix
     # ../../modules/redshift.nix
     # ../../modules/protonvpn.nix
