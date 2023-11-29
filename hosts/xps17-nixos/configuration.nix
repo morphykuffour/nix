@@ -59,7 +59,8 @@
 
   services = {
     emacs = {
-      package = pkgs.emacs-unstable;
+      # package = pkgs.emacs-unstable;
+      package = pkgs.emacs;
       enable = true;
       install = true;
     };
