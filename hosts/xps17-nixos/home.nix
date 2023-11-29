@@ -105,22 +105,24 @@
       (python39.withPackages (pp:
         with pp; [
           pynvim
-          pandas
+          # pandas
           # reticulate needs conda
-          conda
-          requests
+          # conda
+          # requests
           pip
           i3ipc
           ipython
           dbus-python
           html2text
           keymapviz
-          mysql-connector
-          pipx
-          pyqt5
+          # mysql-connector
+          # pipx
+          # pyqt5
           ueberzug
+        ]))
         # https://stackoverflow.com/questions/52941074/in-nixos-how-can-i-resolve-a-collision
-        ]).override (args: { ignoreCollisions = true; }))
+        # ]).override (args: { ignoreCollisions = true; }))
+
     ];
   };
 }
