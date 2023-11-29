@@ -12,7 +12,7 @@
   imports = [
     ./hardware-configuration.nix
     ./keyd.nix
-    ./tailscale.nix
+    # ./tailscale.nix
     ./syncthing.nix
     # ./dslr.nix
     # ./hyprland.nix
@@ -154,8 +154,14 @@
   nixpkgs.config.allowUnfree = true;
 
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
-  # system.stateVersion = config.system.nixos.release;
+  system = {
+    # stateVersion = "23.05"; # Did you read the comment?
+    stateVersion = config.system.nixos.release;
+    autoUpgrade = {
+      enable = true;
+      allowReboot = true;
+    };
+  };
 
   # sudoless
   # security.sudo.wheelNeedsPassword = false;

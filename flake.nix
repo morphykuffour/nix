@@ -88,17 +88,17 @@
 
     # xps17 NixOs
     nixosConfigurations.xps17-nixos = import ./hosts/xps17-nixos {
-      inherit nixpkgs self inputs user home-manager alejandra agenix ;
+      inherit nixpkgs self inputs user home-manager alejandra agenix;
     };
 
     # optiplex NixOs
     nixosConfigurations.optiplex-nixos = import ./hosts/optiplex-nixos {
-      inherit nixpkgs self inputs user home-manager alejandra agenix ;
+      inherit nixpkgs self inputs user home-manager alejandra agenix;
     };
 
     # win-wsl NixOs
     nixosConfigurations.win-wsl = import ./hosts/win-wsl {
-      inherit nixpkgs self inputs user home-manager alejandra agenix ;
+      inherit nixpkgs self inputs user home-manager alejandra agenix;
     };
 
     # visionfive2 NixOs
