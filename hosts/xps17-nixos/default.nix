@@ -16,7 +16,6 @@ nixpkgs.lib.nixosSystem {
   modules = [
     ./configuration.nix
     # ../../modules/mullvad
-    ./tailscale.nix
     # inputs.hyprland.nixosModules.default
     home-manager.nixosModules.home-manager
     agenix.nixosModules.default
