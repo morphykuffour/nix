@@ -119,7 +119,8 @@
           pipx
           pyqt5
           ueberzug
-        ]))
+        # https://stackoverflow.com/questions/52941074/in-nixos-how-can-i-resolve-a-collision
+        ]).override (args: { ignoreCollisions = true; }))
     ];
   };
 }
