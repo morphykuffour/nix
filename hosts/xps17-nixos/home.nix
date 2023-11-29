@@ -90,7 +90,7 @@
       go
       feh
       tree-sitter
-      nodePackages.insect
+      # nodePackages.insect
       file
       newsboat
       neovim
