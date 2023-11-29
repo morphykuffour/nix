@@ -15,7 +15,7 @@ nixpkgs.lib.nixosSystem {
   specialArgs = {inherit inputs;};
   modules = [
     ./configuration.nix
-    # ../../modules/mullvad.nix
+    # ../../modules/mullvad
     # inputs.hyprland.nixosModules.default
     home-manager.nixosModules.home-manager
     agenix.nixosModules.default
