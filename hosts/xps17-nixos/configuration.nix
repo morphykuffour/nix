@@ -12,7 +12,7 @@
   imports = [
     ./hardware-configuration.nix
     ./keyd.nix
-    # ./tailscale.nix
+    ./tailscale.nix
     ./syncthing.nix
     # ./dslr.nix
     # ./hyprland.nix
@@ -157,8 +157,8 @@
 
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system = {
-    # stateVersion = "23.05"; # Did you read the comment?
-    stateVersion = config.system.nixos.release;
+    # stateVersion = config.system.nixos.release;
+    stateVersion = "23.05"; # Did you read the comment?
     autoUpgrade = {
       enable = true;
       allowReboot = true;
@@ -260,6 +260,7 @@
     dmenu
     avahi
     eza
+    blueman
 
     # R packages for data science
     rstudio
