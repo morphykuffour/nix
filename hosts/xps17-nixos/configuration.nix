@@ -78,10 +78,10 @@
         # xterm = {
         #   enable = true;
         # };
-        plasma5 = {
+        xfce = {
           enable = true;
         };
-        xfce = {
+        plasma5 = {
           enable = true;
         };
         mate = {
