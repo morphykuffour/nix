@@ -6,9 +6,11 @@
 }: {
   services. syncthing = {
     enable = true;
+    dataDir = "/home/morph";
     openDefaultPorts = true;
     configDir = "/home/morph/.config/syncthing";
     user = "morph";
+    group = "users";
     guiAddress = "127.0.0.1:8384";
     overrideDevices = true;
     overrideFolders = true;
