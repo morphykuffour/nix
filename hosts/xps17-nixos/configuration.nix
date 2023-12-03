@@ -60,13 +60,15 @@
   };
 
   services = {
-    # emacs = {
-    #   # package = pkgs.emacs-unstable;
-    #   # package = pkgs.emacs-git;
-    #   package = pkgs.emacs;
-    #   enable = true;
-    #   install = true;
-    # };
+    emacs = {
+      # package = pkgs.emacs-unstable;
+      # package = pkgs.emacs-git;
+      package = pkgs.emacs;
+      enable = true;
+      install = true;
+    };
+
+    blueman.enable = true;
 
     xserver = {
       libinput.enable = true;
@@ -78,9 +80,6 @@
         # xterm = {
         #   enable = true;
         # };
-        xfce = {
-          enable = true;
-        };
         plasma5 = {
           enable = true;
         };
@@ -132,7 +131,7 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "Morphy Kuffour";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["networkmanager" "wheel" "syncthing"];
     packages = with pkgs; [];
   };
 
@@ -196,11 +195,9 @@
     autorandr
     xdotool
     xdg-user-dirs
-    bluedevil
     pciutils
     usbutils
     ventoy-bin
-    bluez
     rustup
     rustc
     brightnessctl
@@ -266,7 +263,6 @@
     dmenu
     avahi
     eza
-    blueman
 
     # R packages for data science
     rstudio
