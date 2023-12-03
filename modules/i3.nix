@@ -158,16 +158,6 @@ in {
           notification = false;
         }
         {
-          command = "redshift";
-          always = true;
-          notification = false;
-        }
-        # {
-        #   command = "sxhkd -c /home/${user}/.config/sxhkd/sxhkdrc";
-        #   always = true;
-        #   notification = false;
-        # }
-        {
           command = "blueman-applet";
           always = true;
           notification = false;
@@ -177,6 +167,16 @@ in {
           always = true;
           notification = false;
         }
+        # {
+        #   command = "redshift";
+        #   always = true;
+        #   notification = false;
+        # }
+        # {
+        #   command = "sxhkd -c /home/${user}/.config/sxhkd/sxhkdrc";
+        #   always = true;
+        #   notification = false;
+        # }
         # {
         #   command = "${pkgs.feh}/bin/feh --bg-scale --randomize ~/Pictures/wallpapers/*";
         #   always = true;
