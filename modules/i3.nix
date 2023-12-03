@@ -157,11 +157,11 @@ in {
           always = true;
           notification = false;
         }
-        # {
-        #   command = "redshift";
-        #   always = true;
-        #   notification = false;
-        # }
+        {
+          command = "redshift";
+          always = true;
+          notification = false;
+        }
         # {
         #   command = "sxhkd -c /home/${user}/.config/sxhkd/sxhkdrc";
         #   always = true;
