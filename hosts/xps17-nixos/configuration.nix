@@ -131,7 +131,7 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "Morphy Kuffour";
-    extraGroups = ["networkmanager" "wheel" "syncthing"];
+    extraGroups = ["networkmanager" "wheel" "users"];
     packages = with pkgs; [];
   };
 
