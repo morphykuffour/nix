@@ -78,6 +78,12 @@
         # xterm = {
         #   enable = true;
         # };
+        plasma5 = {
+          enable = true;
+        };
+        xfce = {
+          enable = true;
+        };
         mate = {
           enable = true;
           # excludePackages = [ pkgs.mate.mate-terminal pkgs.mate.pluma ];
