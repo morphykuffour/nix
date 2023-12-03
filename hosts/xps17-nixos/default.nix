@@ -36,6 +36,7 @@ nixpkgs.lib.nixosSystem {
         (import (builtins.fetchTarball {
           url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
         }))
+        inputs.discord.overlays.default
       ];
 
       environment.systemPackages = [
