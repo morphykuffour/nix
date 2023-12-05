@@ -131,7 +131,7 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "Morphy Kuffour";
-    extraGroups = ["networkmanager" "wheel" "users"];
+    extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [];
   };
 
@@ -263,6 +263,8 @@
     dmenu
     avahi
     eza
+    discord
+    # mullvad
 
     # R packages for data science
     rstudio
