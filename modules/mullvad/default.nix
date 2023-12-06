@@ -5,12 +5,9 @@
   config,
   agenix,
   ...
-}: 
-let 
+}: let
   mullvad = "${config.services.mullvad-vpn.package}/bin/mullvad";
-in
-{
-
+in {
   age.identityPaths = [
     "/home/morph/.ssh/id_ed25519"
   ];
@@ -26,7 +23,7 @@ in
   systemd.services."mullvad-daemon".preStart = ''
   '';
 
- systemd.services."mullvad-daemon".postStart = ''
+  systemd.services."mullvad-daemon".postStart = ''
     while ! ${mullvad} status >/dev/null; do sleep 1; done
     ID=`head -n1 ${config.age.secrets.mullvadvpn-xps17-nixos.path}`
     ${mullvad} account login "$ID"
