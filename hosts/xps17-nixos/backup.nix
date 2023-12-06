@@ -1,3 +1,4 @@
+# https://discourse.nixos.org/t/restic-backups-on-b2-with-nixos-agenix/36196
 {
   config,
   pkgs,
