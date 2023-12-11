@@ -60,6 +60,7 @@
   };
 
   security.rtkit.enable = true;
+  hardware.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -89,9 +90,12 @@
         # xterm = {
         #   enable = true;
         # };
-        plasma5 = {
-          enable = true;
-        };
+        # gnome = {
+        #   enable = true;
+        # };
+        # plasma5 = {
+        #   enable = true;
+        # };
         mate = {
           enable = true;
           # excludePackages = [ pkgs.mate.mate-terminal pkgs.mate.pluma ];
