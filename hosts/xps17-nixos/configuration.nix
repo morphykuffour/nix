@@ -113,7 +113,7 @@
         };
         autoLogin = {
           enable = false;
-          user = "${user}";
+          user = "morph";
         };
       };
 
@@ -140,7 +140,7 @@
     };
   };
 
-  users.users.${user} = {
+  users.users.morph = {
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "Morphy Kuffour";

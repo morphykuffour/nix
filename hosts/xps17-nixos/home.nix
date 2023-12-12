@@ -49,8 +49,8 @@
   };
 
   home = {
-    username = "${user}";
-    homeDirectory = "/home/${user}";
+    username = "morph";
+    homeDirectory = "/home/morph";
     stateVersion = "22.05";
     packages = with pkgs; [
       brave
