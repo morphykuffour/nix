@@ -7,9 +7,9 @@
   services.syncthing = {
     enable = true;
     openDefaultPorts = true;
-    dataDir = "/home/${user}/.local/share/syncthing";
-    configDir = "/home/${user}/.config/syncthing";
-    user = "${user}";
+    dataDir = "/home/morph/.local/share/syncthing";
+    configDir = "/home/morph/.config/syncthing";
+    user = "morph";
     group = "users";
     guiAddress = "127.0.0.1:8384";
     overrideDevices = true;
@@ -23,7 +23,7 @@
 
     settings.folders = {
       "Org" = {
-        path = "/home/${user}/Org/";
+        path = "/home/morph/Org/";
         id = "Org";
         devices = ["xps17-nixos" "ubuntu" "macmini-darwin"];
         versioning = {
@@ -36,7 +36,7 @@
       };
 
       "iCloud" = {
-        path = "/home/${user}/iCloud/";
+        path = "/home/morph/iCloud/";
         id = "iCloud";
         devices = ["xps17-nixos" "ubuntu" "macmini-darwin"];
         versioning = {
