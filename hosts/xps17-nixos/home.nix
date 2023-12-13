@@ -17,7 +17,6 @@
     ../../modules/lf
     # ../../modules/nvim.nix
     ../../modules/redshift.nix
-    # ../../modules/protonvpn.nix
     # ../../modules/picom.nix
   ];
 

@@ -1,28 +1,42 @@
+# https://www.arthurkoziel.com/restic-backups-b2-nixos/
 {
   config,
   pkgs,
   agenix,
   ...
 }: {
+
   # use agenix for passwordFile
   age.identityPaths = [
     "/home/morph/.ssh/id_ed25519"
   ];
-  age.secrets.b2-backup-xps17-nixos.file = ../../secrets/b2-backup-xps17-nixos.age;
 
+  age.secrets = {
+    "restic/env".file = ../../../secrets/restic/env.age;
+    "restic/repo".file = ../../../secrets/restic/repo.age;
+    "restic/password".file = ../../../secrets/restic/password.age;
+  };
+
+  # install restic package 
   environment.systemPackages = [pkgs.restic];
 
   services.restic.backups = {
-    local-system_drive_backup-xps17-nixos = {
-      exclude = [
-        "/home/*/.cache"
-      ];
+    daily = {
       initialize = true;
-      passwordFile = config.age.secrets.b2-backup-xps17-nixos.path;
+
+      environmentFile = config.age.secrets."restic/env".path;
+      repositoryFile = config.age.secrets."restic/repo".path;
+      passwordFile = config.age.secrets."restic/password".path;
+
       paths = [
-        "/home"
+        "/home/morph/iCloud"
       ];
-      repository = "/run/media/morph/T7";
+
+      pruneOpts = [
+        "--keep-daily 7"
+        "--keep-weekly 5"
+        "--keep-monthly 12"
+      ];
     };
 
     # cloud-system_drive_backup-xps17-nixos = {
