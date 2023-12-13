@@ -14,6 +14,7 @@
     ./keyd.nix
     # ./tailscale.nix
     ./syncthing.nix
+    ./restic.nix
     # ./dslr.nix
     # ./hyprland.nix
     # ./b2-backup.nix
