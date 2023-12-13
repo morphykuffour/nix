@@ -1,4 +1,4 @@
-# https://www.arthurkoziel.com/restic-backups-b2-nixos/
+# https://www.arthurkoziel.com/restic-backups-b6-nixos/
 {
   config,
   pkgs,
@@ -12,9 +12,9 @@
   ];
 
   age.secrets = {
-    "restic/env".file = ../../../secrets/restic/env.age;
-    "restic/repo".file = ../../../secrets/restic/repo.age;
-    "restic/password".file = ../../../secrets/restic/password.age;
+    "restic/env".file = ../../secrets/restic/env.age;
+    "restic/repo".file = ../../secrets/restic/repo.age;
+    "restic/password".file = ../../secrets/restic/password.age;
   };
 
   # install restic package 
