@@ -11,13 +11,10 @@
 }:
 nixpkgs.lib.nixosSystem {
   system = "x86_64-linux";
-  # specialArgs = inputs;
   specialArgs = {inherit inputs;};
   modules = [
     ./configuration.nix
-    # ../../modules/mullvad
     ../../modules/wg-quick
-    # inputs.hyprland.nixosModules.default
     home-manager.nixosModules.home-manager
     agenix.nixosModules.default
     {
