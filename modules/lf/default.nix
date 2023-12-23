@@ -57,7 +57,8 @@ in  {
       "g/" = "/";
 
       ee = "editor-open";
-      V = ''$${pkgs.bat}/bin/bat --paging=always --theme=gruvbox "$f"'';
+      V = ''$bat --paging=always "$f"'';
+      Y = ''$printf "%s" "$fx" | xclip -selection clipboard'';
 
       # ...
     };
