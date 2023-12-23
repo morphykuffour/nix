@@ -37,7 +37,7 @@
       '';
       fzf-search = ''
       ''${{
-          rg_prefix='rg --column --line-number --no-heading --color=always --smart-case' \
+          rg_prefix="$(rg --column --line-number --no-heading --color=always --smart-case)" \
           fzf --bind 'start:reload:$rg_prefix ""' \
               --bind 'change:reload:$rg_prefix {q} || true' \
               --bind 'enter:become(vim {1} +{2})' \
