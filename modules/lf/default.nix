@@ -4,7 +4,9 @@
   pkgs,
   config,
   ...
-}: {
+}:let
+      fzf_search = builtins.readFile ./fzf_search;
+in  {
   # Download the icons file
   # nix run nixpkgs#wget -- "https://raw.githubusercontent.com/gokcehan/lf/master/etc/icons.example" -O icons
   xdg.configFile."lf/icons".source = ./icons;
@@ -21,7 +23,7 @@
           mkdir $DIR
         }}
       '';
-      fzf-jump = ''
+      fzf_jump = ''
       ''${{
           res="$(find . -maxdepth 1 | fzf --reverse --header='Jump to location')"
           if [ -n "$res" ]; then
@@ -35,6 +37,8 @@
           fi
       }}
       '';
+      # TODO get fzf_search working
+      fzf_search = ${fzf_search};
     };
 
     keybindings = {
@@ -45,7 +49,8 @@
       "`" = "mark-load";
       "\\'" = "mark-load";
       "<enter>" = "open";
-      "<c-f>" = "fzf-jump";
+      "<c-f>" = "fzf_jump";
+      # "<c-s>" = "fzf_search";
       do = "dragon-out";
       "g~" = "cd";
       gh = "cd";
