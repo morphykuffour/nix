@@ -17,7 +17,6 @@
     ./restic.nix
     # ./dslr.nix
     # ./hyprland.nix
-    # ./b2-backup.nix
   ];
 
   # Bootloader.
