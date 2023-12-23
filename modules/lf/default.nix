@@ -38,7 +38,7 @@ in  {
       }}
       '';
       # TODO get fzf_search working
-      fzf_search = ${fzf_search};
+      fzf_search = ''${fzf_search}'';
     };
 
     keybindings = {
@@ -50,7 +50,7 @@ in  {
       "\\'" = "mark-load";
       "<enter>" = "open";
       "<c-f>" = "fzf_jump";
-      # "<c-s>" = "fzf_search";
+      "<c-s>" = "fzf_search";
       do = "dragon-out";
       "g~" = "cd";
       gh = "cd";
