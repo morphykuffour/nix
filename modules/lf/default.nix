@@ -21,7 +21,7 @@
           mkdir $DIR
         }}
       '';
-      fzf_jump = ''
+      fzf-jump = ''
       ''${{
           res="$(find . -maxdepth 1 | fzf --reverse --header='Jump to location')"
           if [ -n "$res" ]; then
@@ -45,10 +45,8 @@
       "`" = "mark-load";
       "\\'" = "mark-load";
       "<enter>" = "open";
-      "<c-f> = "fzf_jump";
-
+      "<c-f>" = "fzf-jump";
       do = "dragon-out";
-
       "g~" = "cd";
       gh = "cd";
       "g/" = "/";
