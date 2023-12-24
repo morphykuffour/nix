@@ -14,7 +14,7 @@ in  {
   programs.lf = {
     enable = true;
     commands = {
-      dragon-out = ''%${pkgs.xdragon}/bin/xdragon -a -x "$fx"'';
+      dragon-out = ''dragon -a -x "$fx"'';
       editor-open = ''$$EDITOR $f'';
       mkdir = ''
         ''${{
@@ -37,7 +37,7 @@ in  {
           fi
       }}
       '';
-      # TODO get fzf_search working
+
       fzf_search = ''${fzf_search}'';
     };
 
@@ -51,7 +51,7 @@ in  {
       "<enter>" = "open";
       "<c-f>" = "fzf_jump";
       "<c-s>" = "fzf_search";
-      do = "dragon-out";
+      "c-d>" = "dragon-out";
       "g~" = "cd";
       gh = "cd";
       "g/" = "/";
