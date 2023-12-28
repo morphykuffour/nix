@@ -5,7 +5,6 @@
   agenix,
   ...
 }: {
-
   # use agenix for passwordFile
   age.identityPaths = [
     "/home/morph/.ssh/id_ed25519"
@@ -17,7 +16,7 @@
     "restic/password".file = ../../secrets/restic/password.age;
   };
 
-  # install restic package 
+  # install restic package
   environment.systemPackages = [pkgs.restic];
 
   services.restic.backups = {
