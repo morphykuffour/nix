@@ -12,11 +12,11 @@
   imports = [
     ./hardware-configuration.nix
     ./keyd.nix
-    ./tailscale.nix
+    # ./tailscale.nix
     ./syncthing.nix
     ./restic.nix
     # ./dslr.nix
-    # ./hyprland.nix
+    ./vm.nix
   ];
 
   # Bootloader.

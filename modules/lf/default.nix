@@ -4,9 +4,9 @@
   pkgs,
   config,
   ...
-}:let
-      fzf_search = builtins.readFile ./fzf_search;
-in  {
+}: let
+  fzf_search = builtins.readFile ./fzf_search;
+in {
   # Download the icons file
   # nix run nixpkgs#wget -- "https://raw.githubusercontent.com/gokcehan/lf/master/etc/icons.example" -O icons
   xdg.configFile."lf/icons".source = ./icons;
@@ -24,18 +24,18 @@ in  {
         }}
       '';
       fzf_jump = ''
-      ''${{
-          res="$(find . -maxdepth 1 | fzf --reverse --header='Jump to location')"
-          if [ -n "$res" ]; then
-              if [ -d "$res" ]; then
-                  cmd="cd"
-              else
-                  cmd="select"
-              fi
-              res="$(printf '%s' "$res" | sed 's/\\/\\\\/g;s/"/\\"/g')"
-              lf -remote "send $id $cmd \"$res\""
-          fi
-      }}
+        ''${{
+            res="$(find . -maxdepth 1 | fzf --reverse --header='Jump to location')"
+            if [ -n "$res" ]; then
+                if [ -d "$res" ]; then
+                    cmd="cd"
+                else
+                    cmd="select"
+                fi
+                res="$(printf '%s' "$res" | sed 's/\\/\\\\/g;s/"/\\"/g')"
+                lf -remote "send $id $cmd \"$res\""
+            fi
+        }}
       '';
 
       fzf_search = ''${fzf_search}'';
