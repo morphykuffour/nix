@@ -16,7 +16,6 @@
     ./syncthing.nix
     ./restic.nix
     # ./dslr.nix
-    ./vm.nix
   ];
 
   # Bootloader.
@@ -144,7 +143,7 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "Morphy Kuffour";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["networkmanager" "wheel" "libvirtd"];
     packages = with pkgs; [];
   };
 
@@ -170,6 +169,11 @@
       ];
     };
   };
+
+  # vms
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
