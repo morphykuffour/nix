@@ -25,11 +25,20 @@
   boot.loader.grub.useOSProber = true;
   boot.loader.grub.efiSupport = true;
 
-  networking.hostName = "xps17-nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "xps17-nixos";
+    networkmanager.enable = true;
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+    firewall = {
+      enable = true;
+      trustedInterfaces = [ "tailscale0" ];
+    };
+  };
+
+  # Enable tailscale Mesh VPN
+  services.tailscale.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/New_York";
@@ -173,6 +182,13 @@
   # vms
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -281,6 +297,7 @@
     avahi
     eza
     discord
+    gimp
     # mullvad
 
     # R packages for data science
