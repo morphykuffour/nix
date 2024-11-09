@@ -19,12 +19,25 @@
   ];
 
   # Bootloader.
+
+  # zfs specific
+  boot.supportedFilesystems = [ "zfs" ];
+  networking.hostId = "944dfacf";
+
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "nodev";
   boot.loader.grub.useOSProber = true;
   boot.loader.grub.efiSupport = true;
+  boot.loader.grub.enableCryptodisk = true;
 
+  boot.initrd.luks.devices = {
+   root = {
+     device = "/dev/disk/by-uuid/08ecff77-0009-4995-8f83-17ff64ee6bd4"; ## Use blkid to find this UUID 
+     # Required even if we're not using LVM
+     preLVM = true;
+   };
+  };
 
   # Enable networking
   networking = {
