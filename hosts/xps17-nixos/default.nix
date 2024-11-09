@@ -14,7 +14,7 @@ nixpkgs.lib.nixosSystem {
   specialArgs = {inherit inputs;};
   modules = [
     ./configuration.nix
-    ../../modules/wg-quick
+    # ../../modules/wg-quick
     home-manager.nixosModules.home-manager
     agenix.nixosModules.default
     {

@@ -44,14 +44,14 @@
     hostName = "xps17-nixos";
     networkmanager.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-    firewall = {
-      enable = true;
-      trustedInterfaces = [ "tailscale0" ];
-    };
+    # firewall = {
+    #   enable = true;
+    #   trustedInterfaces = [ "tailscale0" ];
+    # };
   };
 
   # Enable tailscale Mesh VPN
-  services.tailscale.enable = true;
+  # services.tailscale.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/New_York";
