@@ -19,14 +19,14 @@
   ];
 
   # Bootloader zfs specific
-  boot.supportedFilesystems = [ "zfs" ];
+  boot.supportedFilesystems = ["zfs"];
   networking.hostId = "944dfacf";
 
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.loader.grub = {
     enable = true;
-    version =2;
+    version = 2;
     device = "nodev";
     efiSupport = true;
     enableCryptodisk = true;
@@ -43,18 +43,18 @@
   };
 
   boot.initrd.luks.devices = {
-   root = {
-     device = "/dev/disk/by-uuid/08ecff77-0009-4995-8f83-17ff64ee6bd4"; ## Use blkid to find this UUID 
-     # Required even if we're not using LVM
-     preLVM = true;
-   };
+    root = {
+      device = "/dev/disk/by-uuid/08ecff77-0009-4995-8f83-17ff64ee6bd4"; ## Use blkid to find this UUID
+      # Required even if we're not using LVM
+      preLVM = true;
+    };
   };
 
   # Enable networking
   networking = {
     hostName = "t480-nixos";
     networkmanager.enable = true;
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+    # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     # firewall = {
     #   enable = true;
     #   trustedInterfaces = [ "tailscale0" ];

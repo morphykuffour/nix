@@ -21,7 +21,7 @@
   # Bootloader.
 
   # zfs specific
-  boot.supportedFilesystems = [ "zfs" ];
+  boot.supportedFilesystems = ["zfs"];
   networking.hostId = "944dfacf";
 
   boot.loader.efi.canTouchEfiVariables = true;
@@ -32,18 +32,18 @@
   boot.loader.grub.enableCryptodisk = true;
 
   boot.initrd.luks.devices = {
-   root = {
-     device = "/dev/disk/by-uuid/08ecff77-0009-4995-8f83-17ff64ee6bd4"; ## Use blkid to find this UUID 
-     # Required even if we're not using LVM
-     preLVM = true;
-   };
+    root = {
+      device = "/dev/disk/by-uuid/08ecff77-0009-4995-8f83-17ff64ee6bd4"; ## Use blkid to find this UUID
+      # Required even if we're not using LVM
+      preLVM = true;
+    };
   };
 
   # Enable networking
   networking = {
     hostName = "xps17-nixos";
     networkmanager.enable = true;
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+    # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     # firewall = {
     #   enable = true;
     #   trustedInterfaces = [ "tailscale0" ];
@@ -90,6 +90,8 @@
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
   };
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  services.xserver.videoDrivers = ["nvidia"];
   services = {
     emacs = {
       # package = pkgs.emacs-unstable;
@@ -312,6 +314,7 @@
     discord
     gimp
     # mullvad
+    mpv
 
     # R packages for data science
     rstudio
