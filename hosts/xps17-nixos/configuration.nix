@@ -14,7 +14,7 @@
     ./keyd.nix
     # ./tailscale.nix
     ./syncthing.nix
-    ./restic.nix
+    # ./restic.nix
     # ./dslr.nix
   ];
 
@@ -90,8 +90,7 @@
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
   };
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-  services.xserver.videoDrivers = ["nvidia"];
+
   services = {
     emacs = {
       # package = pkgs.emacs-unstable;
