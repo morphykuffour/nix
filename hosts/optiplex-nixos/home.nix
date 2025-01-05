@@ -7,49 +7,51 @@
   ...
 }: {
   imports = [
-    ../../modules/i3.nix
-    ../../modules/redshift.nix
-    ../../modules/pass.nix
-    ../../modules/fonts.nix
-    ../../modules/zathura
+    # ../../modules/i3.nix
+    # ../../modules/redshift.nix
+    # ../../modules/pass.nix
+    # ../../modules/fonts.nix
+    # ../../modules/zathura
     # ../../modules/hyprland
     # ./modules/nvim.nix
-    ../../modules/picom.nix
+    # ../../modules/picom.nix
   ];
 
-  services.clipmenu.enable = true;
+  # services.clipmenu.enable = true;
   programs = {
     home-manager = {
       enable = true;
     };
-    # obs-studio = {
-    #   enable = true;
-    #   plugins = with pkgs.obs-studio-plugins; [
-    #     wlrobs
-    #     obs-gstreamer
-    #   ];
-    # };
-    lazygit = {
+    obs-studio = {
       enable = true;
-      settings = {
-        git = {
-          paging = {
-            colorArg = "always";
-            pager = "delta --color-only --dark --paging=never";
-            useConfig = false;
-          };
-        };
-      };
-    };
-    vscode = {
-      enable = true;
-      extensions = with pkgs.vscode-extensions; [
-        dracula-theme.theme-dracula
-        vscodevim.vim
-        yzhang.markdown-all-in-one
-        ms-toolsai.jupyter
+      plugins = with pkgs.obs-studio-plugins; [
+        wlrobs
+        obs-gstreamer
+        obs-backgroundremoval
+        obs-pipewire-audio-capture
       ];
     };
+    # lazygit = {
+    #   enable = true;
+    #   settings = {
+    #     git = {
+    #       paging = {
+    #         colorArg = "always";
+    #         pager = "delta --color-only --dark --paging=never";
+    #         useConfig = false;
+    #       };
+    #     };
+    #   };
+    # };
+    # vscode = {
+    #   enable = true;
+    #   extensions = with pkgs.vscode-extensions; [
+    #     dracula-theme.theme-dracula
+    #     vscodevim.vim
+    #     yzhang.markdown-all-in-one
+    #     ms-toolsai.jupyter
+    #   ];
+    # };
   };
 
   nixpkgs = {
@@ -57,8 +59,8 @@
   };
 
   home = {
-    username = "${user}";
-    homeDirectory = "/home/${user}";
+    username = "morph";
+    homeDirectory = "/home/morph";
     stateVersion = "22.05";
     packages = with pkgs; [
       tmux
@@ -137,7 +139,7 @@
       # mathpix-snipping-tool
       black
       # rust-analyzer
-      postman
+      # postman
       openssl
       # protonvpn-gui
       # protonmail-bridge
@@ -168,24 +170,24 @@
       ledger
 
       # python packages
-      (python39.withPackages (pp:
-        with pp; [
-          pynvim
-          pandas
-          # reticulate needs conda
-          conda
-          requests
-          pip
-          i3ipc
-          ipython
-          dbus-python
-          html2text
-          keymapviz
-          mysql-connector
-          pipx
-          pyqt5
-          ueberzug
-        ]))
+      # (python39.withPackages (pp:
+      #   with pp; [
+      #     pynvim
+      #     pandas
+      #     # reticulate needs conda
+      #     conda
+      #     requests
+      #     pip
+      #     i3ipc
+      #     ipython
+      #     dbus-python
+      #     html2text
+      #     keymapviz
+      #     mysql-connector
+      #     pipx
+      #     pyqt5
+      #     ueberzug
+      #   ]))
     ];
   };
 }
