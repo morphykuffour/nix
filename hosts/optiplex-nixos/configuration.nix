@@ -104,18 +104,18 @@
       };
 
       settings.folders = {
-        "Org" = {
-          path = "/home/morph/Org/";
-          id = "Org";
-          devices = ["xps17-nixos" "macmini-darwin"];
-          versioning = {
-            type = "staggered";
-            params = {
-              cleanInterval = "3600";
-              maxAge = "15768000";
-            };
-          };
-        };
+        # "Org" = {
+        #   path = "/home/morph/Org/";
+        #   id = "Org";
+        #   devices = ["xps17-nixos" "macmini-darwin"];
+        #   versioning = {
+        #     type = "staggered";
+        #     params = {
+        #       cleanInterval = "3600";
+        #       maxAge = "15768000";
+        #     };
+        #   };
+        # };
 
         "iCloud" = {
           path = "/home/morph/iCloud/";
