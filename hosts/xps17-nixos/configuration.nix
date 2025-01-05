@@ -12,7 +12,7 @@
   imports = [
     ./hardware-configuration.nix
     ./keyd.nix
-    # ./tailscale.nix
+#     ./tailscale.nix
     ./syncthing.nix
     # ./restic.nix
     # ./dslr.nix
