@@ -16,13 +16,14 @@
     overrideFolders = true;
     settings.devices = {
       "macmini-darwin" = {id = "OK4365M-ZZC4CDT-A6W2YF2-MPIX3GR-FYZIWWJ-5QS6RYM-5KYU35K-SLYBHQO";};
+      "optiplex-nixos" = {id = "ZXN6ICB-6DIAJ3E-LSOBFNF-VBAPZOA-DYHC2CE-TE4KYD5-CGHRJWL-GCFP3AJ";};
     };
 
     settings.folders = {
       "Org" = {
         path = "/home/morph/Org/";
         id = "Org";
-        devices = ["xps17-nixos" "ubuntu" "macmini-darwin"];
+        devices = ["optiplex-nixos" "macmini-darwin"];
         versioning = {
           type = "staggered";
           params = {
@@ -35,7 +36,7 @@
       "iCloud" = {
         path = "/home/morph/iCloud/";
         id = "iCloud";
-        devices = ["xps17-nixos" "ubuntu" "macmini-darwin"];
+        devices = ["optiplex-nixos" "macmini-darwin"];
         versioning = {
           type = "staggered";
           params = {
