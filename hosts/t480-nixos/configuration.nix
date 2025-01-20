@@ -20,7 +20,7 @@
 
   # Bootloader zfs specific
   boot.supportedFilesystems = ["zfs"];
-  networking.hostId = "944dfacf";
+  networking.hostId = "894c9086";
 
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -36,7 +36,7 @@
         insmod fat
         insmod search_fs_uuid
         insmod chain
-        search --fs-uuid --set=root $FS_UUID
+        search --fs-uuid --set=root 88D5-14E9
         chainloader /EFI/Microsoft/Boot/bootmgfw.efi
       }
     '';
@@ -44,7 +44,7 @@
 
   boot.initrd.luks.devices = {
     root = {
-      device = "/dev/disk/by-uuid/08ecff77-0009-4995-8f83-17ff64ee6bd4"; ## Use blkid to find this UUID
+      device = "/dev/disk/by-uuid/0090236f-bc80-444f-8026-b3eea64df092"; ## Use blkid to find this UUID
       # Required even if we're not using LVM
       preLVM = true;
     };
@@ -204,7 +204,7 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system = {
     # stateVersion = config.system.nixos.release;
-    stateVersion = "23.05"; # Did you read the comment?
+    stateVersion = "24.05"; # Did you read the comment?
     autoUpgrade = {
       enable = true;
       allowReboot = true;
