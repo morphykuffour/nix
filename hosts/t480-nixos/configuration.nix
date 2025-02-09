@@ -11,9 +11,9 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    # ./keyd.nix
+    ./keyd.nix
     # ./tailscale.nix
-    # ./syncthing.nix
+    ./syncthing.nix
     # ./restic.nix
     # ./dslr.nix
   ];
@@ -125,13 +125,13 @@
 
       displayManager = {
         startx.enable = false;
-        # sddm = {
-        #   enable = true;
-        # };
-        gdm = {
+        sddm = {
           enable = true;
-          wayland = false;
         };
+        # gdm = {
+        #   enable = true;
+        #   wayland = false;
+        # };
         autoLogin = {
           enable = false;
           user = "morph";
