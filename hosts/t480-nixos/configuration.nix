@@ -44,7 +44,8 @@
 
   boot.initrd.luks.devices = {
     root = {
-      device = "/dev/disk/by-uuid/0090236f-bc80-444f-8026-b3eea64df092"; ## Use blkid to find this UUID
+      # device = "/dev/disk/by-uuid/0090236f-bc80-444f-8026-b3eea64df092"; ## Use blkid to find this UUID
+      device = "/dev/disk/by-uuid/a1568d7c-dcfc-48f8-bd5c-15fe496e896e"; ## Use blkid to find this UUID
       # Required even if we're not using LVM
       preLVM = true;
     };
@@ -244,7 +245,7 @@
     brightnessctl
     xdragon
     keyd
-    gnome.dconf-editor
+    dconf-editor
     mate.mate-power-manager
     mate.mate-media
     orchis-theme
@@ -296,7 +297,7 @@
     uxplay
     arandr
     libclang
-    libstdcxx5
+    # libstdcxx5
     ctags
     zsh-completions
     networkmanager
