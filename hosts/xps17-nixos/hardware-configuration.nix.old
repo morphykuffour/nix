@@ -18,13 +18,19 @@
   boot.extraModulePackages = [];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/805e723d-e779-4eb0-9822-28db4b30b965";
-    fsType = "ext4";
+    device = "rpool/root/nixos";
+    fsType = "zfs";
+  };
+
+  fileSystems."/home" = {
+    device = "rpool/home";
+    fsType = "zfs";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/8456-6BD3";
+    device = "/dev/disk/by-uuid/1447-2412";
     fsType = "vfat";
+    options = ["fmask=0022" "dmask=0022"];
   };
 
   swapDevices = [];
@@ -37,10 +43,5 @@
   # networking.interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
-  #bluetooth
-  hardware.bluetooth.enable = true; # enables support for Bluetooth
-  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
 }

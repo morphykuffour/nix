@@ -37,7 +37,6 @@
 
   # Enable the X11 windowing system.
   services = {
-
     emacs = {
       # package = pkgs.emacs-unstable;
       # package = pkgs.emacs-git;

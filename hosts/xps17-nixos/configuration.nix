@@ -12,7 +12,7 @@
   imports = [
     ./hardware-configuration.nix
     ./keyd.nix
-#     ./tailscale.nix
+    # ./tailscale.nix
     ./syncthing.nix
     # ./restic.nix
     # ./dslr.nix
@@ -22,7 +22,7 @@
 
   # zfs specific
   boot.supportedFilesystems = ["zfs"];
-  networking.hostId = "944dfacf";
+  networking.hostId = "cc5926fa";
 
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.enable = true;
@@ -33,7 +33,7 @@
 
   boot.initrd.luks.devices = {
     root = {
-      device = "/dev/disk/by-uuid/08ecff77-0009-4995-8f83-17ff64ee6bd4"; ## Use blkid to find this UUID
+      device = "/dev/disk/by-uuid/f134f473-95f4-4037-a167-600084b82a7e"; ## Use blkid to find this UUID
       # Required even if we're not using LVM
       preLVM = true;
     };
