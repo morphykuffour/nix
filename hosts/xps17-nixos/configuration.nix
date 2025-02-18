@@ -212,8 +212,8 @@
     # stateVersion = config.system.nixos.release;
     stateVersion = "23.05"; # Did you read the comment?
     autoUpgrade = {
-      enable = true;
-      allowReboot = true;
+      enable = false;
+      allowReboot = false;
     };
   };
 
@@ -279,7 +279,7 @@
     wmctrl
     fwupd
     # mysql80
-    dbeaver
+    dbeaver-bin
     dig
     psmisc
     # discord
@@ -302,7 +302,7 @@
     uxplay
     arandr
     libclang
-    libstdcxx5
+    # libstdcxx5
     ctags
     zsh-completions
     networkmanager
@@ -314,6 +314,8 @@
     gimp
     # mullvad
     mpv
+    code-cursor
+    ghostty
 
     # R packages for data science
     rstudio
