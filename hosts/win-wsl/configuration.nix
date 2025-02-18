@@ -51,10 +51,10 @@
       enable = true;
       acceleration = "cuda"; # Or "rocm"
       # environmentVariables = { # I haven't been able to get this to work myself yet, but I'm sharing it for the sake of completeness
-        # HOME = "/home/ollama";
-        # OLLAMA_MODELS = "/home/ollama/models";
-        # OLLAMA_HOST = "0.0.0.0:11434"; # Make Ollama accesible outside of localhost
-        # OLLAMA_ORIGINS = "http://localhost:8080,http://192.168.0.10:*"; # Allow access, otherwise Ollama returns 403 forbidden due to CORS
+      # HOME = "/home/ollama";
+      # OLLAMA_MODELS = "/home/ollama/models";
+      # OLLAMA_HOST = "0.0.0.0:11434"; # Make Ollama accesible outside of localhost
+      # OLLAMA_ORIGINS = "http://localhost:8080,http://192.168.0.10:*"; # Allow access, otherwise Ollama returns 403 forbidden due to CORS
       #};
     };
 
@@ -68,8 +68,6 @@
         OLLAMA_BASE_URL = "http://127.0.0.1:11434";
       };
     };
-
-
   };
 
   wsl = {
