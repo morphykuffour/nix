@@ -20,7 +20,7 @@
 
   # Bootloader zfs specific
   boot.supportedFilesystems = ["zfs"];
-  networking.hostId = "894c9086";
+  networking.hostId = "d1308988";
 
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -40,15 +40,6 @@
         chainloader /EFI/Microsoft/Boot/bootmgfw.efi
       }
     '';
-  };
-
-  boot.initrd.luks.devices = {
-    root = {
-      # device = "/dev/disk/by-uuid/0090236f-bc80-444f-8026-b3eea64df092"; ## Use blkid to find this UUID
-      device = "/dev/disk/by-uuid/a1568d7c-dcfc-48f8-bd5c-15fe496e896e"; ## Use blkid to find this UUID
-      # Required even if we're not using LVM
-      preLVM = true;
-    };
   };
 
   # Enable networking
