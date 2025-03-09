@@ -8,7 +8,6 @@
   # tailscale
   services.tailscale = {
     enable = true;
-    package = inputs.tailscale.packages.${pkgs.system}.tailscale;
   };
 
   age.identityPaths = [
@@ -29,9 +28,7 @@
     serviceConfig.Type = "oneshot";
 
     # have the job run this shell script
-    script = with pkgs; let
-      tailscale = inputs.tailscale.packages.${pkgs.system}.tailscale;
-    in ''
+    script = with pkgs; ''
       # wait for tailscaled to settle
       sleep 2
 
