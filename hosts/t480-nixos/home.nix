@@ -24,9 +24,7 @@
   services.clipmenu.enable = true;
   programs = {
     home-manager = {
-      enable = true;
-    };
-    # obs-studio = {
+      enable = true; }; # obs-studio = {
     #   enable = true;
     #   plugins = with pkgs.obs-studio-plugins; [
     #     wlrobs
@@ -107,6 +105,7 @@
       p7zip
       ruby
       zip
+      dconf
 
       # python packages
       # (python39.withPackages (pp:
