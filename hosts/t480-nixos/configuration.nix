@@ -299,5 +299,6 @@
     discord
     gimp
     # mullvad
+    code-cursor
   ];
 }
