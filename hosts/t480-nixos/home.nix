@@ -15,6 +15,7 @@
     ../../modules/fonts.nix
     ../../modules/zathura
     ../../modules/lf
+    ../../modules/grobi
     # ../../modules/nvim.nix
     ../../modules/redshift.nix
     # ../../modules/picom.nix
