@@ -250,7 +250,7 @@
     brightnessctl
     xdragon
     keyd
-    # gnome.dconf-editor
+    dconf-editor
     mate.mate-power-manager
     mate.mate-media
     orchis-theme
@@ -296,7 +296,6 @@
     libtool
     libvterm
     os-prober
-    kitty
     age
     rage
     uxplay
