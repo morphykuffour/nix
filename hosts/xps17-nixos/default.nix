@@ -15,6 +15,7 @@ nixpkgs.lib.nixosSystem {
   modules = [
     ./configuration.nix
     # ../../modules/wg-quick
+    ../../modules/tailscale
     home-manager.nixosModules.home-manager
     agenix.nixosModules.default
     {
