@@ -14,6 +14,7 @@ nixpkgs.lib.nixosSystem {
   specialArgs = {inherit inputs;};
   modules = [
     ./configuration.nix
+    ../../modules/tailscale
     home-manager.nixosModules.home-manager
     agenix.nixosModules.default
     {
