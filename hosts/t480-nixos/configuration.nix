@@ -12,7 +12,7 @@
   imports = [
     ./hardware-configuration.nix
     ./keyd.nix
-    # ./tailscale.nix
+    ./tailscale.nix
     ./syncthing.nix
     # ./restic.nix
     # ./dslr.nix
@@ -107,12 +107,12 @@
 
       layout = "us";
       xkbVariant = "";
-      desktopManager = {
-        mate = {
-          enable = true;
-          # excludePackages = [ pkgs.mate.mate-terminal pkgs.mate.pluma ];
-        };
-      };
+      # desktopManager = {
+      #   mate = {
+      #     enable = true;
+      #     # excludePackages = [ pkgs.mate.mate-terminal pkgs.mate.pluma ];
+      #   };
+      # };
 
       displayManager = {
         startx.enable = false;
@@ -237,8 +237,8 @@
     xdragon
     keyd
     dconf-editor
-    mate.mate-power-manager
-    mate.mate-media
+    # mate.mate-power-manager
+    # mate.mate-media
     orchis-theme
     tela-circle-icon-theme
     docker
