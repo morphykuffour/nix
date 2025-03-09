@@ -2,10 +2,14 @@
   config,
   pkgs,
   agenix,
+  inputs,
   ...
 }: {
   # tailscale
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    package = inputs.tailscale.packages.${pkgs.system}.tailscale;
+  };
 
   age.identityPaths = [
     "/home/morph/.ssh/id_ed25519"
@@ -25,7 +29,9 @@
     serviceConfig.Type = "oneshot";
 
     # have the job run this shell script
-    script = with pkgs; ''
+    script = with pkgs; let
+      tailscale = inputs.tailscale.packages.${pkgs.system}.tailscale;
+    in ''
       # wait for tailscaled to settle
       sleep 2
 
