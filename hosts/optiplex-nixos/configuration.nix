@@ -18,6 +18,9 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
+  boot.extraModulePackages = [
+    config.boot.kernelPackages.rtl8814au
+  ];
 
   networking.hostName = "optiplex-nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
