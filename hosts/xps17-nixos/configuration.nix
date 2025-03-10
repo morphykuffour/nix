@@ -44,10 +44,18 @@
     hostName = "xps17-nixos";
     networkmanager.enable = true;
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-    # firewall = {
-    #   enable = true;
-    #   trustedInterfaces = [ "tailscale0" ];
-    # };
+    firewall = {
+      enable = true;
+      
+      # always allow traffic from tailscale network
+      trustedInterfaces = [ "tailscale0" ];
+
+       # allow the Tailscale UDP port through the firewall
+       allowedUDPPorts = [ config.services.tailscale.port ];
+
+       # let you SSH in over the public internet
+       allowedTCPPorts = [ 22 ];
+    };
   };
 
   # Enable tailscale Mesh VPN
