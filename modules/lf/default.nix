@@ -1,5 +1,4 @@
 # https://github.com/vimjoyer/lf-nix-video
-# TODO move ranger to lf in nix
 {
   pkgs,
   config,
