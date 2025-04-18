@@ -50,7 +50,7 @@ in {
       "<enter>" = "open";
       "<c-f>" = "fzf_jump";
       "<c-s>" = "fzf_search";
-      "c-d>" = "dragon-out";
+      "<c-d>" = "dragon-out";
       "g~" = "cd";
       gh = "cd";
       "g/" = "/";
