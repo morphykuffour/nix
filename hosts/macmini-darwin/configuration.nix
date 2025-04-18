@@ -88,6 +88,16 @@
     # ];
   };
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      kitty = prev.kitty.overrideAttrs (old: {
+        version = "0.38.1";  # Try an older version
+        doCheck = false;
+      });
+    })
+  ];
+
+
   system = {
     defaults = {
       NSGlobalDomain = {
@@ -98,10 +108,14 @@
       };
       dock = {
         # Dock settings
-        autohide = true;
+        autohide = false;
         orientation = "bottom";
         showhidden = true;
         tilesize = 40;
+        # mineffect = "genie";
+        # launchanim = true;
+        # show-process-indicators = true;
+        # show-recents = true;
       };
       finder = {
         # Finder settings
