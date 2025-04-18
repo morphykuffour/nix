@@ -44,7 +44,7 @@
       # black
       # gopls
       # ccls
-      newsboat
+      # newsboat
       # dev packages
       # # gcc_multi
       # # avrlibc

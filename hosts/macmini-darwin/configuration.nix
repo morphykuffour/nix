@@ -39,7 +39,6 @@
       # Installed Nix packages
       # Terminal
       git
-      ranger
       # emacs
       fd
       ripgrep
