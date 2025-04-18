@@ -15,3 +15,5 @@ https://nix.dev/manual/nix/2.21/installation/uninstall
 https://blog.6nok.org/how-i-use-nix-on-macos/
 
 https://edolstra.github.io/pubs/phd-thesis.pdf
+
+https://nix.dev/manual/nix/2.18/installation/uninstall
