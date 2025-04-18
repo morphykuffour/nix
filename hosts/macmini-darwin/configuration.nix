@@ -50,10 +50,6 @@
     zsh.enable = true;
   };
 
-  services = {
-    nix-daemon.enable = true; # Auto upgrade daemon
-  };
-
   # homebrew = {
   #   # Declare Homebrew using Nix-Darwin
   #   enable = true;
