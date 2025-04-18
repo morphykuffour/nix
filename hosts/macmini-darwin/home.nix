@@ -1,4 +1,9 @@
 {pkgs, ...}: {
+
+  imports= [
+    ../../modules/lf
+  ];
+
   programs = {
     home-manager = {
       enable = true;
@@ -58,7 +63,7 @@
       delta
       # cargo
       # atuin
-      kitty
+      # kitty
       tmux
       ruby
       edir
@@ -75,8 +80,8 @@
       gh
       jq
       # go
-      python3
-      opam
+      # python3
+      # opam
       # python packages
       # (python39.withPackages (pp:
       #   with pp; [
