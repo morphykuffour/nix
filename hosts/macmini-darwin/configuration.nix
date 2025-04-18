@@ -64,16 +64,19 @@
 
   nix = {
     package = pkgs.nix;
-    gc = {
-      # Garbage collection
-      automatic = true;
-      interval.Day = 7;
-      options = "--delete-older-than 7d";
-    };
+    # gc = {
+    #   # Garbage collection
+    #   automatic = true;
+    #   interval.Day = 7;
+    #   options = "--delete-older-than 7d";
+    # };
     extraOptions = ''
       auto-optimise-store = true
       experimental-features = nix-command flakes
+      gc-keep-outputs = true
+      gc-keep-derivations = true
     '';
+    enable = false;
   };
 
   nixpkgs.config = {

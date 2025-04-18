@@ -1,8 +1,8 @@
 {pkgs, ...}: {
 
-  imports= [
-    ../../modules/lf
-  ];
+  # imports= [
+  #   ../../modules/lf
+  # ];
 
   programs = {
     home-manager = {
@@ -63,7 +63,6 @@
       delta
       # cargo
       # atuin
-      # kitty
       tmux
       ruby
       edir
