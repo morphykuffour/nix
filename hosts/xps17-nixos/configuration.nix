@@ -46,15 +46,15 @@
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     firewall = {
       enable = true;
-      
+
       # always allow traffic from tailscale network
-      trustedInterfaces = [ "tailscale0" ];
+      trustedInterfaces = ["tailscale0"];
 
-       # allow the Tailscale UDP port through the firewall
-       allowedUDPPorts = [ config.services.tailscale.port ];
+      # allow the Tailscale UDP port through the firewall
+      allowedUDPPorts = [config.services.tailscale.port];
 
-       # let you SSH in over the public internet
-       allowedTCPPorts = [ 22 ];
+      # let you SSH in over the public internet
+      allowedTCPPorts = [22];
     };
   };
 
@@ -91,7 +91,6 @@
   };
 
   security.rtkit.enable = true;
-  hardware.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -100,6 +99,10 @@
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
   };
+
+  # bluetooth
+  hardware.bluetooth.enable = true; # enables support for Bluetooth
+  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
 
   services = {
     emacs = {
@@ -110,24 +113,36 @@
       install = true;
     };
 
+    pulseaudio.enable = false;
     blueman.enable = true;
+
+    # printing.enable = true;
+
+    avahi = {
+      nssmdns4 = true;
+      enable = true;
+      openFirewall = true;
+      publish = {
+        enable = true;
+        userServices = true;
+        domain = true;
+      };
+      allowInterfaces = ["wlp0s20f3" "tailscale0"];
+    };
 
     xserver = {
       libinput.enable = true;
       enable = true;
 
-      layout = "us";
-      xkbVariant = "";
+      xkb = {
+        layout = "us";
+        variant = "";
+      };
+
       desktopManager = {
-        # xterm = {
-        #   enable = true;
-        # };
-        # gnome = {
-        #   enable = true;
-        # };
-        # plasma5 = {
-        #   enable = true;
-        # };
+        plasma6 = {
+          enable = true;
+        };
         mate = {
           enable = true;
           # excludePackages = [ pkgs.mate.mate-terminal pkgs.mate.pluma ];
@@ -136,13 +151,17 @@
 
       displayManager = {
         startx.enable = false;
-        # sddm = {
-        #   enable = true;
-        # };
-        gdm = {
-          enable = true;
-          wayland = false;
-        };
+        sddm.enable = true;
+        defaultSession = "plasmax11";
+        # session = [
+        #   {
+        #     manage = "desktop";
+        #     name = "plasma6+i3";
+        #     start = ''exec env KDEWM=${pkgs.i3-gaps}/bin/i3 ${pkgs.kdePackages.plasma-workspace}/bin/startplasma-x11'';
+        #   }
+        # ];
+
+        # sessionCommands = "export KDEWM=${pkgs.i3-gaps}/bin/i3";
         autoLogin = {
           enable = false;
           user = "morph";
@@ -156,27 +175,26 @@
         };
       };
     };
+  };
 
-    # printing.enable = true;
-
-    avahi = {
-      nssmdns = true;
-      enable = true;
-      openFirewall = true;
-      publish = {
-        enable = true;
-        userServices = true;
-        domain = true;
-      };
-      allowInterfaces = ["wlp0s20f3" "tailscale0"];
+  systemd.user.services.plasma-i3wm = {
+    wantedBy = ["plasma-workspace-x11.target"];
+    description = "Launch Plasma with i3wm.";
+    environment = lib.mkForce {};
+    serviceConfig = {
+      ExecStart = "${pkgs.i3-gaps}/bin/i3";
+      Restart = "on-failure";
     };
   };
+
+  systemd.user.services.plasma-workspace-x11.after = ["plasma-i3wm.target"];
+  systemd.user.services.plasma-kwin_x11.enable = false;
 
   users.users.morph = {
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "Morphy Kuffour";
-    extraGroups = ["networkmanager" "wheel" "libvirtd"];
+    extraGroups = ["networkmanager" "wheel" "libvirtd" "docker"];
     packages = with pkgs; [];
   };
 
