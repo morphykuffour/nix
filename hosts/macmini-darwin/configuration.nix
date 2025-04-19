@@ -91,12 +91,11 @@
   nixpkgs.overlays = [
     (final: prev: {
       kitty = prev.kitty.overrideAttrs (old: {
-        version = "0.38.1";  # Try an older version
+        version = "0.38.1"; # Try an older version
         doCheck = false;
       });
     })
   ];
-
 
   system = {
     defaults = {
