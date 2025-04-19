@@ -13,7 +13,7 @@
   age.identityPaths = [
     "/home/morph/.ssh/id_ed25519"
   ];
-  age.secrets.ts-optiplex-nixos.file = ../../secrets/ts-optiplex-nixos.age; 
+  age.secrets.ts-optiplex-nixos.file = ../../secrets/ts-optiplex-nixos.age;
 
   # create a oneshot job to authenticate to Tailscale
   systemd.services.tailscale-autoconnect = {

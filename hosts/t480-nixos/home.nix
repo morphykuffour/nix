@@ -24,7 +24,8 @@
   services.clipmenu.enable = true;
   programs = {
     home-manager = {
-      enable = true; }; # obs-studio = {
+      enable = true;
+    }; # obs-studio = {
     #   enable = true;
     #   plugins = with pkgs.obs-studio-plugins; [
     #     wlrobs

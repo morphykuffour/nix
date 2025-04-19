@@ -1,6 +1,5 @@
 {pkgs, ...}: {
-
-  imports= [
+  imports = [
     ../../modules/lf
   ];
 

@@ -103,7 +103,7 @@
 
     # win-wsl NixOs
     nixosConfigurations.win-wsl = import ./hosts/win-wsl {
-      inherit nixpkgs self inputs user home-manager alejandra agenix overlays; 
+      inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
     };
 
     # visionfive2 NixOs
