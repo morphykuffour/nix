@@ -91,7 +91,7 @@
   nixpkgs.overlays = [
     (final: prev: {
       kitty = prev.kitty.overrideAttrs (old: {
-        version = "0.38.1"; # Try an older version
+        version = "0.38.1";
         doCheck = false;
       });
     })
@@ -108,7 +108,7 @@
       dock = {
         # Dock settings
         autohide = false;
-        orientation = "bottom";
+        orientation = "right";
         showhidden = true;
         tilesize = 40;
         # mineffect = "genie";
