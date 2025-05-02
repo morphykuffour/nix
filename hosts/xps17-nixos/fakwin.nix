@@ -1,4 +1,4 @@
-# source: https://github.com/DMaroo/fakwin/issues/3
+# source:https://github.com/DMaroo/fakwin/issues/3
 {
   config,
   lib,
@@ -40,12 +40,15 @@ in {
   systemd.services.fakwin = {
     description = "Plasma Fake KWin dbus interface";
     wantedBy = [ "graphical-session.target" ];
-    partOf = [ "graphical-session.target" ];
+    after = [ "plasma-workspace.service" ];
+    requires = [ "dbus.socket" ];
     
     serviceConfig = {
       Type = "simple";
       ExecStart = "${fakwin}/bin/fakwin";
-      Restart = "on-failure";
+      Restart = "always";
+      RestartSec = "1";
+      Environment = "DISPLAY=:0";
     };
   };
 }

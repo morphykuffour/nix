@@ -154,17 +154,17 @@ in {
           notification = false;
         }
         {
-          command = "polybar";
-          always = true;
-          notification = false;
-        }
-        {
           command = "blueman-applet";
           always = true;
           notification = false;
         }
         {
           command = "nm-applet";
+          always = true;
+          notification = false;
+        }
+        {
+          command = "fakwin";
           always = true;
           notification = false;
         }
@@ -197,7 +197,6 @@ in {
       # i3 v4.21
       client.focused_tab_title  #ffdb01 #0125ff #0000ff #ffdb01   #ffdb01
       client.focused_inactive   #333333 #5f676a #ffffff #484e50   #5f676a
-
     '';
   };
 }
