@@ -14,6 +14,7 @@
     ./keyd.nix
     ./tailscale.nix
     ./syncthing.nix
+    # ./fakwin.nix
     # ./restic.nix
     # ./dslr.nix
   ];
@@ -143,25 +144,16 @@
         plasma6 = {
           enable = true;
         };
-        mate = {
-          enable = true;
-          # excludePackages = [ pkgs.mate.mate-terminal pkgs.mate.pluma ];
-        };
+        # mate = {
+        #   enable = true;
+        #   # excludePackages = [ pkgs.mate.mate-terminal pkgs.mate.pluma ];
+        # };
       };
 
       displayManager = {
         startx.enable = false;
         sddm.enable = true;
         defaultSession = "plasmax11";
-        # session = [
-        #   {
-        #     manage = "desktop";
-        #     name = "plasma6+i3";
-        #     start = ''exec env KDEWM=${pkgs.i3-gaps}/bin/i3 ${pkgs.kdePackages.plasma-workspace}/bin/startplasma-x11'';
-        #   }
-        # ];
-
-        # sessionCommands = "export KDEWM=${pkgs.i3-gaps}/bin/i3";
         autoLogin = {
           enable = false;
           user = "morph";

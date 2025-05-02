@@ -17,6 +17,7 @@
     ../../modules/lf
     # ../../modules/nvim.nix
     ../../modules/redshift.nix
+    ./fakwin.nix
     # ../../modules/picom.nix
   ];
 
