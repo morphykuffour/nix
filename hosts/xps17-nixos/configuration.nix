@@ -14,6 +14,7 @@
     ./keyd.nix
     ./tailscale.nix
     ./syncthing.nix
+    ../../modules/mullvad
     # ./fakwin.nix
     # ./restic.nix
     # ./dslr.nix

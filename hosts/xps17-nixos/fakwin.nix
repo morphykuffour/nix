@@ -35,20 +35,33 @@ let
     };
   };
 in {
-  environment.systemPackages = [fakwin];
-
-  systemd.services.fakwin = {
-    description = "Plasma Fake KWin dbus interface";
-    wantedBy = [ "graphical-session.target" ];
-    after = [ "plasma-workspace.service" ];
-    requires = [ "dbus.socket" ];
+  home.packages = [fakwin];
+  
+  systemd.user.services.fakwin = {
+    Unit = {
+      Description = "Plasma Fake KWin dbus interface";
+      PartOf = ["graphical-session.target"];
+      After = ["graphical-session-pre.target"];
+    };
     
-    serviceConfig = {
+    Service = {
       Type = "simple";
       ExecStart = "${fakwin}/bin/fakwin";
       Restart = "always";
       RestartSec = "1";
-      Environment = "DISPLAY=:0";
+    };
+    
+    Install = {
+      WantedBy = ["graphical-session.target"];
     };
   };
+  
+  # Optional: add this to your i3 config to ensure fakwin starts with i3
+  xsession.windowManager.i3.config.startup = [
+    {
+      command = "${fakwin}/bin/fakwin";
+      always = false;
+      notification = false;
+    }
+  ];
 }

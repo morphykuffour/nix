@@ -187,6 +187,28 @@ in {
     };
 
     extraConfig = ''
+      # Plasma compatibility improvements
+      for_window [window_role="pop-up"] floating enable
+      for_window [window_role="task_dialog"] floating enable
+      for_window [class="yakuake"] floating enable
+      for_window [class="systemsettings"] floating enable
+      for_window [class="plasmashell"] floating enable
+      for_window [class="Plasma"] floating enable, border none
+      for_window [title="plasma-desktop"] floating enable, border none
+      for_window [title="win7"] floating enable, border none
+      for_window [class="krunner"] floating enable, border none
+      for_window [class="Kmix"] floating enable, border none
+      for_window [class="Klipper"] floating enable, border none
+      for_window [class="Plasmoidviewer"] floating enable, border none
+      for_window [class="(?i)*nextcloud*"] floating disable
+      for_window [class="plasmashell" window_type="notification"] border none, move position 70 ppt 81 ppt
+      no_focus [class="plasmashell" window_type="notification"]
+
+      # Kill the existing desktop window that covers the entire screen
+      for_window [title="Desktop @ QRect.*"] kill, floating enable, border none
+
+
+      # Notetaker
       for_window [ title="notetaker_window" ] floating enable resize set 640 480
       title_align center
       for_window [ title="floatimage_window" ] floating enable resize set 640 260
