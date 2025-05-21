@@ -32,5 +32,11 @@ in {
     ${mullvad} tunnel ipv6 set on
     ${mullvad} dns set default \
        --block-ads --block-malware --block-trackers
+
+    # ── add Shadowsocks bridge setup here ──
+    ${mullvad} bridge set location any
+    ${mullvad} bridge set state on
   '';
 }
+
+# system-wide proxy at 127.0.0.1:1080
