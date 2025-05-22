@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let 
-  kanata_config = builtins.readfile ./xps17.kbd;
+  kanata_config = builtins.readFile ./xps17.kbd;
 in {
   # Enable the uinput module
   boot.kernelModules = [ "uinput" ];
