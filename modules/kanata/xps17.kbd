@@ -1,5 +1,5 @@
 (defsrc
-  caps tab d h j k l rsft
+  caps tab d h j k l rsft rctrl
 )
 
 (defvar
@@ -14,9 +14,9 @@
 )
 
 (deflayer base
-  @caps @tab d h j k l bspc
+  @caps @tab d h j k l bspc ret
 )
 
 (deflayer arrow
-  _ _ @del left down up right _
+  _ _ @del left down up right _ _
 )
