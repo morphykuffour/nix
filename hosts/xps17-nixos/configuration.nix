@@ -58,6 +58,13 @@
 
       # let you SSH in over the public internet
       allowedTCPPorts = [22];
+
+      allowedTCPPortRanges = [ 
+        { from = 1714; to = 1764; } # KDE Connect
+      ];  
+      allowedUDPPortRanges = [ 
+        { from = 1714; to = 1764; } # KDE Connect
+      ];  
     };
   };
 
@@ -193,10 +200,18 @@
   };
 
   programs = {
+    # Steam
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+      localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+    };
     # obs-studio = {
     #   enable = true;
     #   plugins = with pkgs; [ obs-studio-plugins.wlrobs ];
     # };
+    kdeconnect.enable = true;
 
     waybar.enable = true;
     zsh.enable = true;
@@ -337,6 +352,7 @@
     mpv
     code-cursor
     ghostty
+    anki
 
     # R packages for data science
     rstudio
