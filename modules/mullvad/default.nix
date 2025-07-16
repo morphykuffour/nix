@@ -38,5 +38,5 @@ in {
     ${mullvad} bridge set state on
   '';
 }
-
 # system-wide proxy at 127.0.0.1:1080
+
