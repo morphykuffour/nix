@@ -36,26 +36,26 @@ let
   };
 in {
   home.packages = [fakwin];
-  
+
   systemd.user.services.fakwin = {
     Unit = {
       Description = "Plasma Fake KWin dbus interface";
       PartOf = ["graphical-session.target"];
       After = ["graphical-session-pre.target"];
     };
-    
+
     Service = {
       Type = "simple";
       ExecStart = "${fakwin}/bin/fakwin";
       Restart = "always";
       RestartSec = "1";
     };
-    
+
     Install = {
       WantedBy = ["graphical-session.target"];
     };
   };
-  
+
   # Optional: add this to your i3 config to ensure fakwin starts with i3
   xsession.windowManager.i3.config.startup = [
     {

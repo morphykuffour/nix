@@ -101,6 +101,20 @@
       newsboat
       neovim
       # texlive.combined.scheme-full
+      (texlive.combine {
+        inherit
+          (texlive)
+          scheme-small
+          latexmk
+          xetex
+          listings
+          amsmath
+          geometry
+          fontspec
+          hyperref
+          ;
+      })
+
       qmk
       qmk-udev-rules
       p7zip

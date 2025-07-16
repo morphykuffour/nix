@@ -59,12 +59,18 @@
       # let you SSH in over the public internet
       allowedTCPPorts = [22];
 
-      allowedTCPPortRanges = [ 
-        { from = 1714; to = 1764; } # KDE Connect
-      ];  
-      allowedUDPPortRanges = [ 
-        { from = 1714; to = 1764; } # KDE Connect
-      ];  
+      allowedTCPPortRanges = [
+        {
+          from = 1714;
+          to = 1764;
+        } # KDE Connect
+      ];
+      allowedUDPPortRanges = [
+        {
+          from = 1714;
+          to = 1764;
+        } # KDE Connect
+      ];
     };
   };
 
