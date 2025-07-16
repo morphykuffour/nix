@@ -16,7 +16,7 @@
     ../../modules/zathura
     ../../modules/lf
     # ../../modules/nvim.nix
-    ../../modules/redshift.nix
+    # ../../modules/redshift.nix
     ./fakwin.nix
     # ../../modules/picom.nix
   ];
@@ -83,7 +83,7 @@
       neomutt
       mu
       isync
-      msmtp
+      # msmtp
       pass
       eva
       mcfly
@@ -100,7 +100,7 @@
       file
       newsboat
       neovim
-      texlive.combined.scheme-full
+      # texlive.combined.scheme-full
       qmk
       qmk-udev-rules
       p7zip
