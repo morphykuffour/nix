@@ -141,7 +141,10 @@
     };
 
     xserver = {
-      libinput.enable = true;
+      libinput = {
+        enable = true;
+        # touchpad.disableWhileTyping = true;
+      };
       enable = true;
 
       xkb = {
@@ -281,7 +284,7 @@
     xdg-user-dirs
     pciutils
     usbutils
-    ventoy-bin
+    # ventoy-bin
     rustup
     rustc
     brightnessctl
@@ -347,12 +350,13 @@
     avahi
     eza
     discord
-    gimp
+    # gimp
     # mullvad
     mpv
     code-cursor
     ghostty
     anki
+    rustdesk
 
     # R packages for data science
     rstudio
