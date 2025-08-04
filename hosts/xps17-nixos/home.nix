@@ -115,8 +115,8 @@
           ;
       })
 
-      qmk
-      qmk-udev-rules
+      # qmk
+      # qmk-udev-rules
       p7zip
       ruby
       zip
