@@ -30,16 +30,7 @@
     device = "nodev";
     efiSupport = true;
     enableCryptodisk = true;
-    extraEntries = ''
-      menuentry "Windows" {
-        insmod part_gpt
-        insmod fat
-        insmod search_fs_uuid
-        insmod chain
-        search --fs-uuid --set=root 88D5-14E9
-        chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-      }
-    '';
+    useOSProber = true;
   };
 
   # Enable networking
