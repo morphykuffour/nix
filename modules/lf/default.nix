@@ -38,11 +38,21 @@ in {
       '';
 
       fzf_search = ''${fzf_search}'';
+
+      open-file = ''
+        ''${{
+            case $(uname) in
+                Linux) xdg-open "$fx" >/dev/null 2>&1 & ;;
+                Darwin) open "$fx" >/dev/null 2>&1 & ;;
+                CYGWIN*|MINGW*|MSYS*) explorer "$(cygpath -w "$fx")" ;;
+            esac
+        }}
+      '';
     };
 
     keybindings = {
       "\\\"" = "";
-      o = "";
+      o = "open-file";
       c = "mkdir";
       "." = "set hidden!";
       "`" = "mark-load";
