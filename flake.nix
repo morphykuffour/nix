@@ -45,7 +45,9 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
     # vscode-server.url = "github:msteen/nixos-vscode-server";
-    # nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+    };
   };
 
   outputs = {
@@ -61,7 +63,7 @@
     emacs-overlay,
     neovim,
     discord,
-    # nixos-hardware,
+    nixos-hardware,
     ...
   } @ inputs: let
     user = "morph";
@@ -80,6 +82,10 @@
     # nix formatter
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
     formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
+
+    # SD card image for Raspberry Pi 3B
+    # NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 nix build .#packages.aarch64-darwin.rpi3b-sdcard --impure
+    packages.aarch64-linux.rpi3b-sdcard = self.nixosConfigurations.rpi3b-nixos.config.system.build.sdImage;
 
     # mac_mini MacOs
     darwinConfigurations.macmini-darwin = import ./hosts/macmini-darwin {
@@ -141,18 +147,25 @@
       ];
     };
 
-    # rpi3b NixOS
+    # rpi3b NixOS (cross-compile on Darwin → aarch64-linux)
     nixosConfigurations.rpi3b-nixos = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
+
+      # 2) tell Nix how to cross
+      crossSystem = {
+        system = "aarch64-unknown-linux-gnu";
+        config = "aarch64-linux";
+      };
+
       specialArgs = inputs;
       modules = [
         "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-        # ./hosts/rpi3b-nixos
+        nixos-hardware.nixosModules.raspberry-pi-3
+        ./hosts/rpi3b-nixos
         agenix.nixosModules.default
         {
-          environment.systemPackages = [
-            agenix.packages.x86_64-linux.default
-          ];
+          nixpkgs.config.allowUnsupportedSystem = true;
+          nixpkgs.config.allowBroken          = true;
         }
       ];
     };

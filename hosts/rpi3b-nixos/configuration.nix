@@ -4,23 +4,26 @@
   lib,
   ...
 }: {
+  # The nixos-hardware module already includes most of the necessary settings
+  # We only need to override or add specific configurations
+
   # NixOS wants to enable GRUB by default
   boot.loader.grub.enable = false;
-
+  
+  # Use the extlinux boot loader
+  boot.loader.generic-extlinux-compatible.enable = true;
+  
   # if you have a Raspberry Pi 2 or 3, pick this:
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # A bunch of boot parameters needed for optimal runtime on RPi 3b+
   boot.kernelParams = ["cma=256M"];
-  boot.loader.raspberryPi.enable = true;
-  boot.loader.raspberryPi.version = 3;
-  boot.loader.raspberryPi.uboot.enable = true;
-  boot.loader.raspberryPi.firmwareConfig = ''
-    gpu_mem=256
-  '';
 
   environment.systemPackages = with pkgs; [
     libraspberrypi
+    ubootTools
+    raspberrypi-eeprom
+    dtc # For device tree compiler
   ];
 
   # File systems configuration for using the installer's partition layout

@@ -439,6 +439,22 @@
         "type": "github"
       }
     },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1745503349,
+        "narHash": "sha256-bUGjvaPVsOfQeTz9/rLTNLDyqbzhl0CQtJJlhFPhIYw=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "f7bee55a5e551bd8e7b5b82c9bc559bc50d868d1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixos-wsl": {
       "inputs": {
         "flake-compat": "flake-compat_3",
@@ -655,6 +671,7 @@
         "emacs-overlay": "emacs-overlay",
         "home-manager": "home-manager_2",
         "neovim": "neovim",
+        "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_3",
         "plover": "plover",
