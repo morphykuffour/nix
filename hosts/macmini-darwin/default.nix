@@ -13,7 +13,7 @@ darwin.lib.darwinSystem {
     ./configuration.nix
     {
       environment.systemPackages = [
-        alejandra.defaultPackage.aarch64-darwin
+        alejandra.packages.aarch64-darwin.default
         # neovim.packages.aarch64-darwin.neovim
       ];
     }

@@ -98,6 +98,7 @@
   ];
 
   system = {
+    primaryUser = "morph";
     defaults = {
       NSGlobalDomain = {
         # Global macOS system settings
