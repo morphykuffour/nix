@@ -7,6 +7,7 @@
   inputs,
   user,
   overlays,
+  nixified-ai,
   ...
 }:
 nixpkgs.lib.nixosSystem {
@@ -34,5 +35,8 @@ nixpkgs.lib.nixosSystem {
     #   };
     # }
   ];
-  specialArgs = inputs;
+  specialArgs = inputs // {
+    agenix = agenix;
+    nixified-ai = nixified-ai;
+  };
 }

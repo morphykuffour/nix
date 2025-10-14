@@ -48,6 +48,9 @@
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };
+    nixified-ai = {
+      url = "github:nixified-ai/flake";
+    };
   };
 
   outputs = {
@@ -64,6 +67,7 @@
     neovim,
     discord,
     nixos-hardware,
+    nixified-ai,
     ...
   } @ inputs: let
     user = "morph";
@@ -109,7 +113,7 @@
 
     # win-wsl NixOs
     nixosConfigurations.win-wsl = import ./hosts/win-wsl {
-      inherit nixpkgs self inputs user home-manager alejandra agenix overlays;
+      inherit nixpkgs self inputs user home-manager alejandra agenix overlays nixified-ai;
     };
 
     # visionfive2 NixOs
