@@ -21,7 +21,21 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   system.stateVersion = "25.11";
-  hardware.opengl.enable = true;
+  services.xserver.videoDrivers = ["nvidia"];
+  hardware.nvidia.open = true;
+  hardware.graphics.enable = true;
+
+  environment.sessionVariables = {
+    CUDA_PATH = "${pkgs.cudatoolkit}";
+    EXTRA_LDFLAGS = "-L/lib -L${pkgs.linuxPackages.nvidia_x11}/lib";
+    EXTRA_CCFLAGS = "-I/usr/include";
+    LD_LIBRARY_PATH = [
+      "/usr/lib/wsl/lib"
+      "${pkgs.linuxPackages.nvidia_x11}/lib"
+      "${pkgs.ncurses5}/lib"
+    ];
+    MESA_D3D12_DEFAULT_ADAPTER_NAME = "NVIDIA";
+  };
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowBroken = true;
   networking = {
@@ -51,17 +65,15 @@
     # systemctl --user enable auto-fix-vscode-server.service
     # vscode-server.enable = true;
     ollama = {
-      # package = pkgs.unstable.ollama; # If you want to use the unstable channel package for example
       package = pkgs.ollama-cuda;
       enable = true;
-      acceleration = "cuda"; # Or "rocm"
-      # environmentVariables = { # I haven't been able to get this to work myself yet, but I'm sharing it for the sake of completeness
-      # HOME = "/home/ollama";
-      # OLLAMA_MODELS = "/home/ollama/models";
-      # OLLAMA_HOST = "0.0.0.0:11434"; # Make Ollama accesible outside of localhost
-      # OLLAMA_ORIGINS = "http://localhost:8080,http://192.168.0.10:*"; # Allow access, otherwise Ollama returns 403 forbidden due to CORS
-      #};
+      acceleration = "cuda";
+      environmentVariables = {
+        OLLAMA_HOST = "0.0.0.0:11434";
+        OLLAMA_ORIGINS = "*";
+      };
     };
+
 
     open-webui = {
       enable = true;
@@ -77,13 +89,42 @@
 
   wsl = {
     enable = true;
-    wslConf.automount.root = "/mnt";
+    wslConf = {
+      automount.root = "/mnt";
+      network.generateResolvConf = false;  # Prevent WSL from managing resolv.conf
+    };
     defaultUser = "morph";
     startMenuLaunchers = true;
-
-    # Enable integration with Docker Desktop
-    # docker-desktop.enable = true;
   };
+
+  hardware.nvidia-container-toolkit = {
+    enable = true;
+    mount-nvidia-executables = false;
+  };
+
+  systemd.services.nvidia-cdi-generator = {
+    description = "Generate nvidia cdi";
+    wantedBy = [ "docker.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.nvidia-docker}/bin/nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml --nvidia-ctk-path=${pkgs.nvidia-container-toolkit}/bin/nvidia-ctk";
+    };
+  };
+
+  virtualisation.docker = {
+    enable = true;
+    autoPrune.enable = true;
+    daemon.settings = {
+      features.cdi = true;
+      cdi-spec-dirs = ["/etc/cdi"];
+    };
+  };
+
+  # Create necessary directories for docker and nvidia
+  systemd.tmpfiles.rules = [
+    "d /var/lib/ollama 0755 root root"
+    "d /etc/cdi 0755 root root"
+  ];
 
   # nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Enable nix flakes
@@ -200,6 +241,12 @@
     cargo
     oterm
     neovim
+    
+    # NVIDIA packages
+    cudatoolkit
+    nvidia-docker
+    nvidia-container-toolkit
+    linuxPackages.nvidia_x11
     # R packages for data science
     # rstudio
     # (pkgs.rWrapper.override {
