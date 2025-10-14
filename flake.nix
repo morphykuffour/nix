@@ -101,7 +101,7 @@
       inherit nixpkgs self inputs user home-manager alejandra agenix;
     };
 
-    # xps17 NixOs
+    # t480 NixOs
     nixosConfigurations.t480-nixos = import ./hosts/t480-nixos {
       inherit nixpkgs self inputs user home-manager alejandra agenix;
     };

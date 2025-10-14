@@ -52,6 +52,7 @@
     # vscode-server.enable = true;
     ollama = {
       # package = pkgs.unstable.ollama; # If you want to use the unstable channel package for example
+      package = pkgs.ollama-cuda;
       enable = true;
       acceleration = "cuda"; # Or "rocm"
       # environmentVariables = { # I haven't been able to get this to work myself yet, but I'm sharing it for the sake of completeness
@@ -84,6 +85,7 @@
     # docker-desktop.enable = true;
   };
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Enable nix flakes
   nix = {
     package = pkgs.nixFlakes;
@@ -102,9 +104,9 @@
       ];
     };
 
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
+  extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
   };
 
   security.sudo.wheelNeedsPassword = false;
@@ -112,7 +114,7 @@
   # Disable systemd units that don't make sense on WSL
   systemd.services."serial-getty@ttyS0".enable = false;
   systemd.services."serial-getty@hvc0".enable = false;
-  systemd.services."getty@tty1".enable = false;
+  systemd.services."getty@tty2".enable = false;
   systemd.services."autovt@".enable = false;
 
   systemd.services.firewall.enable = false;
@@ -197,6 +199,7 @@
     mcfly
     cargo
     oterm
+    neovim
     # R packages for data science
     # rstudio
     # (pkgs.rWrapper.override {
