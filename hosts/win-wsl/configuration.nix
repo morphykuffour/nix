@@ -20,7 +20,7 @@
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  system.stateVersion = "unstable";
+  system.stateVersion = "25.11";
   hardware.opengl.enable = true;
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowBroken = true;
@@ -85,10 +85,10 @@
     # docker-desktop.enable = true;
   };
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Enable nix flakes
   nix = {
-    package = pkgs.nixFlakes;
+    # package = pkgs.nixFlakes;
     settings = {
       auto-optimise-store = true;
       sandbox = true;
