@@ -5,11 +5,15 @@
   nixos-wsl,
   modulesPath,
   callPackage,
+  agenix,
   ...
 }: {
   imports = [
     "${modulesPath}/profiles/minimal.nix"
     nixos-wsl.nixosModules.wsl
+    agenix.nixosModules.default
+    ./tailscale.nix
+    ./comfyui.nix
   ];
 
   # Set your time zone.
@@ -78,8 +82,6 @@
 
     # Enable integration with Docker Desktop
     # docker-desktop.enable = true;
-
-    # tailscale.enable = true;
   };
 
   # Enable nix flakes
@@ -89,11 +91,15 @@
       auto-optimise-store = true;
       sandbox = true;
       trusted-users = ["root" "morph" "@wheel"];
-      # binaryCache = ["https://cache.nixos.org" "https://nix-community.cachix.org"];
+      # Add nixified.ai binary cache for faster AI model builds
       substituters = [
         "https://nix-community.cachix.org"
+        "https://ai.cachix.org"
       ];
-      trusted-public-keys = ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="];
+      trusted-public-keys = [
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
+      ];
     };
 
     extraOptions = ''
