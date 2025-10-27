@@ -78,6 +78,7 @@
       fd
       gh
       jq
+      rage
       # go
       # python3
       # opam
