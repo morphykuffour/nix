@@ -51,7 +51,7 @@ in {
                     ;;
                 Darwin) 
                     if [[ "$fx" == *.pdf ]]; then
-                        zathura "$fx" >/dev/null 2>&1 &
+                        open -a Zathura "$fx" >/dev/null 2>&1 &
                     else
                         open "$fx" >/dev/null 2>&1 &
                     fi
