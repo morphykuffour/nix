@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ../../modules/lf
+    ../../modules/zathura
   ];
 
   programs = {
