@@ -42,8 +42,20 @@ in {
       open-file = ''
         ''${{
             case $(uname) in
-                Linux) xdg-open "$fx" >/dev/null 2>&1 & ;;
-                Darwin) open "$fx" >/dev/null 2>&1 & ;;
+                Linux) 
+                    if [[ "$fx" == *.pdf ]]; then
+                        zathura "$fx" >/dev/null 2>&1 &
+                    else
+                        xdg-open "$fx" >/dev/null 2>&1 &
+                    fi
+                    ;;
+                Darwin) 
+                    if [[ "$fx" == *.pdf ]]; then
+                        zathura "$fx" >/dev/null 2>&1 &
+                    else
+                        open "$fx" >/dev/null 2>&1 &
+                    fi
+                    ;;
                 CYGWIN*|MINGW*|MSYS*) explorer "$(cygpath -w "$fx")" ;;
             esac
         }}

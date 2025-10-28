@@ -42,6 +42,8 @@
       # emacs
       fd
       ripgrep
+      # PDF viewer setup
+      duti
     ];
   };
 
@@ -130,7 +132,14 @@
     keyboard = {
       enableKeyMapping = true; # Needed for skhd
     };
-    activationScripts.postActivation.text = ''sudo chsh -s ${pkgs.zsh}/bin/zsh''; # Since it's not possible to declare default shell, run this command after build
+    activationScripts.postActivation.text = ''
+      sudo chsh -s ${pkgs.zsh}/bin/zsh
+      # Setup Zathura PDF viewer if it's installed
+      if command -v zathura &> /dev/null; then
+        chmod +x ${./setup-zathura.sh}
+        ${./setup-zathura.sh}
+      fi
+    ''; # Since it's not possible to declare default shell, run this command after build
     stateVersion = 4;
   };
 }
