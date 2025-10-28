@@ -13,6 +13,7 @@
     # ../../modules/fonts.nix
     # ../../modules/zathura
     # ../../modules/hyprland
+    ../../modules/lf
     # ./modules/nvim.nix
     # ../../modules/picom.nix
   ];
