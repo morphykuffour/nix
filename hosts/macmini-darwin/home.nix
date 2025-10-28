@@ -27,6 +27,12 @@
   home = {
     username = "morph";
     stateVersion = "22.05";
+    
+    # Shell aliases
+    shellAliases = {
+      zathura = "open -a Zathura";
+    };
+    
     packages = with pkgs; [
       p7zip
       # eva
