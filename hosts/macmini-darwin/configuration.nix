@@ -93,7 +93,8 @@
   nixpkgs.overlays = [
     (final: prev: {
       kitty = prev.kitty.overrideAttrs (old: {
-        version = "0.38.1";
+        version = "0.43.1";
+        __intentionallyOverridingVersion = true;
         doCheck = false;
       });
     })
@@ -132,14 +133,14 @@
     keyboard = {
       enableKeyMapping = true; # Needed for skhd
     };
-    activationScripts.postActivation.text = ''
-      sudo chsh -s ${pkgs.zsh}/bin/zsh
-      # Setup Zathura PDF viewer if it's installed
-      if command -v zathura &> /dev/null; then
-        chmod +x ${./setup-zathura.sh}
-        ${./setup-zathura.sh}
-      fi
-    ''; # Since it's not possible to declare default shell, run this command after build
+    # activationScripts.postActivation.text = ''
+    #   sudo chsh -s ${pkgs.zsh}/bin/zsh
+    #   # Setup Zathura PDF viewer if it's installed
+    #   if command -v zathura &> /dev/null; then
+    #     chmod +x ${./setup-zathura.sh}
+    #     ${./setup-zathura.sh}
+    #   fi
+    # ''; # Since it's not possible to declare default shell, run this command after build
     stateVersion = 4;
   };
 }
