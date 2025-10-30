@@ -359,5 +359,6 @@
     flashrom
     code-cursor
     qbittorrent-nox
+    dysk
   ];
 }
