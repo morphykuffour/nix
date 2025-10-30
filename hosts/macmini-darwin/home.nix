@@ -86,6 +86,7 @@
       gh
       jq
       rage
+      yt-dlp
       # go
       # python3
       # opam
