@@ -41,6 +41,16 @@
 
   # Enable the X11 windowing system.
   services = {
+    # Prevent system from suspending/hibernating; keep always on
+    logind = {
+      extraConfig = ''
+        IdleAction=ignore
+        IdleActionSec=0
+        HandleSuspendKey=ignore
+        HandleHibernateKey=ignore
+      '';
+    };
+
     emacs = {
       # package = pkgs.emacs-unstable;
       # package = pkgs.emacs-git;
@@ -86,6 +96,13 @@
           sxhkd
         ];
       };
+    };
+    jellyfin = {
+      enable = true;
+      # Run as morph so it can access /home/morph/iCloud media
+      user = "morph";
+      group = "users";
+      openFirewall = true; # opens 8096/tcp and 8920/tcp
     };
     # vscode-server.enable = true;
     # And then enable them for the relevant users:
@@ -134,6 +151,14 @@
         };
       };
     };
+  };
+
+  # Disable all sleep-related systemd targets
+  systemd = {
+    targets.sleep.enable = false;
+    targets.suspend.enable = false;
+    targets.hibernate.enable = false;
+    targets.hybrid-sleep.enable = false;
   };
 
   # Configure keymap in X11
