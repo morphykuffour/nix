@@ -105,8 +105,6 @@
       user = "morph";
       group = "users";
       openFirewall = true; # opens 8096/tcp and 8920/tcp
-      # Ensure Jellyfin can generate images/transcode
-      extraPackages = [ pkgs.jellyfin-ffmpeg ];
       # Keep state in standard locations but owned by the service user
       dataDir = "/var/lib/jellyfin";
       cacheDir = "/var/cache/jellyfin";
@@ -193,6 +191,7 @@
       "d /var/lib/jellyfin 0750 morph users - -"
       "d /var/cache/jellyfin 0750 morph users - -"
     ];
+    services.jellyfin.path = [ pkgs.jellyfin-ffmpeg ];
   };
 
   # Improve filesystem event watching so Jellyfin detects new files immediately
