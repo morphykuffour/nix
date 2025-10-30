@@ -43,12 +43,14 @@
   services = {
     # Prevent system from suspending/hibernating; keep always on
     logind = {
-      extraConfig = ''
-        IdleAction=ignore
-        IdleActionSec=0
-        HandleSuspendKey=ignore
-        HandleHibernateKey=ignore
-      '';
+      settings = {
+        Login = {
+          IdleAction = "ignore";
+          IdleActionSec = 0;
+          HandleSuspendKey = "ignore";
+          HandleHibernateKey = "ignore";
+        };
+      };
     };
 
     emacs = {
@@ -318,5 +320,6 @@
     mcfly
     neovim
     flashrom
+    code-cursor
   ];
 }
