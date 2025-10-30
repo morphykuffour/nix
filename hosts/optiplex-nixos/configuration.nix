@@ -160,6 +160,28 @@
     };
   };
 
+  # qBittorrent systemd service
+  systemd.services.qbittorrent-nox = {
+    description = "qBittorrent-nox service";
+    after = ["network.target"];
+    wantedBy = ["multi-user.target"];
+    
+    serviceConfig = {
+      Type = "simple";
+      User = "morph";
+      Group = "users";
+      ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --webui-port=8080";
+      Restart = "on-failure";
+      
+      # Security hardening
+      NoNewPrivileges = true;
+      PrivateTmp = true;
+      ProtectSystem = "strict";
+      ProtectHome = false;
+      ReadWritePaths = ["/home/morph/.config/qBittorrent" "/home/morph/.local/share/qBittorrent"];
+    };
+  };
+
   # Disable all sleep-related systemd targets
   systemd = {
     targets.sleep.enable = false;
@@ -337,5 +359,6 @@
     neovim
     flashrom
     code-cursor
+    qbittorrent-nox
   ];
 }

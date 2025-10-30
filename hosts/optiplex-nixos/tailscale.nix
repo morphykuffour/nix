@@ -8,15 +8,36 @@
 
   age.identityPaths = [ "/home/morph/.ssh/id_ed25519" ];
   age.secrets.ts-optiplex-nixos.file = ../../secrets/ts-optiplex-nixos.age;
+  age.secrets.qbittorrent-webui-password = {
+    file = ../../secrets/qbittorrent-optiplex-nixos.age;
+    owner = "morph";
+    group = "users";
+    mode = "0400";
+  };
 
   services.tailscale = {
     enable = true;
     authKeyFile = config.age.secrets.ts-optiplex-nixos.path;
     extraUpFlags = [
       "--advertise-exit-node"
-      # optional if you’ve experimented before:
+      # optional if you've experimented before:
       # "--reset"
     ];
+  };
+
+  # Advertise qBittorrent WebUI as a Tailscale service
+  systemd.services.tailscale-serve-qbittorrent = {
+    description = "Advertise qBittorrent WebUI on Tailscale";
+    after = ["tailscale.service" "qbittorrent-nox.service"];
+    wants = ["tailscale.service" "qbittorrent-nox.service"];
+    wantedBy = ["multi-user.target"];
+    
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/qbittorrent http://127.0.0.1:8080";
+      ExecStop = "${config.services.tailscale.package}/bin/tailscale serve --https=443 off";
+    };
   };
 
   # Good practice for exit nodes
@@ -30,6 +51,8 @@
     checkReversePath = "loose";
     trustedInterfaces = [ "tailscale0" ];
     allowedUDPPorts = [ config.services.tailscale.port ];
+    # Allow SSH and qBittorrent WebUI only via Tailscale
     allowedTCPPorts = [ 22 ];
+    # qBittorrent WebUI (8080) is only accessible via Tailscale serve
   };
 }
