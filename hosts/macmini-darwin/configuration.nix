@@ -53,31 +53,21 @@
   };
 
   homebrew = {
-    # Manage Homebrew packages via nix-darwin
+    # Temporarily disable nix-darwin Homebrew management to bypass bundle crash
     enable = true;
-    autoUpdate = true;
-    cleanup = "zap";
-    brews = [
-      "jellyfin"
-      "ffmpeg"
-    ];
+    global = {
+      brewfile = false;
+    };
+    taps = [];
+    onActivation = {
+      autoUpdate = false;
+      cleanup = "none";
+      upgrade = false;
+    };
+    brews = [];
     casks = [];
   };
 
-  launchd.user.agents.jellyfin = {
-    enable = true;
-    config = {
-      ProgramArguments = [
-        "/opt/homebrew/bin/jellyfin"
-      ];
-      KeepAlive = true;
-      RunAtLoad = true;
-      WorkingDirectory = config.users.users.morph.home;
-      StandardOutPath = "${config.users.users.morph.home}/Library/Logs/jellyfin.log";
-      StandardErrorPath = "${config.users.users.morph.home}/Library/Logs/jellyfin.err.log";
-      ProcessType = "Background";
-    };
-  };
 
   nix = {
     package = pkgs.nix;
