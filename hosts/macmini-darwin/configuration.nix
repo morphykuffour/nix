@@ -52,17 +52,32 @@
     zsh.enable = true;
   };
 
-  # homebrew = {
-  #   # Declare Homebrew using Nix-Darwin
-  #   enable = true;
-  #   autoUpdate = true; # Auto update packages
-  #   cleanup = "zap"; # Uninstall not listed packages and casks
-  #   brews = [
-  #   ];
-  #   casks = [
-  #     "plex-media-player"
-  #   ];
-  # };
+  homebrew = {
+    # Manage Homebrew packages via nix-darwin
+    enable = true;
+    autoUpdate = true;
+    cleanup = "zap";
+    brews = [
+      "jellyfin"
+      "ffmpeg"
+    ];
+    casks = [];
+  };
+
+  launchd.user.agents.jellyfin = {
+    enable = true;
+    config = {
+      ProgramArguments = [
+        "/opt/homebrew/bin/jellyfin"
+      ];
+      KeepAlive = true;
+      RunAtLoad = true;
+      WorkingDirectory = config.users.users.morph.home;
+      StandardOutPath = "${config.users.users.morph.home}/Library/Logs/jellyfin.log";
+      StandardErrorPath = "${config.users.users.morph.home}/Library/Logs/jellyfin.err.log";
+      ProcessType = "Background";
+    };
+  };
 
   nix = {
     package = pkgs.nix;
