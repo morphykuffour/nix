@@ -105,6 +105,11 @@
       user = "morph";
       group = "users";
       openFirewall = true; # opens 8096/tcp and 8920/tcp
+      # Ensure Jellyfin can generate images/transcode
+      extraPackages = [ pkgs.jellyfin-ffmpeg ];
+      # Keep state in standard locations but owned by the service user
+      dataDir = "/var/lib/jellyfin";
+      cacheDir = "/var/cache/jellyfin";
     };
     # vscode-server.enable = true;
     # And then enable them for the relevant users:
@@ -161,6 +166,17 @@
     targets.suspend.enable = false;
     targets.hibernate.enable = false;
     targets.hybrid-sleep.enable = false;
+    tmpfiles.rules = [
+      # Ensure Jellyfin state/cache directories exist and are writable by morph
+      "d /var/lib/jellyfin 0750 morph users - -"
+      "d /var/cache/jellyfin 0750 morph users - -"
+    ];
+  };
+
+  # Improve filesystem event watching so Jellyfin detects new files immediately
+  boot.kernel.sysctl = {
+    "fs.inotify.max_user_watches" = 1048576;
+    "fs.inotify.max_user_instances" = 1024;
   };
 
   # Configure keymap in X11
