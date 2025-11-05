@@ -87,7 +87,7 @@
       jq
       rage
       yt-dlp
-      plover.dev
+      # plover.dev
       # go
       # python3
       # opam
