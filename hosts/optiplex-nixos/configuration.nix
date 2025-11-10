@@ -128,33 +128,33 @@
         "macmini-darwin" = {id = "OK4365M-ZZC4CDT-A6W2YF2-MPIX3GR-FYZIWWJ-5QS6RYM-5KYU35K-SLYBHQO";};
       };
 
-      settings.folders = {
-        # "Org" = {
-        #   path = "/home/morph/Org/";
-        #   id = "Org";
-        #   devices = ["xps17-nixos" "macmini-darwin"];
-        #   versioning = {
-        #     type = "staggered";
-        #     params = {
-        #       cleanInterval = "3600";
-        #       maxAge = "15768000";
-        #     };
-        #   };
-        # };
+      # settings.folders = {
+      #   # "Org" = {
+      #   #   path = "/home/morph/Org/";
+      #   #   id = "Org";
+      #   #   devices = ["xps17-nixos" "macmini-darwin"];
+      #   #   versioning = {
+      #   #     type = "staggered";
+      #   #     params = {
+      #   #       cleanInterval = "3600";
+      #   #       maxAge = "15768000";
+      #   #     };
+      #   #   };
+      #   # };
 
-        "iCloud" = {
-          path = "/home/morph/iCloud/";
-          id = "iCloud";
-          devices = ["xps17-nixos" "macmini-darwin"];
-          versioning = {
-            type = "staggered";
-            params = {
-              cleanInterval = "3600";
-              maxAge = "15768000";
-            };
-          };
-        };
-      };
+      #   # "iCloud" = {
+      #   #   path = "/home/morph/iCloud/";
+      #   #   id = "iCloud";
+      #   #   devices = ["xps17-nixos" "macmini-darwin"];
+      #   #   versioning = {
+      #   #     type = "staggered";
+      #   #     params = {
+      #   #       cleanInterval = "3600";
+      #   #       maxAge = "15768000";
+      #   #     };
+      #   #   };
+      #   # };
+      # };
     };
   };
 
