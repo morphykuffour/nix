@@ -39,6 +39,15 @@ in {
 
       fzf_search = ''${fzf_search}'';
 
+      replace-space-in-dirs = ''
+      ''${{
+          for d in $fx; do
+              [ -d "$d" ] || continue
+              (cd "$d" && replace_spaces)
+          done
+      }}
+      '';
+
       open-file = ''
         ''${{
             case $(uname) in
