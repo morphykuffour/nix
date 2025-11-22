@@ -181,7 +181,7 @@
       windowManager = {
         i3 = {
           enable = true;
-          package = pkgs.i3-gaps;
+          package = pkgs.i3;
         };
       };
     };
@@ -192,7 +192,7 @@
     description = "Launch Plasma with i3wm.";
     environment = lib.mkForce {};
     serviceConfig = {
-      ExecStart = "${pkgs.i3-gaps}/bin/i3";
+      ExecStart = "${pkgs.i3}/bin/i3";
       Restart = "on-failure";
     };
   };
