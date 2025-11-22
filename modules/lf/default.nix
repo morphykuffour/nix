@@ -43,7 +43,7 @@ in {
       ''${{
           for d in $fx; do
               [ -d "$d" ] || continue
-              (cd "$d" && replace_spaces)
+              (cd "$d" && "$HOME/.local/bin/replace_spaces")
           done
       }}
       '';
