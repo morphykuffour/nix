@@ -235,7 +235,7 @@
     defaultUserShell = pkgs.zsh;
     users.morph = {
       isNormalUser = true;
-      extraGroups = ["networkmanager" "wheel"]; # Enable ‘sudo’ for the user.
+      extraGroups = ["networkmanager" "wheel" "docker"]; # Enable 'sudo' for the user.
       shell = pkgs.zsh;
       # packages = with pkgs; [ thunderbird ];
     };
@@ -271,6 +271,12 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
+
+  # Enable Docker
+  virtualisation.docker.enable = true;
+
+  # Open firewall port for SearXNG
+  networking.firewall.allowedTCPPorts = [8888];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -360,5 +366,6 @@
     code-cursor
     qbittorrent-nox
     dysk
+    docker-compose
   ];
 }
