@@ -91,7 +91,7 @@ in {
       '';
 
       copy-path = ''
-        ${{
+        ''${{
             case $(uname) in
                 Linux) printf '%s' "$fx" | xclip -selection clipboard ;;
                 Darwin) printf '%s' "$fx" | pbcopy ;;
