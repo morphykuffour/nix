@@ -31,11 +31,26 @@
     after = ["tailscale.service" "qbittorrent-nox.service"];
     wants = ["tailscale.service" "qbittorrent-nox.service"];
     wantedBy = ["multi-user.target"];
-    
+
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStart = "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/qbittorrent http://127.0.0.1:8080";
+      ExecStop = "${config.services.tailscale.package}/bin/tailscale serve --https=443 off";
+    };
+  };
+
+  # Advertise SearXNG as a Tailscale service
+  systemd.services.tailscale-serve-searxng = {
+    description = "Advertise SearXNG on Tailscale";
+    after = ["tailscale.service" "docker-searxng.service"];
+    wants = ["tailscale.service"];
+    wantedBy = ["multi-user.target"];
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 http://127.0.0.1:8888";
       ExecStop = "${config.services.tailscale.package}/bin/tailscale serve --https=443 off";
     };
   };
