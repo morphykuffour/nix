@@ -51,6 +51,10 @@
     nixified-ai = {
       url = "github:nixified-ai/flake";
     };
+    fakwin = {
+      url = "github:DMaroo/fakwin";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -68,6 +72,7 @@
     discord,
     nixos-hardware,
     nixified-ai,
+    fakwin,
     ...
   } @ inputs: let
     user = "morph";
@@ -98,7 +103,7 @@
 
     # xps17 NixOs
     nixosConfigurations.xps17-nixos = import ./hosts/xps17-nixos {
-      inherit nixpkgs self inputs user home-manager alejandra agenix;
+      inherit nixpkgs self inputs user home-manager alejandra agenix fakwin;
     };
 
     # t480 NixOs

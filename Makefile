@@ -54,6 +54,34 @@ update:
 fmt:
 	alejandra .
 
+# Remote building for xps17-nixos from any machine (including Mac)
+# Requires: SSH access to xps17-nixos via tailscale or direct connection
+REMOTE_HOST ?= xps17-nixos
+REMOTE_USER ?= morph
+REMOTE_NIX_DIR ?= ~/nix
+
+remote-switch:
+	@echo "Building and switching on $(REMOTE_HOST)..."
+	ssh $(REMOTE_USER)@$(REMOTE_HOST) "cd $(REMOTE_NIX_DIR) && git pull && make switch"
+
+remote-build:
+	@echo "Building on $(REMOTE_HOST)..."
+	ssh $(REMOTE_USER)@$(REMOTE_HOST) "cd $(REMOTE_NIX_DIR) && git pull && make build"
+
+# Build xps17-nixos config locally on Mac and deploy via SSH
+# This uses nixos-rebuild's --target-host to deploy to remote
+# Requires: linux-builder or remote builder configured on Mac
+xps-deploy:
+	nixos-rebuild switch --flake '.#xps17-nixos' \
+		--target-host $(REMOTE_USER)@$(REMOTE_HOST) \
+		--build-host $(REMOTE_USER)@$(REMOTE_HOST) \
+		--use-remote-sudo
+
+# Build only (no switch) on remote builder
+xps-build-remote:
+	nixos-rebuild build --flake '.#xps17-nixos' \
+		--build-host $(REMOTE_USER)@$(REMOTE_HOST)
+
 clean:
 	sudo nix-collect-garbage --delete-older-than 14d
 	nix-collect-garbage --delete-older-than 14d
