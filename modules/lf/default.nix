@@ -89,6 +89,16 @@ in {
             esac
         }}
       '';
+
+      copy-path = ''
+        ${{
+            case $(uname) in
+                Linux) printf '%s' "$fx" | xclip -selection clipboard ;;
+                Darwin) printf '%s' "$fx" | pbcopy ;;
+            esac
+            lf -remote "send $id echo 'Path copied to clipboard'"
+        }}
+      '';
     };
 
     keybindings = {
@@ -108,7 +118,7 @@ in {
 
       ee = "editor-open";
       V = ''$bat --paging=always "$f"'';
-      Y = ''$printf "%s" "$fx" | xclip -selection clipboard'';
+      Y = "copy-path";
 
       # ...
     };
