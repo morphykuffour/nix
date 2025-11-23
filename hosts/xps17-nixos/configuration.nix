@@ -146,11 +146,26 @@
       allowInterfaces = ["wlp0s20f3" "tailscale0"];
     };
 
-    xserver = {
-      libinput = {
-        enable = true;
-        # touchpad.disableWhileTyping = true;
+    # libinput moved out of xserver
+    libinput = {
+      enable = true;
+      # touchpad.disableWhileTyping = true;
+    };
+
+    # Desktop manager moved out of xserver
+    desktopManager.plasma6.enable = true;
+
+    # Display manager moved out of xserver
+    displayManager = {
+      sddm.enable = true;
+      defaultSession = "plasmax11";
+      autoLogin = {
+        enable = false;
+        user = "morph";
       };
+    };
+
+    xserver = {
       enable = true;
 
       xkb = {
@@ -158,25 +173,7 @@
         variant = "";
       };
 
-      desktopManager = {
-        plasma6 = {
-          enable = true;
-        };
-        # mate = {
-        #   enable = true;
-        #   # excludePackages = [ pkgs.mate.mate-terminal pkgs.mate.pluma ];
-        # };
-      };
-
-      displayManager = {
-        startx.enable = false;
-        sddm.enable = true;
-        defaultSession = "plasmax11";
-        autoLogin = {
-          enable = false;
-          user = "morph";
-        };
-      };
+      displayManager.startx.enable = false;
 
       windowManager = {
         i3 = {

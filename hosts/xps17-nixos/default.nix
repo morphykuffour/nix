@@ -6,6 +6,7 @@
   nixpkgs,
   inputs,
   user,
+  fakwin,
   # neovim,
   ...
 }:
@@ -27,7 +28,7 @@ nixpkgs.lib.nixosSystem {
         ];
         extraSpecialArgs = {
           plover = inputs.plover.packages."x86_64-linux".plover;
-          inherit inputs user;
+          inherit inputs user fakwin;
         };
       };
 

@@ -3,20 +3,18 @@
   config,
   lib,
   pkgs,
+  fakwin, # Flake input - source is managed by flake.lock
   ...
 }:
 # Example: https://github.com/nix-community/home-manager/blob/master/modules/services/window-managers/i3-sway/i3.nix
 let
-  fakwin = pkgs.stdenv.mkDerivation rec {
+  fakwinPkg = pkgs.stdenv.mkDerivation rec {
     pname = "fakwin";
     version = "1.0.0";
 
-    src = pkgs.fetchFromGitHub {
-      owner = "DMaroo";
-      repo = "fakwin";
-      rev = "master";
-      hash = "sha256-oEMSuy2NMbd3Q7wtGSVz9vrqNWFeZLrNDM3KAsLgUOw=";
-    };
+    # Use flake input - hash is managed in flake.lock
+    # Update with: nix flake lock --update-input fakwin
+    src = fakwin;
 
     nativeBuildInputs = [pkgs.cmake pkgs.qt6.wrapQtAppsHook];
 
@@ -35,7 +33,7 @@ let
     };
   };
 in {
-  home.packages = [fakwin];
+  home.packages = [fakwinPkg];
 
   systemd.user.services.fakwin = {
     Unit = {
@@ -46,7 +44,7 @@ in {
 
     Service = {
       Type = "simple";
-      ExecStart = "${fakwin}/bin/fakwin";
+      ExecStart = "${fakwinPkg}/bin/fakwin";
       Restart = "always";
       RestartSec = "1";
     };
@@ -59,7 +57,7 @@ in {
   # Optional: add this to your i3 config to ensure fakwin starts with i3
   xsession.windowManager.i3.config.startup = [
     {
-      command = "${fakwin}/bin/fakwin";
+      command = "${fakwinPkg}/bin/fakwin";
       always = false;
       notification = false;
     }

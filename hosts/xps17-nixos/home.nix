@@ -35,7 +35,7 @@
     # };
     vscode = {
       enable = true;
-      extensions = with pkgs.vscode-extensions; [
+      profiles.default.extensions = with pkgs.vscode-extensions; [
         dracula-theme.theme-dracula
         vscodevim.vim
         yzhang.markdown-all-in-one
@@ -51,9 +51,8 @@
     };
   };
 
-  nixpkgs = {
-    config.allowUnfree = true;
-  };
+  # Note: nixpkgs.config is set at system level in configuration.nix
+  # Removed nixpkgs block as it conflicts with home-manager.useGlobalPkgs = true
 
   home = {
     username = "morph";
