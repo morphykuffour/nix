@@ -5,7 +5,10 @@
   ...
 }: {
   # tailscale
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "client";  # Required for using exit nodes (Mullvad)
+  };
 
   age.identityPaths = [
     "/home/morph/.ssh/id_ed25519"

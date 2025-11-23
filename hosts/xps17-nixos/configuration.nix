@@ -291,7 +291,7 @@
     rustup
     rustc
     brightnessctl
-    xdragon
+    # xdragon
     keyd
     dconf-editor
     mate.mate-power-manager
@@ -360,6 +360,7 @@
     ghostty
     anki
     rustdesk
+    claude-code
 
     # R packages for data science
     rstudio

@@ -128,6 +128,22 @@
         "type": "github"
       }
     },
+    "fakwin": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1756584983,
+        "narHash": "sha256-TObjSQhtqbdrQhYHSQxHL8sopgXrBF449eO+eVNbZgI=",
+        "owner": "DMaroo",
+        "repo": "fakwin",
+        "rev": "0cbbbbf7009d83c3cdd325e20c429b37d89fcef6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DMaroo",
+        "repo": "fakwin",
+        "type": "github"
+      }
+    },
     "fenix": {
       "inputs": {
         "nixpkgs": [
@@ -645,6 +661,7 @@
         "darwin": "darwin_2",
         "discord": "discord",
         "emacs-overlay": "emacs-overlay",
+        "fakwin": "fakwin",
         "home-manager": "home-manager_2",
         "neovim": "neovim",
         "nixified-ai": "nixified-ai",
