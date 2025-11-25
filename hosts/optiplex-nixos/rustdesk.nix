@@ -8,6 +8,9 @@ let
   hbbr_port = 21117;      # TCP - Relay server
   hbbr_port_ws = 21119;   # TCP - Relay server WebSocket
 
+  # Server address for relay configuration
+  server_address = "100.89.107.92";  # Tailscale IP
+
   # Data directory for RustDesk
   rustdesk_data = "/var/lib/rustdesk";
 in
@@ -41,7 +44,7 @@ in
         ${pkgs.rustdesk-server}/bin/hbbs \
           -p ${toString hbbs_port} \
           -k _ \
-          -r 127.0.0.1:${toString hbbr_port}
+          -r ${server_address}:${toString hbbr_port}
       '';
       Restart = "on-failure";
       RestartSec = "5s";
