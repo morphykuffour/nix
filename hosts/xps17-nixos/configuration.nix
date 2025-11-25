@@ -14,6 +14,7 @@
     ./keyd.nix
     ./tailscale.nix
     ./syncthing.nix
+    ./rustdesk-client.nix
     # ../../modules/mullvad
     ../../modules/kanata
     # ./fakwin.nix
