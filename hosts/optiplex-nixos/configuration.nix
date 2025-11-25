@@ -10,6 +10,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./tailscale.nix
+    ./rustdesk.nix
     # ./zfs.nix
   ];
 
