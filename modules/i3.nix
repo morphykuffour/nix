@@ -163,11 +163,7 @@ in {
           always = true;
           notification = false;
         }
-        {
-          command = "fakwin";
-          always = true;
-          notification = false;
-        }
+        # fakwin is started via fakwin.nix systemd service and xsession startup
         # {
         #   command = "redshift";
         #   always = true;
@@ -187,12 +183,12 @@ in {
     };
 
     extraConfig = ''
-      # Plasma compatibility improvements
+      # Plasma 6 compatibility improvements
       for_window [window_role="pop-up"] floating enable
       for_window [window_role="task_dialog"] floating enable
       for_window [class="yakuake"] floating enable
       for_window [class="systemsettings"] floating enable
-      for_window [class="plasmashell"] floating enable
+      for_window [class="plasmashell"] floating enable, border none
       for_window [class="Plasma"] floating enable, border none
       for_window [title="plasma-desktop"] floating enable, border none
       for_window [title="win7"] floating enable, border none
@@ -204,8 +200,15 @@ in {
       for_window [class="plasmashell" window_type="notification"] border none, move position 70 ppt 81 ppt
       no_focus [class="plasmashell" window_type="notification"]
 
-      # Kill the existing desktop window that covers the entire screen
+      # Plasma 6 specific - kill desktop shell windows
       for_window [title="Desktop @ QRect.*"] kill, floating enable, border none
+      for_window [title="Desktop — Plasma"] kill, floating enable, border none
+      for_window [class="plasmashell" window_type="desktop"] kill
+      for_window [class="org.kde.plasmashell"] floating enable, border none
+      for_window [class="org.kde.plasmashell" window_type="desktop"] kill
+
+      # Prevent Plasma panels from reserving space (struts)
+      for_window [class="plasmashell" window_type="dock"] floating enable, border none, move scratchpad
 
 
       # Notetaker
