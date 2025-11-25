@@ -362,6 +362,7 @@
     anki
     rustdesk
     claude-code
+    deskflow
 
     # R packages for data science
     rstudio
