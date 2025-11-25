@@ -11,6 +11,7 @@
     ./hardware-configuration.nix
     ./tailscale.nix
     ./rustdesk.nix
+    ./roon.nix
     # ./zfs.nix
   ];
 
