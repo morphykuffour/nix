@@ -55,10 +55,11 @@ in {
   };
 
   # Optional: add this to your i3 config to ensure fakwin starts with i3
+  # Note: fakwin is also started via systemd user service above
   xsession.windowManager.i3.config.startup = [
     {
       command = "${fakwinPkg}/bin/fakwin";
-      always = false;
+      always = true;
       notification = false;
     }
   ];
