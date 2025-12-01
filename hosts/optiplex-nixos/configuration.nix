@@ -12,6 +12,7 @@
     ./tailscale.nix
     ./rustdesk.nix
     ./roon.nix
+    ./code-server.nix
     # ./zfs.nix
   ];
 
