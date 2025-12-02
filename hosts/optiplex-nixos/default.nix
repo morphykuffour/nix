@@ -17,6 +17,8 @@ nixpkgs.lib.nixosSystem {
     ../../modules/tailscale
     agenix.nixosModules.default
     home-manager.nixosModules.home-manager
+    inputs.vertd.nixosModules.default
+    ./vertd.nix
     {
       home-manager = {
         useGlobalPkgs = true;
