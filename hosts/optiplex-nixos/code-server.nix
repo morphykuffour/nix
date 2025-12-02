@@ -16,30 +16,20 @@
     };
   };
 
-  # Caddy as a local reverse proxy to handle path rewriting
-  services.caddy = {
-    enable = true;
-    # Run on a different port since Tailscale is using 443
-    # Use http:// to disable automatic HTTPS
-    virtualHosts."http://127.0.0.1:8082".extraConfig = ''
-      handle_path /code-server* {
-        reverse_proxy 127.0.0.1:8081
-      }
-    '';
-  };
-
-  # Advertise Caddy (with code-server behind it) via Tailscale
+  # Serve code-server directly on a separate HTTPS port via Tailscale
+  # This avoids subpath issues and WebSocket problems
   systemd.services.tailscale-serve-code-server = {
-    description = "Advertise code-server on Tailscale via Caddy";
-    after = ["tailscale.service" "code-server.service" "caddy.service"];
-    wants = ["tailscale.service" "code-server.service" "caddy.service"];
+    description = "Advertise code-server on Tailscale";
+    after = ["tailscale.service" "code-server.service"];
+    wants = ["tailscale.service" "code-server.service"];
     wantedBy = ["multi-user.target"];
 
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/code-server http://127.0.0.1:8082/code-server";
-      ExecStop = "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/code-server off";
+      # Serve on port 8081 for HTTPS, accessible via :8081
+      ExecStart = "${config.services.tailscale.package}/bin/tailscale serve --bg --https=8081 http://127.0.0.1:8081";
+      ExecStop = "${config.services.tailscale.package}/bin/tailscale serve --https=8081 off";
     };
   };
 }
