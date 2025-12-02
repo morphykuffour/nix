@@ -20,7 +20,8 @@
   services.caddy = {
     enable = true;
     # Run on a different port since Tailscale is using 443
-    virtualHosts."127.0.0.1:8082".extraConfig = ''
+    # Use http:// to disable automatic HTTPS
+    virtualHosts."http://127.0.0.1:8082".extraConfig = ''
       handle_path /code-server* {
         reverse_proxy 127.0.0.1:8081
       }
