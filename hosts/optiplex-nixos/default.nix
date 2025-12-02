@@ -17,6 +17,18 @@ nixpkgs.lib.nixosSystem {
     ../../modules/tailscale
     agenix.nixosModules.default
     home-manager.nixosModules.home-manager
+
+    # vertd module with package override for build dependencies
+    ({pkgs, ...}: {
+      nixpkgs.overlays = [
+        (final: prev: {
+          vertd = inputs.vertd.packages.${prev.system}.default.overrideAttrs (old: {
+            nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.pkg-config ];
+            buildInputs = (old.buildInputs or []) ++ [ pkgs.openssl ];
+          });
+        })
+      ];
+    })
     inputs.vertd.nixosModules.default
     ./vertd.nix
     {
