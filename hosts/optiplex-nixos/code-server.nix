@@ -15,6 +15,9 @@
       # Prevent code-server from generating a password
       CS_DISABLE_GETTING_STARTED_OVERRIDE = "1";
     };
+    extraArguments = [
+      "--proxy-domain=optiplex-nixos.tailc585e.ts.net/code-server"
+    ];
   };
 
   # Advertise code-server as a Tailscale service
