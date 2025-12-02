@@ -8,7 +8,7 @@
     enable = true;
     user = "morph";
     group = "users";
-    host = "100.89.107.92"; # Tailscale IP
+    host = "127.0.0.1"; # Bind to localhost only, Tailscale serve will handle external access
     port = 8081; # Using 8081 since qBittorrent uses 8080
     auth = "none"; # Tailscale provides authentication
     extraEnvironment = {
@@ -17,46 +17,18 @@
     };
   };
 
-  # Caddy reverse proxy for HTTPS
-  services.caddy = {
-    enable = true;
-    extraConfig = ''
-      optiplex-nixos.tailc585e.ts.net {
-        reverse_proxy 100.89.107.92:8081
-      }
-    '';
-  };
-
-  # Allow Caddy to use Tailscale certificates
-  systemd.services.caddy = {
-    serviceConfig = {
-      Environment = "TS_PERMIT_CERT_UID=caddy";
-    };
-  };
-
-  # Create caddy user and group if they don't exist
-  users.users.caddy = {
-    isSystemUser = true;
-    group = "caddy";
-  };
-  users.groups.caddy = {};
-
-  # Generate Tailscale certificate for the machine
-  systemd.services.tailscale-cert = {
-    description = "Generate Tailscale certificate";
-    after = ["tailscale.service"];
-    wants = ["tailscale.service"];
+  # Advertise code-server as a Tailscale service
+  systemd.services.tailscale-serve-code-server = {
+    description = "Advertise code-server on Tailscale";
+    after = ["tailscale.service" "code-server.service"];
+    wants = ["tailscale.service" "code-server.service"];
     wantedBy = ["multi-user.target"];
 
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = "${config.services.tailscale.package}/bin/tailscale cert optiplex-nixos.tailc585e.ts.net";
+      ExecStart = "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/code-server http://127.0.0.1:8081";
+      ExecStop = "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/code-server off";
     };
-  };
-
-  # Open firewall for code-server (only accessible via Tailscale)
-  networking.firewall = {
-    allowedTCPPorts = [ 443 ]; # HTTPS via Caddy
   };
 }
