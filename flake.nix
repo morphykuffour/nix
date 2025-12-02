@@ -55,6 +55,10 @@
       url = "github:DMaroo/fakwin";
       flake = false;
     };
+    vertd = {
+      url = "github:VERT-sh/vertd";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -73,6 +77,7 @@
     nixos-hardware,
     nixified-ai,
     fakwin,
+    vertd,
     ...
   } @ inputs: let
     user = "morph";
