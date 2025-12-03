@@ -65,18 +65,18 @@
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = ''
-        ${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/file-converter http://127.0.0.1:3000
-        ${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/_app http://127.0.0.1:3000
-        ${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/favicon.png http://127.0.0.1:3000
-        ${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/lettermark.jpg http://127.0.0.1:3000
-      '';
-      ExecStop = ''
-        ${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/file-converter off || true
-        ${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/_app off || true
-        ${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/favicon.png off || true
-        ${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/lettermark.jpg off || true
-      '';
+      ExecStart = "${pkgs.bash}/bin/bash -euc '"+
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/file-converter http://127.0.0.1:3000; " +
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/_app http://127.0.0.1:3000; " +
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/api http://127.0.0.1:3000; " +
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/favicon.png http://127.0.0.1:3000; " +
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/lettermark.jpg http://127.0.0.1:3000'";
+      ExecStop = "${pkgs.bash}/bin/bash -euc '"+
+        "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/file-converter off || true; " +
+        "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/_app off || true; " +
+        "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/api off || true; " +
+        "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/favicon.png off || true; " +
+        "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/lettermark.jpg off || true'";
     };
   };
 
