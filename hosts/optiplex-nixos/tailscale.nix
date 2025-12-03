@@ -20,6 +20,7 @@
     authKeyFile = config.age.secrets.ts-optiplex-nixos.path;
     extraUpFlags = [
       "--advertise-exit-node"
+      "--ssh"
       # optional if you've experimented before:
       # "--reset"
     ];
@@ -58,7 +59,7 @@
   # Advertise VERT (Docker UI on host:3000) via Tailscale under /file-converter and proxy asset paths
   systemd.services.tailscale-serve-vert = {
     description = "Advertise VERT UI on Tailscale";
-    after = ["tailscale.service" "docker.service"];
+    after = ["tailscale.service" "docker.service" "tailscale-serve-searxng.service"];
     wants = ["tailscale.service" "docker.service"];
     wantedBy = ["multi-user.target"];
 
