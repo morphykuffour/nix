@@ -116,7 +116,7 @@
       dock = {
         # Dock settings
         autohide = false;
-        orientation = "right";
+        orientation = "left";
         showhidden = true;
         tilesize = 40;
         # mineffect = "genie";
