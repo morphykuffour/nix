@@ -3,7 +3,7 @@
 {
   # SearXNG meta search engine
   # Runs in Docker container on port 8888
-  # Served via Tailscale at https://optiplex-nixos.tailc585e.ts.net/search
+  # Served via Tailscale at https://optiplex-nixos.tailc585e.ts.net:8443
 
   virtualisation.oci-containers.containers.searxng = {
     image = "searxng/searxng:latest";
@@ -19,9 +19,8 @@
     ];
 
     environment = {
-      # CRITICAL: Tell SearXNG it's served under /search subpath
-      # This fixes redirect loops and asset loading
-      SEARXNG_BASE_URL = "https://optiplex-nixos.tailc585e.ts.net/search";
+      # No base_url needed - SearXNG served on dedicated port :8443
+      # (not a subpath, so no redirect loop issues)
 
       # Redis connection for rate limiting
       SEARXNG_REDIS_URL = "redis://searxng-redis:6379/0";

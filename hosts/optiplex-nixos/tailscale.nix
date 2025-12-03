@@ -66,8 +66,8 @@
       ExecStart = "${pkgs.bash}/bin/bash -euc '"+
         # Map qBittorrent under /qbittorrent on 443
         "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/qbittorrent http://127.0.0.1:8080; " +
-        # Map SearXNG under /search on 443
-        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/search http://127.0.0.1:8888; " +
+        # Serve SearXNG on its own HTTPS port 8443 (subpath routing is too complex)
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=8443 http://127.0.0.1:8888; " +
         # Serve VERT UI on its own HTTPS port 444 to avoid subpath/asset rewrites
         "${config.services.tailscale.package}/bin/tailscale serve --bg --https=444 http://127.0.0.1:3000; " +
         # Serve code-server directly on its own HTTPS port 8081
@@ -76,7 +76,7 @@
         "${config.services.tailscale.package}/bin/tailscale serve --bg --https=24153 http://127.0.0.1:24153'";
       ExecStop = "${pkgs.bash}/bin/bash -euc '"+
         "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/qbittorrent off || true; " +
-        "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/search off || true; " +
+        "${config.services.tailscale.package}/bin/tailscale serve --https=8443 off || true; " +
         "${config.services.tailscale.package}/bin/tailscale serve --https=444 off || true; " +
         "${config.services.tailscale.package}/bin/tailscale serve --https=8081 off || true; " +
         "${config.services.tailscale.package}/bin/tailscale serve --https=24153 off || true'";
