@@ -11,6 +11,7 @@
     ./roon.nix
     ./code-server.nix
     ./vert.nix
+    ./searxng.nix
     # ./zfs.nix
   ];
 
