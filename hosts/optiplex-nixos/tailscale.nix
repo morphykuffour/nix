@@ -40,7 +40,7 @@
     };
   };
 
-  # Advertise SearXNG as a Tailscale service
+  # Advertise SearXNG as a Tailscale service (under /searx to avoid shadowing /)
   systemd.services.tailscale-serve-searxng = {
     description = "Advertise SearXNG on Tailscale";
     after = ["tailscale.service" "docker-searxng.service"];
@@ -50,8 +50,8 @@
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 http://127.0.0.1:8888";
-      ExecStop = "${config.services.tailscale.package}/bin/tailscale serve --https=443 off";
+      ExecStart = "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/searx http://127.0.0.1:8888";
+      ExecStop = "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/searx off";
     };
   };
 
