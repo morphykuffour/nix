@@ -26,8 +26,15 @@
     };
     
     environment = {
-      # Ensure ffmpeg is available
-      PATH = lib.makeBinPath [ pkgs.ffmpeg-full ];
+      # Ensure ffmpeg is available - use mkForce to override default PATH
+      PATH = lib.mkForce (lib.makeBinPath [ 
+        pkgs.ffmpeg-full 
+        pkgs.coreutils 
+        pkgs.findutils 
+        pkgs.gnugrep 
+        pkgs.gnused 
+        pkgs.systemd 
+      ]);
     };
   };
 
