@@ -28,15 +28,17 @@ nixpkgs.lib.nixosSystem {
       commonArgs = {
         inherit src;
         strictDeps = true;
-        # Add build dependencies to commonArgs so buildDepsOnly gets them
+        # Add build dependencies - openssl.dev in nativeBuildInputs so setup hooks run
+        # This automatically sets up PKG_CONFIG_PATH
         nativeBuildInputs = [
           pkgs.pkg-config
+          pkgs.openssl.dev
         ];
         buildInputs = [
           pkgs.openssl
-          pkgs.openssl.dev
         ];
-        # Set environment variables for OpenSSL and pkg-config in the build environment
+        # Explicitly set environment variables as backup
+        # The setup hooks should handle PKG_CONFIG_PATH, but we set it explicitly too
         preBuild = ''
           export PKG_CONFIG_PATH="${pkgs.openssl.dev}/lib/pkgconfig"
           export OPENSSL_DIR="${pkgs.openssl.dev}"
@@ -46,7 +48,6 @@ nixpkgs.lib.nixosSystem {
       };
 
       # Build cargo dependencies with proper inputs
-      # Ensure OpenSSL environment variables are set for the build
       cargoArtifacts = crane.buildDepsOnly commonArgs;
 
       # Build vertd with the artifacts
