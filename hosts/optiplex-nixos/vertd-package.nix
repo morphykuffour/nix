@@ -28,38 +28,70 @@ in {
         ];
       };
 
-      # Build cargo dependencies using Crane but with proper environment
-      # Use preConfigure which runs before configurePhase
-      cargoArtifacts = crane.buildDepsOnly (commonArgs // {
-        # Set environment variables as attributes
+      # Get vendored dependencies
+      cargoVendorDir = crane.cargoVendorDir { inherit src; };
+      
+      # Build cargo dependencies manually with full environment control
+      cargoArtifacts = prev.stdenv.mkDerivation {
+        name = "vertd-deps";
+        inherit src;
+        
+        nativeBuildInputs = commonArgs.nativeBuildInputs ++ [
+          prev.cargo
+          prev.rustc
+        ];
+        buildInputs = commonArgs.buildInputs;
+        
+        # Environment variables - Nix will set these in the build environment
         PKG_CONFIG_PATH = "${prev.openssl.dev}/lib/pkgconfig";
         OPENSSL_DIR = "${prev.openssl.dev}";
         OPENSSL_LIB_DIR = "${prev.openssl.out}/lib";
         OPENSSL_INCLUDE_DIR = "${prev.openssl.dev}/include";
         
-        # Use preConfigure to set up environment before any build steps
-        preConfigure = ''
+        configurePhase = ''
+          # Copy vendored dependencies
+          cp -r ${cargoVendorDir} vendor
+          
+          # Configure Cargo to use vendored sources
+          mkdir -p .cargo
+          cat > .cargo/config.toml <<EOF
+          [source.crates-io]
+          replace-with = "vendored-sources"
+          
+          [source.vendored-sources]
+          directory = "$(pwd)/vendor"
+          EOF
+          
+          # Set up environment (redundant but ensures it's set)
           export PKG_CONFIG_PATH="${prev.openssl.dev}/lib/pkgconfig"
           export OPENSSL_DIR="${prev.openssl.dev}"
           export OPENSSL_LIB_DIR="${prev.openssl.out}/lib"
           export OPENSSL_INCLUDE_DIR="${prev.openssl.dev}/include"
-          export PATH="${lib.makeBinPath (commonArgs.nativeBuildInputs)}:$PATH"
           
-          # Debug: verify environment
+          # Verify environment
+          echo "=== Environment Setup ==="
           echo "PKG_CONFIG_PATH: $PKG_CONFIG_PATH"
           echo "PATH: $PATH"
-          which pkg-config || echo "WARNING: pkg-config not in PATH"
-          pkg-config --version || echo "WARNING: pkg-config failed"
+          which pkg-config || (echo "ERROR: pkg-config not in PATH" && exit 1)
+          pkg-config --version
+          pkg-config --exists openssl || (echo "ERROR: openssl not found" && exit 1)
+          echo "=== Environment OK ==="
         '';
         
-        # Also set in preBuild as backup
-        preBuild = ''
-          export PKG_CONFIG_PATH="${prev.openssl.dev}/lib/pkgconfig"
-          export OPENSSL_DIR="${prev.openssl.dev}"
-          export OPENSSL_LIB_DIR="${prev.openssl.out}/lib"
-          export OPENSSL_INCLUDE_DIR="${prev.openssl.dev}/include"
+        buildPhase = ''
+          # Build dependencies using cargo build --lib
+          # This builds the library and all its dependencies
+          export CARGO_TARGET_DIR=$NIX_BUILD_TOP/target-deps
+          cargo build --frozen --offline --lib
         '';
-      });
+        
+        installPhase = ''
+          mkdir -p $out
+          cp -r $CARGO_TARGET_DIR $out/target
+        '';
+        
+        doCheck = false;
+      };
 
       # Build vertd with the artifacts
       vertd-fixed = crane.buildPackage (commonArgs // {
