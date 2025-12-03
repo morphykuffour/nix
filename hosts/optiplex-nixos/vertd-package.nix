@@ -32,7 +32,7 @@ in {
       };
 
       # Build cargo dependencies manually with full environment control
-      # We'll let cargo fetch dependencies normally (no vendoring needed for deps-only build)
+      # First, vendor dependencies, then build with vendored deps
       cargoArtifacts = prev.stdenv.mkDerivation {
         name = "vertd-deps-manual-openssl-fix";
         inherit src;
@@ -50,7 +50,7 @@ in {
         OPENSSL_INCLUDE_DIR = "${prev.openssl.dev}/include";
         
         configurePhase = ''
-          # Set up environment
+          # Set up environment first
           export PKG_CONFIG_PATH="${prev.openssl.dev}/lib/pkgconfig"
           export OPENSSL_DIR="${prev.openssl.dev}"
           export OPENSSL_LIB_DIR="${prev.openssl.out}/lib"
@@ -69,14 +69,28 @@ in {
           pkg-config --version || (echo "ERROR: pkg-config failed" && exit 1)
           pkg-config --exists openssl || (echo "ERROR: openssl not found" && exit 1)
           echo "=== Environment OK ==="
+          
+          # Vendor dependencies for offline build
+          echo "=== Vendoring dependencies ==="
+          cargo vendor vendor
+          
+          # Configure Cargo to use vendored sources
+          mkdir -p .cargo
+          cat > .cargo/config.toml <<EOF
+          [source.crates-io]
+          replace-with = "vendored-sources"
+          
+          [source.vendored-sources]
+          directory = "$(pwd)/vendor"
+          EOF
+          echo "=== Vendoring complete ==="
         '';
         
         buildPhase = ''
-          # Build dependencies using cargo build --lib
-          # This builds the library and all its dependencies
-          # We use --locked to ensure reproducible builds
+          # Build dependencies using cargo build --lib with vendored deps
+          # This builds the library and all its dependencies offline
           export CARGO_TARGET_DIR=$NIX_BUILD_TOP/target-deps
-          cargo build --locked --lib
+          cargo build --frozen --offline --lib
         '';
         
         installPhase = ''
