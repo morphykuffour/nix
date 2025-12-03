@@ -55,6 +55,21 @@
     };
   };
 
+  # Advertise vertd as a Tailscale service at /file-converter/
+  systemd.services.tailscale-serve-vertd = {
+    description = "Advertise vertd on Tailscale";
+    after = ["tailscale.service" "vertd.service"];
+    wants = ["tailscale.service" "vertd.service"];
+    wantedBy = ["multi-user.target"];
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/file-converter/ http://127.0.0.1:24153";
+      ExecStop = "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/file-converter/ off";
+    };
+  };
+
   # Good practice for exit nodes
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
