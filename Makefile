@@ -76,6 +76,19 @@ xps-deploy:
 		--target-host $(REMOTE_USER)@$(REMOTE_HOST) \
 		--build-host $(REMOTE_USER)@$(REMOTE_HOST) \
 		--use-remote-sudo
+#
+# Remote deploy for optiplex-nixos from macOS (no SSHing in / no git pull on target)
+# Uses nixos-rebuild with --target-host and --build-host so evaluation happens locally,
+# build happens on the remote Linux, and the closure is pushed + switched remotely.
+optiplex-deploy:
+	nix run nixpkgs#nixos-rebuild -- switch --flake '.#optiplex-nixos' \
+		--target-host morph@optiplex-nixos \
+		--build-host morph@optiplex-nixos \
+		--use-remote-sudo
+
+optiplex-build-remote:
+	nix run nixpkgs#nixos-rebuild -- build --flake '.#optiplex-nixos' \
+		--build-host morph@optiplex-nixos
 
 # Build only (no switch) on remote builder
 xps-build-remote:
