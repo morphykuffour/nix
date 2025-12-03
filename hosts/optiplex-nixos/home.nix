@@ -55,10 +55,6 @@
     # };
   };
 
-  nixpkgs = {
-    config.allowUnfree = true;
-  };
-
   home = {
     username = "morph";
     homeDirectory = "/home/morph";

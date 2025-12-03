@@ -42,8 +42,12 @@
   # Select internationalisation properties
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Enable the X11 windowing system.
   services = {
+    # New-style desktop/display manager options
+    desktopManager.gnome.enable = true;
+    displayManager.gdm.enable = true;
+
+    # Enable the X11 windowing system.
     # Prevent system from suspending/hibernating; keep always on
     logind = {
       settings = {
@@ -65,21 +69,7 @@
     };
 
     xserver = {
-      desktopManager = {
-        gnome = {
-          enable = true;
-        };
-
-        # plasma5 = {
-        #   enable = true;
-        # };
-
-        # mate = {
-        #   enable = true;
-        # };
-      };
       enable = true;
-      displayManager.gdm.enable = true;
       # displayManager = {
       #   startx.enable = true;
       #   defaultSession = "plasma";
@@ -216,7 +206,7 @@
   # hardware.pulseaudio.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
