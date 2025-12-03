@@ -29,7 +29,6 @@ nixpkgs.lib.nixosSystem {
         inherit src;
         strictDeps = true;
         # Add build dependencies - openssl.dev in nativeBuildInputs so setup hooks run
-        # This automatically sets up PKG_CONFIG_PATH
         nativeBuildInputs = [
           pkgs.pkg-config
           pkgs.openssl.dev
@@ -37,18 +36,26 @@ nixpkgs.lib.nixosSystem {
         buildInputs = [
           pkgs.openssl
         ];
-        # Explicitly set environment variables as backup
-        # The setup hooks should handle PKG_CONFIG_PATH, but we set it explicitly too
-        preBuild = ''
+      };
+
+      # Build cargo dependencies with proper inputs
+      # Override the derivation to ensure environment variables are available
+      cargoArtifacts = (crane.buildDepsOnly commonArgs).overrideAttrs (oldAttrs: {
+        # Add environment variables to the build environment
+        PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+        OPENSSL_DIR = "${pkgs.openssl.dev}";
+        OPENSSL_LIB_DIR = "${pkgs.openssl.out}/lib";
+        OPENSSL_INCLUDE_DIR = "${pkgs.openssl.dev}/include";
+        
+        # Ensure preBuild runs and sets up the environment
+        preBuild = (oldAttrs.preBuild or "") + ''
           export PKG_CONFIG_PATH="${pkgs.openssl.dev}/lib/pkgconfig"
           export OPENSSL_DIR="${pkgs.openssl.dev}"
           export OPENSSL_LIB_DIR="${pkgs.openssl.out}/lib"
           export OPENSSL_INCLUDE_DIR="${pkgs.openssl.dev}/include"
+          export PATH="${lib.makeBinPath [ pkgs.pkg-config ]}:$PATH"
         '';
-      };
-
-      # Build cargo dependencies with proper inputs
-      cargoArtifacts = crane.buildDepsOnly commonArgs;
+      });
 
       # Build vertd with the artifacts
       vertd-fixed = crane.buildPackage (commonArgs // {
@@ -56,6 +63,11 @@ nixpkgs.lib.nixosSystem {
         nativeBuildInputs = commonArgs.nativeBuildInputs ++ [
           pkgs.makeWrapper
         ];
+        # Set environment variables for the final build too
+        PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+        OPENSSL_DIR = "${pkgs.openssl.dev}";
+        OPENSSL_LIB_DIR = "${pkgs.openssl.out}/lib";
+        OPENSSL_INCLUDE_DIR = "${pkgs.openssl.dev}/include";
         postFixup = ''
           wrapProgram $out/bin/vertd --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ pkgs.libGL ]}"
         '';
