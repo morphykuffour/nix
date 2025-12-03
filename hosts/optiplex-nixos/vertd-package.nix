@@ -32,9 +32,14 @@ in {
       cargoVendorDir = crane.cargoVendorDir { inherit src; };
       
       # Build cargo dependencies manually with full environment control
+      # Use a unique name to ensure this derivation is used instead of Crane's
+      # Adding version suffix to force new derivation
       cargoArtifacts = prev.stdenv.mkDerivation {
-        name = "vertd-deps";
+        name = "vertd-deps-manual-v2";
         inherit src;
+        
+        # Add a comment to force derivation change
+        __impure = false;
         
         nativeBuildInputs = commonArgs.nativeBuildInputs ++ [
           prev.cargo
