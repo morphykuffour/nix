@@ -17,8 +17,9 @@ nixpkgs.lib.nixosSystem {
     ../../modules/tailscale
     agenix.nixosModules.default
     home-manager.nixosModules.home-manager
-    ./vertd-package.nix  # Load package override first
-    inputs.vertd.nixosModules.default
+    ./vertd-package.nix  # Load package override first - MUST be before vertd module
+    # Temporarily disable vertd flake module to use our override
+    # inputs.vertd.nixosModules.default
     ./vertd.nix
     {
       home-manager = {

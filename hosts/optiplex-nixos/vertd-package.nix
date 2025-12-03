@@ -10,6 +10,9 @@ in {
   # vertd package override module
   # The vertd flake has a bug where buildDepsOnly doesn't get the nativeBuildInputs
   # So we need to override the package to fix the cargo dependency build
+  
+  # Override the package before the vertd module evaluates
+  # This ensures our package is used instead of the flake's default
   nixpkgs.overlays = [
     (final: prev: let
       crane = inputs.vertd.inputs.crane.mkLib prev;
@@ -33,13 +36,10 @@ in {
       
       # Build cargo dependencies manually with full environment control
       # Use a unique name to ensure this derivation is used instead of Crane's
-      # Adding version suffix to force new derivation
+      # Adding unique identifier to force new derivation hash
       cargoArtifacts = prev.stdenv.mkDerivation {
-        name = "vertd-deps-manual-v2";
+        name = "vertd-deps-manual-openssl-fix";
         inherit src;
-        
-        # Add a comment to force derivation change
-        __impure = false;
         
         nativeBuildInputs = commonArgs.nativeBuildInputs ++ [
           prev.cargo
