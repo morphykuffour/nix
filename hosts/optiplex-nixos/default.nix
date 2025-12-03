@@ -19,13 +19,48 @@ nixpkgs.lib.nixosSystem {
     home-manager.nixosModules.home-manager
 
     # vertd module with package override for build dependencies
-    ({pkgs, ...}: {
+    # The vertd flake has a bug where buildDepsOnly doesn't get the nativeBuildInputs
+    # So we need to override the package to fix the cargo dependency build
+    ({pkgs, lib, ...}: let
+      crane = inputs.vertd.inputs.crane.mkLib pkgs;
+      src = crane.cleanCargoSource inputs.vertd;
+
+      commonArgs = {
+        inherit src;
+        strictDeps = true;
+        # Add build dependencies to commonArgs so buildDepsOnly gets them
+        nativeBuildInputs = [
+          pkgs.pkg-config
+        ];
+        buildInputs = [
+          pkgs.openssl
+        ];
+      };
+
+      # Build cargo dependencies with proper inputs
+      cargoArtifacts = crane.buildDepsOnly commonArgs;
+
+      # Build vertd with the artifacts
+      vertd-fixed = crane.buildPackage (commonArgs // {
+        inherit cargoArtifacts;
+        nativeBuildInputs = commonArgs.nativeBuildInputs ++ [
+          pkgs.makeWrapper
+        ];
+        postFixup = ''
+          wrapProgram $out/bin/vertd --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ pkgs.libGL ]}"
+        '';
+        meta = {
+          description = "VERT's solution to video conversion";
+          homepage = "https://github.com/vert-sh/vertd";
+          license = lib.licenses.gpl3;
+          platforms = lib.platforms.linux;
+          mainProgram = "vertd";
+        };
+      });
+    in {
       nixpkgs.overlays = [
         (final: prev: {
-          vertd = inputs.vertd.packages.${prev.system}.default.overrideAttrs (old: {
-            nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.pkg-config ];
-            buildInputs = (old.buildInputs or []) ++ [ pkgs.openssl ];
-          });
+          vertd = vertd-fixed;
         })
       ];
     })
