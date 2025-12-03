@@ -31,12 +31,8 @@ in {
         ];
       };
 
-      # Get vendored dependencies
-      cargoVendorDir = crane.cargoVendorDir { inherit src; };
-      
       # Build cargo dependencies manually with full environment control
-      # Use a unique name to ensure this derivation is used instead of Crane's
-      # Adding unique identifier to force new derivation hash
+      # We'll let cargo fetch dependencies normally (no vendoring needed for deps-only build)
       cargoArtifacts = prev.stdenv.mkDerivation {
         name = "vertd-deps-manual-openssl-fix";
         inherit src;
@@ -54,20 +50,7 @@ in {
         OPENSSL_INCLUDE_DIR = "${prev.openssl.dev}/include";
         
         configurePhase = ''
-          # Copy vendored dependencies
-          cp -r ${cargoVendorDir} vendor
-          
-          # Configure Cargo to use vendored sources
-          mkdir -p .cargo
-          cat > .cargo/config.toml <<EOF
-          [source.crates-io]
-          replace-with = "vendored-sources"
-          
-          [source.vendored-sources]
-          directory = "$(pwd)/vendor"
-          EOF
-          
-          # Set up environment (redundant but ensures it's set)
+          # Set up environment
           export PKG_CONFIG_PATH="${prev.openssl.dev}/lib/pkgconfig"
           export OPENSSL_DIR="${prev.openssl.dev}"
           export OPENSSL_LIB_DIR="${prev.openssl.out}/lib"
@@ -86,8 +69,9 @@ in {
         buildPhase = ''
           # Build dependencies using cargo build --lib
           # This builds the library and all its dependencies
+          # We use --locked to ensure reproducible builds
           export CARGO_TARGET_DIR=$NIX_BUILD_TOP/target-deps
-          cargo build --frozen --offline --lib
+          cargo build --locked --lib
         '';
         
         installPhase = ''
