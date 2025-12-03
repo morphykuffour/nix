@@ -17,9 +17,10 @@ nixpkgs.lib.nixosSystem {
     ../../modules/tailscale
     agenix.nixosModules.default
     home-manager.nixosModules.home-manager
-    ./vertd-package.nix  # Load package override first - MUST be before vertd module
-    # inputs.vertd.nixosModules.default
-    # ./vertd.nix  # vertd backend service for video conversion
+    # VERT configuration is now consolidated in vert.nix (loaded via configuration.nix)
+    # ./vertd-package.nix  # Moved to vert.nix
+    # inputs.vertd.nixosModules.default  # Not used - using Docker instead
+    # ./vertd.nix  # Moved to vert.nix
     {
       home-manager = {
         useGlobalPkgs = true;
