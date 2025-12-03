@@ -13,7 +13,9 @@ echo
 
 # Step 2: Rebuild NixOS
 echo "🔧 Step 2: Rebuilding NixOS configuration..."
-sudo nixos-rebuild switch --flake .#optiplex-nixos
+# sudo nixos-rebuild switch --flake .#optiplex-nixos
+cd ~/nix
+make switch
 echo "✅ NixOS rebuilt"
 echo
 
