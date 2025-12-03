@@ -1,20 +1,21 @@
-{ config, pkgs, ... }:
-
-let
+{
+  config,
+  pkgs,
+  ...
+}: let
   # RustDesk server ports
-  hbbs_port = 21115;      # TCP - ID/Rendezvous server
-  hbbs_port_udp = 21116;  # UDP - ID/Rendezvous server
-  hbbs_port_web = 21114;  # TCP - Web console (admin)
-  hbbr_port = 21117;      # TCP - Relay server
-  hbbr_port_ws = 21119;   # TCP - Relay server WebSocket
+  hbbs_port = 21115; # TCP - ID/Rendezvous server
+  hbbs_port_udp = 21116; # UDP - ID/Rendezvous server
+  hbbs_port_web = 21114; # TCP - Web console (admin)
+  hbbr_port = 21117; # TCP - Relay server
+  hbbr_port_ws = 21119; # TCP - Relay server WebSocket
 
   # Server address for relay configuration
-  server_address = "100.89.107.92";  # Tailscale IP
+  server_address = "100.89.107.92"; # Tailscale IP
 
   # Data directory for RustDesk
   rustdesk_data = "/var/lib/rustdesk";
-in
-{
+in {
   # Create data directory
   systemd.tmpfiles.rules = [
     "d ${rustdesk_data} 0750 rustdesk rustdesk - -"
@@ -32,8 +33,8 @@ in
   # RustDesk hbbs (ID/Rendezvous server)
   systemd.services.rustdesk-hbbs = {
     description = "RustDesk ID/Rendezvous Server (hbbs)";
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
+    after = ["network.target"];
+    wantedBy = ["multi-user.target"];
 
     serviceConfig = {
       Type = "simple";
@@ -54,7 +55,7 @@ in
       PrivateTmp = true;
       ProtectSystem = "strict";
       ProtectHome = true;
-      ReadWritePaths = [ rustdesk_data ];
+      ReadWritePaths = [rustdesk_data];
 
       # Network optimizations for high throughput
       LimitNOFILE = 1000000;
@@ -65,8 +66,8 @@ in
   # RustDesk hbbr (Relay server)
   systemd.services.rustdesk-hbbr = {
     description = "RustDesk Relay Server (hbbr)";
-    after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
+    after = ["network.target"];
+    wantedBy = ["multi-user.target"];
 
     serviceConfig = {
       Type = "simple";
@@ -86,7 +87,7 @@ in
       PrivateTmp = true;
       ProtectSystem = "strict";
       ProtectHome = true;
-      ReadWritePaths = [ rustdesk_data ];
+      ReadWritePaths = [rustdesk_data];
 
       # Network optimizations for high throughput
       LimitNOFILE = 1000000;
@@ -97,9 +98,9 @@ in
   # Advertise RustDesk web console via Tailscale
   systemd.services.tailscale-serve-rustdesk = {
     description = "Advertise RustDesk Web Console on Tailscale";
-    after = [ "tailscale.service" "rustdesk-hbbs.service" ];
-    wants = [ "tailscale.service" "rustdesk-hbbs.service" ];
-    wantedBy = [ "multi-user.target" ];
+    after = ["tailscale.service" "rustdesk-hbbs.service"];
+    wants = ["tailscale.service" "rustdesk-hbbs.service"];
+    wantedBy = ["multi-user.target"];
 
     serviceConfig = {
       Type = "oneshot";
@@ -116,10 +117,10 @@ in
     "net.ipv4.tcp_congestion_control" = "bbr";
 
     # Increase network buffers for high throughput
-    "net.core.rmem_max" = 134217728;          # 128 MB
-    "net.core.wmem_max" = 134217728;          # 128 MB
-    "net.core.rmem_default" = 16777216;       # 16 MB
-    "net.core.wmem_default" = 16777216;       # 16 MB
+    "net.core.rmem_max" = 134217728; # 128 MB
+    "net.core.wmem_max" = 134217728; # 128 MB
+    "net.core.rmem_default" = 16777216; # 16 MB
+    "net.core.wmem_default" = 16777216; # 16 MB
     "net.ipv4.tcp_rmem" = "4096 87380 134217728";
     "net.ipv4.tcp_wmem" = "4096 65536 134217728";
 
@@ -144,19 +145,19 @@ in
   networking.firewall = {
     # RustDesk ports - allow both local network and Tailscale
     allowedTCPPorts = [
-      hbbs_port       # 21115 - ID/Rendezvous
-      hbbr_port       # 21117 - Relay
-      hbbr_port_ws    # 21119 - Relay WebSocket
-      hbbs_port_web   # 21114 - Web console (optional, mainly for Tailscale)
+      hbbs_port # 21115 - ID/Rendezvous
+      hbbr_port # 21117 - Relay
+      hbbr_port_ws # 21119 - Relay WebSocket
+      hbbs_port_web # 21114 - Web console (optional, mainly for Tailscale)
     ];
     allowedUDPPorts = [
-      hbbs_port_udp   # 21116 - ID/Rendezvous UDP
+      hbbs_port_udp # 21116 - ID/Rendezvous UDP
     ];
 
     # Allow these ports on Tailscale interface
     interfaces.tailscale0 = {
-      allowedTCPPorts = [ hbbs_port hbbr_port hbbr_port_ws hbbs_port_web ];
-      allowedUDPPorts = [ hbbs_port_udp ];
+      allowedTCPPorts = [hbbs_port hbbr_port hbbr_port_ws hbbs_port_web];
+      allowedUDPPorts = [hbbs_port_udp];
     };
   };
 

@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   # SearXNG meta search engine
   # Runs in Docker container on port 8888
   # Served via Tailscale at https://optiplex-nixos.tailc585e.ts.net:8443
@@ -10,7 +13,7 @@
     autoStart = true;
 
     ports = [
-      "8888:8080"  # SearXNG internal port 8080 → host 8888
+      "8888:8080" # SearXNG internal port 8080 → host 8888
     ];
 
     volumes = [
@@ -34,7 +37,7 @@
     };
 
     # Connect to searxng-redis container
-    dependsOn = [ "searxng-redis" ];
+    dependsOn = ["searxng-redis"];
 
     extraOptions = [
       "--network=searxng-network"
@@ -71,10 +74,10 @@
   # Create Docker network for SearXNG containers
   systemd.services.init-searxng-network = {
     description = "Create Docker network for SearXNG";
-    after = [ "docker.service" ];
-    requires = [ "docker.service" ];
-    wantedBy = [ "multi-user.target" ];  # Auto-start on boot
-    before = [ "docker-searxng.service" "docker-searxng-redis.service" ];
+    after = ["docker.service"];
+    requires = ["docker.service"];
+    wantedBy = ["multi-user.target"]; # Auto-start on boot
+    before = ["docker-searxng.service" "docker-searxng-redis.service"];
 
     serviceConfig = {
       Type = "oneshot";
@@ -88,8 +91,8 @@
   };
 
   # Ensure SearXNG containers depend on network creation
-  systemd.services.docker-searxng.requires = [ "init-searxng-network.service" ];
-  systemd.services.docker-searxng-redis.requires = [ "init-searxng-network.service" ];
+  systemd.services.docker-searxng.requires = ["init-searxng-network.service"];
+  systemd.services.docker-searxng-redis.requires = ["init-searxng-network.service"];
 
   # Enable Docker
   virtualisation.docker.enable = true;

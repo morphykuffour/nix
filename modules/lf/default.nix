@@ -40,45 +40,45 @@ in {
       fzf_search = ''${fzf_search}'';
 
       replace-space-in-dirs = ''
-      ''${{
-          REPLACE_SCRIPT="$HOME/.local/bin/replace_spaces"
-          if [ ! -f "$REPLACE_SCRIPT" ]; then
-              echo "Error: $REPLACE_SCRIPT not found" >&2
-              exit 1
-          fi
-          [ -x "$REPLACE_SCRIPT" ] || chmod +x "$REPLACE_SCRIPT" 2>/dev/null
-          if [ ! -x "$REPLACE_SCRIPT" ]; then
-              echo "Error: $REPLACE_SCRIPT is not executable" >&2
-              exit 1
-          fi
-          if [ -z "$fx" ]; then
-              echo "No files selected" >&2
-              exit 1
-          fi
-          printf '%s\n' "$fx" | while IFS= read -r d; do
-              [ -n "$d" ] || continue
-              if [ -d "$d" ]; then
-                  echo "Processing: $d"
-                  (cd "$d" && "$REPLACE_SCRIPT") || echo "Failed to process: $d" >&2
-              else
-                  echo "Skipping (not a directory): $d" >&2
-              fi
-          done
-          lf -remote "send $id reload"
-      }}
+        ''${{
+            REPLACE_SCRIPT="$HOME/.local/bin/replace_spaces"
+            if [ ! -f "$REPLACE_SCRIPT" ]; then
+                echo "Error: $REPLACE_SCRIPT not found" >&2
+                exit 1
+            fi
+            [ -x "$REPLACE_SCRIPT" ] || chmod +x "$REPLACE_SCRIPT" 2>/dev/null
+            if [ ! -x "$REPLACE_SCRIPT" ]; then
+                echo "Error: $REPLACE_SCRIPT is not executable" >&2
+                exit 1
+            fi
+            if [ -z "$fx" ]; then
+                echo "No files selected" >&2
+                exit 1
+            fi
+            printf '%s\n' "$fx" | while IFS= read -r d; do
+                [ -n "$d" ] || continue
+                if [ -d "$d" ]; then
+                    echo "Processing: $d"
+                    (cd "$d" && "$REPLACE_SCRIPT") || echo "Failed to process: $d" >&2
+                else
+                    echo "Skipping (not a directory): $d" >&2
+                fi
+            done
+            lf -remote "send $id reload"
+        }}
       '';
 
       open-file = ''
         ''${{
             case $(uname) in
-                Linux) 
+                Linux)
                     if [[ "$fx" == *.pdf ]]; then
                         zathura "$fx" >/dev/null 2>&1 &
                     else
                         xdg-open "$fx" >/dev/null 2>&1 &
                     fi
                     ;;
-                Darwin) 
+                Darwin)
                     if [[ "$fx" == *.pdf ]]; then
                         open -a Zathura "$fx" >/dev/null 2>&1 &
                     else

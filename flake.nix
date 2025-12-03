@@ -179,7 +179,7 @@
         agenix.nixosModules.default
         {
           nixpkgs.config.allowUnsupportedSystem = true;
-          nixpkgs.config.allowBroken          = true;
+          nixpkgs.config.allowBroken = true;
         }
       ];
     };

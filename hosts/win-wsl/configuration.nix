@@ -74,7 +74,6 @@
       };
     };
 
-
     open-webui = {
       enable = true;
       environment = {
@@ -91,7 +90,7 @@
     enable = true;
     wslConf = {
       automount.root = "/mnt";
-      network.generateResolvConf = false;  # Prevent WSL from managing resolv.conf
+      network.generateResolvConf = false; # Prevent WSL from managing resolv.conf
     };
     defaultUser = "morph";
     startMenuLaunchers = true;
@@ -104,7 +103,7 @@
 
   systemd.services.nvidia-cdi-generator = {
     description = "Generate nvidia cdi";
-    wantedBy = [ "docker.service" ];
+    wantedBy = ["docker.service"];
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${pkgs.nvidia-docker}/bin/nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml --nvidia-ctk-path=${pkgs.nvidia-container-toolkit}/bin/nvidia-ctk";
@@ -145,9 +144,9 @@
       ];
     };
 
-  extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
   };
 
   security.sudo.wheelNeedsPassword = false;
@@ -241,7 +240,7 @@
     cargo
     oterm
     neovim
-    
+
     # NVIDIA packages
     cudatoolkit
     nvidia-docker

@@ -68,7 +68,6 @@
     casks = [];
   };
 
-
   nix = {
     package = pkgs.nix;
     # gc = {

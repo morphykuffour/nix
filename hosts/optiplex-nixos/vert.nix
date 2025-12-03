@@ -90,7 +90,7 @@ in {
   virtualisation.oci-containers.containers.vert = {
     image = "ghcr.io/vert-sh/vert:latest";
     autoStart = true;
-    ports = [ "3000:80" ];
+    ports = ["3000:80"];
     extraOptions = [
       "--health-cmd=curl --fail --silent --output /dev/null http://localhost || exit 1"
       "--health-interval=30s"

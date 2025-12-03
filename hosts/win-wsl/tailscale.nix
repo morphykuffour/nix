@@ -48,7 +48,7 @@
       # warning: Strict reverse path filtering breaks Tailscale
       # exit node use and some subnet routing setups.
       checkReversePath = "loose";
-      
+
       # always allow traffic from your Tailscale network
       trustedInterfaces = ["tailscale0"];
 
@@ -62,4 +62,3 @@
     search = ["tailc585e.ts.net"];
   };
 }
-

@@ -1,9 +1,12 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   # RustDesk server on optiplex-nixos
-  rustdesk_server_lan = "optiplex-nixos.local";  # LAN hostname (via Avahi/mDNS)
-  rustdesk_server_tailscale = "100.89.107.92";    # Tailscale IP
+  rustdesk_server_lan = "optiplex-nixos.local"; # LAN hostname (via Avahi/mDNS)
+  rustdesk_server_tailscale = "100.89.107.92"; # Tailscale IP
 
   # Optimal client configuration for low-latency LAN connections
   rustdeskConfig = pkgs.writeText "RustDesk2.toml" ''
@@ -98,9 +101,7 @@ let
       echo "To reset to defaults, delete the file and run this script again"
     fi
   '';
-
-in
-{
+in {
   # Network optimizations for low-latency connections
   boot.kernel.sysctl = {
     # Enable TCP Fast Open for lower latency
@@ -118,8 +119,8 @@ in
   # Firewall configuration for RustDesk client
   networking.firewall = {
     # Allow RustDesk direct connection port
-    allowedTCPPorts = [ 21118 ];  # Direct IP access port
-    allowedUDPPorts = [ 21118 ];  # Direct IP access port (UDP)
+    allowedTCPPorts = [21118]; # Direct IP access port
+    allowedUDPPorts = [21118]; # Direct IP access port (UDP)
   };
 
   # Add setup script to system packages for manual configuration
@@ -136,7 +137,7 @@ in
   # User-level service to set up RustDesk config on login (optional)
   systemd.user.services.rustdesk-config-setup = {
     description = "RustDesk Client Configuration Setup";
-    wantedBy = [ "default.target" ];
+    wantedBy = ["default.target"];
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${rustdeskSetup}";
