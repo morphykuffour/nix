@@ -26,10 +26,23 @@
     ];
   };
 
+  # Allow morph user to manage Tailscale serve without sudo
+  systemd.services.tailscale-set-operator = {
+    description = "Set Tailscale operator to allow non-root serve management";
+    after = ["tailscale.service"];
+    wants = ["tailscale.service"];
+    wantedBy = ["multi-user.target"];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${config.services.tailscale.package}/bin/tailscale set --operator=morph";
+    };
+  };
+
   # Advertise qBittorrent WebUI as a Tailscale service
   systemd.services.tailscale-serve-qbittorrent = {
     description = "Advertise qBittorrent WebUI on Tailscale";
-    after = ["tailscale.service" "qbittorrent-nox.service"];
+    after = ["tailscale.service" "qbittorrent-nox.service" "tailscale-set-operator.service"];
     wants = ["tailscale.service" "qbittorrent-nox.service"];
     wantedBy = ["multi-user.target"];
 
@@ -44,7 +57,7 @@
   # Advertise SearXNG as a Tailscale service (under /searx to avoid shadowing /)
   systemd.services.tailscale-serve-searxng = {
     description = "Advertise SearXNG on Tailscale";
-    after = ["tailscale.service" "docker-searxng.service"];
+    after = ["tailscale.service" "docker-searxng.service" "tailscale-set-operator.service"];
     wants = ["tailscale.service"];
     wantedBy = ["multi-user.target"];
 
@@ -59,7 +72,7 @@
   # Advertise VERT (Docker UI on host:3000) via Tailscale under /file-converter and proxy asset paths
   systemd.services.tailscale-serve-vert = {
     description = "Advertise VERT UI on Tailscale";
-    after = ["tailscale.service" "docker.service" "tailscale-serve-searxng.service"];
+    after = ["tailscale.service" "docker.service" "tailscale-set-operator.service" "tailscale-serve-searxng.service"];
     wants = ["tailscale.service" "docker.service"];
     wantedBy = ["multi-user.target"];
 

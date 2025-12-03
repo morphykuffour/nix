@@ -20,7 +20,7 @@
   # This avoids subpath issues and WebSocket problems
   systemd.services.tailscale-serve-code-server = {
     description = "Advertise code-server on Tailscale";
-    after = ["tailscale.service" "code-server.service"];
+    after = ["tailscale.service" "code-server.service" "tailscale-set-operator.service"];
     wants = ["tailscale.service" "code-server.service"];
     wantedBy = ["multi-user.target"];
 
