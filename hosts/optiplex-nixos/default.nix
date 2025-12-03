@@ -34,11 +34,19 @@ nixpkgs.lib.nixosSystem {
         ];
         buildInputs = [
           pkgs.openssl
+          pkgs.openssl.dev
         ];
       };
 
       # Build cargo dependencies with proper inputs
-      cargoArtifacts = crane.buildDepsOnly commonArgs;
+      # Ensure OpenSSL environment variables are set for the build
+      cargoArtifacts = crane.buildDepsOnly (commonArgs // {
+        preBuild = ''
+          export OPENSSL_DIR="${pkgs.openssl.dev}"
+          export OPENSSL_LIB_DIR="${pkgs.openssl.out}/lib"
+          export OPENSSL_INCLUDE_DIR="${pkgs.openssl.dev}/include"
+        '';
+      });
 
       # Build vertd with the artifacts
       vertd-fixed = crane.buildPackage (commonArgs // {
@@ -46,6 +54,11 @@ nixpkgs.lib.nixosSystem {
         nativeBuildInputs = commonArgs.nativeBuildInputs ++ [
           pkgs.makeWrapper
         ];
+        preBuild = ''
+          export OPENSSL_DIR="${pkgs.openssl.dev}"
+          export OPENSSL_LIB_DIR="${pkgs.openssl.out}/lib"
+          export OPENSSL_INCLUDE_DIR="${pkgs.openssl.dev}/include"
+        '';
         postFixup = ''
           wrapProgram $out/bin/vertd --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ pkgs.libGL ]}"
         '';
