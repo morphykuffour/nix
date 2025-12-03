@@ -19,8 +19,11 @@
     ];
 
     environment = {
-      # No base_url needed - SearXNG served on dedicated port :8443
-      # (not a subpath, so no redirect loop issues)
+      # Base URL for /search subpath - ensures assets load from /search/static/...
+      # This is CRITICAL for proper CSS/JS loading when accessed via:
+      # https://optiplex-nixos.tailc585e.ts.net/search
+      # Note: Port :8443 works fine without this, but /search subpath needs it
+      SEARXNG_BASE_URL = "/search/";
 
       # Redis connection for rate limiting
       SEARXNG_REDIS_URL = "redis://searxng-redis:6379/0";
