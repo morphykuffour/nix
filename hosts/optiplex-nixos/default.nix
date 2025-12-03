@@ -18,9 +18,8 @@ nixpkgs.lib.nixosSystem {
     agenix.nixosModules.default
     home-manager.nixosModules.home-manager
     ./vertd-package.nix  # Load package override first - MUST be before vertd module
-    # Temporarily disable vertd flake module to use our override
     # inputs.vertd.nixosModules.default
-    ./vertd.nix
+    # ./vertd.nix  # disabled: using Docker container and Tailscale serve instead
     {
       home-manager = {
         useGlobalPkgs = true;
