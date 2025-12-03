@@ -19,7 +19,7 @@ nixpkgs.lib.nixosSystem {
     home-manager.nixosModules.home-manager
     ./vertd-package.nix  # Load package override first - MUST be before vertd module
     # inputs.vertd.nixosModules.default
-    # ./vertd.nix  # disabled: using Docker container and Tailscale serve instead
+    ./vertd.nix  # vertd backend service for video conversion
     {
       home-manager = {
         useGlobalPkgs = true;

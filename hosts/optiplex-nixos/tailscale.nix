@@ -48,6 +48,7 @@
       "code-server.service"
       "docker.service"
       "docker-searxng.service"
+      "vertd.service"
       "tailscale-set-operator.service"
     ];
     wants = [
@@ -56,6 +57,7 @@
       "code-server.service"
       "docker.service"
       "docker-searxng.service"
+      "vertd.service"
       "tailscale-set-operator.service"
     ];
     wantedBy = ["multi-user.target"];
@@ -71,12 +73,15 @@
         # Serve VERT UI on its own HTTPS port to avoid subpath/asset rewrites
         "${config.services.tailscale.package}/bin/tailscale serve --bg --https=444 http://127.0.0.1:3000; " +
         # Serve code-server directly on its own HTTPS port 8081
-        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=8081 http://127.0.0.1:8081'";
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=8081 http://127.0.0.1:8081; " +
+        # Serve vertd backend on its own HTTPS port 24153
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=24153 http://127.0.0.1:24153'";
       ExecStop = "${pkgs.bash}/bin/bash -euc '"+
         "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/qbittorrent off || true; " +
         "${config.services.tailscale.package}/bin/tailscale serve --https=8443 off || true; " +
         "${config.services.tailscale.package}/bin/tailscale serve --https=444 off || true; " +
-        "${config.services.tailscale.package}/bin/tailscale serve --https=8081 off || true'";
+        "${config.services.tailscale.package}/bin/tailscale serve --https=8081 off || true; " +
+        "${config.services.tailscale.package}/bin/tailscale serve --https=24153 off || true'";
     };
   };
 
