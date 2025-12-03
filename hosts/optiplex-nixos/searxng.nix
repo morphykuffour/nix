@@ -71,6 +71,7 @@
     description = "Create Docker network for SearXNG";
     after = [ "docker.service" ];
     requires = [ "docker.service" ];
+    wantedBy = [ "multi-user.target" ];  # Auto-start on boot
     before = [ "docker-searxng.service" "docker-searxng-redis.service" ];
 
     serviceConfig = {
@@ -83,6 +84,10 @@
         ${pkgs.docker}/bin/docker network create searxng-network
     '';
   };
+
+  # Ensure SearXNG containers depend on network creation
+  systemd.services.docker-searxng.requires = [ "init-searxng-network.service" ];
+  systemd.services.docker-searxng-redis.requires = [ "init-searxng-network.service" ];
 
   # Enable Docker
   virtualisation.docker.enable = true;
