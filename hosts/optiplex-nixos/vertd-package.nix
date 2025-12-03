@@ -31,75 +31,11 @@ in {
         ];
       };
 
-      # Build cargo dependencies manually with full environment control
-      # First, vendor dependencies, then build with vendored deps
-      cargoArtifacts = prev.stdenv.mkDerivation {
-        name = "vertd-deps-manual-openssl-fix";
-        inherit src;
-        
-        nativeBuildInputs = commonArgs.nativeBuildInputs ++ [
-          prev.cargo
-          prev.rustc
-        ];
-        buildInputs = commonArgs.buildInputs;
-        
-        # Environment variables - Nix will set these in the build environment
-        PKG_CONFIG_PATH = "${prev.openssl.dev}/lib/pkgconfig";
-        OPENSSL_DIR = "${prev.openssl.dev}";
-        OPENSSL_LIB_DIR = "${prev.openssl.out}/lib";
-        OPENSSL_INCLUDE_DIR = "${prev.openssl.dev}/include";
-        
-        configurePhase = ''
-          # Set up environment first
-          export PKG_CONFIG_PATH="${prev.openssl.dev}/lib/pkgconfig"
-          export OPENSSL_DIR="${prev.openssl.dev}"
-          export OPENSSL_LIB_DIR="${prev.openssl.out}/lib"
-          export OPENSSL_INCLUDE_DIR="${prev.openssl.dev}/include"
-          
-          # Verify environment
-          echo "=== Environment Setup ==="
-          echo "PKG_CONFIG_PATH: $PKG_CONFIG_PATH"
-          echo "PATH: $PATH"
-          # Check if pkg-config is available (use command -v, a bash builtin)
-          if ! command -v pkg-config >/dev/null 2>&1; then
-            echo "ERROR: pkg-config not found in PATH"
-            exit 1
-          fi
-          echo "pkg-config found, testing..."
-          pkg-config --version || (echo "ERROR: pkg-config failed" && exit 1)
-          pkg-config --exists openssl || (echo "ERROR: openssl not found" && exit 1)
-          echo "=== Environment OK ==="
-          
-          # Vendor dependencies for offline build
-          echo "=== Vendoring dependencies ==="
-          cargo vendor vendor
-          
-          # Configure Cargo to use vendored sources
-          mkdir -p .cargo
-          cat > .cargo/config.toml <<EOF
-          [source.crates-io]
-          replace-with = "vendored-sources"
-          
-          [source.vendored-sources]
-          directory = "$(pwd)/vendor"
-          EOF
-          echo "=== Vendoring complete ==="
-        '';
-        
-        buildPhase = ''
-          # Build dependencies using cargo build --lib with vendored deps
-          # This builds the library and all its dependencies offline
-          export CARGO_TARGET_DIR=$NIX_BUILD_TOP/target-deps
-          cargo build --frozen --offline --lib
-        '';
-        
-        installPhase = ''
-          mkdir -p $out
-          cp -r $CARGO_TARGET_DIR $out/target
-        '';
-        
-        doCheck = false;
-      };
+      # Build cargo dependencies (fixed-output) so the network can be used to vendor deps
+      cargoArtifacts = crane.buildDepsOnly (commonArgs // {
+        # Placeholder: rebuild once to get the correct hash from the error, then paste it here
+        cargoHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+      });
 
       # Build vertd with the artifacts
       vertd-fixed = crane.buildPackage (commonArgs // {
