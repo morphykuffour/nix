@@ -60,8 +60,13 @@ in {
           echo "=== Environment Setup ==="
           echo "PKG_CONFIG_PATH: $PKG_CONFIG_PATH"
           echo "PATH: $PATH"
-          which pkg-config || (echo "ERROR: pkg-config not in PATH" && exit 1)
-          pkg-config --version
+          # Check if pkg-config is available (use command -v, a bash builtin)
+          if ! command -v pkg-config >/dev/null 2>&1; then
+            echo "ERROR: pkg-config not found in PATH"
+            exit 1
+          fi
+          echo "pkg-config found, testing..."
+          pkg-config --version || (echo "ERROR: pkg-config failed" && exit 1)
           pkg-config --exists openssl || (echo "ERROR: openssl not found" && exit 1)
           echo "=== Environment OK ==="
         '';
