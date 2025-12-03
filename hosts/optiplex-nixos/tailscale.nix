@@ -67,10 +67,10 @@
       RemainAfterExit = true;
       ExecStart = "${pkgs.bash}/bin/bash -euc '"+
         "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/file-converter http://127.0.0.1:3000; " +
-        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/_app http://127.0.0.1:3000; " +
-        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/api http://127.0.0.1:3000; " +
-        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/favicon.png http://127.0.0.1:3000; " +
-        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/lettermark.jpg http://127.0.0.1:3000'";
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/_app http://127.0.0.1:3000/_app; " +
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/api http://127.0.0.1:3000/api; " +
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/favicon.png http://127.0.0.1:3000/favicon.png; " +
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/lettermark.jpg http://127.0.0.1:3000/lettermark.jpg'";
       ExecStop = "${pkgs.bash}/bin/bash -euc '"+
         "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/file-converter off || true; " +
         "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/_app off || true; " +
