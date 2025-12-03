@@ -1,14 +1,34 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: {
   # Enable vertd service for video conversion
   # Use the package from our overlay which has proper OpenSSL support
-  services.vertd = {
-    enable = true;
-    port = 24153; # Default port for vertd
-    package = pkgs.vertd; # Explicitly use the overridden package
+  # Since we're bypassing the vertd flake module, define the service manually
+  systemd.services.vertd = {
+    description = "VERT's solution to video conversion";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+    
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.vertd}/bin/vertd --port 24153";
+      Restart = "on-failure";
+      RestartSec = "10s";
+      # Security settings
+      NoNewPrivileges = true;
+      PrivateTmp = true;
+      ProtectSystem = "strict";
+      ProtectHome = false;
+      ReadWritePaths = [ "/tmp" ];
+    };
+    
+    environment = {
+      # Ensure ffmpeg is available
+      PATH = lib.makeBinPath [ pkgs.ffmpeg-full ];
+    };
   };
 
   # Open firewall port for vertd
