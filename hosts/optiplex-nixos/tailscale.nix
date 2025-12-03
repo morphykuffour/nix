@@ -55,18 +55,28 @@
     };
   };
 
-  # Advertise vertd as a Tailscale service at /file-converter/
-  systemd.services.tailscale-serve-vertd = {
-    description = "Advertise vertd on Tailscale";
-    after = ["tailscale.service" "vertd.service"];
-    wants = ["tailscale.service" "vertd.service"];
+  # Advertise VERT (Docker UI on host:3000) via Tailscale under /file-converter and proxy asset paths
+  systemd.services.tailscale-serve-vert = {
+    description = "Advertise VERT UI on Tailscale";
+    after = ["tailscale.service" "docker.service"];
+    wants = ["tailscale.service" "docker.service"];
     wantedBy = ["multi-user.target"];
 
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/file-converter/ http://127.0.0.1:24153";
-      ExecStop = "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/file-converter/ off";
+      ExecStart = ''
+        ${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/file-converter http://127.0.0.1:3000
+        ${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/_app http://127.0.0.1:3000
+        ${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/favicon.png http://127.0.0.1:3000
+        ${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/lettermark.jpg http://127.0.0.1:3000
+      '';
+      ExecStop = ''
+        ${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/file-converter off || true
+        ${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/_app off || true
+        ${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/favicon.png off || true
+        ${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/lettermark.jpg off || true
+      '';
     };
   };
 
