@@ -39,58 +39,52 @@
     };
   };
 
-  # Advertise qBittorrent WebUI as a Tailscale service
-  systemd.services.tailscale-serve-qbittorrent = {
-    description = "Advertise qBittorrent WebUI on Tailscale";
-    after = ["tailscale.service" "qbittorrent-nox.service" "tailscale-set-operator.service"];
-    wants = ["tailscale.service" "qbittorrent-nox.service"];
-    wantedBy = ["multi-user.target"];
-
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/qbittorrent http://127.0.0.1:8080";
-      ExecStop = "${config.services.tailscale.package}/bin/tailscale serve --https=443 off";
-    };
-  };
-
-  # Advertise SearXNG as a Tailscale service (under /searx to avoid shadowing /)
-  systemd.services.tailscale-serve-searxng = {
-    description = "Advertise SearXNG on Tailscale";
-    after = ["tailscale.service" "docker-searxng.service" "tailscale-set-operator.service"];
-    wants = ["tailscale.service"];
-    wantedBy = ["multi-user.target"];
-
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/searx http://127.0.0.1:8888";
-      ExecStop = "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/searx off";
-    };
-  };
-
-  # Advertise VERT (Docker UI on host:3000) via Tailscale under /file-converter and proxy asset paths
-  systemd.services.tailscale-serve-vert = {
-    description = "Advertise VERT UI on Tailscale";
-    after = ["tailscale.service" "docker.service" "tailscale-set-operator.service" "tailscale-serve-searxng.service"];
-    wants = ["tailscale.service" "docker.service"];
+  # Consolidated Tailscale Serve configuration to avoid ETag conflicts
+  systemd.services.tailscale-serve-config = {
+    description = "Configure all Tailscale serve routes atomically";
+    after = [
+      "tailscale.service"
+      "qbittorrent-nox.service"
+      "code-server.service"
+      "docker.service"
+      "docker-searxng.service"
+      "tailscale-set-operator.service"
+    ];
+    wants = [
+      "tailscale.service"
+      "qbittorrent-nox.service"
+      "code-server.service"
+      "docker.service"
+      "docker-searxng.service"
+      "tailscale-set-operator.service"
+    ];
     wantedBy = ["multi-user.target"];
 
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStart = "${pkgs.bash}/bin/bash -euc '"+
+        # Map qBittorrent under /qbittorrent on 443
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/qbittorrent http://127.0.0.1:8080; " +
+        # Map SearXNG under /searx on 443
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/searx http://127.0.0.1:8888; " +
+        # VERT UI and assets under paths on 443
         "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/file-converter http://127.0.0.1:3000; " +
         "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/_app http://127.0.0.1:3000/_app; " +
         "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/api http://127.0.0.1:3000/api; " +
         "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/favicon.png http://127.0.0.1:3000/favicon.png; " +
-        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/lettermark.jpg http://127.0.0.1:3000/lettermark.jpg'";
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/lettermark.jpg http://127.0.0.1:3000/lettermark.jpg; " +
+        # Serve code-server directly on its own HTTPS port 8081
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=8081 http://127.0.0.1:8081'";
       ExecStop = "${pkgs.bash}/bin/bash -euc '"+
+        "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/qbittorrent off || true; " +
+        "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/searx off || true; " +
         "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/file-converter off || true; " +
         "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/_app off || true; " +
         "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/api off || true; " +
         "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/favicon.png off || true; " +
-        "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/lettermark.jpg off || true'";
+        "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/lettermark.jpg off || true; " +
+        "${config.services.tailscale.package}/bin/tailscale serve --https=8081 off || true'";
     };
   };
 
