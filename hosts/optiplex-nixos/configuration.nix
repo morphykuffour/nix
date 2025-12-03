@@ -12,6 +12,7 @@
     ./code-server.nix
     ./vert.nix
     ./searxng.nix
+    ./croc.nix
     # ./zfs.nix
   ];
 
