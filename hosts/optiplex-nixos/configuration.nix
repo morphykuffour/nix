@@ -13,6 +13,7 @@
     ./rustdesk.nix
     ./roon.nix
     ./code-server.nix
+    ./vert-docker.nix
     # ./zfs.nix
   ];
 
