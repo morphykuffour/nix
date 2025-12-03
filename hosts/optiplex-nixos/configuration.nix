@@ -156,14 +156,14 @@
     description = "qBittorrent-nox service";
     after = ["network.target"];
     wantedBy = ["multi-user.target"];
-    
+
     serviceConfig = {
       Type = "simple";
       User = "morph";
       Group = "users";
       ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --webui-port=8080";
       Restart = "on-failure";
-      
+
       # Security hardening
       NoNewPrivileges = true;
       PrivateTmp = true;
@@ -184,7 +184,7 @@
       "d /var/lib/jellyfin 0750 morph users - -"
       "d /var/cache/jellyfin 0750 morph users - -"
     ];
-    services.jellyfin.path = [ pkgs.jellyfin-ffmpeg ];
+    services.jellyfin.path = [pkgs.jellyfin-ffmpeg];
   };
 
   # Improve filesystem event watching so Jellyfin detects new files immediately

@@ -9,10 +9,10 @@
 
   # NixOS wants to enable GRUB by default
   boot.loader.grub.enable = false;
-  
+
   # Use the extlinux boot loader
   boot.loader.generic-extlinux-compatible.enable = true;
-  
+
   # if you have a Raspberry Pi 2 or 3, pick this:
   boot.kernelPackages = pkgs.linuxPackages_latest;
 

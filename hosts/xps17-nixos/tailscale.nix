@@ -7,7 +7,7 @@
   # tailscale
   services.tailscale = {
     enable = true;
-    useRoutingFeatures = "client";  # Required for using exit nodes (Mullvad)
+    useRoutingFeatures = "client"; # Required for using exit nodes (Mullvad)
   };
 
   age.identityPaths = [

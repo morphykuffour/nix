@@ -35,8 +35,10 @@ nixpkgs.lib.nixosSystem {
     #   };
     # }
   ];
-  specialArgs = inputs // {
-    agenix = agenix;
-    nixified-ai = nixified-ai;
-  };
+  specialArgs =
+    inputs
+    // {
+      agenix = agenix;
+      nixified-ai = nixified-ai;
+    };
 }
