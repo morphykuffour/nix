@@ -18,7 +18,7 @@
     # ../../modules/nvim.nix
     # ../../modules/redshift.nix
     ./fakwin.nix
-    # ../../modules/picom.nix
+    ../../modules/picom.nix
   ];
 
   services.clipmenu.enable = true;
