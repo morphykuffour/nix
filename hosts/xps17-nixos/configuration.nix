@@ -365,6 +365,7 @@
     deskflow
     tigervnc
     python313Packages.i3ipc
+    filezilla
 
     # R packages for data science
     rstudio
