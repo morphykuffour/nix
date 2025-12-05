@@ -393,6 +393,7 @@
     tigervnc
     python313Packages.i3ipc
     filezilla
+    notepad-next
 
     # R packages for data science
     rstudio

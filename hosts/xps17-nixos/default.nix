@@ -15,7 +15,8 @@ nixpkgs.lib.nixosSystem {
   specialArgs = {inherit inputs;};
   modules = [
     # Hardware-specific tuning for Dell XPS 17 9700
-    inputs.nixos-hardware.nixosModules.dell-xps-17-9700
+    # The module isn't exported in `nixos-hardware.nixosModules`, so import it by path.
+    "${inputs.nixos-hardware}/dell/xps/17-9700"
 
     ./configuration.nix
     # ../../modules/wg-quick
