@@ -16,7 +16,7 @@ in {
     config = {
       modifier = mod;
       # terminal = "${pkgs.kitty}/bin/kitty";
-      terminal = "${pkgs.ghostty}/bin/ghostty";
+      terminal = "${pkgs.kitty}/bin/kitty";
       fonts = {
         names = ["Noto Sans"];
         size = 9.0;
@@ -65,7 +65,7 @@ in {
         "XF86MonBrightnessUp" = "exec brightnessctl set 4%+";
 
         # Application keybindings
-        "${mod}+Return" = "exec ${pkgs.ghostty}/bin/ghostty";
+        "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
         "${mod}+Shift+d" = "exec ${pkgs.rofi}/bin/rofi -modi drun -show drun";
         "${mod}+s" = "exec flameshot gui --clipboard --path ${home}/iCloud/screenshots/";
         "Print" = "exec flameshot full --clipboard --path ${home}/iCloud/screenshots/";
