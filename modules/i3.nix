@@ -179,6 +179,11 @@ in {
           always = true;
           notification = false;
         }
+        {
+          command = "sleep 2 && qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript 'var panel = panelById(panelIds[0]); panel.hiding = \"autohide\"'";
+          always = true;
+          notification = false;
+        }
       ];
     };
 
