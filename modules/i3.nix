@@ -174,11 +174,11 @@ in {
         #   always = true;
         #   notification = false;
         # }
-        # {
-        #   command = "${pkgs.feh}/bin/feh --bg-scale --randomize ~/Pictures/wallpapers/*";
-        #   always = true;
-        #   notification = false;
-        # }
+        {
+          command = "${pkgs.feh}/bin/feh --bg-fill /home/${user}/Pictures/wallpaper/wall.png";
+          always = true;
+          notification = false;
+        }
       ];
     };
 
