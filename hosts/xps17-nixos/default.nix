@@ -14,6 +14,9 @@ nixpkgs.lib.nixosSystem {
   system = "x86_64-linux";
   specialArgs = {inherit inputs;};
   modules = [
+    # Hardware-specific tuning for Dell XPS 17 9700
+    inputs.nixos-hardware.nixosModules.dell-xps-17-9700
+
     ./configuration.nix
     # ../../modules/wg-quick
     ../../modules/tailscale
