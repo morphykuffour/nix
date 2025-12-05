@@ -32,12 +32,8 @@ nixpkgs.lib.nixosSystem {
         };
       };
 
-      nixpkgs.overlays = [
-        (import (builtins.fetchTarball {
-          url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-        }))
-        inputs.discord.overlays.default
-      ];
+      # Temporarily disable overlays to avoid impure fetches during pure flake evaluation
+      nixpkgs.overlays = [];
 
       environment.systemPackages = [
         alejandra.defaultPackage.x86_64-linux

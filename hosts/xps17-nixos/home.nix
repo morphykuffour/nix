@@ -19,6 +19,7 @@
     # ../../modules/redshift.nix
     ./fakwin.nix
     ../../modules/picom.nix
+    ../../modules/grobi
   ];
 
   services.clipmenu.enable = true;
@@ -41,6 +42,24 @@
         yzhang.markdown-all-in-one
         ms-toolsai.jupyter
       ];
+    };
+  };
+
+  # Launch Deskflow (Barrier successor) GUI on login; configure server via its UI
+  systemd.user.services.deskflow = {
+    Unit = {
+      Description = "Deskflow keyboard/mouse sharing";
+      PartOf = ["graphical-session.target"];
+      After = ["graphical-session-pre.target"];
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.deskflow}/bin/deskflow";
+      Restart = "on-failure";
+      RestartSec = 2;
+    };
+    Install = {
+      WantedBy = ["graphical-session.target"];
     };
   };
 
