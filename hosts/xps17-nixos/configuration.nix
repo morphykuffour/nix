@@ -159,6 +159,8 @@
     # Display manager moved out of xserver
     displayManager = {
       sddm.enable = true;
+      # Force SDDM to use X11 to avoid Wayland issues with hybrid/NVIDIA setups
+      sddm.wayland.enable = false;
       defaultSession = "plasmax11";
       autoLogin = {
         enable = false;
@@ -176,6 +178,9 @@
 
       displayManager.startx.enable = false;
 
+      # Use proprietary NVIDIA driver instead of nouveau
+      videoDrivers = ["nvidia"];
+
       windowManager = {
         i3 = {
           enable = true;
@@ -184,6 +189,28 @@
       };
     };
   };
+
+  # Enable graphics stack (GL/Vulkan, etc.)
+  hardware.graphics.enable = true;
+
+  # NVIDIA PRIME offloading (Intel iGPU + NVIDIA dGPU)
+  hardware.nvidia = {
+    modesetting.enable = true;
+    nvidiaSettings = true;
+    open = false;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
+    prime = {
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
+  };
+
+  # Ensure nouveau is not used to prevent conflicts with the NVIDIA driver
+  boot.blacklistedKernelModules = ["nouveau"];
 
   systemd.user.services.plasma-i3wm = {
     wantedBy = ["plasma-workspace-x11.target"];
