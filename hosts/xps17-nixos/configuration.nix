@@ -356,6 +356,7 @@
     discord
     # gimp
     # mullvad
+    kitty
     mpv
     code-cursor
     anki
