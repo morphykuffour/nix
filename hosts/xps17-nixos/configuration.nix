@@ -358,11 +358,12 @@
     # mullvad
     mpv
     code-cursor
-    ghostty
     anki
     rustdesk
     claude-code
     deskflow
+    tigervnc
+    python313Packages.i3ipc
 
     # R packages for data science
     rstudio
