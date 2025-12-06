@@ -315,7 +315,7 @@
       libjpeg_original
       libslirp
       pixman
-      libfdt
+      dtc              # provides libfdt.so
       systemd          # provides libudev
       libusb1
       glib             # provides libgio, libgobject, libglib, libgmodule
