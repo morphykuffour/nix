@@ -53,6 +53,13 @@ in {
         outer = 2;
       };
 
+      bars = [
+        {
+          position = "top";
+          statusCommand = "i3status-rs /home/${user}/.config/i3status-rust/config.toml";
+        }
+      ];
+
       keybindings = {
         # Audio keybindings
         "XF86AudioMute" = "exec amixer set Master toggle";

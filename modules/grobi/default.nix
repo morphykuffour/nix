@@ -1,4 +1,5 @@
 # https://git.2li.ch/Nebucatnetzer/nixos/src/commit/e5fa7e159f7aa5ba0bef13ce233834e4da0059a5/home-manager/software/grobi/default.nix
+# https://michael.stapelberg.ch/posts/2025-05-10-grobi-x11-monitor-autoconfig/
 { pkgs, ... }: {
   services.grobi = {
     enable = true;
@@ -14,6 +15,13 @@
     # external monitor you plug into the dock is "DP-1". If your connector
     # names differ, run e.g. `swaymsg -t get_outputs` or `xrandr` and replace
     # the strings below accordingly.
+
+    outputs = [
+      {
+        name = "eDP-1";
+        mode = "2560x1600";
+      }
+    ];
 
     rules = [
       # Internal panel only (covers both Setup 1 and Setup 3 as far as outputs

@@ -78,6 +78,7 @@
     homeDirectory = "/home/morph";
     stateVersion = "22.05";
     packages = with pkgs; [
+      i3status-rust
       tmux
       zsh
       starship
@@ -162,4 +163,12 @@
       # ]).override (args: { ignoreCollisions = true; }))
     ];
   };
+
+  xdg.configFile."i3status-rust/config.toml".text = ''
+    [theme]
+    theme = "ctp-mocha"
+
+    [icons]
+    icons = "awesome6"
+  '';
 }
