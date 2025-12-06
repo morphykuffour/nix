@@ -265,8 +265,27 @@
   };
 
   # vms
-  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = true;
+      swtpm.enable = true;
+      ovmf = {
+        enable = true;
+        packages = [
+          (pkgs.OVMF.override {
+            secureBoot = true;
+            tpmSupport = true;
+          }).fd
+        ];
+      };
+    };
+  };
+  # Graphical management for libvirt/KVM VMs
   programs.virt-manager.enable = true;
+  # Optional but useful for USB passthrough in VMs
+  virtualisation.spiceUSBRedirection.enable = true;
   virtualisation.docker = {
     enable = true;
     rootless = {
@@ -345,6 +364,10 @@
     quickemu
     samba
     OVMF
+    # Virtualisation tooling for Windows/libvirt workflow
+    swtpm
+    vagrant
+    vagrant-libvirt
     gdb
     libinput-gestures
     wmctrl
