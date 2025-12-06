@@ -103,7 +103,7 @@
 
     # mac_mini MacOs
     darwinConfigurations.macmini-darwin = import ./hosts/macmini-darwin {
-      inherit self nixpkgs darwin inputs user home-manager alejandra;
+      inherit self nixpkgs darwin inputs user home-manager alejandra agenix;
     };
 
     # xps17 NixOs
