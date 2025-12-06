@@ -305,6 +305,28 @@
     alias c99='gcc'
   '';
 
+  # Allow running non-NixOS, dynamically linked binaries (like the patched QEMU from Docker)
+  # by providing the needed shared libraries via nix-ld.
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      stdenv.cc.cc.lib
+      zlib
+      libjpeg_original
+      libslirp
+      pixman
+      libfdt
+      systemd          # provides libudev
+      libusb1
+      glib             # provides libgio, libgobject, libglib, libgmodule
+      zstd
+      liburing
+      libgcrypt
+      libaio
+      bzip2
+    ];
+  };
+
   environment.systemPackages = with pkgs; [
     wget
     xclip
