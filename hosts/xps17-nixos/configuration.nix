@@ -312,7 +312,7 @@
     libraries = with pkgs; [
       stdenv.cc.cc.lib
       zlib
-      libjpeg_original
+      libjpeg_turbo
       libslirp
       pixman
       dtc              # provides libfdt.so
