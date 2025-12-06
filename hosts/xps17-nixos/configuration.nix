@@ -430,6 +430,8 @@
     python313Packages.i3ipc
     filezilla
     notepad-next
+    ntfs3g
+    ntfsprogs
 
     # R packages for data science
     rstudio
