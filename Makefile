@@ -19,7 +19,7 @@ ifeq ($(UNAME_S),Linux)
 endif
 ifeq ($(UNAME_S),Darwin)
 	BUILD_CMD  := nix build --experimental-features 'nix-command flakes' '.\#darwinConfigurations.macmini-darwin.system' --impure
-	SWITCH_CMD := sudo rm -rf /etc/shells && ./result/sw/bin/darwin-rebuild switch --flake .
+	SWITCH_CMD := sudo sh -c 'rm -rf /etc/shells && ./result/sw/bin/darwin-rebuild switch --flake .'
 	EDIT_HOME := nvim hosts/$(HOSTNAME)/configuration.nix
 	EDIT_CONF := nvim hosts/$(HOSTNAME)/home.nix
 	EDIT_DEF := nvim hosts/$(HOSTNAME)/default.nix
