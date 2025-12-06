@@ -89,6 +89,8 @@
       gh
       clipmenu
       delta
+      deadnix
+      statix
       jupyter
       ruby
       edir
@@ -171,29 +173,28 @@
     [icons]
     icons = "awesome6"
 
+    # Time
     [[block]]
-    block = "custom"
-    command = "echo '{\"icon\":\"time\",\"state\":\"Idle\", \"text\": \"Fri 19/05 18:22\"}'"
-    json = true
+    block = "time"
+    interval = 5
+    format = "%a %d/%m %H:%M"
 
+    # Currently playing media (via MPRIS)
     [[block]]
-    block = "custom"
-    command = "echo '{\"icon\":\"music\",\"state\":\"Info\", \"text\": \"Becoming The Bull | A\"}'"
-    json = true
+    block = "music"
 
+    # System load averages
     [[block]]
-    block = "custom"
-    command = "echo '{\"icon\":\"cogs\",\"state\":\"Critical\", \"text\": \"7.76 3.29 2.20\"}'"
-    json = true
+    block = "load"
+    interval = 5
 
+    # CPU usage
     [[block]]
-    block = "custom"
-    command = "echo '{\"icon\":\"cpu\",\"state\":\"Warning\", \"text\": \"85%\"}'"
-    json = true
+    block = "cpu"
+    interval = 1
 
+    # Memory usage
     [[block]]
-    block = "custom"
-    command = "echo '{\"icon\":\"memory_mem\",\"state\":\"Idle\", \"text\": \"45.58%\"}'"
-    json = true
+    block = "memory"
   '';
 }
