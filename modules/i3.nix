@@ -59,7 +59,7 @@ in {
           statusCommand = "i3status-rs /home/${user}/.config/i3status-rust/config.toml";
           fonts = {
             names = ["pango:DejaVu Sans Mono" "Font Awesome 6 Free"];
-            size = 10.0;
+            size = 13.0;
           };
           colors = {
             statusline = "#00ff00";
@@ -71,7 +71,7 @@ in {
             };
           };
           extraConfig = ''
-            height 16
+            height 24
             tray_output none
           '';
         }
