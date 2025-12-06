@@ -16,13 +16,6 @@
     # names differ, run e.g. `swaymsg -t get_outputs` or `xrandr` and replace
     # the strings below accordingly.
 
-    outputs = [
-      {
-        name = "eDP-1";
-        mode = "2560x1600";
-      }
-    ];
-
     rules = [
       # Internal panel only (covers both Setup 1 and Setup 3 as far as outputs
       # are concerned – Deskflow handles the multi‑machine aspect).

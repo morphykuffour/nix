@@ -57,6 +57,23 @@ in {
         {
           position = "top";
           statusCommand = "i3status-rs /home/${user}/.config/i3status-rust/config.toml";
+          fonts = {
+            names = ["pango:DejaVu Sans Mono" "Font Awesome 6 Free"];
+            size = 10.0;
+          };
+          colors = {
+            statusline = "#00ff00";
+            background = "#676767";
+            inactiveWorkspace = {
+              border = "#5c5c5c";
+              background = "#32323200";
+              text = "#5c5c5c";
+            };
+          };
+          extraConfig = ''
+            height 16
+            tray_output none
+          '';
         }
       ];
 
@@ -231,8 +248,8 @@ in {
 
       # class                   border  backgr. text    indicator child_border
       client.focused            #ffdb01 #ffdb01 #0000ff #ffdb01   #ffdb01
-      # i3 v4.21
-      client.focused_tab_title  #ffdb01 #0125ff #0000ff #ffdb01   #ffdb01
+      # i3 v4.21 - focused_tab_title only supports 3 colors: border, background, text
+      client.focused_tab_title  #ffdb01 #0125ff #0000ff
       client.focused_inactive   #333333 #5f676a #ffffff #484e50   #5f676a
     '';
   };
