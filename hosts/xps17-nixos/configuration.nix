@@ -271,15 +271,6 @@
       package = pkgs.qemu_kvm;
       runAsRoot = true;
       swtpm.enable = true;
-      ovmf = {
-        enable = true;
-        packages = [
-          (pkgs.OVMF.override {
-            secureBoot = true;
-            tpmSupport = true;
-          }).fd
-        ];
-      };
     };
   };
   # Graphical management for libvirt/KVM VMs
@@ -367,7 +358,7 @@
     # Virtualisation tooling for Windows/libvirt workflow
     swtpm
     vagrant
-    vagrant-libvirt
+    # vagrant-libvirt  # Not available as standalone package; use vagrant plugin if needed
     gdb
     libinput-gestures
     wmctrl
