@@ -6,18 +6,11 @@
 
 
     rules = [
-      # Internal panel only 
+      # Internal panel only
       {
         name = "laptop-internal-only";
         outputs_connected = [ "eDP-1" ];
-        outputs = [
-          {
-            output = "eDP-1";
-            mode = "2560x1600";
-            position = "0x0";
-            scale = 1.0;
-          }
-        ];
+        configure_single = "eDP-1@2560x1600";
         primary = true;
         atomic = true;
         execute_after = [ ];
@@ -27,18 +20,7 @@
       {
         name = "laptop-with-monitor2-left";
         outputs_connected = [ "eDP-1" "DP-1" ];
-        outputs = [
-          {
-            output = "DP-1";
-            position = "0x0";
-          }
-          {
-            output = "eDP-1";
-            mode = "2560x1600";
-            position = "1920x0";
-            scale = 1.0;
-          }
-        ];
+        configure_row = [ "DP-1" "eDP-1@2560x1600" ];
         primary = "eDP-1";
         atomic = true;
         execute_after = [ ];
@@ -47,14 +29,7 @@
       # Fallback: if nothing else matched, at least bring up the internal panel.
       {
         name = "fallback";
-        outputs = [
-          {
-            output = "eDP-1";
-            mode = "2560x1600";
-            position = "0x0";
-            scale = 1.0;
-          }
-        ];
+        configure_single = "eDP-1@2560x1600";
       }
     ];
   };
