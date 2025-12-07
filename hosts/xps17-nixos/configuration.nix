@@ -211,6 +211,17 @@
   # Ensure nouveau is not used to prevent conflicts with the NVIDIA driver
   boot.blacklistedKernelModules = ["nouveau"];
 
+  # On suspend, terminate the user session so wake shows greetd; on resume, switch to greetd TTY
+  powerManagement = {
+    enable = true;
+    suspendCommands = ''
+      ${pkgs.systemd}/bin/loginctl terminate-user morph || true
+    '';
+    resumeCommands = ''
+      ${pkgs.kbd}/bin/chvt 1 || true
+    '';
+  };
+
   systemd.user.services.plasma-i3wm = {
     wantedBy = ["plasma-workspace-x11.target"];
     description = "Launch Plasma with i3wm.";
