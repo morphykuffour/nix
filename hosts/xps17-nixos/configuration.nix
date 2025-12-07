@@ -135,17 +135,17 @@
 
     # printing.enable = true;
 
-    avahi = {
-      nssmdns4 = true;
-      enable = true;
-      openFirewall = true;
-      publish = {
-        enable = true;
-        userServices = true;
-        domain = true;
-      };
-      allowInterfaces = ["wlp0s20f3" "tailscale0"];
-    };
+    # avahi = {
+    #   nssmdns4 = true;
+    #   enable = true;
+    #   openFirewall = true;
+    #   publish = {
+    #     enable = true;
+    #     userServices = true;
+    #     domain = true;
+    #   };
+    #   allowInterfaces = ["wlp0s20f3" "tailscale0"];
+    # };
 
     # libinput moved out of xserver
     libinput = {
@@ -413,7 +413,7 @@
     networkmanager
     networkmanagerapplet
     dmenu
-    avahi
+    # avahi
     eza
     discord
     # gimp
