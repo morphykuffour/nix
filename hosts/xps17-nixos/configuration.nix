@@ -156,15 +156,14 @@
     # Desktop manager moved out of xserver
     desktopManager.plasma6.enable = true;
 
-    # Display manager moved out of xserver
-    displayManager = {
-      sddm.enable = true;
-      # Force SDDM to use X11 to avoid Wayland issues with hybrid/NVIDIA setups
-      sddm.wayland.enable = false;
-      defaultSession = "plasmax11";
-      autoLogin = {
-        enable = false;
-        user = "morph";
+    # Minimal TUI greeter via greetd + tuigreet launching KDE Wayland
+    greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd startplasma-wayland";
+          user = "greeter";
+        };
       };
     };
 
