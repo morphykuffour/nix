@@ -121,6 +121,9 @@
       file
       newsboat
       neovim
+      bat
+      # fzf-tmux
+
       # texlive.combined.scheme-full
       (texlive.combine {
         inherit
