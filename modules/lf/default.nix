@@ -99,6 +99,14 @@ in {
             lf -remote "send $id echo 'Path copied to clipboard'"
         }}
       '';
+
+      edir-bulk = ''
+        ''${{
+            set -f
+            edir -a
+            lf -remote "send $id reload"
+        }}
+      '';
     };
 
     keybindings = {
@@ -119,6 +127,7 @@ in {
       ee = "editor-open";
       V = ''$bat --paging=always "$f"'';
       Y = "copy-path";
+      R = "edir-bulk";
 
       # ...
     };
