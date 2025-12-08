@@ -156,12 +156,12 @@
     # Desktop manager moved out of xserver
     desktopManager.plasma6.enable = true;
 
-    # Minimal TUI greeter via greetd + tuigreet launching KDE Wayland
+    # Minimal TUI greeter via greetd + tuigreet launching Plasma X11 (for i3 WM)
     greetd = {
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd startplasma-wayland";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd startplasma-x11";
           user = "greeter";
         };
       };
@@ -365,6 +365,7 @@
     sxiv
     gnumake
     xorg.xbacklight
+    alsa-utils
     autorandr
     xdotool
     xdg-user-dirs
@@ -437,6 +438,7 @@
     networkmanager
     networkmanagerapplet
     dmenu
+    rofi
     # avahi
     eza
     discord
