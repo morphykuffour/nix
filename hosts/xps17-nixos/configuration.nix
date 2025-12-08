@@ -257,6 +257,27 @@
   # Ensure nouveau is not used to prevent conflicts with the NVIDIA driver
   boot.blacklistedKernelModules = ["nouveau"];
 
+  # For PRIME offload: Configure X to only use Intel GPU, NVIDIA used on-demand
+  # This prevents the "Failed to create pixmap" error on the NVIDIA GPU
+  services.xserver.config = ''
+    Section "ServerLayout"
+      Identifier "layout"
+      Screen 0 "Screen-intel"
+    EndSection
+
+    Section "Device"
+      Identifier "Device-intel"
+      Driver "modesetting"
+      BusID "PCI:0:2:0"
+      Option "DRI" "3"
+    EndSection
+
+    Section "Screen"
+      Identifier "Screen-intel"
+      Device "Device-intel"
+    EndSection
+  '';
+
   # On suspend, terminate the user session so wake shows greetd; on resume, switch to greetd TTY
   powerManagement.enable = true;
 
