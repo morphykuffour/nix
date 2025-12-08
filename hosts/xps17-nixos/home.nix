@@ -50,13 +50,15 @@
     Unit = {
       Description = "Deskflow keyboard/mouse sharing";
       PartOf = ["graphical-session.target"];
-      After = ["graphical-session-pre.target"];
+      After = ["graphical-session-pre.target" "tray.target"];
     };
     Service = {
       Type = "simple";
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
       ExecStart = "${pkgs.deskflow}/bin/deskflow";
       Restart = "on-failure";
-      RestartSec = 2;
+      RestartSec = 5;
+      Environment = "DISPLAY=:0";
     };
     Install = {
       WantedBy = ["graphical-session.target"];
