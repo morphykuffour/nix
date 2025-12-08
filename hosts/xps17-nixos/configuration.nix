@@ -156,61 +156,29 @@
     # Desktop manager moved out of xserver
     desktopManager.plasma6.enable = true;
 
-    # Minimal TUI greeter via greetd + tuigreet with explicit xsession wrapper path
+    # Minimal TUI greeter via greetd + tuigreet
     greetd = {
       enable = true;
       settings = {
-        default_session = let
-          # Create a complete xsession wrapper that handles X startup and systemd integration
-          xsessionWrapper = pkgs.writeShellScript "greetd-xsession-wrapper" ''
-            #!/bin/sh
-            # This wrapper is called by tuigreet as: wrapper <session-command>
-            # For example: wrapper /nix/store/.../bin/startplasma-x11
-
-            session_cmd="$1"
-
-            # Create a temporary xinitrc that will:
-            # 1. Set up systemd user session
-            # 2. Run the actual session command
-            xinitrc=$(mktemp /tmp/xinitrc.XXXXXX)
-            cat > "$xinitrc" <<'XINITRC'
-            #!/bin/sh
-
-            # Source system xinitrc scripts if they exist
-            if [ -d /etc/X11/xinit/xinitrc.d ]; then
-              for f in /etc/X11/xinit/xinitrc.d/?*.sh; do
-                [ -x "$f" ] && . "$f"
-              done
-              unset f
-            fi
-
-            # Import critical environment variables into systemd user session
-            ${pkgs.systemd}/bin/systemctl --user import-environment PATH DISPLAY XAUTHORITY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP XDG_SESSION_CLASS XDG_SESSION_DESKTOP
-
-            # Start graphical session target for systemd services
-            ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all
-            ${pkgs.systemd}/bin/systemctl --user start graphical-session.target
-
-            # Execute the actual session command passed from tuigreet
-            XINITRC
-
-            # Append the session command to the xinitrc
-            echo "exec $session_cmd" >> "$xinitrc"
-
-            # Make it executable
-            chmod +x "$xinitrc"
-
-            # Start X server with our custom xinitrc
-            ${pkgs.xorg.xinit}/bin/startx "$xinitrc" -- ${pkgs.xorg.xorgserver}/bin/X :0 -keeptty vt1
-
-            # Cleanup
-            rm -f "$xinitrc"
-          '';
-        in {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --debug /var/log/tuigreet.log --xsession-wrapper ${xsessionWrapper} --xsessions /run/current-system/sw/share/xsessions --sessions /run/current-system/sw/share/wayland-sessions";
+        default_session = {
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --debug /var/log/tuigreet.log --xsession-wrapper \"${pkgs.xorg.xinit}/bin/startx ${pkgs.coreutils}/bin/env\" --xsessions /run/current-system/sw/share/xsessions --sessions /run/current-system/sw/share/wayland-sessions";
           user = "greeter";
         };
       };
+    };
+
+    # Create xinitrc.d script to properly initialize systemd user session for greetd/X11
+    environment.etc."X11/xinit/xinitrc.d/50-systemd-user.sh" = {
+      mode = "0755";
+      text = ''
+        #!/bin/sh
+        # Import environment variables into systemd user session
+        systemctl --user import-environment PATH DISPLAY XAUTHORITY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP XDG_SESSION_CLASS XDG_SESSION_DESKTOP
+        # Update dbus activation environment
+        dbus-update-activation-environment --systemd --all
+        # Start graphical session target for user services (fakwin, deskflow, etc.)
+        systemctl --user start graphical-session.target
+      '';
     };
 
     xserver = {
