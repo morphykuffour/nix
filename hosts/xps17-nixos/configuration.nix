@@ -58,7 +58,7 @@
       allowedUDPPorts = [config.services.tailscale.port];
 
       # let you SSH in over the public internet
-      allowedTCPPorts = [22];
+      allowedTCPPorts = [22 24800]; # 24800 = Deskflow/Synergy/Barrier/InputLeap
 
       allowedTCPPortRanges = [
         {
