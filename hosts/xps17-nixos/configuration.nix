@@ -161,7 +161,7 @@
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session --xsession-wrapper \"${pkgs.xorg.xinit}/bin/startx\" --cmd startplasma-x11";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --login-shell --remember --remember-session --xsession-wrapper \"${pkgs.xorg.xinit}/bin/startx\" --cmd startplasma-x11";
           user = "greeter";
         };
       };
@@ -366,6 +366,7 @@
     gnumake
     xorg.xbacklight
     xorg.xinit
+    xorg.xauth
     alsa-utils
     autorandr
     xdotool
