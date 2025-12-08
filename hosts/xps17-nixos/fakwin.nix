@@ -39,14 +39,17 @@ in {
     Unit = {
       Description = "Plasma Fake KWin dbus interface";
       PartOf = ["graphical-session.target"];
-      After = ["graphical-session-pre.target"];
+      After = ["graphical-session-pre.target" "plasma-workspace-x11.target"];
+      Before = ["plasma-workspace-x11.service"];
     };
 
     Service = {
       Type = "simple";
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 2";
       ExecStart = "${fakwinPkg}/bin/fakwin";
       Restart = "always";
-      RestartSec = "1";
+      RestartSec = "3";
+      Environment = "DISPLAY=:0";
     };
 
     Install = {
