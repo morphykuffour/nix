@@ -212,14 +212,27 @@
   boot.blacklistedKernelModules = ["nouveau"];
 
   # On suspend, terminate the user session so wake shows greetd; on resume, switch to greetd TTY
-  powerManagement = {
-    enable = true;
-    suspendCommands = ''
-      ${pkgs.systemd}/bin/loginctl terminate-user morph || true
-    '';
-    resumeCommands = ''
-      ${pkgs.kbd}/bin/chvt 1 || true
-    '';
+  powerManagement.enable = true;
+
+  # Replace deprecated suspendCommands/resumeCommands with systemd services
+  systemd.services.terminate-user-on-suspend = {
+    description = "Terminate user session on suspend";
+    wantedBy = ["sleep.target"];
+    before = ["sleep.target"];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.systemd}/bin/loginctl terminate-user morph || true";
+    };
+  };
+
+  systemd.services.switch-to-greetd-on-resume = {
+    description = "Switch to greetd TTY on resume";
+    after = ["suspend.target"];
+    wantedBy = ["suspend.target"];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.kbd}/bin/chvt 1 || true";
+    };
   };
 
   systemd.user.services.plasma-i3wm = {
