@@ -160,8 +160,20 @@
     greetd = {
       enable = true;
       settings = {
-        default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --debug /var/log/tuigreet.log --xsession-wrapper \"${pkgs.xorg.xinit}/bin/startx ${pkgs.coreutils}/bin/env\" --xsessions /run/current-system/sw/share/xsessions --sessions /run/current-system/sw/share/wayland-sessions";
+        default_session = let
+          # Create a proper xsession wrapper that initializes systemd user session
+          xsessionWrapper = pkgs.writeShellScript "greetd-xsession-wrapper" ''
+            # Import systemd environment
+            ${pkgs.systemd}/bin/systemctl --user import-environment PATH DISPLAY XAUTHORITY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP XDG_SESSION_CLASS
+
+            # Start the graphical session target
+            ${pkgs.systemd}/bin/systemctl --user start graphical-session.target
+
+            # Execute the session command
+            exec "$@"
+          '';
+        in {
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --debug /var/log/tuigreet.log --xsession-wrapper \"${pkgs.xorg.xinit}/bin/startx ${xsessionWrapper}\" --xsessions /run/current-system/sw/share/xsessions --sessions /run/current-system/sw/share/wayland-sessions";
           user = "greeter";
         };
       };
