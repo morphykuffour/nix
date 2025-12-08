@@ -156,12 +156,12 @@
     # Desktop manager moved out of xserver
     desktopManager.plasma6.enable = true;
 
-    # Minimal TUI greeter via greetd + tuigreet launching Plasma X11 (for i3 WM)
+    # Minimal TUI greeter via greetd + tuigreet launching Plasma X11 via xinit (ensures Xorg/DISPLAY)
     greetd = {
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd startplasma-x11";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd '${pkgs.dbus}/bin/dbus-run-session ${pkgs.xorg.xinit}/bin/xinit ${pkgs.runtimeShell} -lc startplasma-x11 -- ${pkgs.xorg.xorgserver}/bin/Xorg :0 vt$XDG_VTNR -keeptty -quiet'";
           user = "greeter";
         };
       };
@@ -365,6 +365,7 @@
     sxiv
     gnumake
     xorg.xbacklight
+    xorg.xinit
     alsa-utils
     autorandr
     xdotool
