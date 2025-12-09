@@ -179,8 +179,8 @@
 
       displayManager.startx.enable = false;
 
-      # Use proprietary NVIDIA driver instead of nouveau
-      videoDrivers = ["nvidia"];
+      # Use open-source drivers (Intel + nouveau) for Sway/Wayland
+      videoDrivers = ["modesetting" "nouveau"];
 
       windowManager = {
         i3 = {
@@ -194,26 +194,12 @@
   # Enable graphics stack (GL/Vulkan, etc.)
   hardware.graphics.enable = true;
 
-  # NVIDIA PRIME offloading (Intel iGPU + NVIDIA dGPU)
-  hardware.nvidia = {
-    modesetting.enable = true;
-    nvidiaSettings = true;
-    open = false;
-    package = config.boot.kernelPackages.nvidiaPackages.production;
-    prime = {
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
-    };
-  };
+  # Use open-source nouveau instead of proprietary NVIDIA for this host (better Wayland/Sway support)
+  hardware.nvidia.enable = false;
 
-  # Ensure nouveau is not used to prevent conflicts with the NVIDIA driver
-  boot.blacklistedKernelModules = ["nouveau"];
-  # Double-blacklist nouveau at kernel cmdline to avoid early load
-  boot.kernelParams = [ "modprobe.blacklist=nouveau" ];
+  # Make sure nouveau is allowed to load (remove previous blacklist)
+  boot.blacklistedKernelModules = lib.mkForce [];
+  boot.kernelParams = lib.mkForce [];
 
   # For PRIME offload: Configure X to only use Intel GPU, NVIDIA used on-demand
   # This prevents the "Failed to create pixmap" error on the NVIDIA GPU
