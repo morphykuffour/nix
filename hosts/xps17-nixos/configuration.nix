@@ -285,8 +285,6 @@
     #   plugins = with pkgs; [ obs-studio-plugins.wlrobs ];
     # };
     kdeconnect.enable = true;
-
-    waybar.enable = true;
     zsh.enable = true;
     mtr.enable = true;
     autojump.enable = true;

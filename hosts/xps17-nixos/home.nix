@@ -59,7 +59,6 @@
       ExecStart = "${pkgs.deskflow}/bin/deskflow";
       Restart = "on-failure";
       RestartSec = 5;
-      Environment = "DISPLAY=:0";
     };
     Install = {
       WantedBy = ["graphical-session.target"];
