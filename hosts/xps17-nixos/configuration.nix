@@ -280,7 +280,7 @@
         swayidle
         wl-clipboard
         wtype
-        rofi-wayland
+        rofi
         wofi
         grim
         slurp
@@ -427,7 +427,7 @@
     swayidle
     wl-clipboard
     wtype
-    rofi-wayland
+    rofi
     wofi
     grim
     slurp

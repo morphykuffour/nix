@@ -27,10 +27,10 @@ in {
 
         # Apps
         "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
-        "${mod}+Shift+d" = "exec ${pkgs.rofi-wayland}/bin/rofi -modi drun -show drun";
+        "${mod}+Shift+d" = "exec ${pkgs.rofi}/bin/rofi -modi drun -show drun";
         "${mod}+s" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot copy area";
         "Print" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot copy output";
-        "${mod}+w" = "exec ${pkgs.rofi-wayland}/bin/rofi -show window";
+        "${mod}+w" = "exec ${pkgs.rofi}/bin/rofi -show window";
         "${mod}+Shift+x" = "exec systemctl suspend";
         "${mod}+Shift+q" = "kill";
         "${mod}+b" = "exec ${pkgs.brave}/bin/brave";
