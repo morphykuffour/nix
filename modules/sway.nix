@@ -7,6 +7,7 @@ in {
   wayland.windowManager.sway = {
     enable = true;
     package = pkgs.sway;
+    checkConfig = false;
     config = {
       modifier = mod;
       terminal = "${pkgs.kitty}/bin/kitty";
@@ -50,7 +51,7 @@ in {
         "${mod}+Shift+k" = "move up";
         "${mod}+Shift+l" = "move right";
         "${mod}+z" = "split h";
-        "${mod}+|" = "split v";
+        "${mod}+Shift+backslash" = "split v";
         "${mod}+f" = "fullscreen toggle";
         "${mod}+Shift+s" = "layout stacking";
         "${mod}+Shift+w" = "layout tabbed";
@@ -58,8 +59,8 @@ in {
         "${mod}+space" = "focus mode_toggle";
         "${mod}+a" = "focus parent";
         "${mod}+Tab" = "workspace back_and_forth";
-        "${mod}+Prior" = "workspace next";
-        "${mod}+Next" = "workspace prev";
+        "${mod}+Page_Up" = "workspace next";
+        "${mod}+Page_Down" = "workspace prev";
 
         "${mod}+1" = "workspace number 1";
         "${mod}+2" = "workspace number 2";
