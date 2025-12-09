@@ -11,6 +11,7 @@
 }: {
   imports = [
     ../../modules/i3.nix
+    ../../modules/sway.nix
     ../../modules/pass.nix
     ../../modules/fonts.nix
     ../../modules/zathura
