@@ -194,9 +194,6 @@
   # Enable graphics stack (GL/Vulkan, etc.)
   hardware.graphics.enable = true;
 
-  # Use open-source nouveau instead of proprietary NVIDIA for this host (better Wayland/Sway support)
-  hardware.nvidia.enable = false;
-
   # Make sure nouveau is allowed to load (remove previous blacklist)
   boot.blacklistedKernelModules = lib.mkForce [];
   boot.kernelParams = lib.mkForce [];
