@@ -114,15 +114,15 @@ in {
     };
   };
 
-  programs.swaylock.enable = true;
+  # Let system-level suspend hooks drop back to greetd; swayidle just triggers suspend
+  programs.swaylock.enable = false;
   services.swayidle = {
     enable = true;
     timeouts = [
-      { timeout = 300; command = "${pkgs.swaylock}/bin/swaylock -f -c 000000"; }
+      # After 5 minutes idle, suspend the system; on resume, systemd hooks
+      # terminate the user and switch to greetd (see configuration.nix).
+      { timeout = 300; command = "systemctl suspend"; }
     ];
-    events = [
-      { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock -f -c 000000"; }
-    ];
+    events = [ ];
   };
 }
-
