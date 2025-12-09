@@ -169,20 +169,6 @@
       };
     };
 
-    # Create xinitrc.d script to properly initialize systemd user session for greetd/X11
-    environment.etc."X11/xinit/xinitrc.d/50-systemd-user.sh" = {
-      mode = "0755";
-      text = ''
-        #!/bin/sh
-        # Import environment variables into systemd user session
-        systemctl --user import-environment PATH DISPLAY XAUTHORITY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP XDG_SESSION_CLASS XDG_SESSION_DESKTOP
-        # Update dbus activation environment
-        dbus-update-activation-environment --systemd --all
-        # Start graphical session target for user services (fakwin, deskflow, etc.)
-        systemctl --user start graphical-session.target
-      '';
-    };
-
     xserver = {
       enable = true;
 
@@ -402,6 +388,20 @@
     QT_QPA_PLATFORM = "wayland";
     XDG_SESSION_TYPE = "wayland";
     WLR_NO_HARDWARE_CURSORS = "1"; # helps on Nvidia if cursor glitches
+  };
+
+  # Create xinitrc.d script to initialize systemd user session variables for X11 when needed
+  environment.etc."X11/xinit/xinitrc.d/50-systemd-user.sh" = {
+    mode = "0755";
+    text = ''
+      #!/bin/sh
+      # Import environment variables into systemd user session
+      systemctl --user import-environment PATH DISPLAY XAUTHORITY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP XDG_SESSION_CLASS XDG_SESSION_DESKTOP
+      # Update dbus activation environment
+      dbus-update-activation-environment --systemd --all
+      # Start graphical session target for user services (fakwin, deskflow, etc.)
+      systemctl --user start graphical-session.target
+    '';
   };
 
   environment.systemPackages = with pkgs; [
