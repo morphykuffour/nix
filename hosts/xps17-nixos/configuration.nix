@@ -108,6 +108,8 @@
   };
 
   security.rtkit.enable = true;
+  # allow swaylock to authenticate
+  security.pam.services.swaylock = {};
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -156,12 +158,12 @@
     # Desktop manager moved out of xserver
     desktopManager.plasma6.enable = true;
 
-    # Minimal TUI greeter via greetd + tuigreet
+    # Minimal TUI greeter: launch sway by default
     greetd = {
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --debug /var/log/tuigreet.log --xsession-wrapper \"${pkgs.xorg.xinit}/bin/startx ${pkgs.coreutils}/bin/env\" --xsessions /run/current-system/sw/share/xsessions --sessions /run/current-system/sw/share/wayland-sessions";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --debug /var/log/tuigreet.log --xsessions /run/current-system/sw/share/xsessions --sessions /run/current-system/sw/share/wayland-sessions --cmd '${pkgs.dbus}/bin/dbus-run-session ${pkgs.sway}/bin/sway'";
           user = "greeter";
         };
       };
@@ -270,18 +272,10 @@
     };
   };
 
-  systemd.user.services.plasma-i3wm = {
-    wantedBy = ["plasma-workspace-x11.target"];
-    description = "Launch Plasma with i3wm.";
-    environment = lib.mkForce {};
-    serviceConfig = {
-      ExecStart = "${pkgs.i3}/bin/i3";
-      Restart = "on-failure";
-    };
-  };
-
-  systemd.user.services.plasma-workspace-x11.after = ["plasma-i3wm.target"];
-  systemd.user.services.plasma-kwin_x11.enable = false;
+  # Remove Plasma+i3 user-service integration when using Sway
+  systemd.user.services.plasma-i3wm = lib.mkForce { wantedBy = []; serviceConfig = {}; };
+  systemd.user.services.plasma-workspace-x11.after = lib.mkForce [];
+  systemd.user.services.plasma-kwin_x11.enable = lib.mkForce false;
 
   users.users.morph = {
     isNormalUser = true;
@@ -292,6 +286,22 @@
   };
 
   programs = {
+    sway = {
+      enable = true;
+      wrapperFeatures.gtk = true;
+      extraPackages = with pkgs; [
+        swaylock
+        swayidle
+        wl-clipboard
+        wtype
+        rofi-wayland
+        wofi
+        grim
+        slurp
+        swaybg
+        sway-contrib.grimshot
+      ];
+    };
     # Steam
     steam = {
       enable = true;
@@ -385,6 +395,15 @@
     ];
   };
 
+  # Wayland-friendly environment
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    MOZ_ENABLE_WAYLAND = "1";
+    QT_QPA_PLATFORM = "wayland";
+    XDG_SESSION_TYPE = "wayland";
+    WLR_NO_HARDWARE_CURSORS = "1"; # helps on Nvidia if cursor glitches
+  };
+
   environment.systemPackages = with pkgs; [
     wget
     xclip
@@ -402,6 +421,17 @@
     xorg.xbacklight
     xorg.xinit
     xorg.xauth
+    sway
+    swaybg
+    swaylock
+    swayidle
+    wl-clipboard
+    wtype
+    rofi-wayland
+    wofi
+    grim
+    slurp
+    sway-contrib.grimshot
     alsa-utils
     autorandr
     xdotool
