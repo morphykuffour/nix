@@ -149,35 +149,46 @@
     ];
   };
 
-  xdg.configFile."i3status-rust/config.toml".text = ''
-    [theme]
-    theme = "ctp-mocha"
+  xdg.configFile = {
+    "i3status-rust/config.toml".text = ''
+      [theme]
+      theme = "ctp-mocha"
 
-    [icons]
-    icons = "awesome6"
+      [icons]
+      icons = "awesome6"
 
-    # Time
-    [[block]]
-    block = "time"
-    interval = 5
-    format = "%a %d/%m %H:%M"
+      # Time
+      [[block]]
+      block = "time"
+      interval = 5
+      format = "%a %d/%m %H:%M"
 
-    # Currently playing media (via MPRIS)
-    [[block]]
-    block = "music"
+      # Currently playing media (via MPRIS)
+      [[block]]
+      block = "music"
 
-    # System load averages
-    [[block]]
-    block = "load"
-    interval = 5
+      # System load averages
+      [[block]]
+      block = "load"
+      interval = 5
 
-    # CPU usage
-    [[block]]
-    block = "cpu"
-    interval = 1
+      # CPU usage
+      [[block]]
+      block = "cpu"
+      interval = 1
 
-    # Memory usage
-    [[block]]
-    block = "memory"
-  '';
+      # Memory usage
+      [[block]]
+      block = "memory"
+    '';
+
+    # Prefer wlr portal for RemoteDesktop/Screencast when under sway
+    "xdg-desktop-portal/sway-portals.conf".text = ''
+      [preferred]
+      default=gtk
+      org.freedesktop.impl.portal.Screenshot=wlr
+      org.freedesktop.impl.portal.ScreenCast=wlr
+      org.freedesktop.impl.portal.RemoteDesktop=wlr
+    '';
+  };
 }

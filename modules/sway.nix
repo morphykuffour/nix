@@ -110,6 +110,9 @@ in {
         { command = "exec kdeconnect-indicator"; always = true; }
         { command = "exec blueman-applet"; always = true; }
         { command = "exec nm-applet"; always = true; }
+        # Ensure XDG portals see correct Wayland env (needed for RemoteDesktop)
+        { command = "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE SWAYSOCK"; always = true; }
+        { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway XDG_SESSION_TYPE=wayland SWAYSOCK"; always = true; }
       ];
     };
   };
