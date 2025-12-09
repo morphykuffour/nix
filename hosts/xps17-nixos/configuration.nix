@@ -158,12 +158,12 @@
     # Desktop manager moved out of xserver
     desktopManager.plasma6.enable = true;
 
-    # Minimal TUI greeter: launch sway by default, allowing proprietary NVIDIA via --unsupported-gpu
+    # Minimal TUI greeter: launch sway by default
     greetd = {
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --debug /var/log/tuigreet.log --xsessions /run/current-system/sw/share/xsessions --sessions /run/current-system/sw/share/wayland-sessions --cmd ${pkgs.dbus}/bin/dbus-run-session ${pkgs.sway}/bin/sway --unsupported-gpu";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --debug /var/log/tuigreet.log --xsessions /run/current-system/sw/share/xsessions --sessions /run/current-system/sw/share/wayland-sessions --cmd '${pkgs.dbus}/bin/dbus-run-session ${pkgs.sway}/bin/sway'";
           user = "greeter";
         };
       };
