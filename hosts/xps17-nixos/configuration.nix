@@ -158,12 +158,12 @@
     # Desktop manager moved out of xserver
     desktopManager.plasma6.enable = true;
 
-    # Minimal TUI greeter: launch sway by default
+    # Minimal TUI greeter: launch sway by default (force Intel iGPU for wlroots)
     greetd = {
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --debug /var/log/tuigreet.log --xsessions /run/current-system/sw/share/xsessions --sessions /run/current-system/sw/share/wayland-sessions --cmd '${pkgs.dbus}/bin/dbus-run-session ${pkgs.sway}/bin/sway'";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --debug /var/log/tuigreet.log --xsessions /run/current-system/sw/share/xsessions --sessions /run/current-system/sw/share/wayland-sessions --cmd '${pkgs.dbus}/bin/dbus-run-session env WLR_DRM_DEVICES=/dev/dri/by-path/pci-0000:00:02.0-card ${pkgs.sway}/bin/sway --unsupported-gpu'";
           user = "greeter";
         };
       };
@@ -212,6 +212,8 @@
 
   # Ensure nouveau is not used to prevent conflicts with the NVIDIA driver
   boot.blacklistedKernelModules = ["nouveau"];
+  # Double-blacklist nouveau at kernel cmdline to avoid early load
+  boot.kernelParams = [ "modprobe.blacklist=nouveau" ];
 
   # For PRIME offload: Configure X to only use Intel GPU, NVIDIA used on-demand
   # This prevents the "Failed to create pixmap" error on the NVIDIA GPU
@@ -388,6 +390,8 @@
     QT_QPA_PLATFORM = "wayland";
     XDG_SESSION_TYPE = "wayland";
     WLR_NO_HARDWARE_CURSORS = "1"; # helps on Nvidia if cursor glitches
+    # Force wlroots to pick the Intel iGPU DRM device (PCI:0:2:0) to avoid NVIDIA
+    WLR_DRM_DEVICES = "/dev/dri/by-path/pci-0000:00:02.0-card";
   };
 
   # Create xinitrc.d script to initialize systemd user session variables for X11 when needed
