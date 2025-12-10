@@ -191,8 +191,8 @@
 
       displayManager.startx.enable = false;
 
-      # Use open-source drivers (Intel + nouveau) for Sway/Wayland
-      videoDrivers = ["modesetting" "nouveau"];
+      # Use proprietary NVIDIA driver instead of nouveau (X11 + i3/Plasma)
+      videoDrivers = ["nvidia"];
 
       windowManager = {
         i3 = {
@@ -206,30 +206,24 @@
   # Enable graphics stack (GL/Vulkan, etc.)
   hardware.graphics.enable = true;
 
-  # Make sure nouveau is allowed to load (remove previous blacklist)
-  boot.blacklistedKernelModules = lib.mkForce [];
-  boot.kernelParams = lib.mkForce [];
+  # NVIDIA PRIME offloading (Intel iGPU + NVIDIA dGPU)
+  hardware.nvidia = {
+    modesetting.enable = true;
+    nvidiaSettings = true;
+    open = false;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
+    prime = {
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
+  };
 
-  # For PRIME offload: Configure X to only use Intel GPU, NVIDIA used on-demand
-  # This prevents the "Failed to create pixmap" error on the NVIDIA GPU
-  services.xserver.config = ''
-    Section "ServerLayout"
-      Identifier "layout"
-      Screen 0 "Screen-intel"
-    EndSection
-
-    Section "Device"
-      Identifier "Device-intel"
-      Driver "modesetting"
-      BusID "PCI:0:2:0"
-      Option "DRI" "3"
-    EndSection
-
-    Section "Screen"
-      Identifier "Screen-intel"
-      Device "Device-intel"
-    EndSection
-  '';
+  # Ensure nouveau is not used to prevent conflicts with the NVIDIA driver
+  boot.blacklistedKernelModules = ["nouveau"];
 
   # On suspend, terminate the user session so wake shows greetd; on resume, switch to greetd TTY
   powerManagement.enable = true;
