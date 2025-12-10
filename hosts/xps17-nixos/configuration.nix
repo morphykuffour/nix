@@ -158,16 +158,28 @@
     # Desktop manager moved out of xserver
     desktopManager.plasma6.enable = true;
 
-    # Minimal TUI greeter: launch sway by default
-    greetd = {
-      enable = true;
-      settings = {
-        default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --debug /var/log/tuigreet.log --xsessions /run/current-system/sw/share/xsessions --sessions /run/current-system/sw/share/wayland-sessions --cmd '${pkgs.dbus}/bin/dbus-run-session ${pkgs.sway}/bin/sway'";
-          user = "greeter";
-        };
+    # Display manager moved out of xserver (KDE SDDM, X11)
+    displayManager = {
+      sddm.enable = true;
+      # Force SDDM to use X11 to avoid Wayland issues with hybrid/NVIDIA setups
+      sddm.wayland.enable = false;
+      defaultSession = "plasmax11";
+      autoLogin = {
+        enable = false;
+        user = "morph";
       };
     };
+
+    # Previous greetd + tuigreet setup (disabled in favor of SDDM)
+    # greetd = {
+    #   enable = true;
+    #   settings = {
+    #     default_session = {
+    #       command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --debug /var/log/tuigreet.log --xsessions /run/current-system/sw/share/xsessions --sessions /run/current-system/sw/share/wayland-sessions --cmd '${pkgs.dbus}/bin/dbus-run-session ${pkgs.sway}/bin/sway'";
+    #       user = "greeter";
+    #     };
+    #   };
+    # };
 
     xserver = {
       enable = true;
