@@ -164,17 +164,8 @@
         enable = true;
         # Force SDDM to use X11 to avoid Wayland/NVIDIA issues
         wayland.enable = false;
-        # Use software rendering in greeter to avoid black screen / crashes
-        environment = {
-          QT_QUICK_BACKEND = "software";
-          # Make sure cursor theme exists for greeter
-          XCURSOR_THEME = "breeze_cursors";
-        };
-        settings = {
-          Theme = {
-            Current = "breeze";
-          };
-        };
+        # Use the standard Breeze theme for the greeter
+        theme = "breeze";
       };
       defaultSession = "plasmax11";
       autoLogin = {
