@@ -39,7 +39,10 @@
       fi
 
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale up --authkey=$(cat ${config.age.secrets.ts-xps17-nixos.path})
+      # do not accept subnet routes / exit-node routes by default so local LAN
+      # traffic (e.g. 192.168.1.0/24) prefers the physical interfaces instead
+      # of being hijacked by Tailscale policy routing.
+      ${tailscale}/bin/tailscale up --authkey=$(cat ${config.age.secrets.ts-xps17-nixos.path}) --accept-routes=false
     '';
   };
 
