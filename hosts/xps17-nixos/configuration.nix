@@ -108,8 +108,6 @@
   };
 
   security.rtkit.enable = true;
-  # allow swaylock to authenticate
-  security.pam.services.swaylock = {};
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -158,32 +156,15 @@
     # Desktop manager moved out of xserver
     desktopManager.plasma6.enable = true;
 
-    # Display manager moved out of xserver (KDE SDDM, X11)
+    # Display manager moved out of xserver
     displayManager = {
-      sddm = {
-        enable = true;
-        # Force SDDM to use X11 to avoid Wayland/NVIDIA issues
-        wayland.enable = false;
-        # Use the standard Breeze theme for the greeter
-        theme = "breeze";
-      };
+      sddm.enable = true;
       defaultSession = "plasmax11";
       autoLogin = {
         enable = false;
         user = "morph";
       };
     };
-
-    # Previous greetd + tuigreet setup (disabled in favor of SDDM)
-    # greetd = {
-    #   enable = true;
-    #   settings = {
-    #     default_session = {
-    #       command = "${pkgs.tuigreet}/bin/tuigreet --time --remember-session --debug /var/log/tuigreet.log --xsessions /run/current-system/sw/share/xsessions --sessions /run/current-system/sw/share/wayland-sessions --cmd '${pkgs.dbus}/bin/dbus-run-session ${pkgs.sway}/bin/sway'";
-    #       user = "greeter";
-    #     };
-    #   };
-    # };
 
     xserver = {
       enable = true;
@@ -195,9 +176,6 @@
 
       displayManager.startx.enable = false;
 
-      # Use proprietary NVIDIA driver instead of nouveau (X11 + i3/Plasma)
-      videoDrivers = ["nvidia"];
-
       windowManager = {
         i3 = {
           enable = true;
@@ -207,56 +185,18 @@
     };
   };
 
-  # Enable graphics stack (GL/Vulkan, etc.)
-  hardware.graphics.enable = true;
-
-  # NVIDIA PRIME offloading (Intel iGPU + NVIDIA dGPU)
-  hardware.nvidia = {
-    modesetting.enable = true;
-    nvidiaSettings = true;
-    open = false;
-    package = config.boot.kernelPackages.nvidiaPackages.production;
-    prime = {
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
-    };
-  };
-
-  # Ensure nouveau is not used to prevent conflicts with the NVIDIA driver
-  boot.blacklistedKernelModules = ["nouveau"];
-
-  # On suspend, terminate the user session so wake shows greetd; on resume, switch to greetd TTY
-  powerManagement.enable = true;
-
-  # Replace deprecated suspendCommands/resumeCommands with systemd services
-  systemd.services.terminate-user-on-suspend = {
-    description = "Terminate user session on suspend";
-    wantedBy = ["sleep.target"];
-    before = ["sleep.target"];
+  systemd.user.services.plasma-i3wm = {
+    wantedBy = ["plasma-workspace-x11.target"];
+    description = "Launch Plasma with i3wm.";
+    environment = lib.mkForce {};
     serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.systemd}/bin/loginctl terminate-user morph || true";
+      ExecStart = "${pkgs.i3}/bin/i3";
+      Restart = "on-failure";
     };
   };
 
-  systemd.services.switch-to-greetd-on-resume = {
-    description = "Switch to greetd TTY on resume";
-    after = ["suspend.target"];
-    wantedBy = ["suspend.target"];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.kbd}/bin/chvt 1 || true";
-    };
-  };
-
-  # Remove Plasma+i3 user-service integration when using Sway
-  systemd.user.services.plasma-i3wm = lib.mkForce { wantedBy = []; serviceConfig = {}; };
-  systemd.user.services.plasma-workspace-x11.after = lib.mkForce [];
-  systemd.user.services.plasma-kwin_x11.enable = lib.mkForce false;
+  systemd.user.services.plasma-workspace-x11.after = ["plasma-i3wm.target"];
+  systemd.user.services.plasma-kwin_x11.enable = false;
 
   users.users.morph = {
     isNormalUser = true;
@@ -267,22 +207,6 @@
   };
 
   programs = {
-    sway = {
-      enable = true;
-      wrapperFeatures.gtk = true;
-      extraPackages = with pkgs; [
-        swaylock
-        swayidle
-        wl-clipboard
-        wtype
-        rofi
-        wofi
-        grim
-        slurp
-        swaybg
-        sway-contrib.grimshot
-      ];
-    };
     # Steam
     steam = {
       enable = true;
@@ -295,6 +219,8 @@
     #   plugins = with pkgs; [ obs-studio-plugins.wlrobs ];
     # };
     kdeconnect.enable = true;
+
+    waybar.enable = true;
     zsh.enable = true;
     mtr.enable = true;
     autojump.enable = true;
@@ -352,60 +278,6 @@
     alias c99='gcc'
   '';
 
-  # Allow running non-NixOS, dynamically linked binaries (like the patched QEMU from Docker)
-  # by providing the needed shared libraries via nix-ld.
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [
-      stdenv.cc.cc.lib
-      zlib
-      libjpeg_turbo
-      libslirp
-      pixman
-      dtc              # provides libfdt.so
-      systemd          # provides libudev
-      libusb1
-      glib             # provides libgio, libgobject, libglib, libgmodule
-      zstd
-      liburing
-      libgcrypt
-      libaio
-      bzip2
-    ];
-  };
-
-  # Wayland-friendly environment
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
-    MOZ_ENABLE_WAYLAND = "1";
-    QT_QPA_PLATFORM = "wayland";
-    XDG_SESSION_TYPE = "wayland";
-    WLR_NO_HARDWARE_CURSORS = "1"; # helps on Nvidia if cursor glitches
-  };
-
-  # Create xinitrc.d script to initialize systemd user session variables for X11 when needed
-  environment.etc."X11/xinit/xinitrc.d/50-systemd-user.sh" = {
-    mode = "0755";
-    text = ''
-      #!/bin/sh
-      # Import environment variables into systemd user session
-      systemctl --user import-environment PATH DISPLAY XAUTHORITY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP XDG_SESSION_CLASS XDG_SESSION_DESKTOP
-      # Update dbus activation environment
-      dbus-update-activation-environment --systemd --all
-      # Start graphical session target for user services (fakwin, deskflow, etc.)
-      systemctl --user start graphical-session.target
-    '';
-  };
-
-  # XDG portals for Wayland apps (Deskflow, screen share, etc.)
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-    ];
-  };
-
   environment.systemPackages = with pkgs; [
     wget
     xclip
@@ -421,20 +293,6 @@
     sxiv
     gnumake
     xorg.xbacklight
-    xorg.xinit
-    xorg.xauth
-    sway
-    swaybg
-    swaylock
-    swayidle
-    wl-clipboard
-    wtype
-    rofi
-    wofi
-    grim
-    slurp
-    sway-contrib.grimshot
-    alsa-utils
     autorandr
     xdotool
     xdg-user-dirs
@@ -507,7 +365,7 @@
     networkmanager
     networkmanagerapplet
     dmenu
-    rofi
+    # rofi
     # avahi
     eza
     discord

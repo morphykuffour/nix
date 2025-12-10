@@ -11,7 +11,6 @@
 }: {
   imports = [
     ../../modules/i3.nix
-    ../../modules/sway.nix
     ../../modules/pass.nix
     ../../modules/fonts.nix
     ../../modules/zathura
@@ -183,12 +182,12 @@
     '';
 
     # Prefer wlr portal for RemoteDesktop/Screencast when under sway
-    "xdg-desktop-portal/sway-portals.conf".text = ''
-      [preferred]
-      default=gtk
-      org.freedesktop.impl.portal.Screenshot=wlr
-      org.freedesktop.impl.portal.ScreenCast=wlr
-      org.freedesktop.impl.portal.RemoteDesktop=wlr
-    '';
+    # "xdg-desktop-portal/sway-portals.conf".text = ''
+    #   [preferred]
+    #   default=gtk
+    #   org.freedesktop.impl.portal.Screenshot=wlr
+    #   org.freedesktop.impl.portal.ScreenCast=wlr
+    #   org.freedesktop.impl.portal.RemoteDesktop=wlr
+    # '';
   };
 }
