@@ -35,8 +35,12 @@ nixpkgs.lib.nixosSystem {
         };
       };
 
-      # Temporarily disable overlays to avoid impure fetches during pure flake evaluation
-      nixpkgs.overlays = [];
+      # Overlays: override deskflow to 1.25.0 (protocol match with macOS)
+      nixpkgs.overlays = [
+        (final: prev: {
+          deskflow = prev.callPackage ../../pkgs/deskflow { };
+        })
+      ];
 
       environment.systemPackages = [
         alejandra.defaultPackage.x86_64-linux
