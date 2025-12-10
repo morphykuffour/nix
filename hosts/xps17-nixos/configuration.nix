@@ -58,7 +58,7 @@
       allowedUDPPorts = [config.services.tailscale.port];
 
       # let you SSH in over the public internet
-      allowedTCPPorts = [22];
+      allowedTCPPorts = [22 24800]; # 24800 = Deskflow/Synergy/Barrier/InputLeap
 
       allowedTCPPortRanges = [
         {
@@ -238,7 +238,15 @@
   };
 
   # vms
-  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = true;
+      swtpm.enable = true;
+    };
+  };
+  # Graphical management for libvirt/KVM VMs
   programs.virt-manager.enable = true;
   virtualisation.docker = {
     enable = true;
@@ -366,6 +374,9 @@
     tigervnc
     python313Packages.i3ipc
     filezilla
+    notepad-next
+    ntfs3g
+    ntfsprogs
 
     # R packages for data science
     rstudio
