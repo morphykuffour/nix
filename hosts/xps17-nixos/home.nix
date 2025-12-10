@@ -46,23 +46,23 @@
   };
 
   # Launch Deskflow (Barrier successor) GUI on login; configure server via its UI
-  systemd.user.services.deskflow = {
-    Unit = {
-      Description = "Deskflow keyboard/mouse sharing";
-      PartOf = ["graphical-session.target"];
-      After = ["graphical-session-pre.target" "tray.target"];
-    };
-    Service = {
-      Type = "simple";
-      ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
-      ExecStart = "${pkgs.deskflow}/bin/deskflow";
-      Restart = "on-failure";
-      RestartSec = 5;
-    };
-    Install = {
-      WantedBy = ["graphical-session.target"];
-    };
-  };
+  # systemd.user.services.deskflow = {
+  #   Unit = {
+  #     Description = "Deskflow keyboard/mouse sharing";
+  #     PartOf = ["graphical-session.target"];
+  #     After = ["graphical-session-pre.target" "tray.target"];
+  #   };
+  #   Service = {
+  #     Type = "simple";
+  #     ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
+  #     ExecStart = "${pkgs.deskflow}/bin/deskflow";
+  #     Restart = "on-failure";
+  #     RestartSec = 5;
+  #   };
+  #   Install = {
+  #     WantedBy = ["graphical-session.target"];
+  #   };
+  # };
 
   dconf.settings = {
     "org/virt-manager/virt-manager/connections" = {

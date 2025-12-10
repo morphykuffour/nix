@@ -53,29 +53,29 @@ in {
         outer = 2;
       };
 
-      bars = [
-        {
-          position = "top";
-          statusCommand = "i3status-rs /home/${user}/.config/i3status-rust/config.toml";
-          fonts = {
-            names = ["pango:DejaVu Sans Mono" "Font Awesome 6 Free"];
-            size = 18.0;
-          };
-          colors = {
-            statusline = "#00ff00";
-            background = "#676767";
-            inactiveWorkspace = {
-              border = "#5c5c5c";
-              background = "#32323200";
-              text = "#5c5c5c";
-            };
-          };
-          extraConfig = ''
-            height 36
-            tray_output none
-          '';
-        }
-      ];
+      # bars = [
+      #   {
+      #     position = "top";
+      #     statusCommand = "i3status-rs /home/${user}/.config/i3status-rust/config.toml";
+      #     fonts = {
+      #       names = ["pango:DejaVu Sans Mono" "Font Awesome 6 Free"];
+      #       size = 18.0;
+      #     };
+      #     colors = {
+      #       statusline = "#00ff00";
+      #       background = "#676767";
+      #       inactiveWorkspace = {
+      #         border = "#5c5c5c";
+      #         background = "#32323200";
+      #         text = "#5c5c5c";
+      #       };
+      #     };
+      #     extraConfig = ''
+      #       height 36
+      #       tray_output none
+      #     '';
+      #   }
+      # ];
 
       keybindings = {
         # Audio keybindings
