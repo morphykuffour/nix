@@ -81,6 +81,7 @@ stdenv.mkDerivation (finalAttrs: {
     libnotify
     python3
     qt6.qtbase
+    qt6.qttools
     wayland-protocols
     qt6.qtwayland
     wayland
