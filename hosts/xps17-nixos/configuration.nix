@@ -135,17 +135,17 @@
 
     # printing.enable = true;
 
-    avahi = {
-      nssmdns4 = true;
-      enable = true;
-      openFirewall = true;
-      publish = {
-        enable = true;
-        userServices = true;
-        domain = true;
-      };
-      allowInterfaces = ["wlp0s20f3" "tailscale0"];
-    };
+    # avahi = {
+    #   nssmdns4 = true;
+    #   enable = true;
+    #   openFirewall = true;
+    #   publish = {
+    #     enable = true;
+    #     userServices = true;
+    #     domain = true;
+    #   };
+    #   allowInterfaces = ["wlp0s20f3" "tailscale0"];
+    # };
 
     # libinput moved out of xserver
     libinput = {
@@ -248,6 +248,8 @@
   };
   # Graphical management for libvirt/KVM VMs
   programs.virt-manager.enable = true;
+  # Optional but useful for USB passthrough in VMs
+  virtualisation.spiceUSBRedirection.enable = true;
   virtualisation.docker = {
     enable = true;
     rootless = {
@@ -326,6 +328,10 @@
     quickemu
     samba
     OVMF
+    # Virtualisation tooling for Windows/libvirt workflow
+    swtpm
+    vagrant
+    # vagrant-libvirt  # Not available as standalone package; use vagrant plugin if needed
     gdb
     libinput-gestures
     wmctrl
@@ -359,7 +365,8 @@
     networkmanager
     networkmanagerapplet
     dmenu
-    avahi
+    # rofi
+    # avahi
     eza
     discord
     # gimp

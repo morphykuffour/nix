@@ -105,4 +105,3 @@ clean:
 	else
 		echo "`result` symlink does not exist."
 	fi
-
