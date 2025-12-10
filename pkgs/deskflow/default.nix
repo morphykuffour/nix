@@ -39,14 +39,14 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "deskflow";
     repo = "deskflow";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-0bdp7hs88dfyw7l02fr6gwl3lrivkx4sjif6vgfqb71cfj317b80";
+    hash = "sha256-AK0ThnQsnIXd28ZFqUmfO2Y6KH8mOwHo4d41hDQ8ty0=";
   };
 
   postPatch = ''
     substituteInPlace src/lib/deskflow/unix/AppUtilUnix.cpp \
       --replace-fail "/usr/share/X11/xkb/rules/evdev.xml" "${xkeyboard_config}/share/X11/xkb/rules/evdev.xml"
     substituteInPlace deploy/linux/deploy.cmake \
-      --replace-fail 'message(FATAL_ERROR \"Unable to read file /etc/os-release\")' 'set(RELEASE_FILE_CONTENTS \"\")'
+      --replace-fail 'message(FATAL_ERROR "Unable to read file /etc/os-release")' 'set(RELEASE_FILE_CONTENTS "")'
   '';
 
   nativeBuildInputs = [
