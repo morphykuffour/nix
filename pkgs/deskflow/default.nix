@@ -39,7 +39,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "deskflow";
     repo = "deskflow";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-AK0ThnQsnIXd28ZFqUmfO2Y6KH8mOwHo4d41hDQ8ty0=";
+    hash = "sha256-IclKXYCvYHMK4e1z1efmOHUaJqnmZgofK5r6Ml+i5OI=";
   };
 
   postPatch = ''
