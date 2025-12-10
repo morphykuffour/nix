@@ -19,6 +19,7 @@
     # ../../modules/redshift.nix
     ./fakwin.nix
     ../../modules/picom.nix
+    ../../modules/grobi
   ];
 
   services.clipmenu.enable = true;
@@ -44,6 +45,25 @@
     };
   };
 
+  # Launch Deskflow (Barrier successor) GUI on login; configure server via its UI
+  systemd.user.services.deskflow = {
+    Unit = {
+      Description = "Deskflow keyboard/mouse sharing";
+      PartOf = ["graphical-session.target"];
+      After = ["graphical-session-pre.target" "tray.target"];
+    };
+    Service = {
+      Type = "simple";
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
+      ExecStart = "${pkgs.deskflow}/bin/deskflow";
+      Restart = "on-failure";
+      RestartSec = 5;
+    };
+    Install = {
+      WantedBy = ["graphical-session.target"];
+    };
+  };
+
   dconf.settings = {
     "org/virt-manager/virt-manager/connections" = {
       autoconnect = ["qemu:///system"];
@@ -59,6 +79,7 @@
     homeDirectory = "/home/morph";
     stateVersion = "22.05";
     packages = with pkgs; [
+      i3status-rust
       tmux
       zsh
       starship
@@ -69,6 +90,8 @@
       gh
       clipmenu
       delta
+      deadnix
+      statix
       jupyter
       ruby
       edir
@@ -99,6 +122,9 @@
       file
       newsboat
       neovim
+      bat
+      # fzf-tmux
+
       # texlive.combined.scheme-full
       (texlive.combine {
         inherit
@@ -119,28 +145,49 @@
       p7zip
       ruby
       zip
-
-      # python packages
-      # (python39.withPackages (pp:
-      #   with pp; [
-      #     pynvim
-      #     # pandas
-      #     # reticulate needs conda
-      #     # conda
-      #     # requests
-      #     pip
-      #     i3ipc
-      #     ipython
-      #     dbus-python
-      #     html2text
-      #     keymapviz
-      #     # mysql-connector
-      #     # pipx
-      #     # pyqt5
-      #     ueberzug
-      #   ]))
-      # https://stackoverflow.com/questions/52941074/in-nixos-how-can-i-resolve-a-collision
-      # ]).override (args: { ignoreCollisions = true; }))
     ];
+  };
+
+  xdg.configFile = {
+    "i3status-rust/config.toml".text = ''
+      [theme]
+      theme = "ctp-mocha"
+
+      [icons]
+      icons = "awesome6"
+
+      # Time
+      [[block]]
+      block = "time"
+      interval = 5
+      format = "%a %d/%m %H:%M"
+
+      # Currently playing media (via MPRIS)
+      [[block]]
+      block = "music"
+
+      # System load averages
+      [[block]]
+      block = "load"
+      interval = 5
+
+      # CPU usage
+      [[block]]
+      block = "cpu"
+      interval = 1
+
+      # Memory usage
+      [[block]]
+      block = "memory"
+    '';
+
+    # Prefer wlr portal for RemoteDesktop/Screencast when under sway
+    # "xdg-desktop-portal/sway-portals.conf".text = ''
+    #   [preferred]
+    #   default=gtk
+    #   org.freedesktop.impl.portal.Screenshot=wlr
+    #   org.freedesktop.impl.portal.ScreenCast=wlr
+    #   org.freedesktop.impl.portal.RemoteDesktop=wlr
+    # '';
   };
 }

@@ -88,6 +88,7 @@
       rage
       yt-dlp
       deadnix
+      neovim
       # plover.dev
       # go
       # python3

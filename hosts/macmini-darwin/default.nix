@@ -5,6 +5,7 @@
   darwin,
   inputs,
   home-manager,
+  agenix,
   ...
 }:
 darwin.lib.darwinSystem {
@@ -14,6 +15,7 @@ darwin.lib.darwinSystem {
     {
       environment.systemPackages = [
         alejandra.packages.aarch64-darwin.default
+        agenix.packages.aarch64-darwin.default
         # neovim.packages.aarch64-darwin.neovim
       ];
     }
