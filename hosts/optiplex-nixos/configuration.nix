@@ -13,6 +13,7 @@
     ./vert.nix
     ./searxng.nix
     ./croc.nix
+    ./nas-mounts.nix
     # ./zfs.nix
   ];
 

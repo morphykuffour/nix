@@ -10,6 +10,9 @@ in
   # OpenAI API key for nvim
   "secrets/openai.age".publicKeys = allUsers;
 
+  # TrueNAS SMB credentials for optiplex-nixos
+  "secrets/truenas-smb.age".publicKeys = allUsers;
+
   # Existing secrets (add them here for completeness)
   "secrets/ts-xps17-nixos.age".publicKeys = allUsers;
   "secrets/ts-t480-nixos.age".publicKeys = allUsers;
