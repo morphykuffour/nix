@@ -45,6 +45,13 @@
       "tailscale.service"
       "docker-gluetun.service"
       "docker-qbittorrent.service"
+      "docker-radarr.service"
+      "docker-sonarr.service"
+      "docker-lidarr.service"
+      "docker-bazarr.service"
+      "docker-prowlarr.service"
+      "docker-jellyseerr.service"
+      "docker-flaresolverr.service"
       "code-server.service"
       "docker.service"
       "docker-vert.service"
@@ -54,6 +61,13 @@
       "tailscale.service"
       "docker-gluetun.service"
       "docker-qbittorrent.service"
+      "docker-radarr.service"
+      "docker-sonarr.service"
+      "docker-lidarr.service"
+      "docker-bazarr.service"
+      "docker-prowlarr.service"
+      "docker-jellyseerr.service"
+      "docker-flaresolverr.service"
       "code-server.service"
       "docker.service"
       "docker-vert.service"
@@ -67,11 +81,33 @@
       ExecStart =
         "${pkgs.bash}/bin/bash -euc '"
         +
-        # Map qBittorrent under /qbittorrent on 443 (via Gluetun-exposed port 8701)
+        # Media Stack Services (via Gluetun-exposed ports)
+        # Map qBittorrent under /qbittorrent on 443
         "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/qbittorrent http://127.0.0.1:8701; "
         +
+        # Radarr on dedicated HTTPS port 7878
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=7878 http://127.0.0.1:7878; "
+        +
+        # Sonarr on dedicated HTTPS port 8989
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=8989 http://127.0.0.1:8989; "
+        +
+        # Lidarr on dedicated HTTPS port 8686
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=8686 http://127.0.0.1:8686; "
+        +
+        # Bazarr on dedicated HTTPS port 6767
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=6767 http://127.0.0.1:6767; "
+        +
+        # Prowlarr on dedicated HTTPS port 9696
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=9696 http://127.0.0.1:9696; "
+        +
+        # FlareSolverr on dedicated HTTPS port 8191
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=8191 http://127.0.0.1:8191; "
+        +
+        # Jellyseerr on dedicated HTTPS port 5055
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=5055 http://127.0.0.1:5055; "
+        +
+        # Other Services
         # Serve SearXNG on BOTH /search subpath AND dedicated port 8443
-        # Subpath for convenience, dedicated port as backup
         "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/search http://127.0.0.1:8888; "
         + "${config.services.tailscale.package}/bin/tailscale serve --bg --https=8443 http://127.0.0.1:8888; "
         +
@@ -86,6 +122,13 @@
       ExecStop =
         "${pkgs.bash}/bin/bash -euc '"
         + "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/qbittorrent off || true; "
+        + "${config.services.tailscale.package}/bin/tailscale serve --https=7878 off || true; "
+        + "${config.services.tailscale.package}/bin/tailscale serve --https=8989 off || true; "
+        + "${config.services.tailscale.package}/bin/tailscale serve --https=8686 off || true; "
+        + "${config.services.tailscale.package}/bin/tailscale serve --https=6767 off || true; "
+        + "${config.services.tailscale.package}/bin/tailscale serve --https=9696 off || true; "
+        + "${config.services.tailscale.package}/bin/tailscale serve --https=8191 off || true; "
+        + "${config.services.tailscale.package}/bin/tailscale serve --https=5055 off || true; "
         + "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/search off || true; "
         + "${config.services.tailscale.package}/bin/tailscale serve --https=8443 off || true; "
         + "${config.services.tailscale.package}/bin/tailscale serve --https=444 off || true; "
