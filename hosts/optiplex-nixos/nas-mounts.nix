@@ -44,7 +44,6 @@
 
       # Additional stability options
       "seal"                           # Enable SMB3 encryption
-      "resilient"                      # Enable resilient handles for better reconnection
     ];
   };
 
@@ -74,7 +73,6 @@
 
       # Additional stability options
       "seal"                           # Enable SMB3 encryption
-      "resilient"                      # Enable resilient handles for better reconnection
     ];
   };
 
