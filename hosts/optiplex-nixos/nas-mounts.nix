@@ -1,5 +1,35 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
+let
+  # Get morph's UID and GID - evaluate these first
+  morphUid = toString config.users.users.morph.uid;
+  morphGid = toString config.users.groups.users.gid;
+
+  # Common mount options for both shares
+  commonMountOptions = [
+    # Systemd automount options for reliable boot
+    "x-systemd.automount"           # Use automount for on-demand mounting
+    "nofail"                         # Don't fail boot if mount fails
+    "x-systemd.idle-timeout=60"     # Unmount after 60 seconds of inactivity
+    "x-systemd.device-timeout=10s"  # Timeout for device availability
+    "_netdev"                        # Network filesystem (wait for network)
+
+    # Authentication
+    "credentials=${config.age.secrets.truenas-smb.path}"
+
+    # Ownership and permissions (files owned by morph)
+    "uid=${morphUid}"
+    "gid=${morphGid}"
+    "file_mode=0664"
+    "dir_mode=0775"
+
+    # SMB protocol version (3.0 is widely compatible)
+    "vers=3.0"
+
+    # Additional stability options
+    "seal"                           # Enable SMB3 encryption
+  ];
+in
 {
   # Install CIFS utilities for SMB/CIFS mounting
   environment.systemPackages = [ pkgs.cifs-utils ];
@@ -18,62 +48,16 @@
   # users.users.morph.extraGroups = [ "nas" ];
 
   # Configure SMB/CIFS mounts for TrueNAS SCALE
-  # Movies share
   fileSystems."/mnt/nas/movies" = {
     device = "//192.168.1.73/movies";
     fsType = "cifs";
-    options = [
-      # Systemd automount options for reliable boot
-      "x-systemd.automount"           # Use automount for on-demand mounting
-      "nofail"                         # Don't fail boot if mount fails
-      "x-systemd.idle-timeout=60"     # Unmount after 60 seconds of inactivity
-      "x-systemd.device-timeout=10s"  # Timeout for device availability
-      "_netdev"                        # Network filesystem (wait for network)
-
-      # Authentication
-      "credentials=${config.age.secrets.truenas-smb.path}"
-
-      # Ownership and permissions (files owned by morph)
-      "uid=${toString config.users.users.morph.uid}"
-      "gid=${toString config.users.groups.users.gid}"
-      "file_mode=0664"
-      "dir_mode=0775"
-
-      # SMB protocol version (3.0 is widely compatible)
-      "vers=3.0"
-
-      # Additional stability options
-      "seal"                           # Enable SMB3 encryption
-    ];
+    options = commonMountOptions;
   };
 
-  # TV Shows share
   fileSystems."/mnt/nas/tv_shows" = {
     device = "//192.168.1.73/tv_shows";
     fsType = "cifs";
-    options = [
-      # Systemd automount options for reliable boot
-      "x-systemd.automount"           # Use automount for on-demand mounting
-      "nofail"                         # Don't fail boot if mount fails
-      "x-systemd.idle-timeout=60"     # Unmount after 60 seconds of inactivity
-      "x-systemd.device-timeout=10s"  # Timeout for device availability
-      "_netdev"                        # Network filesystem (wait for network)
-
-      # Authentication
-      "credentials=${config.age.secrets.truenas-smb.path}"
-
-      # Ownership and permissions (files owned by morph)
-      "uid=${toString config.users.users.morph.uid}"
-      "gid=${toString config.users.groups.users.gid}"
-      "file_mode=0664"
-      "dir_mode=0775"
-
-      # SMB protocol version (3.0 is widely compatible)
-      "vers=3.0"
-
-      # Additional stability options
-      "seal"                           # Enable SMB3 encryption
-    ];
+    options = commonMountOptions;
   };
 
   # Ensure mount points exist
