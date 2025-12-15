@@ -5,6 +5,12 @@ let
   morphUid = toString config.users.users.morph.uid;
   morphGid = toString config.users.groups.users.gid;
 
+  # TrueNAS server address - use Tailscale hostname if available, otherwise IP
+  # truenasHost = "truenas-scale";  # Change to "192.168.1.73" if Tailscale not available
+
+  # TODO: Remove this once Tailscale is working properly on truenas-scale
+  truenasHost = "192.168.1.73";
+
   # Common mount options for both shares (without x-systemd options)
   cifsOptions = lib.concatStringsSep "," [
     "credentials=${config.age.secrets.truenas-smb.path}"
@@ -28,12 +34,6 @@ in
     owner = "root";
     group = "root";
   };
-
-  # TrueNAS server address - use Tailscale hostname if available, otherwise IP
-  # truenasHost = "truenas-scale";  # Change to "192.168.1.73" if Tailscale not available
-
-  # TODO: Remove this once Tailscale is working properly on truenas-scale
-  truenasHost = "192.168.1.73";  
 
   # Ensure mount points exist
   systemd.tmpfiles.rules = [
