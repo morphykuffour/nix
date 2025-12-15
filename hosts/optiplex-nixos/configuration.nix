@@ -326,5 +326,6 @@
     qbittorrent-nox
     dysk
     docker-compose
+    claude-code
   ];
 }
