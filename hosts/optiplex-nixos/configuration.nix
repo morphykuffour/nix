@@ -203,7 +203,7 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account. Don't forget to set a password with 'passwd'.
   users = {
     defaultUserShell = pkgs.zsh;
     users.morph = {
@@ -213,6 +213,9 @@
       # packages = with pkgs; [ thunderbird ];
     };
   };
+
+  # Enable passwordless sudo for wheel group (required for remote NixOS rebuilds)
+  security.sudo.wheelNeedsPassword = false;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -318,5 +321,6 @@
     dysk
     docker-compose
     claude-code
+    nodejs_20  # Required for VSCode/Cursor Remote SSH
   ];
 }
