@@ -43,7 +43,8 @@
     description = "Configure all Tailscale serve routes atomically";
     after = [
       "tailscale.service"
-      "qbittorrent-nox.service"
+      "docker-gluetun.service"
+      "docker-qbittorrent.service"
       "code-server.service"
       "docker.service"
       "docker-vert.service"
@@ -51,7 +52,8 @@
     ];
     wants = [
       "tailscale.service"
-      "qbittorrent-nox.service"
+      "docker-gluetun.service"
+      "docker-qbittorrent.service"
       "code-server.service"
       "docker.service"
       "docker-vert.service"
@@ -65,8 +67,8 @@
       ExecStart =
         "${pkgs.bash}/bin/bash -euc '"
         +
-        # Map qBittorrent under /qbittorrent on 443
-        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/qbittorrent http://127.0.0.1:8080; "
+        # Map qBittorrent under /qbittorrent on 443 (via Gluetun-exposed port 8701)
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/qbittorrent http://127.0.0.1:8701; "
         +
         # Serve SearXNG on BOTH /search subpath AND dedicated port 8443
         # Subpath for convenience, dedicated port as backup
@@ -105,6 +107,6 @@
     allowedUDPPorts = [config.services.tailscale.port];
     # Allow SSH and qBittorrent WebUI only via Tailscale
     allowedTCPPorts = [22];
-    # qBittorrent WebUI (8080) is only accessible via Tailscale serve
+    # qBittorrent WebUI (8701) is only accessible via Tailscale serve
   };
 }

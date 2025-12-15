@@ -14,6 +14,7 @@
     ./searxng.nix
     ./croc.nix
     ./nas-mounts.nix
+    ./jellyfin-stack.nix
     # ./zfs.nix
   ];
 
@@ -152,28 +153,6 @@
     };
   };
 
-  # qBittorrent systemd service
-  systemd.services.qbittorrent-nox = {
-    description = "qBittorrent-nox service";
-    after = ["network.target"];
-    wantedBy = ["multi-user.target"];
-
-    serviceConfig = {
-      Type = "simple";
-      User = "morph";
-      Group = "users";
-      ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --webui-port=8080";
-      Restart = "on-failure";
-
-      # Security hardening
-      NoNewPrivileges = true;
-      PrivateTmp = true;
-      ProtectSystem = "strict";
-      ProtectHome = false;
-      ReadWritePaths = ["/home/morph/.config/qBittorrent" "/home/morph/.local/share/qBittorrent"];
-    };
-  };
-
   # Disable all sleep-related systemd targets
   systemd = {
     targets.sleep.enable = false;
@@ -269,8 +248,21 @@
   # Enable Docker
   virtualisation.docker.enable = true;
 
-  # Open firewall port for SearXNG
-  networking.firewall.allowedTCPPorts = [8888];
+  # Open firewall ports for self-hosted apps and BitTorrent forwarding
+  networking.firewall.allowedTCPPorts = [
+    5055 # Jellyseerr
+    6767 # Bazarr
+    7878 # Radarr
+    8191 # FlareSolverr
+    8686 # Lidarr
+    8888 # SearXNG
+    8989 # Sonarr
+    9696 # Prowlarr
+    8701 # qBittorrent WebUI (via Gluetun)
+  ];
+  networking.firewall.allowedUDPPorts = [
+    6881 # qBittorrent peer traffic
+  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -323,7 +315,6 @@
     neovim
     flashrom
     code-cursor
-    qbittorrent-nox
     dysk
     docker-compose
     claude-code
