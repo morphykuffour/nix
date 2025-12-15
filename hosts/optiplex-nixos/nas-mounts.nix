@@ -35,7 +35,7 @@
 
       # Ownership and permissions (files owned by morph)
       "uid=${toString config.users.users.morph.uid}"
-      "gid=${toString config.users.users.morph.gid}"
+      "gid=${toString config.users.groups.users.gid}"
       "file_mode=0664"
       "dir_mode=0775"
 
@@ -65,7 +65,7 @@
 
       # Ownership and permissions (files owned by morph)
       "uid=${toString config.users.users.morph.uid}"
-      "gid=${toString config.users.users.morph.gid}"
+      "gid=${toString config.users.groups.users.gid}"
       "file_mode=0664"
       "dir_mode=0775"
 
