@@ -7,8 +7,8 @@ let
   timezone = config.time.timeZone or "Etc/UTC";
 
   dataRoot = "/var/lib/media-stack";
-  mediaRoot = "/mnt/nas";
-  downloadsRoot = "${mediaRoot}/downloads";
+  mediaLibraryRoot = "/mnt/nas/media";
+  downloadsRoot = "/mnt/nas/downloads";
   gluetunEnvFile = "${dataRoot}/gluetun/gluetun.env";
 in {
   virtualisation.oci-containers = {
@@ -39,6 +39,7 @@ in {
           "6767:6767"
           "9696:9696"
           "8191:8191"
+          "5055:5055"
         ];
         extraOptions = [
           "--cap-add=NET_ADMIN"
@@ -52,7 +53,6 @@ in {
         dependsOn = ["gluetun"];
         volumes = [
           "${dataRoot}/qbittorrent:/config"
-          "${mediaRoot}:/data"
           "${downloadsRoot}:/downloads"
         ];
         environment = {
@@ -72,7 +72,7 @@ in {
         dependsOn = ["gluetun"];
         volumes = [
           "${dataRoot}/radarr:/config"
-          "${mediaRoot}:/data"
+          "${mediaLibraryRoot}:/data/media"
           "${downloadsRoot}:/downloads"
         ];
         environment = {
@@ -89,7 +89,7 @@ in {
         dependsOn = ["gluetun"];
         volumes = [
           "${dataRoot}/sonarr:/config"
-          "${mediaRoot}:/data"
+          "${mediaLibraryRoot}:/data/media"
           "${downloadsRoot}:/downloads"
         ];
         environment = {
@@ -106,7 +106,7 @@ in {
         dependsOn = ["gluetun"];
         volumes = [
           "${dataRoot}/lidarr:/config"
-          "${mediaRoot}:/data"
+          "${mediaLibraryRoot}:/data/media"
           "${downloadsRoot}:/downloads"
         ];
         environment = {
@@ -123,7 +123,7 @@ in {
         dependsOn = ["gluetun"];
         volumes = [
           "${dataRoot}/bazarr:/config"
-          "${mediaRoot}:/data"
+          "${mediaLibraryRoot}:/data/media"
         ];
         environment = {
           PUID = mediaUid;
@@ -161,13 +161,13 @@ in {
       jellyseerr = {
         image = "fallenbagel/jellyseerr:latest";
         autoStart = true;
+        dependsOn = ["gluetun"];
         volumes = ["${dataRoot}/jellyseerr:/app/config"];
         environment = {
           TZ = timezone;
           LOG_LEVEL = "info";
         };
-        ports = ["5055:5055"];
-        dependsOn = ["gluetun" "sonarr" "radarr"];
+        extraOptions = ["--network=container:gluetun"];
       };
     };
   };
