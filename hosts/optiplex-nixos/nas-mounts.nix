@@ -29,27 +29,33 @@ in
     group = "root";
   };
 
+  # TrueNAS server address - use Tailscale hostname if available, otherwise IP
+  # truenasHost = "truenas-scale";  # Change to "192.168.1.73" if Tailscale not available
+
+  # TODO: Remove this once Tailscale is working properly on truenas-scale
+  truenasHost = "192.168.1.73";  
+
   # Ensure mount points exist
   systemd.tmpfiles.rules = [
     "d /mnt/nas 0755 root root - -"
-    "d /mnt/nas/movies 0755 root root - -"
-    "d /mnt/nas/tv_shows 0755 root root - -"
+    "d /mnt/nas/media 0755 root root - -"
+    "d /mnt/nas/downloads 0755 root root - -"
   ];
 
   # Define systemd mount units explicitly
   systemd.mounts = [
     {
-      description = "TrueNAS Movies Share";
-      what = "//192.168.1.73/movies";
-      where = "/mnt/nas/movies";
+      description = "TrueNAS Media Share";
+      what = "//${truenasHost}/media";
+      where = "/mnt/nas/media";
       type = "cifs";
       options = cifsOptions;
       wantedBy = [ ];  # Don't auto-start, let automount trigger it
     }
     {
-      description = "TrueNAS TV Shows Share";
-      what = "//192.168.1.73/tv_shows";
-      where = "/mnt/nas/tv_shows";
+      description = "TrueNAS Downloads Share";
+      what = "//${truenasHost}/downloads";
+      where = "/mnt/nas/downloads";
       type = "cifs";
       options = cifsOptions;
       wantedBy = [ ];  # Don't auto-start, let automount trigger it
@@ -59,16 +65,16 @@ in
   # Define systemd automount units
   systemd.automounts = [
     {
-      description = "Automount TrueNAS Movies Share";
-      where = "/mnt/nas/movies";
+      description = "Automount TrueNAS Media Share";
+      where = "/mnt/nas/media";
       wantedBy = [ "multi-user.target" ];
       automountConfig = {
         TimeoutIdleSec = "60";
       };
     }
     {
-      description = "Automount TrueNAS TV Shows Share";
-      where = "/mnt/nas/tv_shows";
+      description = "Automount TrueNAS Downloads Share";
+      where = "/mnt/nas/downloads";
       wantedBy = [ "multi-user.target" ];
       automountConfig = {
         TimeoutIdleSec = "60";
