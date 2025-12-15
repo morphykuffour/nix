@@ -73,6 +73,7 @@ in {
         volumes = [
           "${dataRoot}/radarr:/config"
           "${mediaRoot}:/data"
+          "${downloadsRoot}:/downloads"
         ];
         environment = {
           PUID = mediaUid;
@@ -89,6 +90,7 @@ in {
         volumes = [
           "${dataRoot}/sonarr:/config"
           "${mediaRoot}:/data"
+          "${downloadsRoot}:/downloads"
         ];
         environment = {
           PUID = mediaUid;
@@ -105,6 +107,7 @@ in {
         volumes = [
           "${dataRoot}/lidarr:/config"
           "${mediaRoot}:/data"
+          "${downloadsRoot}:/downloads"
         ];
         environment = {
           PUID = mediaUid;
