@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   # Get morph's UID and GID
   morphUid = toString config.users.users.morph.uid;
   morphGid = toString config.users.groups.users.gid;
@@ -22,10 +25,9 @@ let
     "seal"
     "_netdev"
   ];
-in
-{
+in {
   # Install CIFS utilities for SMB/CIFS mounting
-  environment.systemPackages = [ pkgs.cifs-utils ];
+  environment.systemPackages = [pkgs.cifs-utils];
 
   # Define agenix secret for TrueNAS SMB credentials
   age.secrets.truenas-smb = {
@@ -50,7 +52,7 @@ in
       where = "/mnt/nas/media";
       type = "cifs";
       options = cifsOptions;
-      wantedBy = [ ];  # Don't auto-start, let automount trigger it
+      wantedBy = []; # Don't auto-start, let automount trigger it
     }
     {
       description = "TrueNAS Downloads Share";
@@ -58,7 +60,7 @@ in
       where = "/mnt/nas/downloads";
       type = "cifs";
       options = cifsOptions;
-      wantedBy = [ ];  # Don't auto-start, let automount trigger it
+      wantedBy = []; # Don't auto-start, let automount trigger it
     }
   ];
 
@@ -67,7 +69,7 @@ in
     {
       description = "Automount TrueNAS Media Share";
       where = "/mnt/nas/media";
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = ["multi-user.target"];
       automountConfig = {
         TimeoutIdleSec = "60";
       };
@@ -75,7 +77,7 @@ in
     {
       description = "Automount TrueNAS Downloads Share";
       where = "/mnt/nas/downloads";
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = ["multi-user.target"];
       automountConfig = {
         TimeoutIdleSec = "60";
       };

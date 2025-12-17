@@ -114,9 +114,9 @@
         NSAutomaticSpellingCorrectionEnabled = false;
 
         # Disable/reduce animations
-        NSAutomaticWindowAnimationsEnabled = false;  # Disable window open/close animations
-        NSWindowResizeTime = 0.001;  # Speed up window resize animations
-        "com.apple.mouse.linear" = true;  # Disable smooth scrolling
+        NSAutomaticWindowAnimationsEnabled = false; # Disable window open/close animations
+        NSWindowResizeTime = 0.001; # Speed up window resize animations
+        # "com.apple.mouse.linear" = true;  # Disable smooth scrolling - NOT SUPPORTED by nix-darwin
       };
       dock = {
         # Dock settings
@@ -125,19 +125,19 @@
         showhidden = true;
         tilesize = 40;
         # mineffect = "genie";
-        launchanim = false;  # Disable Dock app launch animations
+        launchanim = false; # Disable Dock app launch animations
         # show-process-indicators = true;
         # show-recents = true;
 
         # Additional animation settings
-        autohide-delay = 0.0;  # Remove delay when showing/hiding Dock
-        autohide-time-modifier = 0.0;  # Remove animation when showing/hiding Dock
-        expose-animation-duration = 0.1;  # Speed up Mission Control animations
+        autohide-delay = 0.0; # Remove delay when showing/hiding Dock
+        autohide-time-modifier = 0.0; # Remove animation when showing/hiding Dock
+        expose-animation-duration = 0.1; # Speed up Mission Control animations
       };
       finder = {
         # Finder settings
         QuitMenuItem = false; # I believe this probably will need to be true if using spacebar
-        DisableAllAnimations = true;  # Disable all Finder animations
+        # DisableAllAnimations = true;  # NOT SUPPORTED by nix-darwin
       };
       trackpad = {
         # Trackpad settings

@@ -1,5 +1,9 @@
-{ pkgs, lib, user, ... }:
-let
+{
+  pkgs,
+  lib,
+  user,
+  ...
+}: let
   mod = "Mod1";
   local_bin = "/home/${user}/.local/bin";
   home = "/home/${user}";
@@ -13,7 +17,7 @@ in {
       terminal = "${pkgs.kitty}/bin/kitty";
 
       # Use waybar instead of swaybar
-      bars = [ ];
+      bars = [];
 
       keybindings = {
         # Audio
@@ -105,14 +109,35 @@ in {
       };
 
       startup = [
-        { command = "exec ${pkgs.swaybg}/bin/swaybg -i ${home}/Pictures/wallpaper/wall.png -m fill"; always = true; }
-        { command = "exec ${pkgs.waybar}/bin/waybar"; always = true; }
-        { command = "exec kdeconnect-indicator"; always = true; }
-        { command = "exec blueman-applet"; always = true; }
-        { command = "exec nm-applet"; always = true; }
+        {
+          command = "exec ${pkgs.swaybg}/bin/swaybg -i ${home}/Pictures/wallpaper/wall.png -m fill";
+          always = true;
+        }
+        {
+          command = "exec ${pkgs.waybar}/bin/waybar";
+          always = true;
+        }
+        {
+          command = "exec kdeconnect-indicator";
+          always = true;
+        }
+        {
+          command = "exec blueman-applet";
+          always = true;
+        }
+        {
+          command = "exec nm-applet";
+          always = true;
+        }
         # Ensure XDG portals see correct Wayland env (needed for RemoteDesktop)
-        { command = "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE SWAYSOCK"; always = true; }
-        { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway XDG_SESSION_TYPE=wayland SWAYSOCK"; always = true; }
+        {
+          command = "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE SWAYSOCK";
+          always = true;
+        }
+        {
+          command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway XDG_SESSION_TYPE=wayland SWAYSOCK";
+          always = true;
+        }
       ];
     };
   };
@@ -124,8 +149,11 @@ in {
     timeouts = [
       # After 5 minutes idle, suspend the system; on resume, systemd hooks
       # terminate the user and switch to greetd (see configuration.nix).
-      { timeout = 300; command = "systemctl suspend"; }
+      {
+        timeout = 300;
+        command = "systemctl suspend";
+      }
     ];
-    events = [ ];
+    events = [];
   };
 }

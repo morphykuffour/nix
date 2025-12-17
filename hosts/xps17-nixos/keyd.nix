@@ -13,7 +13,7 @@
     enable = false;
     keyboards = {
       default = {
-        ids = ["*"];  # Match all keyboards
+        ids = ["*"]; # Match all keyboards
         settings = {
           main = {
             # Paste with insert

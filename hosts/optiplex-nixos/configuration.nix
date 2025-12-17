@@ -321,6 +321,6 @@
     dysk
     docker-compose
     claude-code
-    nodejs_20  # Required for VSCode/Cursor Remote SSH
+    nodejs_20 # Required for VSCode/Cursor Remote SSH
   ];
 }

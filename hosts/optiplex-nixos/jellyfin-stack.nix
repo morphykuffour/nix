@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   mediaUser = "morph";
   mediaUid = builtins.toString config.users.users.morph.uid;
   mediaGid = builtins.toString config.users.groups.users.gid;
@@ -57,7 +60,7 @@ in {
         volumes = [
           "${dataRoot}/qbittorrent:/config"
           "${downloadsRoot}:/downloads"
-          "${dataRoot}/gluetun:/gluetun:ro"  # Mount gluetun data for port file access
+          "${dataRoot}/gluetun:/gluetun:ro" # Mount gluetun data for port file access
         ];
         environment = {
           PUID = mediaUid;
@@ -198,8 +201,8 @@ in {
   # Systemd service to automatically update qBittorrent port when Gluetun changes it
   systemd.services.qbittorrent-port-updater = {
     description = "Update qBittorrent listening port from Gluetun forwarded port";
-    after = [ "docker-gluetun.service" "docker-qbittorrent.service" ];
-    wants = [ "docker-gluetun.service" "docker-qbittorrent.service" ];
+    after = ["docker-gluetun.service" "docker-qbittorrent.service"];
+    wants = ["docker-gluetun.service" "docker-qbittorrent.service"];
 
     serviceConfig = {
       Type = "oneshot";
@@ -209,7 +212,7 @@ in {
       # Group = "users";
     };
 
-    path = [ pkgs.bash ];
+    path = [pkgs.bash];
 
     script = ''
       # Use the dedicated port updater script
@@ -220,7 +223,7 @@ in {
   # Timer to periodically check and update the port (every 5 minutes)
   systemd.timers.qbittorrent-port-updater = {
     description = "Timer for qBittorrent port updater";
-    wantedBy = [ "timers.target" ];
+    wantedBy = ["timers.target"];
 
     timerConfig = {
       OnBootSec = "2min";
