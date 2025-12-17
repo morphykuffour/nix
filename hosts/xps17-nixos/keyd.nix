@@ -3,34 +3,48 @@
   lib,
   pkgs,
   ...
-}: let
-  keyd = pkgs.callPackage ../../pkgs/keyd {};
-  keydConfig = builtins.readFile ../../pkgs/keyd/keymaps.conf;
-in {
-  # Create keyd group and add user to it for socket access
-  users.groups.keyd = {};
-  users.users.morph.extraGroups = ["keyd"];
+}: {
+  # https://github.com/NixOS/nixpkgs/issues/59603#issuecomment-1356844284
+  systemd.services.NetworkManager-wait-online.enable = false;
 
-  systemd.services = {
-    # https://github.com/NixOS/nixpkgs/issues/59603#issuecomment-1356844284
-    NetworkManager-wait-online.enable = false;
+  # Use the official NixOS keyd module
+  # This automatically handles socket permissions and group setup
+  services.keyd = {
+    enable = true;
+    keyboards = {
+      default = {
+        ids = ["*"];  # Match all keyboards
+        settings = {
+          ids = ["*"];
+          main = {
+            # Paste with insert
+            insert = "S-insert";
 
-    keyd = {
-      enable = true;
-      description = "keyd key remapping daemon";
-      unitConfig = {
-        Requires = "local-fs.target";
-        After = "local-fs.target";
-      };
-      serviceConfig = {
-        Type = "simple";
-        ExecStart = "${pkgs.keyd}/bin/keyd";
-        # Set socket group to keyd for user access
-        RuntimeDirectory = "keyd";
-        RuntimeDirectoryMode = "0750";
+            # Maps capslock to escape when pressed and control when held
+            capslock = "overload(ctrl_vim, esc)";
+
+            # Remaps the escape key to capslock
+            esc = "capslock";
+          };
+
+          # ctrl_vim modifier layer; inherits from 'Ctrl' modifier layer
+          "ctrl_vim:C" = {
+            space = "swap(vim_mode)";
+          };
+
+          # vim_mode modifier layer; also inherits from 'Ctrl' modifier layer
+          "vim_mode:C" = {
+            h = "left";
+            j = "down";
+            k = "up";
+            l = "right";
+            # forward word
+            w = "C-right";
+            # backward word
+            b = "C-left";
+          };
+        };
       };
     };
   };
-
-  environment.etc."keyd/default.conf".text = keydConfig;
 }
