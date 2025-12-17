@@ -99,15 +99,15 @@
     allowedUDPPorts = [config.services.tailscale.port];
     # Allow SSH and media stack ports via Tailscale
     allowedTCPPorts = [
-      22     # SSH
-      5055   # Jellyseerr
-      6767   # Bazarr
-      7878   # Radarr
-      8686   # Lidarr
-      8701   # qBittorrent
-      8989   # Sonarr
-      9696   # Prowlarr
-      8191   # FlareSolverr
+      22 # SSH
+      5055 # Jellyseerr
+      6767 # Bazarr
+      7878 # Radarr
+      8686 # Lidarr
+      8701 # qBittorrent
+      8989 # Sonarr
+      9696 # Prowlarr
+      8191 # FlareSolverr
     ];
   };
 }

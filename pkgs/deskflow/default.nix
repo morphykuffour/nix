@@ -1,36 +1,36 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, cmake
-, ninja
-, pkg-config
-, tomlplusplus
-, cli11
-, gtest
-, libei
-, libportal
-, libX11
-, libxkbfile
-, libXtst
-, libXinerama
-, libXi
-, libXrandr
-, libxkbcommon
-, pugixml
-, python3
-, gdk-pixbuf
-, libnotify
-, qt6
-, xkeyboard_config
-, wayland-protocols
-, wayland
-, libsysprof-capture
-, lerc
-, doxygen
-, writableTmpDirAsHomeHook
-, nix-update-script
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  cmake,
+  ninja,
+  pkg-config,
+  tomlplusplus,
+  cli11,
+  gtest,
+  libei,
+  libportal,
+  libX11,
+  libxkbfile,
+  libXtst,
+  libXinerama,
+  libXi,
+  libXrandr,
+  libxkbcommon,
+  pugixml,
+  python3,
+  gdk-pixbuf,
+  libnotify,
+  qt6,
+  xkeyboard_config,
+  wayland-protocols,
+  wayland,
+  libsysprof-capture,
+  lerc,
+  doxygen,
+  writableTmpDirAsHomeHook,
+  nix-update-script,
 }:
-
 stdenv.mkDerivation (finalAttrs: {
   pname = "deskflow";
   version = "1.25.0";
@@ -95,7 +95,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   doCheck = true;
 
-  nativeCheckInputs = [ writableTmpDirAsHomeHook ];
+  nativeCheckInputs = [writableTmpDirAsHomeHook];
 
   checkPhase = ''
     runHook preCheck
@@ -121,7 +121,7 @@ stdenv.mkDerivation (finalAttrs: {
     homepage = "https://github.com/deskflow/deskflow";
     description = "Share one mouse and keyboard between multiple computers on Windows, macOS and Linux";
     mainProgram = "deskflow";
-    maintainers = with lib.maintainers; [ flacks ];
+    maintainers = with lib.maintainers; [flacks];
     license = with lib; [
       licenses.gpl2Plus
       licenses.openssl
@@ -130,4 +130,3 @@ stdenv.mkDerivation (finalAttrs: {
     platforms = lib.platforms.linux;
   };
 })
-

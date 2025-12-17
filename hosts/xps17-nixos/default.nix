@@ -38,7 +38,7 @@ nixpkgs.lib.nixosSystem {
       # Overlays: override deskflow to 1.25.0 (protocol match with macOS)
       nixpkgs.overlays = [
         (final: prev: {
-          deskflow = prev.callPackage ../../pkgs/deskflow { };
+          deskflow = prev.callPackage ../../pkgs/deskflow {};
         })
       ];
 

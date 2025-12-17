@@ -4,9 +4,8 @@ let
   macmini-darwin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICVpvLJJJ9smtoSoKr44/1w+ycmMlSVGL+vdP7TTiIjp my-mac";
 
   # Define all users who should have access to secrets
-  allUsers = [ xps17-nixos macmini-darwin ];
-in
-{
+  allUsers = [xps17-nixos macmini-darwin];
+in {
   # OpenAI API key for nvim
   "secrets/openai.age".publicKeys = allUsers;
 
