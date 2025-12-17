@@ -28,8 +28,11 @@ with lib; let
     export VERBOSE_LOGGING="${if cfg.verbose then "true" else "false"}"
     export CLEANSHOT_TEMP_DIR="${cfg.cleanshotTempDir}"
 
-    # Ensure poetry is in PATH
-    export PATH="${pkgs.poetry}/bin:$PATH"
+    # Ensure poetry and tesseract are in PATH
+    export PATH="${pkgs.poetry}/bin:${pkgs.tesseract}/bin:$PATH"
+
+    # Set Tesseract data path
+    export TESSDATA_PREFIX="${pkgs.tesseract}/share/tessdata"
 
     # Start the server using poetry
     exec ${pkgs.poetry}/bin/poetry run ocr-server
@@ -82,9 +85,10 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # Install Poetry globally
+    # Install Poetry and Tesseract globally
     environment.systemPackages = [
       pkgs.poetry
+      pkgs.tesseract
     ];
 
     # Create launchd agent to run the service
@@ -100,8 +104,9 @@ in {
         StandardOutPath = "/tmp/latex-ocr.log";
         StandardErrorPath = "/tmp/latex-ocr.error.log";
         EnvironmentVariables = {
-          PATH = "${pkgs.poetry}/bin:${pkgs.coreutils}/bin:/usr/bin:/bin";
+          PATH = "${pkgs.tesseract}/bin:${pkgs.poetry}/bin:${pkgs.coreutils}/bin:/usr/bin:/bin";
           HOME = "/Users/morph";
+          TESSDATA_PREFIX = "${pkgs.tesseract}/share/tessdata";
         };
       };
     };
