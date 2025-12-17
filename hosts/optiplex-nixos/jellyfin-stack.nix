@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   mediaUser = "morph";
@@ -27,6 +27,9 @@ in {
           VPN_PORT_FORWARDING = "on";
           SERVER_COUNTRIES = "United States";
           TZ = timezone;
+          # Automatic port forwarding configuration
+          VPN_PORT_FORWARDING_STATUS_FILE = "/gluetun/forwarded_port";
+          FIREWALL_OUTBOUND_SUBNETS = "192.168.1.0/24";
         };
         environmentFiles = [gluetunEnvFile];
         ports = [
@@ -54,6 +57,7 @@ in {
         volumes = [
           "${dataRoot}/qbittorrent:/config"
           "${downloadsRoot}:/downloads"
+          "${dataRoot}/gluetun:/gluetun:ro"  # Mount gluetun data for port file access
         ];
         environment = {
           PUID = mediaUid;
@@ -188,5 +192,40 @@ in {
     "d ${downloadsRoot}/tv 0775 ${mediaUser} users - -"
     "d ${downloadsRoot}/music 0775 ${mediaUser} users - -"
     "d ${downloadsRoot}/audiobooks 0775 ${mediaUser} users - -"
+    "d ${downloadsRoot}/incomplete 0775 ${mediaUser} users - -"
   ];
+
+  # Systemd service to automatically update qBittorrent port when Gluetun changes it
+  systemd.services.qbittorrent-port-updater = {
+    description = "Update qBittorrent listening port from Gluetun forwarded port";
+    after = [ "docker-gluetun.service" "docker-qbittorrent.service" ];
+    wants = [ "docker-gluetun.service" "docker-qbittorrent.service" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = false;
+      # Run as root to have permission to edit qBittorrent config
+      # User = mediaUser;
+      # Group = "users";
+    };
+
+    path = [ pkgs.bash ];
+
+    script = ''
+      # Use the dedicated port updater script
+      /usr/local/bin/qbt-port-updater
+    '';
+  };
+
+  # Timer to periodically check and update the port (every 5 minutes)
+  systemd.timers.qbittorrent-port-updater = {
+    description = "Timer for qBittorrent port updater";
+    wantedBy = [ "timers.target" ];
+
+    timerConfig = {
+      OnBootSec = "2min";
+      OnUnitActiveSec = "5min";
+      Unit = "qbittorrent-port-updater.service";
+    };
+  };
 }
