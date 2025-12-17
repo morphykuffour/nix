@@ -76,8 +76,8 @@ in {
 
     cleanshotTempDir = mkOption {
       type = types.str;
-      default = "/Users/morph/Library/Application Support/CleanShot/media";
-      description = "CleanShot X media directory";
+      default = "/Users/morph/Sync/screenshots";
+      description = "Screenshot directory where CleanShot X saves images";
     };
   };
 
