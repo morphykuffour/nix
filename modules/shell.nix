@@ -166,6 +166,9 @@ in {
 
       demo = "export DEMO_PROMPT=1 && ${sz} && clear";
       undemo = "unset DEMO_PROMPT && ${sz} && clear";
+
+      killtouchpad = "xinput disable 'DELL098F:00 04F3:311C Touchpad'";
+      revivetouchpad = "xinput enable 'DELL098F:00 04F3:311C Touchpad'";
     };
     defaultKeymap = "viins";
     initExtraBeforeCompInit = ''

@@ -13,7 +13,7 @@ in {
   programs.lf = {
     enable = true;
     commands = {
-      dragon-out = ''dragon -a -x "$fx"'';
+      dragon-out = ''xdragon -a -x "$fx"'';
       editor-open = ''$$EDITOR $f'';
       mkdir = ''
         ''${{
