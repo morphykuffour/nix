@@ -3,6 +3,10 @@
   pkgs,
   ...
 }: {
+  imports = [
+    ../../modules/latex-ocr
+  ];
+
   users.users.morph = {
     home = "/Users/morph";
     shell = pkgs.zsh;
@@ -103,6 +107,15 @@
       });
     })
   ];
+
+  # LaTeX OCR Service
+  services.latex-ocr = {
+    enable = true;
+    device = "mps"; # Use Apple Silicon GPU
+    autoCopyToClipboard = true;
+    outputFormat = "latex";
+    verbose = false;
+  };
 
   system = {
     primaryUser = "morph";
