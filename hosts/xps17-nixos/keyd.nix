@@ -10,12 +10,11 @@
   # Use the official NixOS keyd module
   # This automatically handles socket permissions and group setup
   services.keyd = {
-    enable = true;
+    enable = false;
     keyboards = {
       default = {
         ids = ["*"];  # Match all keyboards
         settings = {
-          ids = ["*"];
           main = {
             # Paste with insert
             insert = "S-insert";
