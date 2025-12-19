@@ -9,6 +9,10 @@
       enable = true;
     };
 
+    morphEmacs = {
+      enable = true;
+    };
+
     # lazygit = {
     #   enable = true;
     #   settings = {

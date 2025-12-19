@@ -6,6 +6,8 @@
   inputs,
   home-manager,
   agenix,
+  morph-emacs,
+  emacs-overlay,
   ...
 }:
 darwin.lib.darwinSystem {
@@ -24,6 +26,12 @@ darwin.lib.darwinSystem {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.morph = import ./home.nix;
+      home-manager.sharedModules = [
+        morph-emacs.homeManagerModules.default
+      ];
+    }
+    {
+      nixpkgs.overlays = [emacs-overlay.overlays.default];
     }
   ];
 }

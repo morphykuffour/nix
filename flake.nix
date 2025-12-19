@@ -59,6 +59,10 @@
       url = "github:VERT-sh/vertd";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    morph-emacs = {
+      url = "path:/Users/morph/dots/emacs/.emacs.d";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -78,6 +82,7 @@
     nixified-ai,
     fakwin,
     vertd,
+    morph-emacs,
     ...
   } @ inputs: let
     user = "morph";
@@ -103,7 +108,7 @@
 
     # mac_mini MacOs
     darwinConfigurations.macmini-darwin = import ./hosts/macmini-darwin {
-      inherit self nixpkgs darwin inputs user home-manager alejandra agenix;
+      inherit self nixpkgs darwin inputs user home-manager alejandra agenix morph-emacs emacs-overlay;
     };
 
     # xps17 NixOs
