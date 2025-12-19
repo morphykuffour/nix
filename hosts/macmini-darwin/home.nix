@@ -35,6 +35,7 @@
 
     packages = with pkgs; [
       p7zip
+      unar
       # eva
       ripgrep
       autojump
