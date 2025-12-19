@@ -80,7 +80,10 @@
         "${config.services.tailscale.package}/bin/tailscale serve --bg --https=8081 http://127.0.0.1:8081; "
         +
         # Serve vertd backend API on its own HTTPS port 24153
-        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=24153 http://127.0.0.1:24153'";
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=24153 http://127.0.0.1:24153; "
+        +
+        # Serve BookLore on its own HTTPS port 6060
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=6060 http://127.0.0.1:6060'";
       ExecStop =
         "${pkgs.bash}/bin/bash -euc '"
         + "${config.services.tailscale.package}/bin/tailscale serve --https=445 off || true; "
@@ -88,7 +91,8 @@
         + "${config.services.tailscale.package}/bin/tailscale serve --https=8443 off || true; "
         + "${config.services.tailscale.package}/bin/tailscale serve --https=444 off || true; "
         + "${config.services.tailscale.package}/bin/tailscale serve --https=8081 off || true; "
-        + "${config.services.tailscale.package}/bin/tailscale serve --https=24153 off || true'";
+        + "${config.services.tailscale.package}/bin/tailscale serve --https=24153 off || true; "
+        + "${config.services.tailscale.package}/bin/tailscale serve --https=6060 off || true'";
     };
   };
 
@@ -107,6 +111,7 @@
     allowedTCPPorts = [
       22 # SSH
       5055 # Jellyseerr
+      6060 # BookLore
       6767 # Bazarr
       7878 # Radarr
       8686 # Lidarr

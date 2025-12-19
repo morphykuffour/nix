@@ -42,6 +42,7 @@ in {
     "d /mnt/nas 0755 root root - -"
     "d /mnt/nas/media 0755 root root - -"
     "d /mnt/nas/downloads 0755 root root - -"
+    "d /mnt/nas/shared 0755 root root - -"
   ];
 
   # Define systemd mount units explicitly
@@ -62,6 +63,14 @@ in {
       options = cifsOptions;
       wantedBy = []; # Don't auto-start, let automount trigger it
     }
+    {
+      description = "TrueNAS Shared Drive";
+      what = "//${truenasHost}/shared";
+      where = "/mnt/nas/shared";
+      type = "cifs";
+      options = cifsOptions;
+      wantedBy = []; # Don't auto-start, let automount trigger it
+    }
   ];
 
   # Define systemd automount units
@@ -77,6 +86,14 @@ in {
     {
       description = "Automount TrueNAS Downloads Share";
       where = "/mnt/nas/downloads";
+      wantedBy = ["multi-user.target"];
+      automountConfig = {
+        TimeoutIdleSec = "60";
+      };
+    }
+    {
+      description = "Automount TrueNAS Shared Drive";
+      where = "/mnt/nas/shared";
       wantedBy = ["multi-user.target"];
       automountConfig = {
         TimeoutIdleSec = "60";
