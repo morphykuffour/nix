@@ -47,6 +47,7 @@
       "code-server.service"
       "docker.service"
       "docker-vert.service"
+      "docker-silverbullet.service"
       "tailscale-set-operator.service"
     ];
     wants = [
@@ -54,6 +55,7 @@
       "code-server.service"
       "docker.service"
       "docker-vert.service"
+      "docker-silverbullet.service"
       "tailscale-set-operator.service"
     ];
     wantedBy = ["multi-user.target"];
@@ -63,6 +65,9 @@
       RemainAfterExit = true;
       ExecStart =
         "${pkgs.bash}/bin/bash -euc '"
+        +
+        # Serve SilverBullet notes on dedicated port 445 (for new tab page)
+        "${config.services.tailscale.package}/bin/tailscale serve --bg --https=445 http://127.0.0.1:3030; "
         +
         # Serve SearXNG on BOTH /search subpath AND dedicated port 8443
         "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/search http://127.0.0.1:8888; "
@@ -78,6 +83,7 @@
         "${config.services.tailscale.package}/bin/tailscale serve --bg --https=24153 http://127.0.0.1:24153'";
       ExecStop =
         "${pkgs.bash}/bin/bash -euc '"
+        + "${config.services.tailscale.package}/bin/tailscale serve --https=445 off || true; "
         + "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/search off || true; "
         + "${config.services.tailscale.package}/bin/tailscale serve --https=8443 off || true; "
         + "${config.services.tailscale.package}/bin/tailscale serve --https=444 off || true; "

@@ -15,6 +15,7 @@
     ./croc.nix
     ./nas-mounts.nix
     ./jellyfin-stack.nix
+    ./silverbullet.nix
     # ./zfs.nix
   ];
 
