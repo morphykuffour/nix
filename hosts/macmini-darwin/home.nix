@@ -91,6 +91,7 @@
       deadnix
       neovim
       todoist
+      # ladybird # broken as of 2025-11
       # plover.dev
       # go
       # python3

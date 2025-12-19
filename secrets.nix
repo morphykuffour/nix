@@ -3,8 +3,12 @@ let
   xps17-nixos = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIISjAu3KwCZ7iEHmfHmY+EtUJhOXixax9iarMZpYYaqc morph@xps17-nixos";
   macmini-darwin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICVpvLJJJ9smtoSoKr44/1w+ycmMlSVGL+vdP7TTiIjp my-mac";
 
+  # Host keys for servers that need to decrypt secrets
+  optiplex-nixos-host = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHgBLI/WmZElwpkVtl5Bfc5lNCc6gRaf8SzImfUbYSNw root@optiplex-nixos";
+
   # Define all users who should have access to secrets
   allUsers = [xps17-nixos macmini-darwin];
+  optiplexSecrets = allUsers ++ [optiplex-nixos-host];
 in {
   # OpenAI API key for nvim
   "secrets/openai.age".publicKeys = allUsers;
@@ -26,6 +30,7 @@ in {
   "secrets/xps17-nixos-vpn.age".publicKeys = allUsers;
   "secrets/xps17-nixos-vpn-pub.age".publicKeys = allUsers;
   "secrets/qbittorrent-optiplex-nixos.age".publicKeys = allUsers;
+  "secrets/silverbullet-optiplex-nixos.age".publicKeys = optiplexSecrets;
   "secrets/restic/env.age".publicKeys = allUsers;
   "secrets/restic/password.age".publicKeys = allUsers;
   "secrets/restic/repo.age".publicKeys = allUsers;
