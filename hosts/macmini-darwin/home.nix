@@ -90,6 +90,7 @@
       yt-dlp
       deadnix
       neovim
+      todoist
       # plover.dev
       # go
       # python3
