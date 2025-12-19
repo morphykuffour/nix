@@ -165,6 +165,7 @@
 
       # finance
       ledger
+      goose-cli
 
       # python packages
       # (python39.withPackages (pp:
