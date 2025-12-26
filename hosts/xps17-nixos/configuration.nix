@@ -15,6 +15,7 @@
     ./tailscale.nix
     ./syncthing.nix
     ./rustdesk-client.nix
+    ./wireshark-usb.nix
     # ../../modules/mullvad
     ../../modules/kanata
     # ./fakwin.nix
@@ -202,7 +203,7 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     description = "Morphy Kuffour";
-    extraGroups = ["networkmanager" "wheel" "libvirtd" "docker"];
+    extraGroups = ["networkmanager" "wheel" "libvirtd" "docker" "wireshark"];
     packages = with pkgs; [];
   };
 
@@ -312,8 +313,8 @@
     docker
     libreoffice
     # reptyr
-    wireshark
-    tshark
+    # wireshark  # Handled by programs.wireshark in wireshark-usb.nix
+    # tshark     # Included with wireshark package
     procps
     zsync
     cdrkit
