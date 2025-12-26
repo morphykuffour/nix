@@ -108,11 +108,10 @@ in {
         };
       };
 
+      # Dynamic multi-monitor wallpaper for Wayland
+      output."*".bg = "${home}/Pictures/wallpaper/wall.jpg fill";
+
       startup = [
-        {
-          command = "exec ${pkgs.swaybg}/bin/swaybg -i ${home}/Pictures/wallpaper/wall.png -m fill";
-          always = true;
-        }
         {
           command = "exec ${pkgs.waybar}/bin/waybar";
           always = true;

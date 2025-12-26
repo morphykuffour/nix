@@ -16,6 +16,7 @@
     ../../modules/zathura
     ../../modules/lf
     ../../modules/grobi
+    ../../modules/wallpaper.nix
     # ../../modules/nvim.nix
     ../../modules/redshift.nix
     # ../../modules/picom.nix
