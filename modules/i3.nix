@@ -92,7 +92,7 @@ in {
         "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
         "${mod}+Shift+d" = "exec ${pkgs.rofi}/bin/rofi -modi drun -show drun";
         "${mod}+s" = "exec flameshot gui --clipboard --path ${home}/iCloud/screenshots/";
-        "Print" = "exec flameshot full --clipboard --path ${home}/iCloud/screenshots/";
+        "Print" = "exec flameshot screen --clipboard --path ${home}/iCloud/screenshots/";
         "${mod}+w" = "exec ${pkgs.rofi}/bin/rofi -show window";
         "${mod}+Shift+x" = "exec systemctl suspend";
         "${mod}+Shift+q" = "kill";
@@ -199,12 +199,19 @@ in {
         #   notification = false;
         # }
         {
-          command = "${pkgs.feh}/bin/feh --bg-fill /home/${user}/Pictures/wallpaper/wall.png";
+          # Disable Plasma desktop wallpaper to prevent conflicts with feh
+          command = "sleep 1 && qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript 'desktops().forEach(function(d) { d.wallpaperPlugin = \"org.kde.color\"; d.currentConfigGroup = [\"Wallpaper\", \"org.kde.color\", \"General\"]; d.writeConfig(\"Color\", \"#000000\"); })'";
           always = true;
           notification = false;
         }
         {
-          command = "sleep 2 && qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript 'var panel = panelById(panelIds[0]); panel.hiding = \"autohide\"'";
+          # Dynamic multi-monitor wallpaper - works with any display configuration
+          command = "sleep 2 && ${pkgs.feh}/bin/feh --no-fehbg --bg-fill /home/${user}/Pictures/wallpaper/wall.jpg";
+          always = true;
+          notification = false;
+        }
+        {
+          command = "sleep 3 && qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript 'var panel = panelById(panelIds[0]); panel.hiding = \"autohide\"'";
           always = true;
           notification = false;
         }

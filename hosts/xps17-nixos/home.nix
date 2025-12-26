@@ -20,6 +20,7 @@
     ./fakwin.nix
     ../../modules/picom.nix
     ../../modules/grobi
+    ../../modules/wallpaper.nix
   ];
 
   services.clipmenu.enable = true;
