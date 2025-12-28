@@ -5,6 +5,7 @@
 }: {
   imports = [
     ../../modules/latex-ocr
+    ../../modules/rawtalk
   ];
 
   users.users.morph = {
@@ -115,6 +116,11 @@
     autoCopyToClipboard = true;
     outputFormat = "latex";
     verbose = false;
+  };
+
+  # Rawtalk QMK Layer Switcher Service
+  services.rawtalk = {
+    enable = true;
   };
 
   system = {
