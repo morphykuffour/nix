@@ -8,16 +8,19 @@
   agenix,
   morph-emacs,
   emacs-overlay,
+  rawtalk,
   ...
 }:
 darwin.lib.darwinSystem {
   system = "aarch64-darwin";
+  specialArgs = {inherit rawtalk;};
   modules = [
     ./configuration.nix
     {
       environment.systemPackages = [
         alejandra.packages.aarch64-darwin.default
         agenix.packages.aarch64-darwin.default
+        rawtalk.packages.aarch64-darwin.default
         # neovim.packages.aarch64-darwin.neovim
       ];
     }

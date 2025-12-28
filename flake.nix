@@ -63,6 +63,10 @@
       url = "path:/Users/morph/dots/emacs/.emacs.d";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    rawtalk = {
+      url = "github:morphykuffour/rawtalk";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -83,6 +87,7 @@
     fakwin,
     vertd,
     morph-emacs,
+    rawtalk,
     ...
   } @ inputs: let
     user = "morph";
@@ -108,7 +113,7 @@
 
     # mac_mini MacOs
     darwinConfigurations.macmini-darwin = import ./hosts/macmini-darwin {
-      inherit self nixpkgs darwin inputs user home-manager alejandra agenix morph-emacs emacs-overlay;
+      inherit self nixpkgs darwin inputs user home-manager alejandra agenix morph-emacs emacs-overlay rawtalk;
     };
 
     # xps17 NixOs
