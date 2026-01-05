@@ -6,6 +6,7 @@
   nixpkgs,
   inputs,
   user,
+  morph-emacs,
   # neovim,
   ...
 }:
@@ -23,6 +24,9 @@ nixpkgs.lib.nixosSystem {
         useUserPackages = true;
         users.${user}.imports = [
           ./home.nix
+        ];
+        sharedModules = [
+          morph-emacs.homeManagerModules.default
         ];
         extraSpecialArgs = {
           plover = inputs.plover.packages."x86_64-linux".plover;

@@ -23,6 +23,9 @@
     home-manager = {
       enable = true;
     };
+    morphEmacs = {
+      enable = true;
+    };
     obs-studio = {
       enable = true;
       plugins = with pkgs.obs-studio-plugins; [
