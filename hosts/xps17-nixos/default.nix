@@ -7,6 +7,8 @@
   inputs,
   user,
   fakwin,
+  morph-emacs,
+  emacs-overlay,
   # neovim,
   ...
 }:
@@ -29,6 +31,9 @@ nixpkgs.lib.nixosSystem {
         users.${user}.imports = [
           ./home.nix
         ];
+        sharedModules = [
+          morph-emacs.homeManagerModules.default
+        ];
         extraSpecialArgs = {
           plover = inputs.plover.packages."x86_64-linux".plover;
           inherit inputs user fakwin;
@@ -37,6 +42,7 @@ nixpkgs.lib.nixosSystem {
 
       # Overlays: override deskflow to 1.25.0 (protocol match with macOS)
       nixpkgs.overlays = [
+        emacs-overlay.overlays.default
         (final: prev: {
           deskflow = prev.callPackage ../../pkgs/deskflow {};
         })

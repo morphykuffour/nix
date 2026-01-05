@@ -7,6 +7,8 @@
   inputs,
   user,
   overlays,
+  morph-emacs,
+  emacs-overlay,
   ...
 }:
 nixpkgs.lib.nixosSystem {
@@ -28,11 +30,18 @@ nixpkgs.lib.nixosSystem {
         users.${user}.imports = [
           ./home.nix
         ];
+        sharedModules = [
+          morph-emacs.homeManagerModules.default
+        ];
         extraSpecialArgs = {
           plover = inputs.plover.packages."x86_64-linux".plover;
           inherit inputs user;
         };
       };
+
+      nixpkgs.overlays = [
+        emacs-overlay.overlays.default
+      ];
 
       environment.systemPackages = [
         alejandra.defaultPackage.x86_64-linux
