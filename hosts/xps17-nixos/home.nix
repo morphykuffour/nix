@@ -149,6 +149,24 @@
     ];
   };
 
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "image/png" = ["sxiv.desktop"];
+      "image/jpeg" = ["sxiv.desktop"];
+      "image/gif" = ["sxiv.desktop"];
+      "image/webp" = ["sxiv.desktop"];
+      "image/tiff" = ["sxiv.desktop"];
+      "image/bmp" = ["sxiv.desktop"];
+      "image/x-icon" = ["sxiv.desktop"];
+      "image/x-portable-pixmap" = ["sxiv.desktop"];
+      "image/x-portable-bitmap" = ["sxiv.desktop"];
+      "image/x-portable-graymap" = ["sxiv.desktop"];
+      "image/x-xbitmap" = ["sxiv.desktop"];
+      "image/x-xpixmap" = ["sxiv.desktop"];
+    };
+  };
+
   xdg.configFile = {
     "i3status-rust/config.toml".text = ''
       [theme]
