@@ -382,7 +382,7 @@
     tigervnc
     python313Packages.i3ipc
     filezilla
-    notepad-next
+    # notepad-next
     ntfs3g
     ntfsprogs
 
