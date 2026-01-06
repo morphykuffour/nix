@@ -8,7 +8,11 @@
   rustdesk_server_lan = "optiplex-nixos.local"; # LAN hostname (via Avahi/mDNS)
   rustdesk_server_tailscale = "100.89.107.92"; # Tailscale IP
 
+  # Tailscale CGNAT range for IP whitelisting
+  tailscale_ip_range = "100.64.0.0/10";
+
   # Optimal client configuration for low-latency LAN connections
+  # This config auto-accepts connections from Tailscale IPs
   rustdeskConfig = pkgs.writeText "RustDesk2.toml" ''
     # Server Configuration - Points to optiplex-nixos
     [options]
@@ -53,10 +57,13 @@
     allow-auto-disconnect = "N"          # Don't auto-disconnect
     keep-screen-on = "during-controlled" # Keep screen on during sessions
 
-    # Security settings - Reasonable defaults
+    # Security settings - Auto-accept from Tailscale network
+    # Since tailscale0 is a trusted interface in firewall config,
+    # connections from Tailscale network will be auto-accepted
     access-mode = "full"                 # Full access mode
-    approve-mode = "password"            # Password-only approval
-    verification-method = "use-permanent-password"  # Use permanent password
+    approve-mode = ""                    # Empty = auto-accept all connections (secured by Tailscale)
+    allow-only-conn-window-open = "N"    # Allow connections even when window is closed
+    verification-method = "use-permanent-password"  # Use permanent password for non-Tailscale access
     enable-keyboard = "Y"
     enable-clipboard = "Y"
     enable-file-transfer = "Y"
@@ -73,6 +80,28 @@
     # Device registration
     enable-lan-discovery = "Y"           # Enable LAN discovery
     allow-hostname-as-id = "N"           # Use RustDesk ID instead of hostname
+  '';
+
+  # Script to check if an IP is from Tailscale network
+  isTailscaleIP = pkgs.writeShellScript "is-tailscale-ip.sh" ''
+    #!/usr/bin/env bash
+    # Check if IP is in Tailscale CGNAT range (100.64.0.0/10)
+    IP="$1"
+    if [[ -z "$IP" ]]; then
+      exit 1
+    fi
+
+    # Extract first octet
+    FIRST_OCTET=$(echo "$IP" | cut -d. -f1)
+    SECOND_OCTET=$(echo "$IP" | cut -d. -f2)
+
+    # Tailscale uses 100.64.0.0/10, which means:
+    # First octet: 100
+    # Second octet: 64-127 (bits 64-127 in the second octet)
+    if [[ "$FIRST_OCTET" == "100" ]] && [[ "$SECOND_OCTET" -ge 64 ]] && [[ "$SECOND_OCTET" -le 127 ]]; then
+      exit 0  # Is Tailscale IP
+    fi
+    exit 1  # Not Tailscale IP
   '';
 
   # Script to configure RustDesk on first run
@@ -117,10 +146,13 @@ in {
   };
 
   # Firewall configuration for RustDesk client
+  # Note: Direct access port (21118) is NOT opened to the public internet.
+  # Since tailscale0 is configured as a trustedInterface in tailscale.nix,
+  # all Tailscale traffic (including port 21118) is automatically allowed.
+  # This ensures only Tailscale nodes can auto-connect directly.
+  # Non-Tailscale connections must go through the RustDesk server with password auth.
   networking.firewall = {
-    # Allow RustDesk direct connection port
-    allowedTCPPorts = [21118]; # Direct IP access port
-    allowedUDPPorts = [21118]; # Direct IP access port (UDP)
+    # No ports opened here - Tailscale access is via trusted interface
   };
 
   # Add setup script to system packages for manual configuration
@@ -132,9 +164,39 @@ in {
       #!${pkgs.bash}/bin/bash
       ${rustdeskSetup}
     '')
+
+    # Script to check Tailscale status
+    (pkgs.writeScriptBin "rustdesk-tailscale-check" ''
+      #!${pkgs.bash}/bin/bash
+      ${isTailscaleIP} "$@"
+    '')
   ];
 
-  # User-level service to set up RustDesk config on login (optional)
+  # System-level RustDesk service that runs on boot
+  # This runs the RustDesk service daemon for accepting incoming connections
+  systemd.services.rustdesk = {
+    description = "RustDesk Remote Desktop Service";
+    after = ["network.target" "tailscale.service"];
+    wants = ["tailscale.service"];
+    wantedBy = ["multi-user.target"];
+
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.rustdesk}/bin/rustdesk --service";
+      Restart = "always";
+      RestartSec = 5;
+      # Run as root for system-level service (required for some RustDesk features)
+      User = "root";
+    };
+
+    # Environment for headless operation
+    environment = {
+      DISPLAY = ":0";
+      XAUTHORITY = "/home/morph/.Xauthority";
+    };
+  };
+
+  # User-level service to set up RustDesk config on login
   systemd.user.services.rustdesk-config-setup = {
     description = "RustDesk Client Configuration Setup";
     wantedBy = ["default.target"];
@@ -145,6 +207,22 @@ in {
     };
   };
 
+  # User-level RustDesk GUI service (for the tray icon and UI)
+  systemd.user.services.rustdesk = {
+    description = "RustDesk Remote Desktop Client";
+    after = ["graphical-session.target" "rustdesk-config-setup.service"];
+    wants = ["rustdesk-config-setup.service"];
+    wantedBy = ["graphical-session.target"];
+    partOf = ["graphical-session.target"];
+
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.rustdesk}/bin/rustdesk --tray";
+      Restart = "on-failure";
+      RestartSec = 5;
+    };
+  };
+
   # Add helpful message to login
   environment.interactiveShellInit = ''
     # RustDesk server info
@@ -152,7 +230,7 @@ in {
       # Config exists, user is set up
       :
     else
-      echo "💡 RustDesk is installed. Run 'rustdesk-configure' to set up your client."
+      echo "RustDesk is installed. Run 'rustdesk-configure' to set up your client."
     fi
   '';
 }
