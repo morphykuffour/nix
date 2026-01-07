@@ -190,11 +190,14 @@ in {
     lidSwitch = "ignore";
     lidSwitchDocked = "ignore";
     lidSwitchExternalPower = "ignore";
-    extraConfig = ''
-      HandlePowerKey=ignore
-      IdleAction=ignore
-      IdleActionSec=0
-    '';
+    powerKey = "ignore";
+    powerKeyLongPress = "ignore";
+    settings = {
+      Login = {
+        IdleAction = "ignore";
+        IdleActionSec = 0;
+      };
+    };
   };
 
   # ============================================
