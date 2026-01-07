@@ -1,5 +1,5 @@
-# VNC Server configuration for remote access from iPhone
-# Uses GNOME Remote Desktop (gnome-remote-desktop) for Wayland-native VNC
+# Remote Desktop configuration for iPhone access
+# Uses GNOME Remote Desktop (RDP) or RustDesk for Wayland
 # Only accessible via Tailscale network
 {
   config,
@@ -7,20 +7,21 @@
   lib,
   ...
 }: let
-  # Script to configure VNC password from agenix secret
-  configureVncPassword = pkgs.writeShellScript "configure-vnc-password" ''
+  # Script to configure RDP credentials from agenix secret
+  configureRdp = pkgs.writeShellScript "configure-rdp" ''
     set -e
     PASSWORD_FILE="${config.age.secrets.vnc-optiplex-nixos.path}"
+    GRDCTL="${pkgs.gnome-remote-desktop}/bin/grdctl"
 
     if [ -f "$PASSWORD_FILE" ]; then
       PASSWORD=$(cat "$PASSWORD_FILE")
-      # Use grd-ctl to set VNC password (GNOME Remote Desktop control tool)
-      ${pkgs.gnome-remote-desktop}/bin/grd-ctl vnc set-password "$PASSWORD" 2>/dev/null || true
-      ${pkgs.gnome-remote-desktop}/bin/grd-ctl vnc enable 2>/dev/null || true
-      ${pkgs.gnome-remote-desktop}/bin/grd-ctl vnc set-auth-method password 2>/dev/null || true
-      echo "VNC password configured from secret"
+      # Configure RDP (GNOME Remote Desktop 49+ only supports RDP, not VNC)
+      "$GRDCTL" rdp enable 2>/dev/null || true
+      "$GRDCTL" rdp disable-view-only 2>/dev/null || true
+      "$GRDCTL" rdp set-credentials morph "$PASSWORD" 2>/dev/null || true
+      echo "RDP configured (note: GNOME keyring must be unlocked from GUI)"
     else
-      echo "Warning: VNC password secret not found at $PASSWORD_FILE"
+      echo "Warning: Password secret not found at $PASSWORD_FILE"
     fi
   '';
 in {
@@ -52,10 +53,10 @@ in {
   systemd.services."autovt@tty1".enable = false;
 
   # ============================================
-  # SYSTEMD - Configure VNC password on boot
+  # SYSTEMD - Configure RDP on boot
   # ============================================
-  systemd.services.configure-vnc-password = {
-    description = "Configure GNOME Remote Desktop VNC password";
+  systemd.services.configure-rdp = {
+    description = "Configure GNOME Remote Desktop RDP";
     after = ["agenix.service" "graphical.target"];
     wantedBy = ["graphical.target"];
 
@@ -63,7 +64,7 @@ in {
       Type = "oneshot";
       User = "morph";
       Group = "users";
-      ExecStart = "${configureVncPassword}";
+      ExecStart = "${configureRdp}";
       RemainAfterExit = true;
     };
 
@@ -93,6 +94,10 @@ in {
   environment.systemPackages = with pkgs; [
     gnome-remote-desktop
 
+    # RustDesk - Wayland-compatible remote desktop (uses PipeWire screen capture)
+    # Connect using RustDesk iOS app or via Tailscale IP directly
+    rustdesk
+
     # VNC client for local testing
     tigervnc
 
@@ -101,14 +106,17 @@ in {
   ];
 
   # ============================================
-  # USER SERVICE - Configure VNC on login
+  # USER SERVICE - Configure RDP/Remote Desktop on login
   # ============================================
   # Create a helper script for manual setup if needed
-  environment.etc."profile.d/vnc-setup-helper.sh".text = ''
-    # Helper to check VNC status
-    alias vnc-status='systemctl --user status gnome-remote-desktop'
-    alias vnc-enable='systemctl --user enable --now gnome-remote-desktop'
-    alias vnc-password='grd-ctl vnc set-password'
+  environment.etc."profile.d/remote-desktop-helper.sh".text = ''
+    # Helper commands for remote desktop
+    alias rdp-status='systemctl --user status gnome-remote-desktop'
+    alias rdp-enable='systemctl --user enable --now gnome-remote-desktop'
+    alias grdctl='${pkgs.gnome-remote-desktop}/bin/grdctl'
+
+    # RustDesk helper - start with screen sharing permission prompt
+    alias rustdesk-server='rustdesk --server'
   '';
 
   # ============================================
