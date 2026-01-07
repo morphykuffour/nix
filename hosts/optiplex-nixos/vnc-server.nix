@@ -6,9 +6,34 @@
   pkgs,
   lib,
   ...
-}: {
-  # VNC password is configured manually via GNOME Settings > Sharing > Remote Desktop
-  # This ensures no secrets are stored in the Nix configuration
+}: let
+  # Script to configure VNC password from agenix secret
+  configureVncPassword = pkgs.writeShellScript "configure-vnc-password" ''
+    set -e
+    PASSWORD_FILE="${config.age.secrets.vnc-optiplex-nixos.path}"
+
+    if [ -f "$PASSWORD_FILE" ]; then
+      PASSWORD=$(cat "$PASSWORD_FILE")
+      # Use grd-ctl to set VNC password (GNOME Remote Desktop control tool)
+      ${pkgs.gnome-remote-desktop}/bin/grd-ctl vnc set-password "$PASSWORD" 2>/dev/null || true
+      ${pkgs.gnome-remote-desktop}/bin/grd-ctl vnc enable 2>/dev/null || true
+      ${pkgs.gnome-remote-desktop}/bin/grd-ctl vnc set-auth-method password 2>/dev/null || true
+      echo "VNC password configured from secret"
+    else
+      echo "Warning: VNC password secret not found at $PASSWORD_FILE"
+    fi
+  '';
+in {
+  # ============================================
+  # AGENIX SECRET - VNC Password
+  # ============================================
+  age.secrets.vnc-optiplex-nixos = {
+    file = ../../secrets/vnc-optiplex-nixos.age;
+    owner = "morph";
+    group = "users";
+    mode = "0400";
+  };
+
   # ============================================
   # GNOME REMOTE DESKTOP - Native Wayland VNC
   # ============================================
@@ -25,6 +50,29 @@
   # Workaround for GNOME auto-login race condition
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
+
+  # ============================================
+  # SYSTEMD - Configure VNC password on boot
+  # ============================================
+  systemd.services.configure-vnc-password = {
+    description = "Configure GNOME Remote Desktop VNC password";
+    after = ["agenix.service" "graphical.target"];
+    wantedBy = ["graphical.target"];
+
+    serviceConfig = {
+      Type = "oneshot";
+      User = "morph";
+      Group = "users";
+      ExecStart = "${configureVncPassword}";
+      RemainAfterExit = true;
+    };
+
+    environment = {
+      HOME = "/home/morph";
+      XDG_RUNTIME_DIR = "/run/user/1000";
+      DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/1000/bus";
+    };
+  };
 
   # ============================================
   # FIREWALL - VNC only via Tailscale
@@ -55,28 +103,12 @@
   # ============================================
   # USER SERVICE - Configure VNC on login
   # ============================================
-  # Note: gnome-remote-desktop configuration is per-user
-  # The user needs to enable it via GNOME Settings > Sharing > Remote Desktop
-  # Or we can automate it with dconf/gsettings
-
-  # Create a helper script for initial setup
+  # Create a helper script for manual setup if needed
   environment.etc."profile.d/vnc-setup-helper.sh".text = ''
     # Helper to check VNC status
     alias vnc-status='systemctl --user status gnome-remote-desktop'
     alias vnc-enable='systemctl --user enable --now gnome-remote-desktop'
-
-    # First-time setup reminder
-    if [ ! -f "$HOME/.config/gnome-remote-desktop/.vnc-configured" ]; then
-      echo ""
-      echo "=== VNC Setup Required ==="
-      echo "Run these commands to enable VNC:"
-      echo "  1. Open GNOME Settings > Sharing > Remote Desktop"
-      echo "  2. Enable 'Remote Desktop' and 'Remote Control'"
-      echo "  3. Set authentication method and password"
-      echo ""
-      echo "Or run: gnome-remote-desktop-configure"
-      echo ""
-    fi
+    alias vnc-password='grd-ctl vnc set-password'
   '';
 
   # ============================================
