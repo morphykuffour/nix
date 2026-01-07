@@ -31,4 +31,7 @@ in {
   "secrets/restic/env.age".publicKeys = allUsers;
   "secrets/restic/password.age".publicKeys = allUsers;
   "secrets/restic/repo.age".publicKeys = allUsers;
+
+  # VNC password for GNOME Remote Desktop on optiplex-nixos
+  "secrets/vnc-optiplex-nixos.age".publicKeys = allUsers;
 }
