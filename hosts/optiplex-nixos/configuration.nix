@@ -8,6 +8,9 @@
     ./hardware-configuration.nix
     ./tailscale.nix
     ./rustdesk.nix
+    # ./rustdesk-client.nix  # Disabled - forces X11, incompatible with Waydroid
+    ./waydroid.nix          # Android container for JADENS printer app
+    ./vnc-server.nix        # VNC access for iPhone remote control
     ./roon.nix
     ./code-server.nix
     ./vert.nix
