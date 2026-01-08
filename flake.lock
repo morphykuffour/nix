@@ -446,14 +446,19 @@
         ]
       },
       "locked": {
-        "lastModified": 1766955860,
-        "narHash": "sha256-UtacWkp5d7G2I6A/iXgUbjlo9XehY1FDM+DH3eYhhLk=",
-        "path": "/Users/morph/dots/emacs/.emacs.d",
-        "type": "path"
+        "dir": "emacs/.emacs.d",
+        "lastModified": 1767686586,
+        "narHash": "sha256-X6h/2bcuevdaMjKRnqMa36FyfIVhVK0Y/FbmUfOH5wQ=",
+        "owner": "morphykuffour",
+        "repo": "dots",
+        "rev": "84d6dae8abdd98b436e2016ffacca3207a2c5ddf",
+        "type": "github"
       },
       "original": {
-        "path": "/Users/morph/dots/emacs/.emacs.d",
-        "type": "path"
+        "dir": "emacs/.emacs.d",
+        "owner": "morphykuffour",
+        "repo": "dots",
+        "type": "github"
       }
     },
     "neovim": {
