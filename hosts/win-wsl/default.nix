@@ -1,6 +1,5 @@
 {
   home-manager,
-  alejandra,
   agenix,
   self,
   nixpkgs,
@@ -18,8 +17,8 @@ nixpkgs.lib.nixosSystem {
     inputs.nixos-wsl.nixosModules.wsl
     # vscode-server.nixosModule
     {
-      environment.systemPackages = [
-        alejandra.defaultPackage.x86_64-linux
+      environment.systemPackages = with nixpkgs.legacyPackages.x86_64-linux; [
+        alejandra
         # neovim.packages.x86_64-linux.neovim
       ];
     }

@@ -1,6 +1,5 @@
 {
   home-manager,
-  alejandra,
   agenix,
   self,
   nixpkgs,
@@ -43,8 +42,8 @@ nixpkgs.lib.nixosSystem {
         emacs-overlay.overlays.default
       ];
 
-      environment.systemPackages = [
-        alejandra.defaultPackage.x86_64-linux
+      environment.systemPackages = with nixpkgs.legacyPackages.x86_64-linux; [
+        alejandra
         agenix.packages.x86_64-linux.default
         # neovim.packages.x86_64-linux.neovim
       ];

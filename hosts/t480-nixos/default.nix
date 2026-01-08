@@ -1,6 +1,5 @@
 {
   home-manager,
-  alejandra,
   agenix,
   self,
   nixpkgs,
@@ -39,8 +38,8 @@ nixpkgs.lib.nixosSystem {
         inputs.discord.overlays.default
       ];
 
-      environment.systemPackages = [
-        alejandra.defaultPackage.x86_64-linux
+      environment.systemPackages = with nixpkgs.legacyPackages.x86_64-linux; [
+        alejandra
         agenix.packages.x86_64-linux.default
         # inputs.neovim.packages.x86_64-linux.neovim # NVIM v0.9-dev
       ];
