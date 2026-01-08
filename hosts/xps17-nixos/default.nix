@@ -1,6 +1,5 @@
 {
   home-manager,
-  alejandra,
   agenix,
   self,
   nixpkgs,

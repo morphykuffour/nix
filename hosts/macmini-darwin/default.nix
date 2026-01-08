@@ -1,5 +1,4 @@
 {
-  alejandra,
   user,
   nixpkgs,
   darwin,
@@ -17,8 +16,8 @@ darwin.lib.darwinSystem {
   modules = [
     ./configuration.nix
     {
-      environment.systemPackages = [
-        alejandra.packages.aarch64-darwin.default
+      environment.systemPackages = with nixpkgs.legacyPackages.aarch64-darwin; [
+        alejandra
         agenix.packages.aarch64-darwin.default
         rawtalk.packages.aarch64-darwin.default
         # neovim.packages.aarch64-darwin.neovim

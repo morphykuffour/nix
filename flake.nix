@@ -32,10 +32,6 @@
       url = "github:dnaq/plover-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    alejandra = {
-      url = "github:kamadorueda/alejandra/3.0.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -75,7 +71,6 @@
     home-manager,
     darwin,
     plover,
-    alejandra,
     nixos-wsl,
     agenix,
     tailscale,
@@ -113,27 +108,27 @@
 
     # mac_mini MacOs
     darwinConfigurations.macmini-darwin = import ./hosts/macmini-darwin {
-      inherit self nixpkgs darwin inputs user home-manager alejandra agenix morph-emacs emacs-overlay rawtalk;
+      inherit self nixpkgs darwin inputs user home-manager agenix morph-emacs emacs-overlay rawtalk;
     };
 
     # xps17 NixOs
     nixosConfigurations.xps17-nixos = import ./hosts/xps17-nixos {
-      inherit nixpkgs self inputs user home-manager alejandra agenix fakwin morph-emacs emacs-overlay;
+      inherit nixpkgs self inputs user home-manager agenix fakwin morph-emacs emacs-overlay;
     };
 
     # t480 NixOs
     nixosConfigurations.t480-nixos = import ./hosts/t480-nixos {
-      inherit nixpkgs self inputs user home-manager alejandra agenix morph-emacs;
+      inherit nixpkgs self inputs user home-manager agenix morph-emacs;
     };
 
     # optiplex NixOs
     nixosConfigurations.optiplex-nixos = import ./hosts/optiplex-nixos {
-      inherit nixpkgs self inputs user home-manager alejandra agenix overlays morph-emacs emacs-overlay;
+      inherit nixpkgs self inputs user home-manager agenix overlays morph-emacs emacs-overlay;
     };
 
     # win-wsl NixOs
     nixosConfigurations.win-wsl = import ./hosts/win-wsl {
-      inherit nixpkgs self inputs user home-manager alejandra agenix overlays nixified-ai;
+      inherit nixpkgs self inputs user home-manager agenix overlays nixified-ai;
     };
 
     # visionfive2 NixOs
