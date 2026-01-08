@@ -34,4 +34,7 @@ in {
 
   # VNC password for GNOME Remote Desktop on optiplex-nixos
   "secrets/vnc-optiplex-nixos.age".publicKeys = allUsers;
+
+  # RustDesk password for optiplex-nixos
+  "secrets/rustdesk-optiplex-nixos.age".publicKeys = allUsers;
 }
