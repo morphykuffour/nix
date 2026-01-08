@@ -26,8 +26,8 @@
     relay-server = '${rustdesk_server}:21117'
     key = '${rustdesk_key}'
 
-    # Passwordless for Tailscale network - auto-accept connections
-    approve-mode = 'click'
+    # Passwordless for Tailscale network - auto-accept connections from whitelist
+    approve-mode = 'password'
     verification-method = 'use-permanent-password'
 
     # Whitelist Tailscale network for passwordless access
@@ -82,8 +82,8 @@ in {
   # ============================================
   # VIRTUAL DISPLAY - Headless Wayland support
   # ============================================
-  # For headless operation, GNOME/mutter can create virtual outputs
-  # This is configured via mutter settings
+  # With HDMI EDID dummy plug connected, no software EDID needed
+  # The physical adapter provides proper EDID data
 
   # Enable GNOME's headless/virtual display support
   services.xserver.displayManager.gdm = {
@@ -128,12 +128,28 @@ in {
   systemd.services."autovt@tty1".enable = false;
 
   # ============================================
+  # D-BUS ENVIRONMENT - Propagate Wayland vars for portals
+  # ============================================
+  # This ensures xdg-desktop-portal can access Wayland display
+  systemd.user.services.dbus-wayland-env = {
+    description = "Update D-Bus environment for Wayland";
+    wantedBy = ["graphical-session.target"];
+    after = ["graphical-session.target"];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.dbus}/bin/dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE";
+      RemainAfterExit = true;
+    };
+  };
+
+  # ============================================
   # RUSTDESK CLIENT - Wayland with passwordless Tailscale
   # ============================================
   systemd.user.services.rustdesk-client = {
     description = "RustDesk Client for Wayland Remote Access";
     wantedBy = ["graphical-session.target"];
-    after = ["graphical-session.target" "pipewire.service"];
+    after = ["graphical-session.target" "pipewire.service" "dbus-wayland-env.service"];
+    requires = ["dbus-wayland-env.service"];
 
     serviceConfig = {
       Type = "simple";
@@ -147,8 +163,11 @@ in {
       # Wayland environment
       WAYLAND_DISPLAY = "wayland-0";
       XDG_SESSION_TYPE = "wayland";
-      # For PipeWire screen capture
+      # For PipeWire screen capture via portal
       XDG_CURRENT_DESKTOP = "GNOME";
+      # Required for D-Bus and portal access
+      XDG_RUNTIME_DIR = "/run/user/1000";
+      DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/1000/bus";
     };
   };
 
@@ -214,7 +233,19 @@ in {
   xdg.portal = {
     enable = true;
     wlr.enable = false;  # Not needed for GNOME
-    extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gnome
+      pkgs.xdg-desktop-portal-gtk
+    ];
+    # Explicit portal backend configuration for GNOME
+    config = {
+      common = {
+        default = [ "gnome" "gtk" ];
+      };
+      gnome = {
+        default = [ "gnome" "gtk" ];
+      };
+    };
   };
 
   # ============================================
