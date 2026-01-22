@@ -14,7 +14,7 @@
     ./keyd.nix
     ./tailscale.nix
     ./syncthing.nix
-    ./rustdesk-client.nix
+    # ./rustdesk-client.nix  # Temporarily disabled - rustdesk fails to build with GCC 15
     ./wireshark-usb.nix
     # ../../modules/mullvad
     ../../modules/kanata
@@ -28,6 +28,10 @@
   # zfs specific
   boot.supportedFilesystems = ["zfs"];
   networking.hostId = "cc5926fa";
+
+  # Use prebuilt kernel from binary cache (6.12 series, ZFS-compatible)
+  # Pin to linuxPackages_6_12 to avoid building kernel when nixpkgs is ahead of cache
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
 
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.enable = true;
@@ -106,7 +110,28 @@
       options = "--delete-older-than 14d";
     };
     optimise.automatic = true;
+    # Add nix-community cache for pre-built emacs-unstable and other packages
+    settings = {
+      substituters = [
+        "https://cache.nixos.org"
+        "https://nix-community.cachix.org"
+      ];
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
+    };
   };
+
+  # Power management and lid handling
+  services.logind = {
+    lidSwitch = "suspend"; # Suspend when lid closes on battery
+    lidSwitchExternalPower = "suspend"; # Suspend when lid closes on AC power
+    lidSwitchDocked = "ignore"; # Ignore lid close when docked (external display)
+  };
+
+  # NVIDIA power management for proper suspend/resume
+  hardware.nvidia.powerManagement.enable = true;
 
   security.rtkit.enable = true;
   services.pipewire = {
@@ -154,13 +179,11 @@
       # touchpad.disableWhileTyping = true;
     };
 
-    # Desktop manager moved out of xserver
-    desktopManager.plasma6.enable = true;
-
-    # Display manager moved out of xserver
+    # Display manager
     displayManager = {
       sddm.enable = true;
-      defaultSession = "plasmax11";
+      # defaultSession = "xfce+i3";
+      defaultSession = "i3";
       autoLogin = {
         enable = false;
         user = "morph";
@@ -177,6 +200,12 @@
 
       displayManager.startx.enable = false;
 
+      # desktopManager.xfce = {
+      #   enable = true;
+      #   noDesktop = true;  # Use i3 instead of xfwm4
+      #   enableXfwm = false;
+      # };
+
       windowManager = {
         i3 = {
           enable = true;
@@ -185,19 +214,6 @@
       };
     };
   };
-
-  systemd.user.services.plasma-i3wm = {
-    wantedBy = ["plasma-workspace-x11.target"];
-    description = "Launch Plasma with i3wm.";
-    environment = lib.mkForce {};
-    serviceConfig = {
-      ExecStart = "${pkgs.i3}/bin/i3";
-      Restart = "on-failure";
-    };
-  };
-
-  systemd.user.services.plasma-workspace-x11.after = ["plasma-i3wm.target"];
-  systemd.user.services.plasma-kwin_x11.enable = false;
 
   users.users.morph = {
     isNormalUser = true;
@@ -231,10 +247,10 @@
     };
     thunar = {
       enable = true;
-      plugins = with pkgs.xfce; [
-        thunar-archive-plugin
-        thunar-volman
-      ];
+      # plugins = with pkgs.xfce; [
+      #   thunar-archive-plugin
+      #   thunar-volman
+      # ];
     };
   };
 
@@ -376,7 +392,7 @@
     mpv
     code-cursor
     anki
-    rustdesk
+    # rustdesk  # Temporarily disabled - fails to build with GCC 15
     claude-code
     deskflow
     tigervnc

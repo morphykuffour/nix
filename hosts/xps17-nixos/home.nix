@@ -17,9 +17,9 @@
     ../../modules/lf
     # ../../modules/nvim.nix
     # ../../modules/redshift.nix
-    ./fakwin.nix
+    # ./fakwin.nix  # Disabled - not needed with XFCE
     ../../modules/picom.nix
-    ../../modules/grobi
+    # ../../modules/grobi  # Disabled - using manual xrandr/arandr instead
     ../../modules/wallpaper.nix
   ];
 
