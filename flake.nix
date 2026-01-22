@@ -26,7 +26,7 @@
     };
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
-      # nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     plover = {
       url = "github:dnaq/plover-flake";

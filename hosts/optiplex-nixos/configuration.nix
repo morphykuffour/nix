@@ -8,9 +8,7 @@
     ./hardware-configuration.nix
     ./tailscale.nix
     ./rustdesk.nix
-    # ./rustdesk-client.nix  # Disabled - forces X11, incompatible with Waydroid
-    ./waydroid.nix          # Android container for JADENS printer app
-    ./remote-desktop.nix    # RustDesk + headless Wayland for remote access
+    ./waydroid.nix
     ./roon.nix
     ./code-server.nix
     ./vert.nix
