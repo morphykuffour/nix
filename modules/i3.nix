@@ -187,31 +187,9 @@ in {
           always = true;
           notification = false;
         }
-        # fakwin is started via fakwin.nix systemd service and xsession startup
-        # {
-        #   command = "redshift";
-        #   always = true;
-        #   notification = false;
-        # }
-        # {
-        #   command = "sxhkd -c /home/${user}/.config/sxhkd/sxhkdrc";
-        #   always = true;
-        #   notification = false;
-        # }
-        {
-          # Disable Plasma desktop wallpaper to prevent conflicts with feh
-          command = "sleep 1 && qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript 'desktops().forEach(function(d) { d.wallpaperPlugin = \"org.kde.color\"; d.currentConfigGroup = [\"Wallpaper\", \"org.kde.color\", \"General\"]; d.writeConfig(\"Color\", \"#000000\"); })'";
-          always = true;
-          notification = false;
-        }
         {
           # Dynamic multi-monitor wallpaper - works with any display configuration
           command = "sleep 2 && ${pkgs.feh}/bin/feh --no-fehbg --bg-fill /home/${user}/Pictures/wallpaper/wall.jpg";
-          always = true;
-          notification = false;
-        }
-        {
-          command = "sleep 3 && qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript 'var panel = panelById(panelIds[0]); panel.hiding = \"autohide\"'";
           always = true;
           notification = false;
         }
@@ -219,33 +197,13 @@ in {
     };
 
     extraConfig = ''
-      # Plasma 6 compatibility improvements
+      # XFCE + i3 compatibility
       for_window [window_role="pop-up"] floating enable
       for_window [window_role="task_dialog"] floating enable
-      for_window [class="yakuake"] floating enable
-      for_window [class="systemsettings"] floating enable
-      for_window [class="plasmashell"] floating enable, border none
-      for_window [class="Plasma"] floating enable, border none
-      for_window [title="plasma-desktop"] floating enable, border none
-      for_window [title="win7"] floating enable, border none
-      for_window [class="krunner"] floating enable, border none
-      for_window [class="Kmix"] floating enable, border none
-      for_window [class="Klipper"] floating enable, border none
-      for_window [class="Plasmoidviewer"] floating enable, border none
-      for_window [class="(?i)*nextcloud*"] floating disable
-      for_window [class="plasmashell" window_type="notification"] border none, move position 70 ppt 81 ppt
-      no_focus [class="plasmashell" window_type="notification"]
 
-      # Plasma 6 specific - kill desktop shell windows
-      for_window [title="Desktop @ QRect.*"] kill, floating enable, border none
-      for_window [title="Desktop — Plasma"] kill, floating enable, border none
-      for_window [class="plasmashell" window_type="desktop"] kill
-      for_window [class="org.kde.plasmashell"] floating enable, border none
-      for_window [class="org.kde.plasmashell" window_type="desktop"] kill
-
-      # Prevent Plasma panels from reserving space (struts)
-      for_window [class="plasmashell" window_type="dock"] floating enable, border none, move scratchpad
-
+      # XFCE panel/settings floating
+      for_window [class="Xfce4-panel"] floating enable
+      for_window [class="Xfce4-settings-manager"] floating enable
 
       # Notetaker
       for_window [ title="notetaker_window" ] floating enable resize set 640 480
