@@ -121,9 +121,13 @@ xps-build-remote:
 		--build-host $(REMOTE)
 
 clean:
-	sudo nix-collect-garbage --delete-older-than 14d
-	nix-collect-garbage --delete-older-than 14d
-	if [ -e "result" ]; then \
+	@if [ "$(UNAME_S)" = "Linux" ]; then \
+		sudo nix-collect-garbage --delete-older-than 14d; \
+		nix-collect-garbage --delete-older-than 14d; \
+	else \
+		nix-collect-garbage --delete-older-than 14d; \
+	fi
+	@if [ -e "result" ]; then \
 		unlink result; \
 	else \
 		echo "'result' symlink does not exist."; \
