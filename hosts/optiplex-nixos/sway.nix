@@ -76,7 +76,8 @@
       common = {
         default = [ "wlr" "gtk" ];
       };
-      sway = {
+      # Sway portal config - use mkForce to override default from sway module
+      sway = lib.mkForce {
         default = [ "wlr" "gtk" ];
         "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
         "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
@@ -89,7 +90,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd sway";
         user = "morph";
       };
       initial_session = {
