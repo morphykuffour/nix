@@ -7,8 +7,9 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./tailscale.nix
-    ./rustdesk.nix
-    ./remote-desktop.nix
+    # ./rustdesk.nix  # Disabled - using WayVNC instead
+    # ./remote-desktop.nix  # Disabled - replaced by sway.nix
+    ./sway.nix  # Sway window manager with WayVNC
     ./waydroid.nix
     ./wake-on-lan.nix
     ./roon.nix
@@ -49,15 +50,8 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   services = {
-    # New-style desktop/display manager options
-    desktopManager.gnome.enable = true;
-    displayManager.gdm.enable = true;
-    # GNOME session - autologin defaults to X11 (GDM quirk), Wayland available on manual login
-    displayManager.defaultSession = "gnome";
-    displayManager.autoLogin = {
-      enable = true;
-      user = "morph";
-    };
+    # Sway with greetd autologin (configured in sway.nix)
+    # Removed GNOME/GDM configuration - using Sway + greetd instead
 
     # Enable the X11 windowing system.
     # Prevent system from suspending/hibernating; keep always on
@@ -92,6 +86,7 @@
       #   sddm.enable = true;
       # };
 
+      # i3 kept available as fallback (can select at login)
       windowManager.i3 = {
         enable = true;
         package = pkgs.i3;
