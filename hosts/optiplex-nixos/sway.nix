@@ -115,10 +115,10 @@
 
     serviceConfig = {
       Type = "simple";
-      # Don't specify -o output or address, let wayvnc use defaults
-      # -r 60 = 60 fps max
-      # Bind to localhost:5900
-      ExecStart = "${pkgs.wayvnc}/bin/wayvnc --enable-auth=false 127.0.0.1";
+      # -f 60 = max 60 fps
+      # -r = render cursor overlay
+      # Binds to 127.0.0.1:5900 by default
+      ExecStart = "${pkgs.wayvnc}/bin/wayvnc -f 60 -r";
       Restart = "on-failure";
       RestartSec = "5s";
       # Ensure network access is allowed
