@@ -109,12 +109,15 @@
   # Note: WayVNC doesn't have a NixOS service, so we'll create a systemd user service
   systemd.user.services.wayvnc = {
     description = "WayVNC - VNC server for Wayland";
-    wantedBy = [ "graphical-session.target" ];
-    after = [ "graphical-session.target" ];
+    wantedBy = [ "sway-session.target" ];
+    after = [ "sway-session.target" ];
+    partOf = [ "sway-session.target" ];
 
     serviceConfig = {
       Type = "simple";
-      ExecStart = "${pkgs.wayvnc}/bin/wayvnc -o '%s' -r 60 0.0.0.0 5900";
+      # Don't specify -o output, let wayvnc auto-detect
+      # -r 60 = 60 fps max
+      ExecStart = "${pkgs.wayvnc}/bin/wayvnc -r 60 0.0.0.0 5900";
       Restart = "on-failure";
       RestartSec = "5s";
     };
