@@ -53,6 +53,10 @@
     desktopManager.gnome.enable = true;
     displayManager.gdm.enable = true;
     displayManager.defaultSession = "gnome";
+    displayManager.autoLogin = {
+      enable = true;
+      user = "morph";
+    };
 
     # Enable the X11 windowing system.
     # Prevent system from suspending/hibernating; keep always on
