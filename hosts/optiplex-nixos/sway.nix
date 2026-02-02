@@ -117,8 +117,9 @@
       Type = "simple";
       # -f 60 = max 60 fps
       # -r = render cursor overlay
+      # -C = config file path
       # Binds to 127.0.0.1:5900 by default
-      ExecStart = "${pkgs.wayvnc}/bin/wayvnc -f 60 -r";
+      ExecStart = "${pkgs.wayvnc}/bin/wayvnc -C /home/morph/.config/wayvnc/config -f 60 -r";
       Restart = "on-failure";
       RestartSec = "5s";
       # Ensure network access is allowed
