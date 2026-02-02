@@ -21,6 +21,7 @@
     ./nas-mounts.nix
     ./jellyfin-stack.nix
     ./silverbullet.nix
+    ./esphome.nix  # XIAO ESP32-S3 camera system
     # ./zfs.nix
   ];
 
