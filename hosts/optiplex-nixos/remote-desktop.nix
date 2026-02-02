@@ -90,9 +90,11 @@ in {
 
   # Enable GNOME's headless/virtual display support
   # Enable both Wayland (for Waydroid) and X11 (for RustDesk)
-  services.xserver.displayManager.gdm = {
+  # Note: GDM autologin defaults to X11 as a known quirk, which is perfect for RustDesk
+  # Wayland is available when manually logging in for Waydroid support
+  services.displayManager.gdm = {
     enable = true;
-    wayland = true;  # Enable Wayland for Waydroid support
+    wayland = true;  # Enable Wayland support (available on manual login)
     autoSuspend = false;
   };
 
