@@ -115,9 +115,10 @@
 
     serviceConfig = {
       Type = "simple";
-      # Don't specify -o output, let wayvnc auto-detect
+      # Don't specify -o output or address, let wayvnc use defaults
       # -r 60 = 60 fps max
-      ExecStart = "${pkgs.wayvnc}/bin/wayvnc -r 60 0.0.0.0 5900";
+      # Default binds to localhost:5900, accessible via Tailscale
+      ExecStart = "${pkgs.wayvnc}/bin/wayvnc -r 60";
       Restart = "on-failure";
       RestartSec = "5s";
     };
