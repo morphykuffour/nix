@@ -52,9 +52,9 @@
     # New-style desktop/display manager options
     desktopManager.gnome.enable = true;
     displayManager.gdm.enable = true;
-    # Use GNOME on X11 for RustDesk compatibility
-    # RustDesk has a bug where it rejects NixOS version for Wayland
-    displayManager.defaultSession = "gnome-xorg";
+    # GNOME will use X11 when GDM wayland is disabled (see remote-desktop.nix)
+    # This works around RustDesk bug that rejects NixOS version for Wayland
+    displayManager.defaultSession = "gnome";
     displayManager.autoLogin = {
       enable = true;
       user = "morph";
