@@ -10,6 +10,7 @@
     ./rustdesk.nix
     ./remote-desktop.nix
     ./waydroid.nix
+    ./wake-on-lan.nix
     ./roon.nix
     ./code-server.nix
     ./vert.nix
