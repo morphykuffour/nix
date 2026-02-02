@@ -52,9 +52,8 @@
     # New-style desktop/display manager options
     desktopManager.gnome.enable = true;
     displayManager.gdm.enable = true;
-    # Use X11 session by default for RustDesk compatibility
-    # Wayland is still available for Waydroid - user can switch sessions
-    displayManager.defaultSession = "gnome-xorg";
+    # GNOME session - autologin defaults to X11 (GDM quirk), Wayland available on manual login
+    displayManager.defaultSession = "gnome";
     displayManager.autoLogin = {
       enable = true;
       user = "morph";
