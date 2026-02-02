@@ -27,11 +27,15 @@
     key = '${rustdesk_key}'
 
     # Passwordless for Tailscale network - auto-accept connections from whitelist
-    approve-mode = 'password'
-    verification-method = 'use-permanent-password'
+    # Using 'click' mode means no password required, just auto-accept from whitelist
+    approve-mode = 'click'
+    verification-method = 'use-both'
 
     # Whitelist Tailscale network for passwordless access
     whitelist = '${tailscale_cidr}'
+
+    # Allow direct access without password for whitelisted IPs
+    allow-only-conn-window-open = 'N'
 
     # Enable direct IP access (for Tailscale direct connections)
     enable-lan-discovery = 'Y'
@@ -40,7 +44,8 @@
 
     # Quality settings for good remote experience
     image-quality = 'best'
-    custom-fps = '30'
+    custom-fps = '60'
+    codec-preference = 'vp9'
 
     # Full access permissions
     access-mode = 'full'
@@ -48,6 +53,10 @@
     enable-clipboard = 'Y'
     enable-file-transfer = 'Y'
     enable-audio = 'Y'
+    enable-tcp-tunneling = 'Y'
+
+    # Enable remote restart
+    enable-remote-restart = 'Y'
   '';
 
   # Script to set up RustDesk config and start server
@@ -60,24 +69,18 @@
     cp ${rustdeskConfig} "$CONFIG_DIR/RustDesk2.toml"
     chmod 600 "$CONFIG_DIR/RustDesk2.toml"
 
-    # Set permanent password from agenix secret
-    if [ -f "/run/agenix/vnc-optiplex-nixos" ]; then
-      PASSWORD=$(cat /run/agenix/vnc-optiplex-nixos)
-      ${pkgs.rustdesk}/bin/rustdesk --password "$PASSWORD" 2>/dev/null || true
-    fi
+    # Set empty password for passwordless access from whitelist
+    # The whitelist + click mode combination allows auto-accept from Tailscale IPs
+    ${pkgs.rustdesk}/bin/rustdesk --password "" 2>/dev/null || true
 
-    echo "RustDesk configured for Wayland with Tailscale whitelist"
+    echo "RustDesk configured for Wayland with passwordless Tailscale access"
   '';
 in {
   # ============================================
-  # AGENIX SECRET - Remote Desktop Password
+  # PASSWORDLESS RUSTDESK - Whitelist-based
   # ============================================
-  age.secrets.vnc-optiplex-nixos = {
-    file = ../../secrets/vnc-optiplex-nixos.age;
-    owner = "morph";
-    group = "users";
-    mode = "0400";
-  };
+  # No password secret needed - using whitelist + click mode
+  # for auto-accept from Tailscale network
 
   # ============================================
   # VIRTUAL DISPLAY - Headless Wayland support
