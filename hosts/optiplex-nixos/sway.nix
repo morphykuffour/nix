@@ -117,10 +117,12 @@
       Type = "simple";
       # Don't specify -o output or address, let wayvnc use defaults
       # -r 60 = 60 fps max
-      # Default binds to localhost:5900, accessible via Tailscale
-      ExecStart = "${pkgs.wayvnc}/bin/wayvnc -r 60";
+      # Bind to localhost:5900
+      ExecStart = "${pkgs.wayvnc}/bin/wayvnc --enable-auth=false 127.0.0.1";
       Restart = "on-failure";
       RestartSec = "5s";
+      # Ensure network access is allowed
+      RestrictAddressFamilies = ["AF_UNIX" "AF_INET" "AF_INET6"];
     };
 
     environment = {
