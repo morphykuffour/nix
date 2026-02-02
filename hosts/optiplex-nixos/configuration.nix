@@ -8,6 +8,7 @@
     ./hardware-configuration.nix
     ./tailscale.nix
     ./rustdesk.nix
+    ./remote-desktop.nix
     ./waydroid.nix
     ./roon.nix
     ./code-server.nix
@@ -50,6 +51,7 @@
     # New-style desktop/display manager options
     desktopManager.gnome.enable = true;
     displayManager.gdm.enable = true;
+    displayManager.defaultSession = "gnome";
 
     # Enable the X11 windowing system.
     # Prevent system from suspending/hibernating; keep always on
