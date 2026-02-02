@@ -89,9 +89,10 @@ in {
   # The physical adapter provides proper EDID data
 
   # Enable GNOME's headless/virtual display support
+  # Using X11 instead of Wayland for RustDesk compatibility
   services.xserver.displayManager.gdm = {
     enable = true;
-    wayland = true;
+    wayland = false;  # Disable Wayland to use X11 for RustDesk
     autoSuspend = false;
   };
 
@@ -119,12 +120,9 @@ in {
   }];
 
   # ============================================
-  # AUTO-LOGIN - Ensure graphical session is always active
+  # AUTO-LOGIN - Configured in configuration.nix
   # ============================================
-  services.displayManager.autoLogin = {
-    enable = true;
-    user = "morph";
-  };
+  # Removed duplicate autologin config - see configuration.nix
 
   # Workaround for GNOME auto-login race condition
   systemd.services."getty@tty1".enable = false;
