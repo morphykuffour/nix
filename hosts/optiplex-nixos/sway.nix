@@ -118,8 +118,8 @@
       # -f 60 = max 60 fps
       # -r = render cursor overlay
       # -C = config file path
-      # Binds to 127.0.0.1:5900 by default
-      ExecStart = "${pkgs.wayvnc}/bin/wayvnc -C /home/morph/.config/wayvnc/config -f 60 -r";
+      # Bind to 0.0.0.0 to accept Tailscale connections
+      ExecStart = "${pkgs.wayvnc}/bin/wayvnc -C /home/morph/.config/wayvnc/config -f 60 -r 0.0.0.0 5900";
       Restart = "on-failure";
       RestartSec = "5s";
       # Ensure network access is allowed
