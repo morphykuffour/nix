@@ -89,10 +89,10 @@ in {
   # The physical adapter provides proper EDID data
 
   # Enable GNOME's headless/virtual display support
-  # Using X11 instead of Wayland for RustDesk compatibility
+  # Enable both Wayland (for Waydroid) and X11 (for RustDesk)
   services.xserver.displayManager.gdm = {
     enable = true;
-    wayland = false;  # Disable Wayland to use X11 for RustDesk
+    wayland = true;  # Enable Wayland for Waydroid support
     autoSuspend = false;
   };
 
@@ -261,5 +261,10 @@ in {
 
     # Display helpers
     alias list-displays='wlr-randr'
+
+    # Session switching helpers
+    # To switch to Wayland (for Waydroid): logout and select "GNOME" at login screen
+    # To switch to X11 (for RustDesk): logout and select "GNOME on Xorg" at login screen
+    # Current session type: echo $XDG_SESSION_TYPE
   '';
 }
