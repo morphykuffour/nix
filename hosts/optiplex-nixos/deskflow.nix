@@ -20,12 +20,13 @@
 
     serviceConfig = {
       Type = "simple";
-      # Run Deskflow in client mode
+      # Run Deskflow in client mode using deskflow-core
+      # client = client mode
       # -f = run in foreground
       # -d INFO = logging level
       # -n = client name
       # Connect to macmini-darwin server on Tailscale or local network
-      ExecStart = "${pkgs.deskflow}/bin/deskflow-client -f -d INFO -n optiplex-nixos macmini-darwin:24800";
+      ExecStart = "${pkgs.deskflow}/bin/deskflow-core client -f -d INFO -n optiplex-nixos macmini-darwin:24800";
       Restart = "on-failure";
       RestartSec = "5s";
     };
