@@ -11,22 +11,23 @@
     input-leap  # Keyboard/mouse sharing across computers
   ];
 
-  # Systemd user service for Input Leap client
-  systemd.user.services.deskflow-client = {
-    description = "Input Leap Client - Keyboard/Mouse Sharing";
+  # Systemd user service for Input Leap server
+  systemd.user.services.deskflow-server = {
+    description = "Input Leap Server - Keyboard/Mouse Sharing";
     wantedBy = [ "sway-session.target" ];
     after = [ "sway-session.target" ];
     partOf = [ "sway-session.target" ];
 
     serviceConfig = {
       Type = "simple";
-      # Run Input Leap in client mode
+      # Run Input Leap in server mode
       # -f = run in foreground
       # --no-tray = don't show tray icon
       # --debug INFO = logging level
-      # --name = client name
-      # Connect to macmini-darwin server on Tailscale or local network
-      ExecStart = "${pkgs.input-leap}/bin/input-leapc -f --no-tray --debug INFO --name optiplex-nixos macmini-darwin:24800";
+      # --name = server name
+      # --address 0.0.0.0:24800 = listen on all interfaces
+      # -c = config file
+      ExecStart = "${pkgs.input-leap}/bin/input-leaps -f --no-tray --debug INFO --name optiplex-nixos --address 0.0.0.0:24800 -c /home/morph/.config/input-leap/input-leap.conf";
       Restart = "on-failure";
       RestartSec = "5s";
     };
@@ -38,19 +39,59 @@
     };
   };
 
-  # Firewall configuration - client mode doesn't need incoming connections
-  # No firewall rules needed for client (only makes outgoing connections to server)
+  # Firewall configuration - allow Input Leap server on Tailscale AND local network
+  networking.firewall = {
+    # Allow on Tailscale
+    interfaces.tailscale0 = {
+      allowedTCPPorts = [
+        24800  # Input Leap/Synergy default port
+      ];
+    };
+    # Also allow on main network interface for local LAN access
+    interfaces.enp0s31f6 = {
+      allowedTCPPorts = [
+        24800  # Input Leap/Synergy default port
+      ];
+    };
+  };
 
-  # Helper script for Input Leap client
+  # Create default Input Leap server config
+  environment.etc."input-leap-server-config".text = ''
+section: screens
+    optiplex-nixos:
+    macmini-darwin:
+end
+
+section: links
+    optiplex-nixos:
+        right = macmini-darwin
+    macmini-darwin:
+        left = optiplex-nixos
+end
+
+section: options
+    keystroke(Super+L) = switchInDirection(right)
+    keystroke(Super+H) = switchInDirection(left)
+end
+  '';
+
+  # Helper script for Input Leap server
   environment.etc."profile.d/deskflow-helper.sh".text = ''
-    # Input Leap client helpers (using deskflow-* aliases for consistency)
-    alias deskflow-status='systemctl --user status deskflow-client'
-    alias deskflow-restart='systemctl --user restart deskflow-client'
-    alias deskflow-logs='journalctl --user -u deskflow-client -f'
-    alias deskflow-stop='systemctl --user stop deskflow-client'
-    alias deskflow-start='systemctl --user start deskflow-client'
-    alias input-leap-status='systemctl --user status deskflow-client'
-    alias input-leap-restart='systemctl --user restart deskflow-client'
-    alias input-leap-logs='journalctl --user -u deskflow-client -f'
+    # Input Leap server helpers (using deskflow-* aliases for consistency)
+    alias deskflow-status='systemctl --user status deskflow-server'
+    alias deskflow-restart='systemctl --user restart deskflow-server'
+    alias deskflow-logs='journalctl --user -u deskflow-server -f'
+    alias deskflow-stop='systemctl --user stop deskflow-server'
+    alias deskflow-start='systemctl --user start deskflow-server'
+    alias input-leap-status='systemctl --user status deskflow-server'
+    alias input-leap-restart='systemctl --user restart deskflow-server'
+    alias input-leap-logs='journalctl --user -u deskflow-server -f'
+
+    # Create Input Leap config if it doesn't exist
+    if [ ! -f ~/.config/input-leap/input-leap.conf ]; then
+        mkdir -p ~/.config/input-leap
+        cp /etc/input-leap-server-config ~/.config/input-leap/input-leap.conf
+        echo "Input Leap config created at ~/.config/input-leap/input-leap.conf"
+    fi
   '';
 }
