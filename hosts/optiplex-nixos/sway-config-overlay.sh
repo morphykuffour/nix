@@ -39,12 +39,13 @@ input type:touchpad {
     natural_scroll enabled
 }
 
-# Idle configuration
-exec swayidle -w \
-    timeout 300 'swaylock -f' \
-    timeout 600 'swaymsg "output * dpms off"' \
-    resume 'swaymsg "output * dpms on"' \
-    before-sleep 'swaylock -f'
+# Idle configuration - DISABLED for headless VNC access
+# Keep display always on for remote access
+# exec swayidle -w \
+#     timeout 300 'swaylock -f' \
+#     timeout 600 'swaymsg "output * dpms off"' \
+#     resume 'swaymsg "output * dpms on"' \
+#     before-sleep 'swaylock -f'
 
 # WayVNC auto-start (handled by systemd service)
 # exec systemctl --user start wayvnc
