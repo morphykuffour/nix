@@ -33,9 +33,10 @@
     };
 
     environment = {
+      # Use X11 compatibility mode (XWayland) to avoid Wayland portal issues
       DISPLAY = ":0";
-      WAYLAND_DISPLAY = "wayland-1";
       XDG_RUNTIME_DIR = "/run/user/1000";
+      # Don't set WAYLAND_DISPLAY to force X11 mode
     };
   };
 
