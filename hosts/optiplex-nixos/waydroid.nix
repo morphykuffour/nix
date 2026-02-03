@@ -14,7 +14,7 @@
   boot.kernelPatches = [{
     name = "waydroid-binder";
     patch = null;
-    extraStructuredConfig = with lib.kernel; {
+    structuredExtraConfig = with lib.kernel; {
       ANDROID = yes;
       ANDROID_BINDER_IPC = module;
       ANDROID_BINDERFS = yes;
