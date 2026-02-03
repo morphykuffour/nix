@@ -1,13 +1,26 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: {
-  # Waydroid requires specific kernel modules
-  boot.kernelModules = ["binder_linux"];
+  # Waydroid requires specific kernel modules and config
+  boot.kernelModules = ["binder_linux" "ashmem_linux"];
   boot.extraModprobeConfig = ''
     options binder_linux devices="binder,hwbinder,vndbinder"
   '';
+
+  # Enable required kernel features for Waydroid
+  boot.kernelPatches = [{
+    name = "waydroid-binder";
+    patch = null;
+    extraStructuredConfig = with lib.kernel; {
+      ANDROID = yes;
+      ANDROID_BINDER_IPC = module;
+      ANDROID_BINDERFS = yes;
+      ASHMEM = module;
+    };
+  }];
 
   # Enable Waydroid virtualisation service
   virtualisation.waydroid.enable = true;
