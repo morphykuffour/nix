@@ -27,7 +27,8 @@
       # --name = server name
       # --address 0.0.0.0:24800 = listen on all interfaces
       # -c = config file
-      ExecStart = "${pkgs.input-leap}/bin/input-leaps -f --no-tray --debug INFO --name optiplex-nixos --address 0.0.0.0:24800 -c /home/morph/.config/input-leap/input-leap.conf";
+      # --use-x11 = use X11 backend (avoids Wayland portal issues)
+      ExecStart = "${pkgs.input-leap}/bin/input-leaps -f --no-tray --debug INFO --name optiplex-nixos --address 0.0.0.0:24800 -c /home/morph/.config/input-leap/input-leap.conf --use-x11";
       Restart = "on-failure";
       RestartSec = "5s";
     };
