@@ -12,6 +12,7 @@
     ./sway.nix  # Sway window manager with WayVNC
     ./waydroid.nix
     ./wake-on-lan.nix
+    ./deskflow.nix  # Barrier for keyboard/mouse sharing
     ./roon.nix
     ./code-server.nix
     ./vert.nix
