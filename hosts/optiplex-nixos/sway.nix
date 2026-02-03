@@ -8,6 +8,7 @@
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
+    xwayland.enable = true;  # Enable XWayland for X11 app compatibility
     extraPackages = with pkgs; [
       # Core Sway tools
       swaylock
