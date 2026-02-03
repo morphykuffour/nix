@@ -10,6 +10,7 @@
   environment.systemPackages = with pkgs; [
     esphome          # ESPHome CLI and libraries
     platformio-core  # PlatformIO for ESP32 compilation
+    esptool          # ESP32 flashing tool
     python3          # Python runtime
     python3Packages.pip
   ];
