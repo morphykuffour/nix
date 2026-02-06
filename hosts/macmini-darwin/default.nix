@@ -31,6 +31,7 @@ darwin.lib.darwinSystem {
       home-manager.sharedModules = [
         morph-emacs.homeManagerModules.default
       ];
+      home-manager.backupFileExtension = "backup";
     }
     {
       nixpkgs.overlays = [emacs-overlay.overlays.default];
