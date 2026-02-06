@@ -9,9 +9,10 @@
       enable = true;
     };
 
-    morphEmacs = {
-      enable = true;
-    };
+    # Temporarily disabled to prevent source file symlink issues
+    # morphEmacs = {
+    #   enable = true;
+    # };
 
     # lazygit = {
     #   enable = true;

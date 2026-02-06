@@ -28,9 +28,10 @@ darwin.lib.darwinSystem {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.morph = import ./home.nix;
-      home-manager.sharedModules = [
-        morph-emacs.homeManagerModules.default
-      ];
+      # Temporarily disabled to prevent symlinking source files
+      # home-manager.sharedModules = [
+      #   morph-emacs.homeManagerModules.default
+      # ];
       home-manager.backupFileExtension = "backup";
     }
     {
