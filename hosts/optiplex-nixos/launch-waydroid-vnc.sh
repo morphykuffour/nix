@@ -99,20 +99,18 @@ start_waydroid &
 WAYDROID_PID=$!
 
 echo -e "${BLUE}Step 3: Launching VNC viewer...${NC}"
-echo "  - Using dynamic display sizing"
-echo "  - Remote resize enabled"
-echo "  - Full screen mode: Current monitor"
+echo "  - Window size: 1920x1080"
+echo "  - Remote desktop will resize to fit"
 echo ""
 
-# Launch VNC with optimal settings
+# Launch VNC with optimal window size that shows full display
 vncviewer \
     -RemoteResize=1 \
-    -FullScreenMode=Current \
+    -geometry 1920x1080 \
     -QualityLevel=8 \
     -CompressLevel=2 \
     -AcceptClipboard=1 \
     -SendClipboard=1 \
-    -Maximize=0 \
     -DotWhenNoCursor=0 \
     -PointerEventInterval=10 \
     "${OPTIPLEX_IP}:${VNC_PORT}" &
