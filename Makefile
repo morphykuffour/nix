@@ -100,8 +100,8 @@ xps-build-remote:
 clean:
 	sudo nix-collect-garbage --delete-older-than 14d
 	nix-collect-garbage --delete-older-than 14d
-	if [ -e "result" ]; then
-		unlink result
-	else
-		echo "`result` symlink does not exist."
+	if [ -e "result" ]; then \
+		unlink result; \
+	else \
+		echo "`result` symlink does not exist."; \
 	fi
