@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    ../../modules/latex-ocr
+    # ../../modules/latex-ocr  # Temporarily disabled due to rapidfuzz build failure on macOS
     ../../modules/rawtalk
   ];
 
@@ -110,13 +110,14 @@
   ];
 
   # LaTeX OCR Service
-  services.latex-ocr = {
-    enable = true;
-    device = "mps"; # Use Apple Silicon GPU
-    autoCopyToClipboard = true;
-    outputFormat = "latex";
-    verbose = false;
-  };
+  # Temporarily disabled due to rapidfuzz build failure on macOS
+  # services.latex-ocr = {
+  #   enable = true;
+  #   device = "mps"; # Use Apple Silicon GPU
+  #   autoCopyToClipboard = true;
+  #   outputFormat = "latex";
+  #   verbose = false;
+  # };
 
   # Rawtalk QMK Layer Switcher Service
   services.rawtalk = {
@@ -140,7 +141,7 @@
       dock = {
         # Dock settings
         autohide = false;
-        orientation = "left";
+        orientation = "bottom";
         showhidden = true;
         tilesize = 40;
         # mineffect = "genie";
@@ -157,6 +158,15 @@
         # Finder settings
         QuitMenuItem = false; # I believe this probably will need to be true if using spacebar
         # DisableAllAnimations = true;  # NOT SUPPORTED by nix-darwin
+
+        # View and display settings
+        AppleShowAllExtensions = true; # Show all file extensions
+        ShowPathbar = true; # Show path bar at bottom
+        ShowStatusBar = true; # Show status bar at bottom
+        FXPreferredViewStyle = "Nlsv"; # Default view: Nlsv = List, icnv = Icon, clmv = Column, glyv = Gallery
+        FXDefaultSearchScope = "SCcf"; # Search current folder by default
+        FXEnableExtensionChangeWarning = false; # Disable warning when changing file extension
+        _FXSortFoldersFirst = true; # Keep folders on top when sorting
       };
       trackpad = {
         # Trackpad settings
@@ -175,6 +185,23 @@
     #     ${./setup-zathura.sh}
     #   fi
     # ''; # Since it's not possible to declare default shell, run this command after build
+
+    # Finder configuration activation script
+    activationScripts.postActivation.text = ''
+      # Run user-specific Finder configuration as the morph user
+      sudo -u morph bash -c '
+        # Configure Finder to sort by Date Modified (newest first)
+        defaults write com.apple.finder FXPreferredGroupBy -string "Date Modified"
+
+        # Remove .DS_Store files to force Finder to use new defaults
+        # Only remove from common user directories to avoid system issues
+        find ~/Documents ~/Downloads ~/Desktop -name ".DS_Store" -depth -exec rm {} \; 2>/dev/null || true
+
+        # Restart Finder to apply changes
+        killall Finder 2>/dev/null || true
+      '
+    '';
+
     stateVersion = 4;
   };
 }
