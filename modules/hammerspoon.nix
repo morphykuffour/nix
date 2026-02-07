@@ -80,7 +80,7 @@ in {
       data = ''
         if [ ! -d "${hammerspoonPath}/Spoons/FocusMode.spoon" ]; then
           echo "Installing FocusMode.spoon..."
-          ${pkgs.git}/bin/git clone https://github.com/dbalatero/FocusMode.spoon "${hammerspoonPath}/Spoons/FocusMode.spoon"
+          ${pkgs.git}/bin/git clone https://github.com/selimacerbas/FocusMode.spoon "${hammerspoonPath}/Spoons/FocusMode.spoon"
         else
           echo "FocusMode.spoon already installed"
         fi
