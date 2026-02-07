@@ -10,17 +10,17 @@
   ...
 }: {
   imports = [
-    ../../modules/i3.nix
+    # ../../modules/i3.nix  # Disabled for XFCE
     ../../modules/pass.nix
     ../../modules/fonts.nix
     ../../modules/zathura
     ../../modules/lf
     # ../../modules/nvim.nix
     # ../../modules/redshift.nix
+    # ../../modules/picom.nix  # Disabled for XFCE - not needed
     # ./fakwin.nix  # Disabled - not needed with XFCE
-    ../../modules/picom.nix
     # ../../modules/grobi  # Disabled - using manual xrandr/arandr instead
-    ../../modules/wallpaper.nix
+    # ../../modules/wallpaper.nix  # Disabled for XFCE - use XFCE's own wallpaper settings
   ];
 
   services.clipmenu.enable = true;
@@ -83,7 +83,7 @@
     homeDirectory = "/home/morph";
     stateVersion = "22.05";
     packages = with pkgs; [
-      i3status-rust
+      # i3status-rust  # Disabled for XFCE
       tmux
       zsh
       starship
@@ -170,46 +170,47 @@
     };
   };
 
-  xdg.configFile = {
-    "i3status-rust/config.toml".text = ''
-      [theme]
-      theme = "ctp-mocha"
-
-      [icons]
-      icons = "awesome6"
-
-      # Time
-      [[block]]
-      block = "time"
-      interval = 5
-      format = "%a %d/%m %H:%M"
-
-      # Currently playing media (via MPRIS)
-      [[block]]
-      block = "music"
-
-      # System load averages
-      [[block]]
-      block = "load"
-      interval = 5
-
-      # CPU usage
-      [[block]]
-      block = "cpu"
-      interval = 1
-
-      # Memory usage
-      [[block]]
-      block = "memory"
-    '';
-
-    # Prefer wlr portal for RemoteDesktop/Screencast when under sway
-    # "xdg-desktop-portal/sway-portals.conf".text = ''
-    #   [preferred]
-    #   default=gtk
-    #   org.freedesktop.impl.portal.Screenshot=wlr
-    #   org.freedesktop.impl.portal.ScreenCast=wlr
-    #   org.freedesktop.impl.portal.RemoteDesktop=wlr
-    # '';
-  };
+  # Disabled for XFCE - XFCE has its own panel and configuration system
+  # xdg.configFile = {
+  #   "i3status-rust/config.toml".text = ''
+  #     [theme]
+  #     theme = "ctp-mocha"
+  #
+  #     [icons]
+  #     icons = "awesome6"
+  #
+  #     # Time
+  #     [[block]]
+  #     block = "time"
+  #     interval = 5
+  #     format = "%a %d/%m %H:%M"
+  #
+  #     # Currently playing media (via MPRIS)
+  #     [[block]]
+  #     block = "music"
+  #
+  #     # System load averages
+  #     [[block]]
+  #     block = "load"
+  #     interval = 5
+  #
+  #     # CPU usage
+  #     [[block]]
+  #     block = "cpu"
+  #     interval = 1
+  #
+  #     # Memory usage
+  #     [[block]]
+  #     block = "memory"
+  #   '';
+  #
+  #   # Prefer wlr portal for RemoteDesktop/Screencast when under sway
+  #   # "xdg-desktop-portal/sway-portals.conf".text = ''
+  #   #   [preferred]
+  #   #   default=gtk
+  #   #   org.freedesktop.impl.portal.Screenshot=wlr
+  #   #   org.freedesktop.impl.portal.ScreenCast=wlr
+  #   #   org.freedesktop.impl.portal.RemoteDesktop=wlr
+  #   # '';
+  # };
 }

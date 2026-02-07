@@ -132,3 +132,15 @@ clean:
 	else \
 		echo "'result' symlink does not exist."; \
 	fi
+
+optimize:
+	@echo "Collecting garbage and optimizing nix store..."
+	@if [ "$(UNAME_S)" = "Linux" ]; then \
+		sudo nix-collect-garbage -d; \
+		nix-collect-garbage -d; \
+		sudo nix-store --optimise; \
+	else \
+		nix-collect-garbage -d; \
+		nix-store --optimise; \
+	fi
+	@echo "Optimization complete!"
