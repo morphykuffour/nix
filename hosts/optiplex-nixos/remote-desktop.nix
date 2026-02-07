@@ -94,32 +94,34 @@ in {
   # Wayland is available when manually logging in for Waydroid support
   services.displayManager.gdm = {
     enable = true;
-    wayland = true;  # Enable Wayland support (available on manual login)
+    wayland = true; # Enable Wayland support (available on manual login)
     autoSuspend = false;
   };
 
   # Configure mutter for virtual displays
-  programs.dconf.profiles.user.databases = [{
-    settings = {
-      "org/gnome/mutter" = {
-        experimental-features = ["scale-monitor-framebuffer" "kms-modifiers"];
+  programs.dconf.profiles.user.databases = [
+    {
+      settings = {
+        "org/gnome/mutter" = {
+          experimental-features = ["scale-monitor-framebuffer" "kms-modifiers"];
+        };
+        # Prevent screen blanking
+        "org/gnome/desktop/session" = {
+          idle-delay = lib.gvariant.mkUint32 0;
+        };
+        "org/gnome/settings-daemon/plugins/power" = {
+          sleep-inactive-ac-type = "nothing";
+          sleep-inactive-battery-type = "nothing";
+          power-button-action = "nothing";
+        };
+        # Disable screen lock
+        "org/gnome/desktop/screensaver" = {
+          lock-enabled = false;
+          idle-activation-enabled = false;
+        };
       };
-      # Prevent screen blanking
-      "org/gnome/desktop/session" = {
-        idle-delay = lib.gvariant.mkUint32 0;
-      };
-      "org/gnome/settings-daemon/plugins/power" = {
-        sleep-inactive-ac-type = "nothing";
-        sleep-inactive-battery-type = "nothing";
-        power-button-action = "nothing";
-      };
-      # Disable screen lock
-      "org/gnome/desktop/screensaver" = {
-        lock-enabled = false;
-        idle-activation-enabled = false;
-      };
-    };
-  }];
+    }
+  ];
 
   # ============================================
   # AUTO-LOGIN - Configured in configuration.nix
@@ -180,12 +182,12 @@ in {
   networking.firewall = {
     interfaces.tailscale0 = {
       allowedTCPPorts = [
-        21118  # RustDesk direct access
-        21119  # RustDesk
-        3389   # RDP (fallback)
+        21118 # RustDesk direct access
+        21119 # RustDesk
+        3389 # RDP (fallback)
       ];
       allowedUDPPorts = [
-        21118  # RustDesk direct access
+        21118 # RustDesk direct access
       ];
     };
   };
@@ -197,11 +199,11 @@ in {
     rustdesk
 
     # Screen/display tools
-    wdisplays      # Wayland display configuration
-    wl-clipboard   # Wayland clipboard
+    wdisplays # Wayland display configuration
+    wl-clipboard # Wayland clipboard
 
     # For debugging
-    wlr-randr      # Wayland output management
+    wlr-randr # Wayland output management
   ];
 
   # ============================================
@@ -235,7 +237,7 @@ in {
   # Portal for screen sharing (required for Wayland)
   xdg.portal = {
     enable = true;
-    wlr.enable = false;  # Not needed for GNOME
+    wlr.enable = false; # Not needed for GNOME
     extraPortals = [
       pkgs.xdg-desktop-portal-gnome
       pkgs.xdg-desktop-portal-gtk
@@ -243,10 +245,10 @@ in {
     # Explicit portal backend configuration for GNOME
     config = {
       common = {
-        default = [ "gnome" "gtk" ];
+        default = ["gnome" "gtk"];
       };
       gnome = {
-        default = [ "gnome" "gtk" ];
+        default = ["gnome" "gtk"];
       };
     };
   };

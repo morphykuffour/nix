@@ -70,17 +70,12 @@
     nixpkgs,
     home-manager,
     darwin,
-    plover,
-    nixos-wsl,
     agenix,
-    tailscale,
     emacs-overlay,
-    neovim,
     discord,
     nixos-hardware,
     nixified-ai,
     fakwin,
-    vertd,
     morph-emacs,
     rawtalk,
     ...
@@ -90,13 +85,7 @@
       discord.overlays.default
       # plover.overlay
     ];
-
     # List of unix configurations
-    configurations = [
-      "xps17-nixos" # xps17 NixOs
-      "optiplex-nixos" # optiplex NixOs
-      "win-wsl" # win-wsl NixOs
-    ];
   in {
     # nix formatter
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;

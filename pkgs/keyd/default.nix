@@ -2,8 +2,6 @@
   stdenv,
   lib,
   fetchFromGitHub,
-  cmake,
-  pkg-config,
   systemd,
 }:
 stdenv.mkDerivation rec {

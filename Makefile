@@ -38,7 +38,7 @@ eh:
 ec:
 	$(EDIT_HOME)
 
-switch:
+switch: build
 	$(SWITCH_CMD)
 
 build:
@@ -57,6 +57,29 @@ update:
 
 fmt:
 	alejandra .
+
+# Build-and-switch targets for each host
+# These combine build + switch for local execution on each host
+
+# macmini-darwin (Darwin)
+macmini-build-and-switch:
+	nix build --experimental-features 'nix-command flakes' '.\#darwinConfigurations.macmini-darwin.system' --impure
+	sudo sh -c 'rm -rf /etc/shells && ./result/sw/bin/darwin-rebuild switch --flake .'
+
+# xps17-nixos (NixOS)
+xps17-build-and-switch:
+	nixos-rebuild build --flake '.\#xps17-nixos'
+	nixos-rebuild switch --flake '.\#xps17-nixos' --impure --sudo
+
+# optiplex-nixos (NixOS)
+optiplex-build-and-switch:
+	nixos-rebuild build --flake '.\#optiplex-nixos'
+	nixos-rebuild switch --flake '.\#optiplex-nixos' --impure --sudo
+
+# t480-nixos (NixOS)
+t480-build-and-switch:
+	nixos-rebuild build --flake '.\#t480-nixos'
+	nixos-rebuild switch --flake '.\#t480-nixos' --impure --sudo
 
 # Remote building for xps17-nixos from any machine (including Mac)
 # Requires: SSH access to xps17-nixos via tailscale or direct connection
@@ -103,5 +126,5 @@ clean:
 	if [ -e "result" ]; then \
 		unlink result; \
 	else \
-		echo "`result` symlink does not exist."; \
+		echo "'result' symlink does not exist."; \
 	fi

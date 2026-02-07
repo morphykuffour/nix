@@ -1,12 +1,6 @@
 {
-  inputs,
   config,
-  current,
-  lib,
   pkgs,
-  home-manager,
-  agenix,
-  user,
   ...
 }: {
   imports = [

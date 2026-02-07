@@ -173,6 +173,10 @@
         Clicking = true;
         TrackpadRightClick = true;
       };
+      spaces = {
+        # Prevent other displays from going black when one is fullscreen
+        spans-displays = true;
+      };
     };
     keyboard = {
       enableKeyMapping = true; # Needed for skhd
