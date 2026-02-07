@@ -23,9 +23,17 @@ with lib; let
     export API_HOST="${cfg.host}"
     export API_PORT="${toString cfg.port}"
     export MODEL_DEVICE="${cfg.device}"
-    export AUTO_COPY_TO_CLIPBOARD="${if cfg.autoCopyToClipboard then "true" else "false"}"
+    export AUTO_COPY_TO_CLIPBOARD="${
+      if cfg.autoCopyToClipboard
+      then "true"
+      else "false"
+    }"
     export OUTPUT_FORMAT="${cfg.outputFormat}"
-    export VERBOSE_LOGGING="${if cfg.verbose then "true" else "false"}"
+    export VERBOSE_LOGGING="${
+      if cfg.verbose
+      then "true"
+      else "false"
+    }"
     export CLEANSHOT_TEMP_DIR="${cfg.cleanshotTempDir}"
 
     # Ensure poetry and tesseract are in PATH

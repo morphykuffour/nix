@@ -44,7 +44,6 @@ nixpkgs.lib.nixosSystem {
         emacs-overlay.overlays.default
         (final: prev: {
           deskflow = prev.callPackage ../../pkgs/deskflow {};
-
         })
       ];
 

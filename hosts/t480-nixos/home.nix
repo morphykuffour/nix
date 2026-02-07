@@ -1,14 +1,4 @@
-{
-  inputs,
-  config,
-  current,
-  pkgs,
-  lib,
-  plover,
-  user,
-  agenix,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ../../modules/i3.nix
     ../../modules/pass.nix

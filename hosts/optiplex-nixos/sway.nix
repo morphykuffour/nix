@@ -8,7 +8,7 @@
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
-    xwayland.enable = true;  # Enable XWayland for X11 app compatibility
+    xwayland.enable = true; # Enable XWayland for X11 app compatibility
     extraPackages = with pkgs; [
       # Core Sway tools
       swaylock
@@ -25,8 +25,8 @@
       wlr-randr
 
       # Status bar
-      waybar  # Alternative to i3status
-      i3status  # Your current i3status should work
+      waybar # Alternative to i3status
+      i3status # Your current i3status should work
 
       # Brightness control (replacement for xbacklight)
       brightnessctl
@@ -75,13 +75,13 @@
     ];
     config = {
       common = {
-        default = [ "wlr" "gtk" ];
+        default = ["wlr" "gtk"];
       };
       # Sway portal config - use mkForce to override default from sway module
       sway = lib.mkForce {
-        default = [ "wlr" "gtk" ];
-        "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
-        "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
+        default = ["wlr" "gtk"];
+        "org.freedesktop.impl.portal.Screenshot" = ["wlr"];
+        "org.freedesktop.impl.portal.ScreenCast" = ["wlr"];
       };
     };
   };
@@ -103,16 +103,16 @@
 
   # Disable GDM since we're using greetd
   services.displayManager.gdm.enable = lib.mkForce false;
-  services.xserver.enable = lib.mkForce true;  # Still needed for some apps
+  services.xserver.enable = lib.mkForce true; # Still needed for some apps
   services.xserver.displayManager.startx.enable = false;
 
   # WayVNC for remote desktop access
   # Note: WayVNC doesn't have a NixOS service, so we'll create a systemd user service
   systemd.user.services.wayvnc = {
     description = "WayVNC - VNC server for Wayland";
-    wantedBy = [ "sway-session.target" ];
-    after = [ "sway-session.target" ];
-    partOf = [ "sway-session.target" ];
+    wantedBy = ["sway-session.target"];
+    after = ["sway-session.target"];
+    partOf = ["sway-session.target"];
 
     serviceConfig = {
       Type = "simple";
@@ -138,7 +138,7 @@
   networking.firewall = {
     interfaces.tailscale0 = {
       allowedTCPPorts = [
-        5900  # WayVNC
+        5900 # WayVNC
       ];
     };
   };
@@ -151,7 +151,7 @@
     tigervnc
 
     # Sway-specific tools
-    sway-contrib.grimshot  # Screenshot script
+    sway-contrib.grimshot # Screenshot script
 
     # i3 compatibility tools
     i3status

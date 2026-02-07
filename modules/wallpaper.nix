@@ -50,5 +50,4 @@ in {
 
   # Ensure wallpaper directory exists
   home.file."Pictures/wallpaper/.keep".text = "";
-
 }

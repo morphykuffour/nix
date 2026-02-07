@@ -8,15 +8,15 @@
 
   # Install Input Leap
   environment.systemPackages = with pkgs; [
-    input-leap  # Keyboard/mouse sharing across computers
+    input-leap # Keyboard/mouse sharing across computers
   ];
 
   # Systemd user service for Input Leap server
   systemd.user.services.deskflow-server = {
     description = "Input Leap Server - Keyboard/Mouse Sharing";
-    wantedBy = [ "sway-session.target" ];
-    after = [ "sway-session.target" ];
-    partOf = [ "sway-session.target" ];
+    wantedBy = ["sway-session.target"];
+    after = ["sway-session.target"];
+    partOf = ["sway-session.target"];
 
     serviceConfig = {
       Type = "simple";
@@ -47,35 +47,35 @@
     # Allow on Tailscale
     interfaces.tailscale0 = {
       allowedTCPPorts = [
-        24800  # Input Leap/Synergy default port
+        24800 # Input Leap/Synergy default port
       ];
     };
     # Also allow on main network interface for local LAN access
     interfaces.enp0s31f6 = {
       allowedTCPPorts = [
-        24800  # Input Leap/Synergy default port
+        24800 # Input Leap/Synergy default port
       ];
     };
   };
 
   # Create default Input Leap server config
   environment.etc."input-leap-server-config".text = ''
-section: screens
-    optiplex-nixos:
-    macmini-darwin:
-end
+    section: screens
+        optiplex-nixos:
+        macmini-darwin:
+    end
 
-section: links
-    optiplex-nixos:
-        right = macmini-darwin
-    macmini-darwin:
-        left = optiplex-nixos
-end
+    section: links
+        optiplex-nixos:
+            right = macmini-darwin
+        macmini-darwin:
+            left = optiplex-nixos
+    end
 
-section: options
-    keystroke(Super+L) = switchInDirection(right)
-    keystroke(Super+H) = switchInDirection(left)
-end
+    section: options
+        keystroke(Super+L) = switchInDirection(right)
+        keystroke(Super+H) = switchInDirection(left)
+    end
   '';
 
   # Helper script for Input Leap server

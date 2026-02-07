@@ -89,9 +89,9 @@ in {
   environment.systemPackages = with pkgs; [
     rustdesk
     xorg.xrandr
-    xorg.xorgserver  # For Xvfb
-    xorg.xf86videodummy  # Dummy/virtual display driver
-    dbus  # For dbus-launch
+    xorg.xorgserver # For Xvfb
+    xorg.xf86videodummy # Dummy/virtual display driver
+    dbus # For dbus-launch
   ];
 
   # Force GDM to use X11 instead of Wayland
@@ -108,7 +108,7 @@ in {
   systemd.services."autovt@tty1".enable = false;
 
   # Configure a virtual/dummy display for headless operation
-  services.xserver.videoDrivers = lib.mkBefore [ "dummy" ];
+  services.xserver.videoDrivers = lib.mkBefore ["dummy"];
 
   # X11 configuration for dummy monitor
   services.xserver.config = ''
@@ -141,8 +141,8 @@ in {
   # RustDesk client systemd service
   systemd.services.rustdesk-client = {
     description = "RustDesk Client Service";
-    after = [ "network.target" "graphical.target" "agenix.service" ];
-    wantedBy = [ "graphical.target" ];
+    after = ["network.target" "graphical.target" "agenix.service"];
+    wantedBy = ["graphical.target"];
 
     # Use main display (X11 session from GDM)
     environment = {
@@ -166,8 +166,8 @@ in {
   # Set up config on boot
   systemd.services.rustdesk-config-setup = {
     description = "RustDesk Client Configuration Setup";
-    after = [ "network.target" "agenix.service" ];
-    wantedBy = [ "multi-user.target" ];
+    after = ["network.target" "agenix.service"];
+    wantedBy = ["multi-user.target"];
 
     serviceConfig = {
       Type = "oneshot";
@@ -178,12 +178,12 @@ in {
 
   # Firewall for RustDesk client
   networking.firewall = {
-    allowedTCPPorts = [ 21118 21119 ];
-    allowedUDPPorts = [ 21118 ];
+    allowedTCPPorts = [21118 21119];
+    allowedUDPPorts = [21118];
 
     interfaces.tailscale0 = {
-      allowedTCPPorts = [ 21118 21119 ];
-      allowedUDPPorts = [ 21118 ];
+      allowedTCPPorts = [21118 21119];
+      allowedUDPPorts = [21118];
     };
   };
 }
