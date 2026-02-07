@@ -182,8 +182,8 @@
     # Display manager
     displayManager = {
       sddm.enable = true;
-      # defaultSession = "xfce+i3";
-      defaultSession = "i3";
+      defaultSession = "xfce";
+      # defaultSession = "i3";
       autoLogin = {
         enable = false;
         user = "morph";
@@ -200,18 +200,17 @@
 
       displayManager.startx.enable = false;
 
-      # desktopManager.xfce = {
-      #   enable = true;
-      #   noDesktop = true;  # Use i3 instead of xfwm4
-      #   enableXfwm = false;
-      # };
-
-      windowManager = {
-        i3 = {
-          enable = true;
-          package = pkgs.i3;
-        };
+      desktopManager.xfce = {
+        enable = true;
+        enableXfwm = true;  # Use XFCE's lightweight window manager
       };
+
+      # windowManager = {
+      #   i3 = {
+      #     enable = true;
+      #     package = pkgs.i3;
+      #   };
+      # };
     };
   };
 
@@ -237,7 +236,7 @@
     # };
     kdeconnect.enable = true;
 
-    waybar.enable = true;
+    # waybar.enable = true;  # Disabled for XFCE
     zsh.enable = true;
     mtr.enable = true;
     autojump.enable = true;
