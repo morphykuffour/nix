@@ -2,6 +2,7 @@
   imports = [
     ../../modules/lf
     ../../modules/zathura
+    ../../modules/hammerspoon.nix
   ];
 
   programs = {
