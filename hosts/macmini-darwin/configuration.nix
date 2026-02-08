@@ -7,6 +7,7 @@
     # ../../modules/latex-ocr  # Temporarily disabled due to rapidfuzz build failure on macOS
     ../../modules/rawtalk
     ../../modules/emacs-daemon.nix
+    ../../modules/atomic-chrome.nix
   ];
 
   users.users.morph = {
@@ -126,10 +127,18 @@
   };
 
   # Emacs daemon service
+  # Disabled to prevent conflicts with manual daemon management
   services.emacs-daemon = {
-    enable = true;
+    enable = false;
     package = pkgs.emacs;  # This will use the Emacs from nixpkgs
-    socketActivation = false;  # Start immediately on boot
+    socketActivation = false;
+  };
+
+  # Atomic Chrome service for browser integration
+  services.atomic-chrome = {
+    enable = true;
+    emacsPackage = pkgs.emacs;
+    startDelay = 5;
   };
 
   system = {

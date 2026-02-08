@@ -33,8 +33,8 @@ in
       path = [ cfg.package ];
       serviceConfig = {
         ProgramArguments = [ "${cfg.package}/bin/emacs" "--daemon" ];
-        RunAtLoad = !cfg.socketActivation;
-        KeepAlive = !cfg.socketActivation;
+        RunAtLoad = false;  # Don't auto-start to avoid conflicts
+        KeepAlive = false;  # Don't restart on failure
         StandardErrorPath = "/tmp/emacs-daemon.err";
         StandardOutPath = "/tmp/emacs-daemon.out";
         Label = "org.nixos.emacs-daemon";
