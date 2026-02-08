@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/Users/morph/nix/logs/.72bca48fcdf025b0def31f4d6e87da0bbecc5bee-audit.json",
+    "files": [
+        {
+            "date": 1770508818187,
+            "name": "/Users/morph/nix/logs/mcp-puppeteer-2026-02-07.log",
+            "hash": "e02c02a736265aebecaad32d85f1de1cf3f99a56f097194088995a6d10a23276"
+        }
+    ],
+    "hashType": "sha256"
+}

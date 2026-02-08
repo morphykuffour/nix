@@ -110,6 +110,19 @@
       dataDir = "/var/lib/jellyfin";
       cacheDir = "/var/cache/jellyfin";
     };
+
+    # Enable Avahi for mDNS/Bonjour discovery (needed for Apple TV auto-discovery)
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+      publish = {
+        enable = true;
+        addresses = true;
+        workstation = true;
+        userServices = true;
+      };
+    };
     # vscode-server.enable = true;
     # And then enable them for the relevant users:
     # systemctl --user enable auto-fix-vscode-server.service
