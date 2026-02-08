@@ -7,3 +7,6 @@ hosts/.DS_Store
 modules/.DS_Store
 pkgs/fprintd/**
 *.backup
+
+# MCP logs
+logs/mcp-*.log
