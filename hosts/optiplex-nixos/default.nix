@@ -6,7 +6,7 @@
   inputs,
   user,
   overlays,
-  morph-emacs,
+  # morph-emacs, # Disabled: path doesn't exist on Linux
   emacs-overlay,
   ...
 }:
@@ -30,7 +30,7 @@ nixpkgs.lib.nixosSystem {
           ./home.nix
         ];
         sharedModules = [
-          morph-emacs.homeManagerModules.default
+          # morph-emacs.homeManagerModules.default # Disabled: path doesn't exist on Linux
         ];
         extraSpecialArgs = {
           plover = inputs.plover.packages."x86_64-linux".plover;
