@@ -6,6 +6,7 @@
   imports = [
     # ../../modules/latex-ocr  # Temporarily disabled due to rapidfuzz build failure on macOS
     ../../modules/rawtalk
+    ../../modules/emacs-daemon.nix
   ];
 
   users.users.morph = {
@@ -44,7 +45,7 @@
       # Installed Nix packages
       # Terminal
       git
-      # emacs
+      emacs
       fd
       ripgrep
       # PDF viewer setup
@@ -122,6 +123,13 @@
   # Rawtalk QMK Layer Switcher Service
   services.rawtalk = {
     enable = true;
+  };
+
+  # Emacs daemon service
+  services.emacs-daemon = {
+    enable = true;
+    package = pkgs.emacs;  # This will use the Emacs from nixpkgs
+    socketActivation = false;  # Start immediately on boot
   };
 
   system = {
