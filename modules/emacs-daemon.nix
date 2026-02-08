@@ -1,9 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, options, ... }:
 
 with lib;
 
 let
   cfg = config.services.emacs-daemon;
+  # Check if we're on Darwin by looking for Darwin-specific options
+  isDarwin = options ? launchd;
 in
 {
   options.services.emacs-daemon = {
@@ -26,48 +28,17 @@ in
     };
   };
 
-  config = mkIf cfg.enable (mkMerge [
-    (mkIf pkgs.stdenv.isDarwin {
-      launchd.user.agents.emacs-daemon = {
-        path = [ cfg.package ];
-        serviceConfig = {
-          ProgramArguments = [ "${cfg.package}/bin/emacs" "--daemon" ];
-          RunAtLoad = !cfg.socketActivation;
-          KeepAlive = !cfg.socketActivation;
-          StandardErrorPath = "/tmp/emacs-daemon.err";
-          StandardOutPath = "/tmp/emacs-daemon.out";
-          Label = "org.nixos.emacs-daemon";
-        };
+  config = mkIf (cfg.enable && isDarwin) {
+    launchd.user.agents.emacs-daemon = {
+      path = [ cfg.package ];
+      serviceConfig = {
+        ProgramArguments = [ "${cfg.package}/bin/emacs" "--daemon" ];
+        RunAtLoad = !cfg.socketActivation;
+        KeepAlive = !cfg.socketActivation;
+        StandardErrorPath = "/tmp/emacs-daemon.err";
+        StandardOutPath = "/tmp/emacs-daemon.out";
+        Label = "org.nixos.emacs-daemon";
       };
-    })
-
-    (mkIf pkgs.stdenv.isLinux {
-      systemd.user.services.emacs = {
-        description = "Emacs text editor";
-        documentation = [ "info:emacs" "man:emacs(1)" "https://gnu.org/software/emacs/" ];
-        
-        serviceConfig = {
-          Type = "forking";
-          ExecStart = "${cfg.package}/bin/emacs --daemon";
-          ExecStop = "${cfg.package}/bin/emacsclient --eval '(kill-emacs)'";
-          Restart = "on-failure";
-        };
-        
-        wantedBy = mkIf (!cfg.socketActivation) [ "default.target" ];
-      };
-
-      systemd.user.sockets.emacs = mkIf cfg.socketActivation {
-        description = "Emacs text editor";
-        documentation = [ "info:emacs" "man:emacs(1)" "https://gnu.org/software/emacs/" ];
-        
-        socketConfig = {
-          ListenStream = "%t/emacs";
-          FileDescriptorName = "server";
-          SocketMode = "0600";
-        };
-        
-        wantedBy = [ "sockets.target" ];
-      };
-    })
-  ]);
+    };
+  };
 }
