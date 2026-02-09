@@ -78,7 +78,59 @@ let
                      (not atomic-chrome-server-stop-flag))
             (run-with-timer 2 nil (quote my/atomic-chrome-server-ensure))))
         
-        (message "Atomic Chrome server started/restarted on port 64292"))' 2>&1
+        ;; Periodic polling to ensure server is running
+        (defvar my/atomic-chrome-polling-timer nil
+          "Timer for periodic atomic-chrome server checks.")
+        
+        (defun my/atomic-chrome-check-and-restart ()
+          "Check if atomic-chrome server is running and restart if needed."
+          (unless (and (boundp 'atomic-chrome-server)
+                       atomic-chrome-server
+                       (process-live-p atomic-chrome-server))
+            (message "Atomic-chrome server not running, restarting...")
+            (my/atomic-chrome-server-ensure)))
+        
+        ;; Cancel any existing timer
+        (when (and (boundp 'my/atomic-chrome-polling-timer)
+                   my/atomic-chrome-polling-timer)
+          (cancel-timer my/atomic-chrome-polling-timer))
+        
+        ;; Start periodic polling (every 60 seconds by default)
+        (setq my/atomic-chrome-polling-timer
+              (run-with-timer 30 ${toString cfg.pollingInterval} 
+                              'my/atomic-chrome-check-and-restart))
+        
+        ;; Also check server health when Emacs gains focus
+        (add-hook 'focus-in-hook 'my/atomic-chrome-check-and-restart)
+        
+        ;; Function to test server connectivity
+        (defun my/atomic-chrome-test-server ()
+          "Test if atomic-chrome server is responsive."
+          (condition-case err
+              (let ((test-process 
+                     (make-network-process
+                      :name "atomic-chrome-test"
+                      :host "localhost"
+                      :service 64292
+                      :nowait t)))
+                (when test-process
+                  (delete-process test-process)
+                  t))
+            (error 
+             (message "Atomic-chrome server test failed: %s" err)
+             (my/atomic-chrome-server-ensure)
+             nil)))
+        
+        ;; Final status message
+        (message "Atomic Chrome server started/restarted on port 64292")
+        
+        ;; Load enhanced monitoring if available
+        (when (file-exists-p "~/.emacs.d/atomic-chrome-monitor.el")
+          (load-file "~/.emacs.d/atomic-chrome-monitor.el")
+          (message "Loaded atomic-chrome enhanced monitoring"))
+        
+        ;; Return success
+        t)' 2>&1
     }
     
     # Wait for Emacs to be ready
@@ -151,6 +203,12 @@ in
       };
       default = {};
       description = "Transparency settings for atomic-chrome frames";
+    };
+
+    pollingInterval = mkOption {
+      type = types.int;
+      default = 60;
+      description = "Seconds between Emacs internal server health checks";
     };
   };
 
