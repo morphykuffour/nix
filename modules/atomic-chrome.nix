@@ -6,18 +6,23 @@ let
   cfg = config.services.atomic-chrome;
   isDarwin = options ? launchd;
   
-  # Script to start and monitor atomic-chrome server
+  # Script to start atomic-chrome server once
   startScript = pkgs.writeScript "start-atomic-chrome" ''
     #!${pkgs.bash}/bin/bash
     
-    # Function to check if server is running
-    check_server() {
-      ${pkgs.lsof}/bin/lsof -i :64292 >/dev/null 2>&1
-    }
+    echo "$(date): Starting atomic-chrome server setup"
     
-    # Function to start the server
-    start_server() {
-      ${cfg.emacsPackage}/bin/emacsclient --eval '(progn
+    # Wait for Emacs to be ready (max 30 seconds)
+    for i in {1..30}; do
+      if ${cfg.emacsPackage}/bin/emacsclient --eval "(progn t)" >/dev/null 2>&1; then
+        echo "$(date): Emacs is ready"
+        break
+      fi
+      sleep 1
+    done
+    
+    # Start the server and monitoring
+    ${cfg.emacsPackage}/bin/emacsclient --eval '(progn
         ;; Load atomic-chrome if not already loaded
         (require (quote atomic-chrome) nil t)
         
@@ -131,27 +136,15 @@ let
         
         ;; Return success
         t)' 2>&1
-    }
     
-    # Wait for Emacs to be ready
-    echo "Waiting for Emacs..."
-    for i in {1..30}; do
-      if ${cfg.emacsPackage}/bin/emacsclient --eval "(progn t)" >/dev/null 2>&1; then
-        echo "Emacs is ready"
-        break
-      fi
-      sleep 1
-    done
-    
-    # Main monitoring loop
-    while true; do
-      if ! check_server; then
-        echo "$(date): Server not running, starting..."
-        start_server
-        sleep 2
-      fi
-      sleep ${toString cfg.checkInterval}
-    done
+    if [ $? -eq 0 ]; then
+      echo "$(date): Atomic-chrome server initialized successfully"
+      # Keep the process alive for launchd (exit will trigger restart)
+      exec sleep infinity
+    else
+      echo "$(date): Failed to initialize atomic-chrome server"
+      exit 1
+    fi
   '';
 in
 {
@@ -168,17 +161,7 @@ in
       description = "The Emacs package to use";
     };
 
-    startDelay = mkOption {
-      type = types.int;
-      default = 5;
-      description = "Seconds to wait after login before starting the server";
-    };
 
-    checkInterval = mkOption {
-      type = types.int;
-      default = 30;
-      description = "Seconds between server health checks";
-    };
 
     enableSessionPersistence = mkOption {
       type = types.bool;
@@ -207,26 +190,23 @@ in
 
     pollingInterval = mkOption {
       type = types.int;
-      default = 60;
+      default = 120;
       description = "Seconds between Emacs internal server health checks";
     };
   };
 
   config = mkIf (cfg.enable && isDarwin) {
     launchd.user.agents.atomic-chrome = {
-      path = [ cfg.emacsPackage pkgs.coreutils pkgs.lsof ];
+      path = [ cfg.emacsPackage pkgs.coreutils ];
       serviceConfig = {
         ProgramArguments = [ "${startScript}" ];
         RunAtLoad = true;
-        KeepAlive = {
-          SuccessfulExit = false;  # Keep running even after successful exit
-          Crashed = true;          # Restart if crashed
-        };
+        # Simple setup: just run once at startup
+        # Emacs internal monitoring will handle keeping the server alive
+        KeepAlive = false;
         StandardErrorPath = "/tmp/atomic-chrome.err";
         StandardOutPath = "/tmp/atomic-chrome.out";
         Label = "org.nixos.atomic-chrome";
-        # Remove StartInterval as we're using KeepAlive instead
-        ThrottleInterval = 10;     # Wait 10 seconds before restart on crash
       };
     };
   };
