@@ -124,8 +124,12 @@ clean:
 	@if [ "$(UNAME_S)" = "Linux" ]; then \
 		sudo nix-collect-garbage --delete-older-than 14d; \
 		nix-collect-garbage --delete-older-than 14d; \
+		echo "Optimizing store with hardlinks..."; \
+		sudo nix-store --optimise; \
 	else \
 		nix-collect-garbage --delete-older-than 14d; \
+		echo "Optimizing store with hardlinks..."; \
+		nix-store --optimise; \
 	fi
 	@if [ -e "result" ]; then \
 		unlink result; \

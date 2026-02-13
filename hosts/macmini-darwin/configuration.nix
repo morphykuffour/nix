@@ -138,7 +138,6 @@
   services.atomic-chrome = {
     enable = true;
     emacsPackage = pkgs.emacs;
-    startDelay = 5;
   };
 
   system = {
