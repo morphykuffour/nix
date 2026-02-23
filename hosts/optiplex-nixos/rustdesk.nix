@@ -42,7 +42,7 @@ in {
       Group = "rustdesk";
       WorkingDirectory = rustdesk_data;
       ExecStart = ''
-        ${pkgs.rustdesk-server}/bin/hbbs \
+        /usr/local/bin/hbbs \
           -p ${toString hbbs_port} \
           -k _ \
           -r ${server_address}:${toString hbbr_port}
@@ -90,7 +90,7 @@ in {
       Group = "rustdesk";
       WorkingDirectory = rustdesk_data;
       ExecStart = ''
-        ${pkgs.rustdesk-server}/bin/hbbr \
+        /usr/local/bin/hbbr \
           -p ${toString hbbr_port} \
           -k _
       '';
@@ -296,9 +296,8 @@ in {
     };
   };
 
-  # Add rustdesk-server package and management tools to system
+  # Add management tools to system (rustdesk server installed manually)
   environment.systemPackages = with pkgs; [
-    rustdesk-server
     netcat  # For health checks
     
     # RustDesk management script

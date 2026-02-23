@@ -27,6 +27,10 @@
     useOSProber = true;
   };
 
+  # Pin to latest LTS kernel for stability and security
+  # This prevents automatic kernel updates on every build
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
+
   # Enable networking
   networking = {
     hostName = "t480-nixos";

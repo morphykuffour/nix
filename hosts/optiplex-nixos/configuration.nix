@@ -36,6 +36,10 @@
     config.boot.kernelPackages.rtl8814au
   ];
 
+  # Pin to latest LTS kernel for stability and security
+  # This prevents automatic kernel updates on every build
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
+
   networking.hostName = "optiplex-nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 

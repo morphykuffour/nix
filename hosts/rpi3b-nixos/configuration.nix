@@ -19,6 +19,10 @@
   # A bunch of boot parameters needed for optimal runtime on RPi 3b+
   boot.kernelParams = ["cma=256M"];
 
+  # Pin to latest stable kernel for ARM (Raspberry Pi compatible)
+  # This prevents automatic kernel updates on every build
+  boot.kernelPackages = pkgs.linuxPackages_rpi3;
+
   environment.systemPackages = with pkgs; [
     libraspberrypi
     ubootTools
