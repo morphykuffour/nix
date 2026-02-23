@@ -47,8 +47,23 @@ in {
           -k _ \
           -r ${server_address}:${toString hbbr_port}
       '';
-      Restart = "on-failure";
+      Restart = "always";
       RestartSec = "5s";
+      StartLimitIntervalSec = "60s";
+      StartLimitBurst = "5";
+      
+      # Fault tolerance settings
+      WatchdogSec = "30s";
+      RestartKillSignal = "SIGINT";
+      TimeoutStopSec = "10s";
+      
+      # Health check via systemd
+      ExecStartPost = "${pkgs.bash}/bin/bash -c 'sleep 3 && ${pkgs.netcat}/bin/nc -z localhost ${toString hbbs_port}'";
+      
+      # Enhanced logging for debugging
+      StandardOutput = "journal";
+      StandardError = "journal";
+      SyslogIdentifier = "rustdesk-hbbs";
 
       # Security hardening
       NoNewPrivileges = true;
@@ -79,8 +94,23 @@ in {
           -p ${toString hbbr_port} \
           -k _
       '';
-      Restart = "on-failure";
+      Restart = "always";
       RestartSec = "5s";
+      StartLimitIntervalSec = "60s";
+      StartLimitBurst = "5";
+      
+      # Fault tolerance settings
+      WatchdogSec = "30s";
+      RestartKillSignal = "SIGINT";
+      TimeoutStopSec = "10s";
+      
+      # Health check via systemd
+      ExecStartPost = "${pkgs.bash}/bin/bash -c 'sleep 3 && ${pkgs.netcat}/bin/nc -z localhost ${toString hbbr_port}'";
+      
+      # Enhanced logging for debugging
+      StandardOutput = "journal";
+      StandardError = "journal";
+      SyslogIdentifier = "rustdesk-hbbr";
 
       # Security hardening
       NoNewPrivileges = true;
@@ -161,8 +191,187 @@ in {
     };
   };
 
-  # Add rustdesk-server package to system
+  # Monitoring and health check service
+  systemd.services.rustdesk-monitor = {
+    description = "RustDesk Server Health Monitor";
+    after = ["rustdesk-hbbs.service" "rustdesk-hbbr.service"];
+    wants = ["rustdesk-hbbs.service" "rustdesk-hbbr.service"];
+    wantedBy = ["multi-user.target"];
+
+    serviceConfig = {
+      Type = "simple";
+      User = "rustdesk";
+      Group = "rustdesk";
+      Restart = "always";
+      RestartSec = "30s";
+      
+      ExecStart = pkgs.writeShellScript "rustdesk-monitor" ''
+        #!/bin/bash
+        
+        # Monitoring script for RustDesk services
+        LOG_FILE="/var/lib/rustdesk/monitor.log"
+        
+        log() {
+          echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
+        }
+        
+        check_service() {
+          local service="$1"
+          local port="$2"
+          
+          # Check if service is running
+          if ! systemctl is-active --quiet "$service"; then
+            log "ERROR: $service is not running, attempting restart"
+            systemctl restart "$service"
+            sleep 5
+          fi
+          
+          # Check if port is listening
+          if ! ${pkgs.netcat}/bin/nc -z localhost "$port" 2>/dev/null; then
+            log "ERROR: $service port $port is not responding, restarting service"
+            systemctl restart "$service"
+          else
+            log "INFO: $service on port $port is healthy"
+          fi
+        }
+        
+        # Main monitoring loop
+        while true; do
+          check_service "rustdesk-hbbs" "${toString hbbs_port}"
+          check_service "rustdesk-hbbr" "${toString hbbr_port}"
+          
+          # Clean old log entries (keep last 1000 lines)
+          if [[ -f "$LOG_FILE" ]]; then
+            tail -n 1000 "$LOG_FILE" > "$LOG_FILE.tmp" && mv "$LOG_FILE.tmp" "$LOG_FILE"
+          fi
+          
+          sleep 60  # Check every minute
+        done
+      '';
+    };
+  };
+
+  # Log rotation for RustDesk logs
+  services.logrotate.settings.rustdesk = {
+    files = "/var/lib/rustdesk/*.log";
+    frequency = "daily";
+    rotate = 7;
+    compress = true;
+    delaycompress = true;
+    missingok = true;
+    notifempty = true;
+    copytruncate = true;
+  };
+
+  # Backup script for RustDesk configuration
+  systemd.services.rustdesk-backup = {
+    description = "Backup RustDesk Configuration";
+    serviceConfig = {
+      Type = "oneshot";
+      User = "rustdesk";
+      Group = "rustdesk";
+      ExecStart = pkgs.writeShellScript "rustdesk-backup" ''
+        #!/bin/bash
+        BACKUP_DIR="/var/lib/rustdesk/backups"
+        mkdir -p "$BACKUP_DIR"
+        
+        # Create timestamped backup
+        DATE=$(date +%Y%m%d_%H%M%S)
+        tar -czf "$BACKUP_DIR/rustdesk_backup_$DATE.tar.gz" -C /var/lib/rustdesk \
+          --exclude="backups" --exclude="*.log" .
+        
+        # Keep only last 5 backups
+        cd "$BACKUP_DIR" && ls -t rustdesk_backup_*.tar.gz | tail -n +6 | xargs -r rm
+      '';
+    };
+  };
+
+  # Run backup daily
+  systemd.timers.rustdesk-backup = {
+    description = "Daily RustDesk Backup";
+    wantedBy = ["timers.target"];
+    timerConfig = {
+      OnCalendar = "daily";
+      Persistent = true;
+    };
+  };
+
+  # Add rustdesk-server package and management tools to system
   environment.systemPackages = with pkgs; [
     rustdesk-server
+    netcat  # For health checks
+    
+    # RustDesk management script
+    (writeScriptBin "rustdesk-manage" ''
+      #!/bin/bash
+      
+      show_status() {
+        echo "=== RustDesk Server Status ==="
+        echo "HBBS (ID Server):"
+        systemctl status rustdesk-hbbs --no-pager -l
+        echo -e "\nHBBR (Relay Server):"
+        systemctl status rustdesk-hbbr --no-pager -l
+        echo -e "\nMonitor Service:"
+        systemctl status rustdesk-monitor --no-pager -l
+        echo -e "\nPort Status:"
+        netstat -tlnp | grep -E ":(${toString hbbs_port}|${toString hbbr_port})"
+      }
+      
+      show_logs() {
+        echo "=== Recent RustDesk Logs ==="
+        journalctl -u rustdesk-hbbs -u rustdesk-hbbr -u rustdesk-monitor --since "1 hour ago" --no-pager
+      }
+      
+      restart_all() {
+        echo "Restarting all RustDesk services..."
+        systemctl restart rustdesk-hbbs rustdesk-hbbr rustdesk-monitor
+        sleep 3
+        show_status
+      }
+      
+      show_config() {
+        echo "=== RustDesk Server Configuration ==="
+        echo "Server Address: ${server_address}"
+        echo "HBBS Port: ${toString hbbs_port}"
+        echo "HBBR Port: ${toString hbbr_port}"
+        echo "Web Console: ${toString hbbs_port_web}"
+        echo "Data Directory: ${rustdesk_data}"
+        echo -e "\nPublic Key:"
+        if [[ -f "${rustdesk_data}/id_ed25519.pub" ]]; then
+          cat "${rustdesk_data}/id_ed25519.pub"
+        else
+          echo "Key file not found. Server may not have started yet."
+        fi
+      }
+      
+      case "$1" in
+        status|"")
+          show_status
+          ;;
+        logs)
+          show_logs
+          ;;
+        restart)
+          restart_all
+          ;;
+        config)
+          show_config
+          ;;
+        test)
+          echo "Testing RustDesk connectivity..."
+          nc -zv localhost ${toString hbbs_port}
+          nc -zv localhost ${toString hbbr_port}
+          ;;
+        *)
+          echo "Usage: $0 {status|logs|restart|config|test}"
+          echo "  status  - Show service status and ports"
+          echo "  logs    - Show recent logs"
+          echo "  restart - Restart all services"
+          echo "  config  - Show configuration and public key"
+          echo "  test    - Test port connectivity"
+          exit 1
+          ;;
+      esac
+    '')
   ];
 }
