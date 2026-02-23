@@ -53,7 +53,7 @@ in {
       StartLimitBurst = "5";
       
       # Fault tolerance settings
-      WatchdogSec = "30s";
+
       RestartKillSignal = "SIGINT";
       TimeoutStopSec = "10s";
       
@@ -100,7 +100,7 @@ in {
       StartLimitBurst = "5";
       
       # Fault tolerance settings
-      WatchdogSec = "30s";
+
       RestartKillSignal = "SIGINT";
       TimeoutStopSec = "10s";
       
