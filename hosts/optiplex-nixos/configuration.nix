@@ -8,6 +8,7 @@
     ./hardware-configuration.nix
     ./tailscale.nix
     ./rustdesk.nix  # RustDesk server for remote access
+    ./rustdesk-client.nix # RustDesk client configuration
     # ./remote-desktop.nix  # Disabled - replaced by sway.nix
     ./sway.nix # Sway window manager with WayVNC
     ./waydroid.nix
@@ -18,8 +19,8 @@
     ./vert.nix
     ./searxng.nix
     ./croc.nix
-    ./nas-mounts.nix
-    ./jellyfin-stack.nix
+    # ./nas-mounts.nix  # Disabled - causing mount failures
+    # ./jellyfin-stack.nix  # Disabled - depends on NAS mounts
     ./stremio-working.nix # Working Stremio web proxy
     ./silverbullet.nix
     ./esphome.nix  # XIAO ESP32-S3 camera system
@@ -44,7 +45,7 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.default = "http://proxy.example.com:8080";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
