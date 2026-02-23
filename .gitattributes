@@ -1,0 +1,17 @@
+# Security: Mark sensitive files
+*.age binary
+*.secret filter=secret
+*.key filter=secret  
+*.pem filter=secret
+*.p12 filter=secret
+*.pfx filter=secret
+*password* filter=secret
+*token* filter=secret
+*api_key* filter=secret
+.env filter=secret
+.env.* filter=secret
+
+# Prevent diff/logging of secrets
+secrets/*.age binary
+secrets/*.key binary
+secrets/*.pem binary

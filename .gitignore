@@ -8,6 +8,24 @@ modules/.DS_Store
 pkgs/fprintd/**
 *.backup
 
+# Security: Prevent secrets leakage
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+*.secret
+.env
+.env.*
+*password*
+*token*
+*api_key*
+*.log
+*.tmp
+auth_*
+credential*
+
 # MCP logs
 logs/mcp-*.log
 
