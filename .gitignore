@@ -10,3 +10,9 @@ pkgs/fprintd/**
 
 # MCP logs
 logs/mcp-*.log
+
+# Ignore all .md files
+*.md
+
+# Do not ignore the README.md
+!README.md
