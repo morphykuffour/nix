@@ -107,7 +107,7 @@
     checkReversePath = "loose";
     trustedInterfaces = ["tailscale0"];
     allowedUDPPorts = [config.services.tailscale.port];
-    # Allow SSH and media stack ports via Tailscale
+    # Allow SSH, media stack, and Stremio ports via Tailscale
     allowedTCPPorts = [
       22 # SSH
       5055 # Jellyseerr
@@ -119,6 +119,13 @@
       8989 # Sonarr
       9696 # Prowlarr
       8191 # FlareSolverr
+      # Stremio services
+      8080 # Stremio streaming server
+      11470 # Stremio server
+      12470 # Stremio web interface
+      9117 # Jackett (via Gluetun)
+      # Stremio addons (7000-7010 range)
+      7000 7001 7002 7003 7004 7005 7006 7007 7008 7009 7010
     ];
   };
 }
