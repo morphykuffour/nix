@@ -170,6 +170,9 @@
       ledger
       goose-cli
 
+      # todo test this tool
+      qrcp
+
       # python packages
       # (python39.withPackages (pp:
       #   with pp; [

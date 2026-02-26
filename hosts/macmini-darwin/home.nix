@@ -97,6 +97,8 @@
       deadnix
       neovim
       todoist
+      # todo test this tool
+      qrcp
       # ladybird # broken as of 2025-11
       # plover.dev
       # go

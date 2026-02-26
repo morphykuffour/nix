@@ -37,4 +37,7 @@ in {
 
   # RustDesk password for optiplex-nixos
   "secrets/rustdesk-optiplex-nixos.age".publicKeys = allUsers;
+  
+  # RustDesk encryption key for optiplex-nixos
+  "secrets/rustdesk-key-optiplex-nixos.age".publicKeys = allUsers;
 }

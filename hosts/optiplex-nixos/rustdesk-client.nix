@@ -6,13 +6,12 @@
 }: let
   # RustDesk server configuration
   rustdesk_server = "100.89.107.92"; # Tailscale IP of this machine (server)
-  rustdesk_key = "sOIwLVZhj6oBdKBD7kaK5YE5+k5EpQWNNMjiAfGkyec=";
 
   # Tailscale CGNAT range for whitelist
   tailscale_cidr = "100.64.0.0/10";
 
-  # RustDesk client config file
-  rustdeskConfig = pkgs.writeText "RustDesk2.toml" ''
+  # RustDesk client config template (key will be filled in by setup script)
+  rustdeskConfigTemplate = pkgs.writeText "RustDesk2.toml.template" ''
     rendezvous_server = '${rustdesk_server}:21115'
     nat_type = 1
     serial = 0
@@ -20,7 +19,7 @@
     [options]
     custom-rendezvous-server = '${rustdesk_server}:21115'
     relay-server = '${rustdesk_server}:21117'
-    key = '${rustdesk_key}'
+    key = 'RUSTDESK_KEY_PLACEHOLDER'
 
     # Auto-accept connections with password (no manual click required)
     approve-mode = 'password'
@@ -53,13 +52,22 @@
     CONFIG_DIR="/root/.config/rustdesk"
     USER_CONFIG_DIR="/home/morph/.config/rustdesk"
     PASSWORD_FILE="${config.age.secrets.rustdesk-optiplex-nixos.path}"
+    KEY_FILE="${config.age.secrets.rustdesk-key-optiplex-nixos.path}"
 
     # Create config directories
     mkdir -p "$CONFIG_DIR" "$USER_CONFIG_DIR"
 
-    # Copy config to both root and user
+    # Read the encryption key from secret
+    if [ -f "$KEY_FILE" ]; then
+      RUSTDESK_KEY=$(cat "$KEY_FILE")
+    else
+      echo "Error: RustDesk key secret not found at $KEY_FILE"
+      exit 1
+    fi
+
+    # Generate config with the actual key
     for dir in "$CONFIG_DIR" "$USER_CONFIG_DIR"; do
-      cp ${rustdeskConfig} "$dir/RustDesk2.toml"
+      ${pkgs.gnused}/bin/sed "s/RUSTDESK_KEY_PLACEHOLDER/$RUSTDESK_KEY/" ${rustdeskConfigTemplate} > "$dir/RustDesk2.toml"
       chmod 600 "$dir/RustDesk2.toml"
     done
 
@@ -76,10 +84,17 @@
   '';
 in {
   # ============================================
-  # AGENIX SECRET - RustDesk Password
+  # AGENIX SECRETS - RustDesk Password & Encryption Key
   # ============================================
   age.secrets.rustdesk-optiplex-nixos = {
     file = ../../secrets/rustdesk-optiplex-nixos.age;
+    owner = "root";
+    group = "root";
+    mode = "0400";
+  };
+
+  age.secrets.rustdesk-key-optiplex-nixos = {
+    file = ../../secrets/rustdesk-key-optiplex-nixos.age;
     owner = "root";
     group = "root";
     mode = "0400";

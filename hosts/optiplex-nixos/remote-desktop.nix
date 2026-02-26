@@ -10,13 +10,12 @@
 }: let
   # RustDesk server configuration (self-hosted on this machine)
   rustdesk_server = "100.89.107.92";
-  rustdesk_key = "sOIwLVZhj6oBdKBD7kaK5YE5+k5EpQWNNMjiAfGkyec=";
 
   # Tailscale CIDR for whitelist (passwordless access)
   tailscale_cidr = "100.64.0.0/10";
 
-  # RustDesk client config - passwordless for Tailscale
-  rustdeskConfig = pkgs.writeText "RustDesk2.toml" ''
+  # RustDesk client config template - passwordless for Tailscale
+  rustdeskConfigTemplate = pkgs.writeText "RustDesk2.toml.template" ''
     rendezvous_server = '${rustdesk_server}:21115'
     nat_type = 1
     serial = 0
@@ -24,7 +23,7 @@
     [options]
     custom-rendezvous-server = '${rustdesk_server}:21115'
     relay-server = '${rustdesk_server}:21117'
-    key = '${rustdesk_key}'
+    key = 'RUSTDESK_KEY_PLACEHOLDER'
 
     # Passwordless for Tailscale network - auto-accept connections from whitelist
     # Using 'click' mode means no password required, just auto-accept from whitelist
@@ -63,10 +62,20 @@
   rustdeskSetup = pkgs.writeShellScript "rustdesk-wayland-setup" ''
     set -e
     CONFIG_DIR="$HOME/.config/rustdesk"
+    KEY_FILE="${config.age.secrets.rustdesk-key-optiplex-nixos.path}"
+    
     mkdir -p "$CONFIG_DIR"
 
-    # Copy config
-    cp ${rustdeskConfig} "$CONFIG_DIR/RustDesk2.toml"
+    # Read the encryption key from secret
+    if [ -f "$KEY_FILE" ]; then
+      RUSTDESK_KEY=$(cat "$KEY_FILE")
+    else
+      echo "Error: RustDesk key secret not found at $KEY_FILE"
+      exit 1
+    fi
+
+    # Generate config with the actual key
+    ${pkgs.gnused}/bin/sed "s/RUSTDESK_KEY_PLACEHOLDER/$RUSTDESK_KEY/" ${rustdeskConfigTemplate} > "$CONFIG_DIR/RustDesk2.toml"
     chmod 600 "$CONFIG_DIR/RustDesk2.toml"
 
     # Set empty password for passwordless access from whitelist
@@ -76,6 +85,15 @@
     echo "RustDesk configured for Wayland with passwordless Tailscale access"
   '';
 in {
+  # ============================================
+  # AGENIX SECRET - RustDesk Encryption Key
+  # ============================================
+  age.secrets.rustdesk-key-optiplex-nixos = {
+    file = ../../secrets/rustdesk-key-optiplex-nixos.age;
+    owner = "root";
+    group = "root";
+    mode = "0400";
+  };
   # ============================================
   # PASSWORDLESS RUSTDESK - Whitelist-based
   # ============================================
