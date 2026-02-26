@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Suppress git filter-branch warning
+export FILTER_BRANCH_SQUELCH_WARNING=1
+
 # Remove the leaked RustDesk key from git history
 LEAKED_KEY="sOIwLVZhj6oBdKBD7kaK5YE5+k5EpQWNNMjiAfGkyec="
 REPLACEMENT="[REDACTED-RUSTDESK-KEY]"
