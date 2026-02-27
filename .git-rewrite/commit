@@ -1,0 +1,8 @@
+tree ba91bcff25d1848dcb003a631d02c81d2ea23f72
+parent b5cbd5c5722a8d8a466d7a0f4cc7089da61de88c
+author Morphy Kuffour <morpkuff@gmail.com> 1765310754 -0500
+committer Morphy Kuffour <morpkuff@gmail.com> 1765310754 -0500
+
+Disable swaylock and update swayidle configuration to use system suspend command
+
+This commit disables swaylock to allow system-level suspend hooks to function properly, and modifies the swayidle configuration to suspend the system after 5 minutes of inactivity. This change enhances the integration with greetd and streamlines the user experience on resume.

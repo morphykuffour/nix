@@ -1,0 +1,3 @@
+Remove waybar and DISPLAY environment variable from Nix configuration for xps17-nixos
+
+This commit simplifies the configuration by disabling the waybar and removing the DISPLAY environment variable from the home service definition, enhancing compatibility and streamlining the setup.
