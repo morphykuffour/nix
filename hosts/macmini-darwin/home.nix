@@ -93,7 +93,7 @@
       gh
       jq
       rage
-      yt-dlp
+      # yt-dlp  # temporarily disabled: jeepney test failure on macOS (no dbus)
       deadnix
       neovim
       todoist
