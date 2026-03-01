@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  morph-emacs,
   ...
 }: {
   imports = [
@@ -134,10 +135,12 @@
     socketActivation = false;
   };
 
-  # Atomic Chrome service for browser integration
+  # Atomic Chrome service - launches Emacs at login with all packages
+  # The emacsWithPackages derivation includes atomic-chrome + websocket.
+  # init.el starts the WebSocket server on port 64292 automatically.
   services.atomic-chrome = {
     enable = true;
-    emacsPackage = pkgs.emacs;
+    emacsPackage = morph-emacs.packages.aarch64-darwin.default;
   };
 
   system = {

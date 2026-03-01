@@ -12,7 +12,7 @@
 }:
 darwin.lib.darwinSystem {
   system = "aarch64-darwin";
-  specialArgs = {inherit rawtalk;};
+  specialArgs = {inherit rawtalk morph-emacs;};
   modules = [
     ./configuration.nix
     {
