@@ -387,8 +387,8 @@
         ]
       },
       "locked": {
-        "lastModified": 1771507921,
-        "narHash": "sha256-BaQQLq87DXH4cBh3FyuGsTBPi9pf8kzHV2wjQ8Kbaks=",
+        "lastModified": 1772391310,
+        "narHash": "sha256-+LdkiWBpDp7UMK80ngn5oHP6bx6BAP0rm3bjqV459gE=",
         "path": "/Users/morph/dots/emacs/.emacs.d",
         "type": "path"
       },
