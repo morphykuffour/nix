@@ -51,15 +51,15 @@ in {
       RestartSec = "5s";
       StartLimitIntervalSec = "60s";
       StartLimitBurst = "5";
-      
+
       # Fault tolerance settings
 
       RestartKillSignal = "SIGINT";
       TimeoutStopSec = "10s";
-      
+
       # Health check via systemd
       ExecStartPost = "${pkgs.bash}/bin/bash -c 'sleep 3 && ${pkgs.netcat}/bin/nc -z localhost ${toString hbbs_port}'";
-      
+
       # Enhanced logging for debugging
       StandardOutput = "journal";
       StandardError = "journal";
@@ -98,15 +98,15 @@ in {
       RestartSec = "5s";
       StartLimitIntervalSec = "60s";
       StartLimitBurst = "5";
-      
+
       # Fault tolerance settings
 
       RestartKillSignal = "SIGINT";
       TimeoutStopSec = "10s";
-      
+
       # Health check via systemd
       ExecStartPost = "${pkgs.bash}/bin/bash -c 'sleep 3 && ${pkgs.netcat}/bin/nc -z localhost ${toString hbbr_port}'";
-      
+
       # Enhanced logging for debugging
       StandardOutput = "journal";
       StandardError = "journal";
@@ -204,28 +204,28 @@ in {
       Group = "rustdesk";
       Restart = "always";
       RestartSec = "30s";
-      
+
       ExecStart = pkgs.writeShellScript "rustdesk-monitor" ''
         #!/bin/bash
-        
+
         # Monitoring script for RustDesk services
         LOG_FILE="/var/lib/rustdesk/monitor.log"
-        
+
         log() {
           echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
         }
-        
+
         check_service() {
           local service="$1"
           local port="$2"
-          
+
           # Check if service is running
           if ! systemctl is-active --quiet "$service"; then
             log "ERROR: $service is not running, attempting restart"
             systemctl restart "$service"
             sleep 5
           fi
-          
+
           # Check if port is listening
           if ! ${pkgs.netcat}/bin/nc -z localhost "$port" 2>/dev/null; then
             log "ERROR: $service port $port is not responding, restarting service"
@@ -234,17 +234,17 @@ in {
             log "INFO: $service on port $port is healthy"
           fi
         }
-        
+
         # Main monitoring loop
         while true; do
           check_service "rustdesk-hbbs" "${toString hbbs_port}"
           check_service "rustdesk-hbbr" "${toString hbbr_port}"
-          
+
           # Clean old log entries (keep last 1000 lines)
           if [[ -f "$LOG_FILE" ]]; then
             tail -n 1000 "$LOG_FILE" > "$LOG_FILE.tmp" && mv "$LOG_FILE.tmp" "$LOG_FILE"
           fi
-          
+
           sleep 60  # Check every minute
         done
       '';
@@ -274,12 +274,12 @@ in {
         #!/bin/bash
         BACKUP_DIR="/var/lib/rustdesk/backups"
         mkdir -p "$BACKUP_DIR"
-        
+
         # Create timestamped backup
         DATE=$(date +%Y%m%d_%H%M%S)
         tar -czf "$BACKUP_DIR/rustdesk_backup_$DATE.tar.gz" -C /var/lib/rustdesk \
           --exclude="backups" --exclude="*.log" .
-        
+
         # Keep only last 5 backups
         cd "$BACKUP_DIR" && ls -t rustdesk_backup_*.tar.gz | tail -n +6 | xargs -r rm
       '';
@@ -298,12 +298,12 @@ in {
 
   # Add management tools to system (rustdesk server installed manually)
   environment.systemPackages = with pkgs; [
-    netcat  # For health checks
-    
+    netcat # For health checks
+
     # RustDesk management script
     (writeScriptBin "rustdesk-manage" ''
       #!/bin/bash
-      
+
       show_status() {
         echo "=== RustDesk Server Status ==="
         echo "HBBS (ID Server):"
@@ -315,19 +315,19 @@ in {
         echo -e "\nPort Status:"
         netstat -tlnp | grep -E ":(${toString hbbs_port}|${toString hbbr_port})"
       }
-      
+
       show_logs() {
         echo "=== Recent RustDesk Logs ==="
         journalctl -u rustdesk-hbbs -u rustdesk-hbbr -u rustdesk-monitor --since "1 hour ago" --no-pager
       }
-      
+
       restart_all() {
         echo "Restarting all RustDesk services..."
         systemctl restart rustdesk-hbbs rustdesk-hbbr rustdesk-monitor
         sleep 3
         show_status
       }
-      
+
       show_config() {
         echo "=== RustDesk Server Configuration ==="
         echo "Server Address: ${server_address}"
@@ -342,7 +342,7 @@ in {
           echo "Key file not found. Server may not have started yet."
         fi
       }
-      
+
       case "$1" in
         status|"")
           show_status

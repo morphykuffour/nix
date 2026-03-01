@@ -7,7 +7,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./tailscale.nix
-    ./rustdesk.nix  # RustDesk server for remote access
+    ./rustdesk.nix # RustDesk server for remote access
     ./rustdesk-client.nix # RustDesk client configuration
     # ./remote-desktop.nix  # Disabled - replaced by sway.nix
     ./sway.nix # Sway window manager with WayVNC
@@ -23,7 +23,7 @@
     # ./jellyfin-stack.nix  # Disabled - depends on NAS mounts
     ./stremio-working.nix # Working Stremio web proxy
     ./silverbullet.nix
-    ./esphome.nix  # XIAO ESP32-S3 camera system
+    ./esphome.nix # XIAO ESP32-S3 camera system
     # ./zfs.nix
   ];
 

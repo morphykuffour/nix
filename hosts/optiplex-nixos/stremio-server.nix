@@ -12,7 +12,7 @@ in {
   # Real Stremio streaming server setup
   virtualisation.oci-containers = {
     backend = "docker";
-    
+
     containers = {
       # Stremio Streaming Server - handles torrent streaming
       stremio-server = {
@@ -20,11 +20,11 @@ in {
         autoStart = true;
         ports = [
           "11470:11470" # Stremio server API
-          "12470:8080"  # Web interface (mapped to port 12470)
+          "12470:8080" # Web interface (mapped to port 12470)
         ];
         volumes = [
           "${dataRoot}/server:/app/server"
-          "${dataRoot}/cache:/app/cache" 
+          "${dataRoot}/cache:/app/cache"
           "/tmp:/tmp"
         ];
         environment = {
@@ -62,7 +62,12 @@ in {
 
     virtualHosts = {
       "default" = {
-        listen = [ { addr = "0.0.0.0"; port = 8080; } ];
+        listen = [
+          {
+            addr = "0.0.0.0";
+            port = 8080;
+          }
+        ];
         locations = {
           "/" = {
             proxyPass = "http://localhost:12470";
@@ -72,18 +77,18 @@ in {
               proxy_set_header X-Real-IP $remote_addr;
               proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
               proxy_set_header X-Forwarded-Proto $scheme;
-              
+
               # CORS headers for Stremio
               add_header Access-Control-Allow-Origin "*" always;
               add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
               add_header Access-Control-Allow-Headers "Origin, Content-Type, Accept, Authorization" always;
-              
+
               if ($request_method = OPTIONS) {
                 return 204;
               }
             '';
           };
-          
+
           # Streaming server API
           "/api/" = {
             proxyPass = "http://localhost:11470/";
@@ -93,12 +98,12 @@ in {
               proxy_set_header X-Real-IP $remote_addr;
               proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
               proxy_set_header X-Forwarded-Proto $scheme;
-              
+
               # CORS headers
               add_header Access-Control-Allow-Origin "*" always;
               add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
               add_header Access-Control-Allow-Headers "Origin, Content-Type, Accept, Authorization" always;
-              
+
               if ($request_method = OPTIONS) {
                 return 204;
               }
@@ -112,7 +117,7 @@ in {
   # Firewall configuration
   networking.firewall = {
     allowedTCPPorts = [
-      8080  # Nginx proxy to Stremio
+      8080 # Nginx proxy to Stremio
       11470 # Stremio server API
       12470 # Stremio web interface (Docker internal)
     ];
@@ -122,7 +127,7 @@ in {
   environment.systemPackages = with pkgs; [
     (writeScriptBin "stremio-server-manager" ''
       #!${bash}/bin/bash
-      
+
       case "$1" in
         "status")
           echo "Stremio Server Status:"
@@ -165,35 +170,38 @@ in {
   # Update Tailscale serve configuration
   systemd.services.tailscale-serve-config = {
     serviceConfig.ExecStart = lib.mkForce (
-      "${pkgs.bash}/bin/bash -euc '" +
+      "${pkgs.bash}/bin/bash -euc '"
+      +
       # Existing serves from tailscale.nix
-      "${config.services.tailscale.package}/bin/tailscale serve --bg --https=445 http://127.0.0.1:3030; " +
-      "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/search http://127.0.0.1:8888; " +
-      "${config.services.tailscale.package}/bin/tailscale serve --bg --https=8443 http://127.0.0.1:8888; " +
-      "${config.services.tailscale.package}/bin/tailscale serve --bg --https=444 http://127.0.0.1:3000; " +
-      "${config.services.tailscale.package}/bin/tailscale serve --bg --https=8081 http://127.0.0.1:8081; " +
-      "${config.services.tailscale.package}/bin/tailscale serve --bg --https=24153 http://127.0.0.1:24153; " +
-      "${config.services.tailscale.package}/bin/tailscale serve --bg --https=6060 http://127.0.0.1:6060; " +
+      "${config.services.tailscale.package}/bin/tailscale serve --bg --https=445 http://127.0.0.1:3030; "
+      + "${config.services.tailscale.package}/bin/tailscale serve --bg --https=443 --set-path=/search http://127.0.0.1:8888; "
+      + "${config.services.tailscale.package}/bin/tailscale serve --bg --https=8443 http://127.0.0.1:8888; "
+      + "${config.services.tailscale.package}/bin/tailscale serve --bg --https=444 http://127.0.0.1:3000; "
+      + "${config.services.tailscale.package}/bin/tailscale serve --bg --https=8081 http://127.0.0.1:8081; "
+      + "${config.services.tailscale.package}/bin/tailscale serve --bg --https=24153 http://127.0.0.1:24153; "
+      + "${config.services.tailscale.package}/bin/tailscale serve --bg --https=6060 http://127.0.0.1:6060; "
+      +
       # Add Stremio server on port 8080 (the nginx proxy)
       "${config.services.tailscale.package}/bin/tailscale serve --bg --https=8080 http://127.0.0.1:8080'"
     );
-    
+
     serviceConfig.ExecStop = lib.mkForce (
-      "${pkgs.bash}/bin/bash -euc '" +
-      "${config.services.tailscale.package}/bin/tailscale serve --https=445 off || true; " +
-      "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/search off || true; " +
-      "${config.services.tailscale.package}/bin/tailscale serve --https=8443 off || true; " +
-      "${config.services.tailscale.package}/bin/tailscale serve --https=444 off || true; " +
-      "${config.services.tailscale.package}/bin/tailscale serve --https=8081 off || true; " +
-      "${config.services.tailscale.package}/bin/tailscale serve --https=24153 off || true; " +
-      "${config.services.tailscale.package}/bin/tailscale serve --https=6060 off || true; " +
+      "${pkgs.bash}/bin/bash -euc '"
+      + "${config.services.tailscale.package}/bin/tailscale serve --https=445 off || true; "
+      + "${config.services.tailscale.package}/bin/tailscale serve --https=443 --set-path=/search off || true; "
+      + "${config.services.tailscale.package}/bin/tailscale serve --https=8443 off || true; "
+      + "${config.services.tailscale.package}/bin/tailscale serve --https=444 off || true; "
+      + "${config.services.tailscale.package}/bin/tailscale serve --https=8081 off || true; "
+      + "${config.services.tailscale.package}/bin/tailscale serve --https=24153 off || true; "
+      + "${config.services.tailscale.package}/bin/tailscale serve --https=6060 off || true; "
+      +
       # Remove Stremio serve
       "${config.services.tailscale.package}/bin/tailscale serve --https=8080 off || true'"
     );
 
     after = [
       "tailscale.service"
-      "nginx.service" 
+      "nginx.service"
       "docker-stremio-server.service"
     ];
 

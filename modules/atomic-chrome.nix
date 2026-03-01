@@ -1,12 +1,14 @@
-{ config, lib, pkgs, options, ... }:
-
-with lib;
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  options,
+  ...
+}:
+with lib; let
   cfg = config.services.atomic-chrome;
   isDarwin = options ? launchd;
-in
-{
+in {
   options.services.atomic-chrome = {
     enable = mkOption {
       type = types.bool;

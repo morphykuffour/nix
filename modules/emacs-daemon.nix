@@ -1,13 +1,15 @@
-{ config, lib, pkgs, options, ... }:
-
-with lib;
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  options,
+  ...
+}:
+with lib; let
   cfg = config.services.emacs-daemon;
   # Check if we're on Darwin by looking for Darwin-specific options
   isDarwin = options ? launchd;
-in
-{
+in {
   options.services.emacs-daemon = {
     enable = mkOption {
       type = types.bool;
@@ -30,11 +32,11 @@ in
 
   config = mkIf (cfg.enable && isDarwin) {
     launchd.user.agents.emacs-daemon = {
-      path = [ cfg.package ];
+      path = [cfg.package];
       serviceConfig = {
-        ProgramArguments = [ "${cfg.package}/bin/emacs" "--daemon" ];
-        RunAtLoad = false;  # Don't auto-start to avoid conflicts
-        KeepAlive = false;  # Don't restart on failure
+        ProgramArguments = ["${cfg.package}/bin/emacs" "--daemon"];
+        RunAtLoad = false; # Don't auto-start to avoid conflicts
+        KeepAlive = false; # Don't restart on failure
         StandardErrorPath = "/tmp/emacs-daemon.err";
         StandardOutPath = "/tmp/emacs-daemon.out";
         Label = "org.nixos.emacs-daemon";

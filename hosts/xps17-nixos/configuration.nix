@@ -202,7 +202,7 @@
 
       desktopManager.xfce = {
         enable = true;
-        enableXfwm = true;  # Use XFCE's lightweight window manager
+        enableXfwm = true; # Use XFCE's lightweight window manager
       };
 
       # windowManager = {

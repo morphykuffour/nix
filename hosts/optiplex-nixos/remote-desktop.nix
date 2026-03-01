@@ -63,7 +63,7 @@
     set -e
     CONFIG_DIR="$HOME/.config/rustdesk"
     KEY_FILE="${config.age.secrets.rustdesk-key-optiplex-nixos.path}"
-    
+
     mkdir -p "$CONFIG_DIR"
 
     # Read the encryption key from secret

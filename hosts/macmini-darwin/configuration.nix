@@ -131,7 +131,7 @@
   # Disabled to prevent conflicts with manual daemon management
   services.emacs-daemon = {
     enable = false;
-    package = pkgs.emacs;  # This will use the Emacs from nixpkgs
+    package = pkgs.emacs; # This will use the Emacs from nixpkgs
     socketActivation = false;
   };
 
