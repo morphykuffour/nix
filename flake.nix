@@ -56,7 +56,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     morph-emacs = {
-      url = "path:/Users/morph/dots/emacs/.emacs.d";
+      url = "github:morphykuffour/dots?dir=emacs/.emacs.d";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     rawtalk = {
@@ -106,14 +106,14 @@
     };
 
     # xps17 NixOs
-    nixosConfigurations.xps17-nixos = import ./hosts/xps17-nixos {
-      inherit nixpkgs self inputs user home-manager agenix fakwin emacs-overlay;
-    };
+    # nixosConfigurations.xps17-nixos = import ./hosts/xps17-nixos {
+    #   inherit nixpkgs self inputs user home-manager agenix fakwin emacs-overlay;
+    # };
 
     # t480 NixOs
-    nixosConfigurations.t480-nixos = import ./hosts/t480-nixos {
-      inherit nixpkgs self inputs user home-manager agenix morph-emacs;
-    };
+    # nixosConfigurations.t480-nixos = import ./hosts/t480-nixos {
+    #   inherit nixpkgs self inputs user home-manager agenix morph-emacs;
+    # };
 
     # optiplex NixOs
     nixosConfigurations.optiplex-nixos = import ./hosts/optiplex-nixos {

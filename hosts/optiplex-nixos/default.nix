@@ -7,7 +7,6 @@
   user,
   overlays,
   # morph-emacs, # Disabled: path doesn't exist on Linux
-  emacs-overlay,
   ...
 }:
 nixpkgs.lib.nixosSystem {
@@ -39,7 +38,6 @@ nixpkgs.lib.nixosSystem {
       };
 
       nixpkgs.overlays = [
-        emacs-overlay.overlays.default
         # Fix rustdesk webm-sys C++ compilation issue with GCC 15
         (final: prev: {
           rustdesk = prev.rustdesk.overrideAttrs (old: {
