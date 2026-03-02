@@ -16,8 +16,8 @@
   };
 
   networking = {
-    computerName = "morphys-macbook-pro";
-    hostName = "morphys-macbook-pro";
+    computerName = "mbp-darwin";
+    hostName = "mbp-darwin";
   };
 
   environment = {
