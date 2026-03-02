@@ -41,6 +41,12 @@
   # This prevents automatic kernel updates on every build
   boot.kernelPackages = pkgs.linuxPackages_6_12;
 
+  # Auto-reboot on kernel panic (wait 10 seconds then reboot)
+  boot.kernelParams = [
+    "panic=10" # Reboot 10 seconds after kernel panic
+    "oops=panic" # Treat kernel oops as panic (reboot on oops too)
+  ];
+
   networking.hostName = "optiplex-nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -179,6 +185,14 @@
     };
   };
 
+  # Hardware watchdog - reboots system if it becomes unresponsive
+  systemd.settings.Manager = {
+    WatchdogDevice = "/dev/watchdog";
+    RuntimeWatchdogSec = "30s"; # Reboot if systemd doesn't pet watchdog within 30s
+    RebootWatchdogSec = "10min"; # Force reboot if graceful reboot takes >10min
+    KExecWatchdogSec = "10min";
+  };
+
   # Disable all sleep-related systemd targets
   systemd = {
     targets.sleep.enable = false;
@@ -197,6 +211,10 @@
   boot.kernel.sysctl = {
     "fs.inotify.max_user_watches" = 1048576;
     "fs.inotify.max_user_instances" = 1024;
+    # Auto-reboot on hung tasks and soft lockups
+    "kernel.hung_task_panic" = 1;
+    "kernel.hung_task_timeout_secs" = 120;
+    "kernel.softlockup_panic" = 1;
   };
 
   # Configure keymap in X11
