@@ -112,7 +112,7 @@
 
     # optiplex NixOs
     nixosConfigurations.optiplex-nixos = import ./hosts/optiplex-nixos {
-      inherit nixpkgs self inputs user home-manager agenix overlays morph-emacs emacs-overlay;
+      inherit nixpkgs self inputs user home-manager agenix overlays;
     };
 
     # win-wsl NixOs
