@@ -154,11 +154,10 @@
     socketActivation = false;
   };
 
-  # Atomic Chrome service - launches Emacs daemon at login
-  # The emacsWithPackages derivation includes atomic-chrome + websocket.
-  # init.el starts the WebSocket server on port 64292 automatically.
+  # Atomic Chrome service - starts Emacs daemon at login
+  # The wrapper script in systemPackages connects to this daemon via emacsclient
   services.atomic-chrome = {
-    enable = true;  # Start daemon at login for atomic-chrome
+    enable = true;
     emacsPackage = morph-emacs.packages.aarch64-darwin.default;
   };
 
