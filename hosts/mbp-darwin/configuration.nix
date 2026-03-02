@@ -8,6 +8,7 @@
     ../../modules/rawtalk
     ../../modules/emacs-daemon.nix
     ../../modules/atomic-chrome.nix
+    ../../modules/kanata
   ];
 
   users.users.morph = {
@@ -88,6 +89,22 @@
       });
     })
   ];
+
+  # Enable SSH via macOS Remote Login (sshd)
+  services.openssh = {
+    enable = true;
+  };
+
+  # Tailscale mesh VPN with SSH access
+  services.tailscale = {
+    enable = true;
+  };
+
+  # Kanata key remapper (cross-platform, migrated from keyd)
+  services.kanata-remapper = {
+    enable = true;
+    # Uses shared kanata.kbd config by default (CapsLock→Esc/Ctrl, vim mode, etc.)
+  };
 
   # Rawtalk QMK Layer Switcher Service
   services.rawtalk = {

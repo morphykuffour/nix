@@ -23,6 +23,14 @@
     # ./dslr.nix
   ];
 
+  # Kanata key remapper (cross-platform module)
+  services.kanata-remapper = {
+    enable = true;
+    config = builtins.readFile ../../modules/kanata/xps17.kbd;
+    devices = ["/dev/input/by-path/platform-i8042-serio-0-event-kbd"];
+    extraDefCfg = "process-unmapped-keys yes";
+  };
+
   # Bootloader.
 
   # zfs specific

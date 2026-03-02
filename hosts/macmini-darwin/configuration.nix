@@ -9,6 +9,7 @@
     ../../modules/rawtalk
     ../../modules/emacs-daemon.nix
     ../../modules/atomic-chrome.nix
+    ../../modules/kanata
   ];
 
   users.users.morph = {
@@ -140,6 +141,11 @@
   #   outputFormat = "latex";
   #   verbose = false;
   # };
+
+  # Kanata key remapper (cross-platform, migrated from keyd)
+  services.kanata-remapper = {
+    enable = true;
+  };
 
   # Rawtalk QMK Layer Switcher Service
   services.rawtalk = {

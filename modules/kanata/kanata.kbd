@@ -1,0 +1,42 @@
+;; Shared kanata keymap configuration
+;; Migrated from keyd keymaps.conf - works on both Linux and macOS
+;;
+;; Key behaviors (from keyd):
+;;   capslock = overload(ctrl_vim, esc)   -> tap=Esc, hold=LCtrl
+;;   esc = capslock                       -> Esc key becomes CapsLock
+;;   insert = S-insert                    -> Insert becomes paste
+;;   [ctrl_vim:C] space = swap(vim_mode)  -> CapsHold+Space enters vim_mode
+;;   [vim_mode:C] h/j/k/l = arrows       -> vim navigation
+;;   [vim_mode:C] w = C-right, b = C-left -> word navigation
+
+(defsrc
+  esc caps ins spc h j k l w b
+)
+
+(defvar
+  tap-time 200
+  hold-time 200
+)
+
+(defalias
+  ;; CapsLock: tap = Esc, hold = Ctrl (mirrors keyd: overload(ctrl_vim, esc))
+  caps (tap-hold $tap-time $hold-time esc (multi lctl (layer-toggle ctrl_vim)))
+)
+
+;; Base layer: esc->caps, caps->tap-hold, insert->paste
+(deflayer base
+  caps @caps S-ins spc h j k l w b
+)
+
+;; ctrl_vim layer: activated while holding CapsLock (inherits Ctrl)
+;; space switches to vim_mode, everything else passes through
+(deflayer ctrl_vim
+  _ _ _ (layer-switch vim_mode) _ _ _ _ _ _
+)
+
+;; vim_mode layer: Ctrl + vim navigation (inherits Ctrl from keyd's [vim_mode:C])
+;; h/j/k/l = arrows, w = Ctrl+Right (word fwd), b = Ctrl+Left (word back)
+;; Releasing CapsLock returns to base layer
+(deflayer vim_mode
+  _ _ _ (layer-switch base) left down up right C-right C-left
+)
