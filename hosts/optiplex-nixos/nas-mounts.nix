@@ -8,11 +8,8 @@
   morphUid = toString config.users.users.morph.uid;
   morphGid = toString config.users.groups.users.gid;
 
-  # TrueNAS server address - use Tailscale hostname if available, otherwise IP
-  # truenasHost = "truenas-scale";  # Change to "192.168.1.73" if Tailscale not available
-
-  # TODO: Remove this once Tailscale is working properly on truenas-scale
-  truenasHost = "192.168.1.73";
+  # TrueNAS server address - LAN IP (both on same 192.168.1.x network)
+  truenasHost = "192.168.1.42";
 
   # Common mount options for both shares (without x-systemd options)
   cifsOptions = lib.concatStringsSep "," [

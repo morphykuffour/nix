@@ -19,8 +19,8 @@
     ./vert.nix
     ./searxng.nix
     ./croc.nix
-    # ./nas-mounts.nix  # Disabled - causing mount failures
-    # ./jellyfin-stack.nix  # Disabled - depends on NAS mounts
+    ./nas-mounts.nix
+    ./jellyfin-stack.nix
     ./stremio-working.nix # Working Stremio web proxy
     ./silverbullet.nix
     ./esphome.nix # XIAO ESP32-S3 camera system
