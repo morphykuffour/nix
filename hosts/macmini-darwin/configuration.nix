@@ -51,16 +51,25 @@
       ripgrep
       # PDF viewer setup
       duti
-      # Emacs client wrapper to connect to atomic-chrome instance
+      # Emacs daemon wrapper for single-instance behavior
       (pkgs.writeShellScriptBin "emacs" ''
-        # Connect to existing Emacs instance or start new frame
-        if pgrep -f "emacs.*no-splash" > /dev/null; then
-          # Emacs is running, create new frame
-          ${morph-emacs.packages.aarch64-darwin.default}/bin/emacsclient -c "$@"
-        else
-          # Emacs not running, start it
-          exec ${morph-emacs.packages.aarch64-darwin.default}/bin/emacs --no-splash "$@"
-        fi
+        # Function to start daemon if not running
+        start_daemon_if_needed() {
+          if ! ${morph-emacs.packages.aarch64-darwin.default}/bin/emacsclient -e "t" >/dev/null 2>&1; then
+            ${morph-emacs.packages.aarch64-darwin.default}/bin/emacs --daemon >/dev/null 2>&1 &
+            # Wait for daemon to start
+            for i in {1..10}; do
+              if ${morph-emacs.packages.aarch64-darwin.default}/bin/emacsclient -e "t" >/dev/null 2>&1; then
+                break
+              fi
+              sleep 0.5
+            done
+          fi
+        }
+        
+        # Start daemon if needed and connect
+        start_daemon_if_needed
+        exec ${morph-emacs.packages.aarch64-darwin.default}/bin/emacsclient -c -a "" "$@"
       '')
     ];
   };
@@ -145,11 +154,11 @@
     socketActivation = false;
   };
 
-  # Atomic Chrome service - launches Emacs at login with all packages
+  # Atomic Chrome service - launches Emacs daemon at login
   # The emacsWithPackages derivation includes atomic-chrome + websocket.
   # init.el starts the WebSocket server on port 64292 automatically.
   services.atomic-chrome = {
-    enable = true;
+    enable = true;  # Start daemon at login for atomic-chrome
     emacsPackage = morph-emacs.packages.aarch64-darwin.default;
   };
 

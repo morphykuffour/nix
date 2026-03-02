@@ -36,7 +36,7 @@ in {
         # init.el handles starting the WebSocket server on port 64292.
         ProgramArguments = [
           "${cfg.emacsPackage}/bin/emacs"
-          "--no-splash"
+          "--daemon"
         ];
         RunAtLoad = true;
         # Restart Emacs if it crashes (but not on clean exit)
