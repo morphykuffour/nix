@@ -47,11 +47,21 @@
       # Installed Nix packages
       # Terminal
       git
-      emacs
       fd
       ripgrep
       # PDF viewer setup
       duti
+      # Emacs client wrapper to connect to atomic-chrome instance
+      (pkgs.writeShellScriptBin "emacs" ''
+        # Connect to existing Emacs instance or start new frame
+        if pgrep -f "emacs.*no-splash" > /dev/null; then
+          # Emacs is running, create new frame
+          ${morph-emacs.packages.aarch64-darwin.default}/bin/emacsclient -c "$@"
+        else
+          # Emacs not running, start it
+          exec ${morph-emacs.packages.aarch64-darwin.default}/bin/emacs --no-splash "$@"
+        fi
+      '')
     ];
   };
 

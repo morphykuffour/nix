@@ -40,4 +40,8 @@ in {
 
   # RustDesk encryption key for optiplex-nixos
   "secrets/rustdesk-key-optiplex-nixos.age".publicKeys = allUsers;
+
+  # BorgBase restic backup for macmini-darwin ~/Sync
+  "secrets/restic-borgbase/repo.age".publicKeys = allUsers;
+  "secrets/restic-borgbase/password.age".publicKeys = allUsers;
 }

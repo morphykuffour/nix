@@ -100,6 +100,11 @@
       inherit self nixpkgs darwin inputs user home-manager agenix morph-emacs emacs-overlay rawtalk;
     };
 
+    # macbook_pro MacOs
+    darwinConfigurations.mbp-darwin = import ./hosts/mbp-darwin {
+      inherit self nixpkgs darwin inputs user home-manager agenix morph-emacs emacs-overlay rawtalk;
+    };
+
     # xps17 NixOs
     nixosConfigurations.xps17-nixos = import ./hosts/xps17-nixos {
       inherit nixpkgs self inputs user home-manager agenix fakwin emacs-overlay;

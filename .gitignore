@@ -26,6 +26,9 @@ id_ed25519*
 auth_*
 credential*
 
+# Allow agenix-encrypted secrets (safe to commit — they're age-encrypted)
+!secrets/**/*.age
+
 # MCP logs
 logs/mcp-*.log
 

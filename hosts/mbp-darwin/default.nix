@@ -23,7 +23,6 @@ darwin.lib.darwinSystem {
         alejandra
         agenix.packages.aarch64-darwin.default
         rawtalk.packages.aarch64-darwin.default
-        # neovim.packages.aarch64-darwin.neovim
       ];
     }
     home-manager.darwinModules.home-manager
@@ -31,10 +30,6 @@ darwin.lib.darwinSystem {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.morph = import ./home.nix;
-      # Temporarily disabled to prevent symlinking source files
-      # home-manager.sharedModules = [
-      #   morph-emacs.homeManagerModules.default
-      # ];
       home-manager.backupFileExtension = "backup";
     }
     {
