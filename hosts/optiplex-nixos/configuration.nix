@@ -80,13 +80,13 @@
       };
     };
 
-    emacs = {
-      # package = pkgs.emacs-unstable;
-      # package = pkgs.emacs-git;
-      package = pkgs.emacs;
-      enable = true;
-      install = true;
-    };
+    # emacs = {
+    #   # package = pkgs.emacs-unstable;
+    #   # package = pkgs.emacs-git;
+    #   package = pkgs.emacs;
+    #   enable = true;
+    #   install = true;
+    # };
 
     xserver = {
       enable = true;

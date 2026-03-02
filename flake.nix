@@ -102,7 +102,7 @@
 
     # xps17 NixOs
     nixosConfigurations.xps17-nixos = import ./hosts/xps17-nixos {
-      inherit nixpkgs self inputs user home-manager agenix fakwin morph-emacs emacs-overlay;
+      inherit nixpkgs self inputs user home-manager agenix fakwin emacs-overlay;
     };
 
     # t480 NixOs
