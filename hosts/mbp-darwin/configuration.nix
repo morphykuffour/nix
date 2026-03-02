@@ -32,6 +32,21 @@
       fd
       ripgrep
       duti
+      bat
+      stow
+      tldr
+      autojump
+      starship
+      opencode
+      gh
+      fzf
+      eza
+      btop
+      dog
+      duf
+      dust
+      tokei
+      delta
       (pkgs.writeShellScriptBin "emacs" ''
         # Connect to existing Emacs instance or start new frame
         if pgrep -f "emacs.*no-splash" > /dev/null; then
@@ -60,7 +75,9 @@
       cleanup = "none";
       upgrade = false;
     };
-    brews = [];
+    brews = [
+      "yabai"
+    ];
     casks = [];
   };
 

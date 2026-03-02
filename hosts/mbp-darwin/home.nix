@@ -50,6 +50,14 @@
       neovim
       todoist
       qrcp
+      stow
+      btop
+      dog
+      duf
+      dust
+      tokei
+      atuin
+      mcfly
     ];
   };
 }
