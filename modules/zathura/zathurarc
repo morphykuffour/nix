@@ -1,6 +1,9 @@
 # Clipboard settings
 set selection-clipboard clipboard
 
+# Printing (macOS fix - uses lpr with native CUPS)
+set print-command "lpr"
+
 # UI settings
 set statusbar-h-padding 0
 set statusbar-v-padding 0
