@@ -93,7 +93,17 @@
       upgrade = false;
     };
     brews = [];
-    casks = [];
+    # GUI apps that require homebrew casks
+    casks = [
+      "aerospace"
+      "alt-tab"
+      "hiddenbar"
+      "keycastr"
+      "raycast"
+      "spotify"
+      "utm"
+      "vlc"
+    ];
   };
 
   nix = {

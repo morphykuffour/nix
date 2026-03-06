@@ -1,8 +1,8 @@
 # Clipboard settings
 set selection-clipboard clipboard
 
-# Printing (macOS fix - uses lpr with native CUPS)
-set print-command "lpr"
+# Printing (macOS fix - opens Preview with native print dialog)
+set print-command "zathura-print"
 
 # UI settings
 set statusbar-h-padding 0

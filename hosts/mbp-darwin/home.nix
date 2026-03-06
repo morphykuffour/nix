@@ -20,44 +20,109 @@
     };
 
     packages = with pkgs; [
+      # Archive/compression
       p7zip
       unar
-      ripgrep
+      xz
+      zstd
+
+      # Shell & navigation
       autojump
-      pandoc
-      croc
       starship
-      tealdeer
-      jupyter
-      ranger
-      stylua
-      cscope
+      zsh
+      atuin
+      mcfly
+
+      # File tools
+      ripgrep
+      fd
+      fzf
+      eza
+      bat
+      tree
+      edir
+      rename
+      fswatch
+      watchexec
+
+      # Git & version control
+      gh
       delta
+
+      # Text/document processing
+      pandoc
+      jq
+      glow
+      gum
+
+      # Development tools
+      neovim
       tmux
       kitty
+      entr
+      cmake
+      meson
+      ninja
+      gnused
+      moreutils
+
+      # Languages & runtimes
+      go
+      lua
+      luarocks
+      nodejs
       ruby
-      edir
-      curl
-      zsh
-      eza
-      fzf
-      bat
-      fd
-      gh
-      jq
-      rage
-      deadnix
-      neovim
-      todoist
-      qrcp
-      stow
+
+      # Python tools
+      pipx
+      poetry
+      uv
+      jupyter
+
+      # System monitoring
       btop
+      htop
       dog
       duf
       dust
       tokei
-      atuin
-      mcfly
+
+      # Media & documents
+      ffmpeg
+      imagemagick
+      exiftool
+      tesseract
+      mupdf
+
+      # Network & communication
+      curl
+      wget
+      aria2
+      socat
+      croc
+      qrcp
+
+      # Email tools
+      neomutt
+      isync
+      notmuch
+      msmtp
+
+      # Security & encryption
+      age
+      rage
+
+      # Nix tools
+      deadnix
+
+      # Other utilities
+      stow
+      tealdeer
+      todoist
+      ranger
+      stylua
+      cscope
+      minicom
     ];
   };
 }

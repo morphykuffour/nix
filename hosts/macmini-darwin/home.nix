@@ -40,85 +40,109 @@
     };
 
     packages = with pkgs; [
+      # Archive/compression
       p7zip
       unar
-      # eva
-      ripgrep
+      xz
+      zstd
+
+      # Shell & navigation
       autojump
-      pandoc
-      croc
-      # mpv
-      # tree-sitter-grammars.tree-sitter-markdown
-      # nodePackages.typescript-language-server
-      # nodePackages.bash-language-server
-      # sumneko-lua-language-server
-      # nodePackages.typescript
-      # nodePackages.prettier
-      # nodePackages.pyright
-      # nodePackages.insect
-      # rust-analyzer
-      # rnix-lsp
-      # ccls
-      # black
-      # gopls
-      # ccls
-      # newsboat
-      # dev packages
-      # # gcc_multi
-      # # avrlibc
-      # # python2
       starship
-      tealdeer
+      zsh
+      atuin
+      mcfly
+
+      # File tools
+      ripgrep
+      fd
+      fzf
+      eza
+      bat
+      tree
+      edir
+      rename
+      fswatch
+      watchexec
+
+      # Git & version control
+      gh
+      delta
+
+      # Text/document processing
+      pandoc
+      jq
+      glow
+      gum
+
+      # Development tools
+      neovim
+      tmux
+      kitty
+      entr
+      cmake
+      meson
+      ninja
+      gnused
+      moreutils
+
+      # Languages & runtimes
+      go
+      lua
+      luarocks
+      nodejs
+      ruby
+
+      # Python tools
+      pipx
+      poetry
+      uv
       jupyter
+
+      # System monitoring
+      btop
+      htop
+      dog
+      duf
+      dust
+      tokei
+
+      # Media & documents
+      ffmpeg
+      imagemagick
+      exiftool
+      tesseract
+      mupdf
+
+      # Network & communication
+      curl
+      wget
+      aria2
+      socat
+      croc
+      qrcp
+
+      # Email tools
+      neomutt
+      isync
+      notmuch
+      msmtp
+
+      # Security & encryption
+      age
+      rage
+
+      # Nix tools
+      deadnix
+
+      # Other utilities
+      stow
+      tealdeer
+      todoist
       ranger
       stylua
       cscope
-      delta
-      # cargo
-      # atuin
-      tmux
-      kitty
-      ruby
-      edir
-      curl
-      # sbcl
-      # stow
-      zsh
-      # qmk
-      # exa
-      eza
-      fzf
-      bat
-      fd
-      gh
-      jq
-      rage
-      # yt-dlp  # temporarily disabled: jeepney test failure on macOS (no dbus)
-      deadnix
-      neovim
-      todoist
-      # todo test this tool
-      qrcp
-      # ladybird # broken as of 2025-11
-      # plover.dev
-      # go
-      # python3
-      # opam
-      # python packages
-      # (python39.withPackages (pp:
-      #   with pp; [
-      #     mysql-connector
-      #     pynvim
-      #     pandas
-      #     conda
-      #     requests
-      #     pip
-      #     i3ipc
-      #     ipython
-      #     dbus-python
-      #     html2text
-      #     keymapviz
-      #   ]))
+      minicom
     ];
   };
 }
