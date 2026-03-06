@@ -10,6 +10,11 @@ set statusbar-v-padding 0
 set page-padding 1
 set guioptions ""
 
+# Link hint styling (Vimium-like)
+set highlight-color "rgba(255, 220, 0, 0.8)"
+set highlight-active-color "rgba(255, 127, 0, 0.8)"
+set highlight-fg "rgba(0, 0, 0, 1.0)"
+
 # Window settings
 set window-title-basename true
 
@@ -28,6 +33,7 @@ map i recolor
 map p print
 map g goto top
 map G goto bottom
-map f fullscreen
+map F fullscreen
+map f follow
 map q quit
 map [fullscreen] q quit
