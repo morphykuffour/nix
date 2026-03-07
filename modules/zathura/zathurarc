@@ -10,6 +10,9 @@ set statusbar-v-padding 0
 set page-padding 1
 set guioptions ""
 
+# Font settings (larger hints and command mode)
+set font "monospace 16"
+
 # Link hint styling (Vimium-like)
 set highlight-color "rgba(255, 220, 0, 0.8)"
 set highlight-active-color "rgba(255, 127, 0, 0.8)"
@@ -17,6 +20,11 @@ set highlight-fg "rgba(0, 0, 0, 1.0)"
 
 # Window settings
 set window-title-basename true
+
+# Window geometry - center half (Raycast style)
+# For 2560x1440 effective resolution: half width (1280), full height minus menubar
+set window-width 1280
+set window-height 1415
 
 # Search settings
 set incremental-search true
