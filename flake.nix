@@ -56,7 +56,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     morph-emacs = {
-      url = "github:morphykuffour/dots?dir=emacs/.emacs.d";
+      # Use local path for development; change to GitHub URL for deployment
+      url = "path:/Users/morph/dots/emacs/.emacs.d";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     rawtalk = {
