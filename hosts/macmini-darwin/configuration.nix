@@ -67,7 +67,7 @@
             done
           fi
         }
-        
+
         # Start daemon if needed and connect
         start_daemon_if_needed
         exec ${morph-emacs.packages.aarch64-darwin.default}/bin/emacsclient -c -a "" "$@"
@@ -194,7 +194,7 @@
       dock = {
         # Dock settings
         autohide = false;
-        orientation = "bottom";
+        orientation = "left";
         showhidden = true;
         tilesize = 40;
         # mineffect = "genie";
