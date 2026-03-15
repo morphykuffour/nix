@@ -3,7 +3,7 @@
 
 set -euo pipefail
 
-echo "🔧 Deploying SSH Improvements to NixOS Systems"
+echo "Deploying SSH Improvements to NixOS Systems"
 echo "=============================================="
 echo ""
 
@@ -120,40 +120,32 @@ print_step "Testing final connectivity..."
 WORKING_SYSTEMS=0
 TOTAL_SYSTEMS=2
 
-if ssh-tailscale optiplex "echo 'optiplex-nixos: ✅ SSH working'" 2>/dev/null; then
+if ssh-tailscale optiplex "echo 'optiplex-nixos: SSH working'" 2>/dev/null; then
     ((WORKING_SYSTEMS++))
 fi
 
-if ssh-tailscale laptop "echo 'xps17-nixos: ✅ SSH working'" 2>/dev/null; then
+if ssh-tailscale laptop "echo 'xps17-nixos: SSH working'" 2>/dev/null; then
     ((WORKING_SYSTEMS++))
 fi
 
 echo ""
 print_step "SSH Deployment Summary"
 echo "======================"
-print_success "✅ $WORKING_SYSTEMS out of $TOTAL_SYSTEMS NixOS systems have working SSH"
+print_success "$WORKING_SYSTEMS out of $TOTAL_SYSTEMS NixOS systems have working SSH"
 
 echo ""
 print_step "Next Steps for Non-NixOS Systems"
 echo "================================"
 echo ""
-echo "🍓 Raspberry Pi (100.115.236.80):"
+echo "Raspberry Pi (100.115.236.80):"
 echo "   1. Connect via physical access or VNC"
 echo "   2. Enable SSH: sudo systemctl enable --now ssh"
 echo "   3. Allow through firewall: sudo ufw allow ssh"
 echo "   4. Test: ssh pi@100.115.236.80"
 echo ""
-echo "💾 TrueNAS Scale (100.120.143.27):"
-echo "   1. Open web interface: http://100.120.143.27"
-echo "   2. Login with admin credentials"
-echo "   3. Go to System → SSH"
-echo "   4. Enable SSH service"
-echo "   5. Configure port (default 22)"
-echo "   6. Test: ssh root@100.120.143.27"
-echo ""
 
 echo ""
-print_success "🎉 SSH improvements deployed successfully!"
+print_success "SSH improvements deployed successfully!"
 echo ""
 echo "Quick SSH Commands:"
 echo "  ssh-tailscale list       # List all systems"

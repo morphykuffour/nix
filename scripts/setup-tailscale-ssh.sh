@@ -3,7 +3,7 @@
 
 set -euo pipefail
 
-echo "🔧 Tailscale SSH Setup for All Systems"
+echo "Tailscale SSH Setup for All Systems"
 echo "======================================"
 echo ""
 
@@ -31,7 +31,7 @@ print_info() {
 # Get current Tailscale status
 print_step "Getting current Tailscale device status..."
 
-TAILSCALE_DEVICES=$(tailscale status --json | jq -r '.Peer[] | select(.Online == true and (.HostName | contains("optiplex") or contains("xps17") or contains("macmini") or contains("raspberry") or contains("truenas"))) | "\(.HostName) \(.TailscaleIPs[0])"')
+TAILSCALE_DEVICES=$(tailscale status --json | jq -r '.Peer[] | select(.Online == true and (.HostName | contains("optiplex") or contains("xps17") or contains("macmini") or contains("raspberry"))) | "\(.HostName) \(.TailscaleIPs[0])"')
 
 echo "Found these personal devices:"
 echo "$TAILSCALE_DEVICES"
@@ -49,17 +49,17 @@ test_ssh() {
     
     # Try regular SSH first
     if ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "$user@$ip" "hostname" >/dev/null 2>&1; then
-        print_success "✅ Regular SSH to $hostname works"
+        print_success "Regular SSH to $hostname works"
         return 0
     fi
     
     # Try Tailscale SSH
     if tailscale ssh "$hostname" "hostname" >/dev/null 2>&1; then
-        print_success "✅ Tailscale SSH to $hostname works"
+        print_success "Tailscale SSH to $hostname works"
         return 0
     fi
     
-    print_warning "❌ SSH to $hostname failed"
+    print_warning "SSH to $hostname failed"
     return 1
 }
 
@@ -91,27 +91,20 @@ else
     FAILED_SSH+=("raspberrypi")
 fi
 
-# Test truenas-scale
-if test_ssh "truenas-scale" "100.120.143.27" "root" || test_ssh "truenas-scale" "100.120.143.27" "admin"; then
-    WORKING_SSH+=("truenas-scale")
-else
-    FAILED_SSH+=("truenas-scale")
-fi
-
 echo ""
 print_step "SSH Connectivity Summary"
 echo "========================"
 if [ ${#WORKING_SSH[@]} -gt 0 ]; then
     print_success "Working SSH connections:"
     for system in "${WORKING_SSH[@]}"; do
-        echo "  ✅ $system"
+        echo "  $system"
     done
 fi
 
 if [ ${#FAILED_SSH[@]} -gt 0 ]; then
     print_warning "Failed SSH connections:"
     for system in "${FAILED_SSH[@]}"; do
-        echo "  ❌ $system"
+        echo "  $system"
     done
 fi
 
@@ -159,10 +152,6 @@ for system in "${FAILED_SSH[@]}"; do
             fix_remote_ssh "raspberrypi" "100.115.236.80" "pi"
             fix_remote_ssh "raspberrypi" "100.115.236.80" "morph"
             ;;
-        "truenas-scale")
-            print_info "TrueNAS Scale SSH might need to be enabled in the web interface"
-            print_info "Check System -> SSH -> Service at http://100.120.143.27"
-            ;;
     esac
 done
 
@@ -187,19 +176,15 @@ case "$1" in
     "raspberry"|"pi")
         exec ssh pi@100.115.236.80 "${@:2}"
         ;;
-    "truenas"|"nas")
-        exec ssh root@100.120.143.27 "${@:2}"
-        ;;
     "list"|"ls")
         echo "Available systems:"
-        echo "  optiplex, server   → ssh morph@100.89.107.92"
-        echo "  xps17, laptop      → ssh morph@100.104.224.46" 
-        echo "  raspberry, pi      → ssh pi@100.115.236.80"
-        echo "  truenas, nas       → ssh root@100.120.143.27"
+        echo "  optiplex, server   -> ssh morph@100.89.107.92"
+        echo "  xps17, laptop      -> ssh morph@100.104.224.46" 
+        echo "  raspberry, pi      -> ssh pi@100.115.236.80"
         ;;
     *)
         echo "Tailscale SSH Helper"
-        echo "Usage: $0 {optiplex|xps17|raspberry|truenas|list} [command]"
+        echo "Usage: $0 {optiplex|xps17|raspberry|list} [command]"
         echo ""
         echo "Examples:"
         echo "  $0 optiplex                    # SSH to optiplex-nixos"
@@ -227,7 +212,7 @@ echo ""
 FINAL_WORKING=()
 FINAL_FAILED=()
 
-for system in optiplex-nixos xps17-nixos raspberrypi truenas-scale; do
+for system in optiplex-nixos xps17-nixos raspberrypi; do
     case "$system" in
         "optiplex-nixos")
             if test_ssh "$system" "100.89.107.92" "morph"; then
@@ -250,13 +235,6 @@ for system in optiplex-nixos xps17-nixos raspberrypi truenas-scale; do
                 FINAL_FAILED+=("$system")
             fi
             ;;
-        "truenas-scale")
-            if test_ssh "$system" "100.120.143.27" "root"; then
-                FINAL_WORKING+=("$system")
-            else
-                FINAL_FAILED+=("$system")
-            fi
-            ;;
     esac
 done
 
@@ -265,42 +243,34 @@ print_step "Final SSH Status Report"
 echo "======================"
 
 if [ ${#FINAL_WORKING[@]} -gt 0 ]; then
-    print_success "✅ Working SSH systems (${#FINAL_WORKING[@]}/4):"
+    print_success "Working SSH systems (${#FINAL_WORKING[@]}/3):"
     for system in "${FINAL_WORKING[@]}"; do
         case "$system" in
-            "optiplex-nixos") echo "  ✅ optiplex-nixos (server) - ssh morph@100.89.107.92" ;;
-            "xps17-nixos")    echo "  ✅ xps17-nixos (laptop) - ssh morph@100.104.224.46" ;;
-            "raspberrypi")    echo "  ✅ raspberrypi (pi) - ssh user@100.115.236.80" ;;
-            "truenas-scale")  echo "  ✅ truenas-scale (nas) - ssh root@100.120.143.27" ;;
+            "optiplex-nixos") echo "  optiplex-nixos (server) - ssh morph@100.89.107.92" ;;
+            "xps17-nixos")    echo "  xps17-nixos (laptop) - ssh morph@100.104.224.46" ;;
+            "raspberrypi")    echo "  raspberrypi (pi) - ssh user@100.115.236.80" ;;
         esac
     done
 fi
 
 if [ ${#FINAL_FAILED[@]} -gt 0 ]; then
     echo ""
-    print_warning "❌ Systems still needing attention (${#FINAL_FAILED[@]}/4):"
+    print_warning "Systems still needing attention (${#FINAL_FAILED[@]}/3):"
     for system in "${FINAL_FAILED[@]}"; do
         case "$system" in
-            "optiplex-nixos") echo "  ❌ optiplex-nixos - Check SSH service status" ;;
-            "xps17-nixos")    echo "  ❌ xps17-nixos - May need NixOS rebuild or SSH service restart" ;;
-            "raspberrypi")    echo "  ❌ raspberrypi - Enable SSH with 'sudo systemctl enable --now ssh'" ;;
-            "truenas-scale")  echo "  ❌ truenas-scale - Enable SSH in TrueNAS web interface" ;;
+            "optiplex-nixos") echo "  optiplex-nixos - Check SSH service status" ;;
+            "xps17-nixos")    echo "  xps17-nixos - May need NixOS rebuild or SSH service restart" ;;
+            "raspberrypi")    echo "  raspberrypi - Enable SSH with 'sudo systemctl enable --now ssh'" ;;
         esac
     done
     
     echo ""
-    print_info "🔧 Manual fixes needed:"
+    print_info "Manual fixes needed:"
     echo ""
     echo "For Raspberry Pi:"
     echo "  1. Connect via physical access or VNC"
     echo "  2. Run: sudo systemctl enable --now ssh"
     echo "  3. Run: sudo ufw allow ssh (if using firewall)"
-    echo ""
-    echo "For TrueNAS:"
-    echo "  1. Open web interface: http://100.120.143.27"
-    echo "  2. Go to System → SSH"
-    echo "  3. Enable SSH service"
-    echo "  4. Configure authorized keys if needed"
     echo ""
     echo "For xps17-nixos:"
     echo "  1. Check if system is actually running NixOS"
@@ -317,30 +287,27 @@ echo "  ssh-tailscale list           # List all systems"
 echo "  ssh-tailscale optiplex       # SSH to server"
 echo "  ssh-tailscale laptop         # SSH to xps17-nixos"
 echo "  ssh-tailscale pi             # SSH to Raspberry Pi"
-echo "  ssh-tailscale nas            # SSH to TrueNAS"
 echo ""
 echo "Or use the traditional method:"
 echo "  ssh morph@100.89.107.92      # optiplex-nixos"
 echo "  ssh morph@100.104.224.46     # xps17-nixos"
 echo "  ssh user@100.115.236.80      # raspberrypi"
-echo "  ssh root@100.120.143.27      # truenas-scale"
 
 echo ""
-if [ ${#FINAL_WORKING[@]} -eq 4 ]; then
-    print_success "🎉 All SSH connections are working perfectly!"
+if [ ${#FINAL_WORKING[@]} -eq 3 ]; then
+    print_success "All SSH connections are working perfectly!"
 elif [ ${#FINAL_WORKING[@]} -gt 0 ]; then
-    print_success "✅ ${#FINAL_WORKING[@]} out of 4 systems have working SSH"
-    print_warning "⚠️  ${#FINAL_FAILED[@]} systems need manual configuration"
+    print_success "${#FINAL_WORKING[@]} out of 3 systems have working SSH"
+    print_warning "${#FINAL_FAILED[@]} systems need manual configuration"
 else
-    print_error "❌ No SSH connections are working properly"
+    print_error "No SSH connections are working properly"
 fi
 
 echo ""
-print_info "💡 Pro tip: Add these aliases to your ~/.zshrc:"
+print_info "Pro tip: Add these aliases to your ~/.zshrc:"
 echo ""
 echo "alias sshopt='ssh morph@100.89.107.92'"
 echo "alias sshlaptop='ssh morph@100.104.224.46'"
 echo "alias sshpi='ssh user@100.115.236.80'"
-echo "alias sshnas='ssh root@100.120.143.27'"
 
 exit 0

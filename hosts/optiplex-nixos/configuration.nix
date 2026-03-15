@@ -19,7 +19,6 @@
     ./vert.nix
     ./searxng.nix
     ./croc.nix
-    ./nas-mounts.nix
     ./jellyfin-stack.nix
     ./stremio-working.nix # Working Stremio web proxy
     ./silverbullet.nix

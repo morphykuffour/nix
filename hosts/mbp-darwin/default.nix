@@ -17,7 +17,6 @@ darwin.lib.darwinSystem {
     agenix.darwinModules.default
     ./configuration.nix
     # ./restic.nix
-    # ./nas-sync.nix
     {
       environment.systemPackages = with nixpkgs.legacyPackages.aarch64-darwin; [
         alejandra
