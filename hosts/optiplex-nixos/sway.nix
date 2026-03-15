@@ -30,7 +30,6 @@
 
       # Brightness control (replacement for xbacklight)
       brightnessctl
-      light
 
       # Screenshots
       grim
