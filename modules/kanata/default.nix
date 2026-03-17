@@ -3,7 +3,7 @@
   lib,
   pkgs,
   ...
-}@args: let
+} @ args: let
   cfg = config.services.kanata-remapper;
   isDarwin = builtins.hasAttr "launchd" (args.options or {});
   kanataConfigFile = pkgs.writeText "kanata.kbd" cfg.config;

@@ -1,14 +1,14 @@
 {
   config,
   pkgs,
-  morph-emacs,
   ...
 }: {
   imports = [
     # ../../modules/latex-ocr  # Temporarily disabled due to rapidfuzz build failure on macOS
     ../../modules/rawtalk
-    ../../modules/emacs-daemon.nix
-    ../../modules/atomic-chrome.nix
+    # Emacs modules disabled - using stow + simple nix package instead
+    # ../../modules/emacs-daemon.nix
+    # ../../modules/atomic-chrome.nix
     ../../modules/kanata
   ];
 
@@ -53,6 +53,7 @@
       # PDF viewer setup
       duti
       # Emacs daemon wrapper for single-instance behavior
+      /*
       (pkgs.writeShellScriptBin "emacs" ''
         # Function to start daemon if not running
         start_daemon_if_needed() {
@@ -72,6 +73,7 @@
         start_daemon_if_needed
         exec ${morph-emacs.packages.aarch64-darwin.default}/bin/emacsclient -c -a "" "$@"
       '')
+      */
     ];
   };
 
@@ -95,10 +97,28 @@
     brews = [];
     # GUI apps that require homebrew casks
     casks = [
+      # "raycast"
+      "spotify"
       "aerospace"
       "alt-tab"
+      "background-music"
+      "barrier"
+      "buzz"
+      "deskflow"
+      "flameshot"
+      "font-fira-code-nerd-font"
+      "free-gpgmail"
+      "gcloud-cli"
+      "gpg-suite-no-mail"
+      "hashicorp-vagrant"
       "hiddenbar"
-      "keycastr"
+      # "keycastr"
+      "libndi"
+      "mactex"
+      "miniforge"
+      "notunes"
+      "qmk-toolbox"
+      "raspberry-pi-imager"
       "raycast"
       "spotify"
       "utm"
@@ -162,20 +182,18 @@
     enable = true;
   };
 
-  # Emacs daemon service
-  # Disabled to prevent conflicts with manual daemon management
-  services.emacs-daemon = {
-    enable = false;
-    package = pkgs.emacs; # This will use the Emacs from nixpkgs
-    socketActivation = false;
-  };
+  # Emacs daemon service - DISABLED
+  # Using stow + simple nix package approach instead of flake-based config
+  # services.emacs-daemon = {
+  #   enable = false;
+  #   package = pkgs.emacs;
+  #   socketActivation = false;
+  # };
 
-  # Atomic Chrome service - starts Emacs daemon at login
-  # The wrapper script in systemPackages connects to this daemon via emacsclient
-  services.atomic-chrome = {
-    enable = true;
-    emacsPackage = morph-emacs.packages.aarch64-darwin.default;
-  };
+  # Atomic Chrome service - DISABLED
+  # services.atomic-chrome = {
+  #   enable = false;
+  # };
 
   system = {
     primaryUser = "morph";

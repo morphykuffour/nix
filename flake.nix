@@ -55,11 +55,11 @@
       url = "github:VERT-sh/vertd";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    morph-emacs = {
-      # Use local path for development; change to GitHub URL for deployment
-      url = "path:/Users/morph/dots/emacs/.emacs.d";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # morph-emacs DISABLED - using stow + simple nix package approach
+    # morph-emacs = {
+    #   url = "path:/Users/morph/dots/emacs/.emacs.d";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     rawtalk = {
       url = "github:morphykuffour/rawtalk";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -77,7 +77,7 @@
     nixos-hardware,
     nixified-ai,
     fakwin,
-    morph-emacs,
+    # morph-emacs,  # DISABLED
     rawtalk,
     ...
   } @ inputs: let
@@ -98,12 +98,12 @@
 
     # mac_mini MacOs
     darwinConfigurations.macmini-darwin = import ./hosts/macmini-darwin {
-      inherit self nixpkgs darwin inputs user home-manager agenix morph-emacs emacs-overlay rawtalk;
+      inherit self nixpkgs darwin inputs user home-manager agenix emacs-overlay rawtalk;
     };
 
     # macbook_pro MacOs
     darwinConfigurations.mbp-darwin = import ./hosts/mbp-darwin {
-      inherit self nixpkgs darwin inputs user home-manager agenix morph-emacs emacs-overlay rawtalk;
+      inherit self nixpkgs darwin inputs user home-manager agenix emacs-overlay rawtalk;
     };
 
     # xps17 NixOs

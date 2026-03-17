@@ -10,23 +10,77 @@
       enable = true;
     };
 
-    # Temporarily disabled to prevent source file symlink issues
-    # morphEmacs = {
-    #   enable = true;
-    # };
+    # Emacs with packages - config is stowed from ~/dots/emacs
+    emacs = {
+      enable = true;
+      package = pkgs.emacs30.override {
+        withNativeCompilation = true;
+      };
+      extraPackages = epkgs:
+        with epkgs; [
+          # Core
+          use-package
+          gcmh
 
-    # lazygit = {
-    #   enable = true;
-    #   settings = {
-    #     git = {
-    #       paging = {
-    #         colorArg = "always";
-    #         pager = "delta --color-only --dark --paging=never";
-    #         useConfig = false;
-    #       };
-    #     };
-    #   };
-    # };
+          # Evil ecosystem
+          evil
+          evil-collection
+          evil-org
+          evil-commentary
+          undo-tree
+
+          # Completion
+          counsel
+          counsel-tramp
+          ivy
+          swiper
+          flx
+
+          # Git
+          magit
+          magit-delta
+          git-commit
+          magit-section
+          with-editor
+
+          # Org ecosystem
+          org-roam
+          org-roam-ui
+          org-msg
+
+          # Terminal
+          vterm
+          multi-vterm
+          eat
+
+          # UI/UX
+          which-key
+          rainbow-delimiters
+          olivetti
+          deadgrep
+          circadian
+          autothemer
+          gruvbox-theme
+          modus-themes
+
+          # Dired
+          dired-hide-dotfiles
+          nerd-icons-dired
+          nerd-icons
+          async
+
+          # Editing
+          yasnippet
+          markdown-mode
+          nix-mode
+          slime
+          pdf-tools
+
+          # Utilities
+          exec-path-from-shell
+          atomic-chrome
+        ];
+    };
   };
 
   # TODO remove homebrew packages

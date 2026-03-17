@@ -33,7 +33,7 @@ credential*
 !secrets/**/*.age
 
 # MCP logs
-logs/mcp-*.log
+logs/
 
 # Ignore all .md files
 *.md
