@@ -38,6 +38,7 @@
       autojump
       starship
       opencode
+      deskflow
       gh
       fzf
       eza
