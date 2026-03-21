@@ -55,11 +55,6 @@
       url = "github:VERT-sh/vertd";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # morph-emacs DISABLED - using stow + simple nix package approach
-    # morph-emacs = {
-    #   url = "path:/Users/morph/dots/emacs/.emacs.d";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
     rawtalk = {
       url = "github:morphykuffour/rawtalk";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -77,7 +72,6 @@
     nixos-hardware,
     nixified-ai,
     fakwin,
-    # morph-emacs,  # DISABLED
     rawtalk,
     ...
   } @ inputs: let

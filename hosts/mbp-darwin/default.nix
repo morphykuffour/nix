@@ -5,14 +5,13 @@
   inputs,
   home-manager,
   agenix,
-  morph-emacs,
   emacs-overlay,
   rawtalk,
   ...
 }:
 darwin.lib.darwinSystem {
   system = "aarch64-darwin";
-  specialArgs = {inherit rawtalk morph-emacs;};
+  specialArgs = {inherit rawtalk;};
   modules = [
     agenix.darwinModules.default
     ./configuration.nix

@@ -1,12 +1,11 @@
 {
   config,
   pkgs,
-  morph-emacs,
   ...
 }: {
   imports = [
     ../../modules/rawtalk
-    ../../modules/emacs-daemon.nix
+    # ../../modules/emacs-daemon.nix
     ../../modules/atomic-chrome.nix
     ../../modules/kanata
   ];
@@ -48,16 +47,16 @@
       dust
       tokei
       delta
-      (pkgs.writeShellScriptBin "emacs" ''
-        # Connect to existing Emacs instance or start new frame
-        if pgrep -f "emacs.*no-splash" > /dev/null; then
-          # Emacs is running, create new frame
-          ${morph-emacs.packages.aarch64-darwin.default}/bin/emacsclient -c "$@"
-        else
-          # Emacs not running, start it
-          exec ${morph-emacs.packages.aarch64-darwin.default}/bin/emacs --no-splash "$@"
-        fi
-      '')
+      # (pkgs.writeShellScriptBin "emacs" ''
+      # Connect to existing Emacs instance or start new frame
+      # if pgrep -f "emacs.*no-splash" > /dev/null; then
+      # Emacs is running, create new frame
+      # ${morph-emacs.packages.aarch64-darwin.default}/bin/emacsclient -c "$@"
+      # else
+      # Emacs not running, start it
+      # exec ${morph-emacs.packages.aarch64-darwin.default}/bin/emacs --no-splash "$@"
+      # fi
+      # '')
     ];
   };
 
@@ -148,10 +147,10 @@
   };
 
   # Atomic Chrome service
-  services.atomic-chrome = {
-    enable = true;
-    emacsPackage = morph-emacs.packages.aarch64-darwin.default;
-  };
+  # services.atomic-chrome = {
+  #  enable = true;
+  # emacsPackage = morph-emacs.packages.aarch64-darwin.default;
+  # };
 
   system = {
     primaryUser = "morph";
