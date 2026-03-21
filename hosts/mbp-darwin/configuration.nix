@@ -84,6 +84,7 @@
       "aerospace"
       "alt-tab"
       "hiddenbar"
+      "karabiner-elements"
       "keycastr"
       "raycast"
       "spotify"
