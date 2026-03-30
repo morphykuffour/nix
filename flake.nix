@@ -17,9 +17,6 @@
       url = "github:nix-community/nixos-wsl";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    neovim = {
-      url = "github:nix-community/neovim-nightly-overlay?ref=master";
-    };
     discord = {
       url = "github:InternetUnexplorer/discord-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -40,7 +37,6 @@
       url = "github:tailscale/tailscale";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
-    # vscode-server.url = "github:msteen/nixos-vscode-server";
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };
@@ -50,10 +46,6 @@
     fakwin = {
       url = "github:DMaroo/fakwin";
       flake = false;
-    };
-    vertd = {
-      url = "github:VERT-sh/vertd";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     rawtalk = {
       url = "github:morphykuffour/rawtalk";
@@ -78,7 +70,6 @@
     user = "morph";
     overlays = [
       discord.overlays.default
-      # plover.overlay
     ];
     # List of unix configurations
   in {
@@ -99,16 +90,6 @@
     darwinConfigurations.mbp-darwin = import ./hosts/mbp-darwin {
       inherit self nixpkgs darwin inputs user home-manager agenix emacs-overlay rawtalk;
     };
-
-    # xps17 NixOs
-    # nixosConfigurations.xps17-nixos = import ./hosts/xps17-nixos {
-    #   inherit nixpkgs self inputs user home-manager agenix fakwin emacs-overlay;
-    # };
-
-    # t480 NixOs
-    # nixosConfigurations.t480-nixos = import ./hosts/t480-nixos {
-    #   inherit nixpkgs self inputs user home-manager agenix morph-emacs;
-    # };
 
     # optiplex NixOs
     nixosConfigurations.optiplex-nixos = import ./hosts/optiplex-nixos {

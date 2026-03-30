@@ -5,7 +5,7 @@
 }: {
   imports = [
     ../../modules/rawtalk
-    # ../../modules/emacs-daemon.nix
+    ../../modules/emacs-daemon.nix
     ../../modules/atomic-chrome.nix
     ../../modules/kanata
   ];
@@ -37,7 +37,7 @@
       autojump
       starship
       opencode
-      deskflow
+      cachix
       gh
       fzf
       eza
@@ -47,16 +47,6 @@
       dust
       tokei
       delta
-      # (pkgs.writeShellScriptBin "emacs" ''
-      # Connect to existing Emacs instance or start new frame
-      # if pgrep -f "emacs.*no-splash" > /dev/null; then
-      # Emacs is running, create new frame
-      # ${morph-emacs.packages.aarch64-darwin.default}/bin/emacsclient -c "$@"
-      # else
-      # Emacs not running, start it
-      # exec ${morph-emacs.packages.aarch64-darwin.default}/bin/emacs --no-splash "$@"
-      # fi
-      # '')
     ];
   };
 
@@ -82,6 +72,7 @@
     casks = [
       "aerospace"
       "alt-tab"
+      "deskflow"
       "hiddenbar"
       "karabiner-elements"
       "keycastr"
@@ -99,6 +90,8 @@
       experimental-features = nix-command flakes
       gc-keep-outputs = true
       gc-keep-derivations = true
+      extra-substituters = https://jedimaster.cachix.org https://nix-community.cachix.org
+      extra-trusted-public-keys = jedimaster.cachix.org-1:d3z8VEyrrqcYEe/9wOhIa6iXb4ArWUoQLB5tz1b+CZA= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
     '';
     enable = false;
   };
@@ -128,6 +121,9 @@
     enable = true;
   };
 
+  # Cachix auth token for pushing to jedimaster cache
+  age.secrets.cachix-token.file = ../../secrets/cachix-token.age;
+
   # Kanata key remapper (cross-platform, migrated from keyd)
   services.kanata-remapper = {
     enable = true;
@@ -145,12 +141,6 @@
     package = pkgs.emacs;
     socketActivation = false;
   };
-
-  # Atomic Chrome service
-  # services.atomic-chrome = {
-  #  enable = true;
-  # emacsPackage = morph-emacs.packages.aarch64-darwin.default;
-  # };
 
   system = {
     primaryUser = "morph";
@@ -200,6 +190,14 @@
         find ~/Documents ~/Downloads ~/Desktop -name ".DS_Store" -depth -exec rm {} \; 2>/dev/null || true
         killall Finder 2>/dev/null || true
       '
+
+      # Kanata on macOS requires the Karabiner-VirtualHIDDevice driver.
+      # After first install of karabiner-elements cask, you must:
+      #   1. Open Karabiner-Elements and follow the prompts to allow the system extension
+      #      (System Settings -> Privacy & Security -> allow "Karabiner-Elements.app")
+      #   2. Disable all Karabiner remapping rules so it only acts as a driver for kanata
+      #      (Karabiner-Elements -> Simple Modifications -> leave empty)
+      #   3. Restart the kanata daemon: sudo launchctl kickstart -k system/org.kanata.daemon
     '';
 
     stateVersion = 4;

@@ -9,6 +9,9 @@ UNAME_S := $(shell uname -s)
 
 EDIT_FLAKE := nvim flake.nix
 
+# Source files that affect the build — used for stamp-based caching
+NIX_SOURCES := $(shell find . -path ./result -prune -o \( -name '*.nix' -o -name '*.kbd' -o -name '*.lock' \) -print 2>/dev/null)
+
 ifeq ($(UNAME_S),Linux)
 	# Local NixOS rebuild for the current host
 	SWITCH_CMD := nixos-rebuild switch --flake '.\#$(HOSTNAME)' --impure --sudo
@@ -18,7 +21,7 @@ ifeq ($(UNAME_S),Linux)
 	EDIT_DEF := nvim hosts/$(HOSTNAME)/default.nix
 endif
 ifeq ($(UNAME_S),Darwin)
-	BUILD_CMD  := nix build --experimental-features 'nix-command flakes' '.\#darwinConfigurations.macmini-darwin.system' --impure
+	BUILD_CMD  := nix build --experimental-features 'nix-command flakes' '.\#darwinConfigurations.$(HOSTNAME).system' --impure
 	SWITCH_CMD := sudo sh -c 'rm -rf /etc/shells && ./result/sw/bin/darwin-rebuild switch --flake .'
 	EDIT_HOME := nvim hosts/$(HOSTNAME)/configuration.nix
 	EDIT_CONF := nvim hosts/$(HOSTNAME)/home.nix
@@ -38,19 +41,31 @@ eh:
 ec:
 	$(EDIT_HOME)
 
-switch: build
+# .build-stamp tracks whether ./result is up-to-date with sources.
+# If no .nix, .kbd, or .lock files changed since last build, skip rebuild.
+.build-stamp: $(NIX_SOURCES)
+	$(BUILD_CMD)
+	@touch $@
+
+build: .build-stamp
+
+# Force a full rebuild regardless of source changes
+rebuild:
+	$(BUILD_CMD)
+	@touch .build-stamp
+
+switch: .build-stamp
 	$(SWITCH_CMD)
 
-build:
-	$(BUILD_CMD)
+.PHONY: build switch rebuild
 
 wsl-build:
 	nix build .#nixosConfigurations.win-wsl.config.system.build.installer
 	echo "The rootfs tarball can then be found under ./result/tarball/nixos-wsl-x86_64-linux.tar.gz"
 	echo "croc send ./result/tarball/nixos-wsl-x86_64-linux.tar.gz"
 
-push-cachix:
-	$(BUILD_CMD) | cachix push jedimaster
+push-cachix: .build-stamp
+	CACHIX_AUTH_TOKEN=$$(agenix -d secrets/cachix-token.age 2>/dev/null) cachix push jedimaster ./result
 
 update:
 	sudo nix flake update
@@ -131,6 +146,7 @@ clean:
 		echo "Optimizing store with hardlinks..."; \
 		nix-store --optimise; \
 	fi
+	@rm -f .build-stamp
 	@if [ -e "result" ]; then \
 		unlink result; \
 	else \

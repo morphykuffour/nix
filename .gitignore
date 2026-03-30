@@ -2,6 +2,7 @@
 *.swp
 *.swo
 result
+.build-stamp
 .DS_Store
 hosts/.DS_Store
 modules/.DS_Store

@@ -9,6 +9,10 @@
 ;;   [vim_mode:C] h/j/k/l = arrows       -> vim navigation
 ;;   [vim_mode:C] w = C-right, b = C-left -> word navigation
 
+(defcfg
+  process-unmapped-keys yes
+)
+
 (defsrc
   esc caps ins spc h j k l w b
 )
