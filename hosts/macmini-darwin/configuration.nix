@@ -200,7 +200,7 @@
       };
       dock = {
         # Dock settings
-        autohide = false;
+        autohide = true;
         orientation = "left";
         showhidden = true;
         tilesize = 40;
