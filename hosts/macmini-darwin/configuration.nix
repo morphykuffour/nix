@@ -4,7 +4,6 @@
   ...
 }: {
   imports = [
-    # ../../modules/latex-ocr  # Temporarily disabled due to rapidfuzz build failure on macOS
     ../../modules/rawtalk
     # Emacs modules disabled - using stow + simple nix package instead
     # ../../modules/emacs-daemon.nix
@@ -97,8 +96,8 @@
     brews = [];
     # GUI apps that require homebrew casks
     casks = [
-      # "raycast"
-      "spotify"
+      "raycast"
+      # "spotify"
       "aerospace"
       "alt-tab"
       "background-music"
@@ -112,7 +111,7 @@
       "gpg-suite-no-mail"
       "hashicorp-vagrant"
       "hiddenbar"
-      # "keycastr"
+      "keycastr"
       "libndi"
       "mactex"
       "miniforge"
@@ -161,16 +160,6 @@
       });
     })
   ];
-
-  # LaTeX OCR Service
-  # Temporarily disabled due to rapidfuzz build failure on macOS
-  # services.latex-ocr = {
-  #   enable = true;
-  #   device = "mps"; # Use Apple Silicon GPU
-  #   autoCopyToClipboard = true;
-  #   outputFormat = "latex";
-  #   verbose = false;
-  # };
 
   # Kanata key remapper (cross-platform, migrated from keyd)
   services.kanata-remapper = {

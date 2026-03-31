@@ -7,8 +7,12 @@
   agenix,
   emacs-overlay,
   rawtalk,
+  agtx,
   ...
-}:
+}: let
+  pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+  agtx-pkg = pkgs.callPackage ../../pkgs/agtx {agtx-src = agtx;};
+in
 darwin.lib.darwinSystem {
   system = "aarch64-darwin";
   specialArgs = {inherit rawtalk;};
@@ -17,10 +21,11 @@ darwin.lib.darwinSystem {
     ./configuration.nix
     ./restic.nix
     {
-      environment.systemPackages = with nixpkgs.legacyPackages.aarch64-darwin; [
+      environment.systemPackages = with pkgs; [
         alejandra
         agenix.packages.aarch64-darwin.default
         rawtalk.packages.aarch64-darwin.default
+        agtx-pkg
       ];
     }
     # Add emacs-overlay for latest Emacs builds

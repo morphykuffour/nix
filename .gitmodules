@@ -1,0 +1,3 @@
+[submodule "agtx"]
+	path = agtx
+	url = git@github.com:fynnfluegge/agtx.git
