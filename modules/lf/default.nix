@@ -131,7 +131,7 @@ in {
             fi
             dirPaths=""
             IFS=';' read -ra PD <<< "$PROJECT_PATHES"
-            for i in "${{PD[@]}}"; do
+            for i in "''${PD[@]}"; do
                 case "$i" in
                     /*) base="$i" ;;
                     *)  base="$HOME/$i" ;;
