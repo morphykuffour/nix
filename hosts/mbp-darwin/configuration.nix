@@ -65,9 +65,7 @@
       cleanup = "none";
       upgrade = false;
     };
-    brews = [
-      "yabai"
-    ];
+    brews = [];
     # GUI apps that require homebrew casks
     casks = [
       "aerospace"
