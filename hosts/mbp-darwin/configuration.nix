@@ -59,7 +59,9 @@
     global = {
       brewfile = false;
     };
-    taps = [];
+    taps = [
+      "homebrew/cask"
+    ];
     onActivation = {
       autoUpdate = false;
       cleanup = "none";
@@ -77,7 +79,6 @@
       "raycast"
       "spotify"
       "utm"
-      "vlc"
     ];
   };
 
