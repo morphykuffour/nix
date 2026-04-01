@@ -151,7 +151,7 @@
         NSWindowResizeTime = 0.001;
       };
       dock = {
-        autohide = false;
+        autohide = true;
         orientation = "bottom";
         showhidden = true;
         tilesize = 40;
