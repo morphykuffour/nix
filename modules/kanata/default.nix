@@ -49,11 +49,19 @@ in {
       # ── macOS (nix-darwin) ─────────────────────────────────────────
       environment.systemPackages = [cfg.package];
 
+      # Copy kanata binary to a stable path so macOS TCC (Input Monitoring)
+      # permissions persist across nix rebuilds that change /nix/store paths.
+      system.activationScripts.postActivation.text = ''
+        mkdir -p /usr/local/bin
+        cp -f ${cfg.package}/bin/kanata /usr/local/bin/kanata
+        chmod 755 /usr/local/bin/kanata
+      '';
+
       launchd.daemons.kanata = {
         serviceConfig = {
           Label = "org.kanata.daemon";
           ProgramArguments = [
-            "${cfg.package}/bin/kanata"
+            "/usr/local/bin/kanata"
             "--cfg"
             "${kanataConfigFile}"
           ];
