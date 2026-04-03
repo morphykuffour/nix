@@ -60,7 +60,8 @@
       brewfile = false;
     };
     taps = [
-      "homebrew/cask"
+      # "nikitabobko/tap"
+      # "deskflow/tap"
     ];
     onActivation = {
       autoUpdate = false;
@@ -70,9 +71,9 @@
     brews = [];
     # GUI apps that require homebrew casks
     casks = [
-      "aerospace"
+      # "aerospace"
       "alt-tab"
-      "deskflow"
+      # "deskflow"
       "hiddenbar"
       "karabiner-elements"
       "keycastr"
