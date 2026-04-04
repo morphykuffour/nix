@@ -72,7 +72,7 @@
     # GUI apps that require homebrew casks
     casks = [
       # "aerospace"
-      "alt-tab"
+      # "alt-tab"
       # "deskflow"
       "hiddenbar"
       "karabiner-elements"

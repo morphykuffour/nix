@@ -99,7 +99,7 @@
       "raycast"
       # "spotify"
       "aerospace"
-      "alt-tab"
+      # "alt-tab"
       "background-music"
       "barrier"
       "buzz"

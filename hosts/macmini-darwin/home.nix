@@ -197,6 +197,9 @@
       stylua
       cscope
       minicom
+
+      # language learning (https://oliverobscure.xyz/posts/free-software-is-cool/)
+      # dictd
     ];
   };
 }
