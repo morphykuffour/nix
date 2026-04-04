@@ -114,6 +114,7 @@
 
       # Nix tools
       deadnix
+      nix-your-shell
 
       # Other utilities
       stow
