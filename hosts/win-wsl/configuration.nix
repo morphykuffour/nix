@@ -229,6 +229,7 @@
     atuin
     starship
     tmux
+    abduco
     tealdeer
     xclip
     nodejs

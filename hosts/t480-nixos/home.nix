@@ -56,6 +56,7 @@
     packages = with pkgs; [
       brave
       tmux
+      abduco
       zsh
       starship
       eza

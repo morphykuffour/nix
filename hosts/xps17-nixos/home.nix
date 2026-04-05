@@ -85,6 +85,7 @@
     packages = with pkgs; [
       # i3status-rust  # Disabled for XFCE
       tmux
+      abduco
       zsh
       starship
       eza

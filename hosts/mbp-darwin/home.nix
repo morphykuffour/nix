@@ -58,6 +58,7 @@
       # Development tools
       neovim
       tmux
+      abduco
       kitty
       entr
       cmake
