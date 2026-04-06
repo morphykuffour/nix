@@ -9,6 +9,14 @@
     home-manager = {
       enable = true;
     };
+
+    neovim = {
+      enable = true;
+      plugins = with pkgs.vimPlugins; [
+        nvim-treesitter.withAllGrammars
+        nvim-treesitter-textobjects
+      ];
+    };
   };
 
   home = {
@@ -56,7 +64,6 @@
       gum
 
       # Development tools
-      neovim
       tmux
       abduco
       kitty
