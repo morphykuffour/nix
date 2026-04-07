@@ -11,7 +11,7 @@ rustPlatform.buildRustPackage {
   cargoLock = {
     lockFile = "${agtx-src}/Cargo.lock";
   };
-  nativeCheckInputs = [ git ];
+  nativeCheckInputs = [git];
   meta = {
     description = "Terminal-native kanban board for managing coding agents";
     mainProgram = "agtx";

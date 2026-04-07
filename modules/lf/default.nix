@@ -124,35 +124,35 @@ in {
       '';
 
       cdp = ''
-        ''${{
-            if [ -z "$PROJECT_PATHES" ]; then
-                lf -remote "send $id echo 'PROJECT_PATHES not set'"
-                exit 0
-            fi
-            dirPaths=""
-            IFS=';' read -ra PD <<< "$PROJECT_PATHES"
-            for i in "''${PD[@]}"; do
-                case "$i" in
-                    /*) base="$i" ;;
-                    *)  base="$HOME/$i" ;;
-                esac
-                dirs=$(ls -d "$base/"* 2>/dev/null)
-                dirPaths="$dirPaths
-$dirs"
-            done
-            targetDir=$(printf '%s\n' "$dirPaths" | grep -v '^$' | fzf --reverse --header='Jump to project')
-            if [ -n "$targetDir" ]; then
-                lf -remote "send $id cd \"$targetDir\""
-                changes=$(git -C "$targetDir" status --porcelain 2>/dev/null)
-                if [ -z "$changes" ]; then
-                    git -C "$targetDir" checkout main 2>/dev/null || git -C "$targetDir" checkout master 2>/dev/null
-                    git -C "$targetDir" pull 2>/dev/null
-                    lf -remote "send $id echo 'Pulled latest changes'"
-                else
-                    lf -remote "send $id echo 'Uncommitted changes - skipping git update'"
-                fi
-            fi
-        }}
+                ''${{
+                    if [ -z "$PROJECT_PATHES" ]; then
+                        lf -remote "send $id echo 'PROJECT_PATHES not set'"
+                        exit 0
+                    fi
+                    dirPaths=""
+                    IFS=';' read -ra PD <<< "$PROJECT_PATHES"
+                    for i in "''${PD[@]}"; do
+                        case "$i" in
+                            /*) base="$i" ;;
+                            *)  base="$HOME/$i" ;;
+                        esac
+                        dirs=$(ls -d "$base/"* 2>/dev/null)
+                        dirPaths="$dirPaths
+        $dirs"
+                    done
+                    targetDir=$(printf '%s\n' "$dirPaths" | grep -v '^$' | fzf --reverse --header='Jump to project')
+                    if [ -n "$targetDir" ]; then
+                        lf -remote "send $id cd \"$targetDir\""
+                        changes=$(git -C "$targetDir" status --porcelain 2>/dev/null)
+                        if [ -z "$changes" ]; then
+                            git -C "$targetDir" checkout main 2>/dev/null || git -C "$targetDir" checkout master 2>/dev/null
+                            git -C "$targetDir" pull 2>/dev/null
+                            lf -remote "send $id echo 'Pulled latest changes'"
+                        else
+                            lf -remote "send $id echo 'Uncommitted changes - skipping git update'"
+                        fi
+                    fi
+                }}
       '';
     };
 
