@@ -42,6 +42,7 @@
           git-commit
           magit-section
           with-editor
+          git-timemachine
 
           # Org ecosystem
           org-roam
@@ -130,6 +131,7 @@
       gum
 
       # Development tools
+      coreutils
       neovim
       tmux
       abduco

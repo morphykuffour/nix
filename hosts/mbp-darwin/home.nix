@@ -64,6 +64,7 @@
       gum
 
       # Development tools
+      coreutils
       tmux
       abduco
       kitty
