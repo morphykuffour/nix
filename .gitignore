@@ -41,3 +41,6 @@ logs/
 
 # Do not ignore the README.md
 !README.md
+
+# Claude
+.claude/
