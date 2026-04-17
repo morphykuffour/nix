@@ -2,7 +2,7 @@
 ;; Migrated from keyd keymaps.conf - works on both Linux and macOS
 ;;
 ;; Key behaviors (from keyd):
-;;   capslock = overload(ctrl_vim, esc)   -> tap=Esc, hold=LCtrl
+;;   capslock = overload(ctrl_vim, esc)   -> tap=Esc, hold=Ctrl (via layer)
 ;;   esc = capslock                       -> Esc key becomes CapsLock
 ;;   insert = S-insert                    -> Insert becomes paste
 ;;   [ctrl_vim:C] space = swap(vim_mode)  -> CapsHold+Space enters vim_mode
@@ -23,8 +23,9 @@
 )
 
 (defalias
-  ;; CapsLock: tap = Esc, hold = Ctrl (mirrors keyd: overload(ctrl_vim, esc))
-  caps (tap-hold $tap-time $hold-time esc (multi lctl (layer-toggle ctrl_vim)))
+  ;; CapsLock: tap = Esc, hold = activate ctrl_vim layer
+  ;; Uses layer-toggle (not multi lctl) so vim_mode arrows stay unmodified
+  caps (tap-hold $tap-time $hold-time esc (layer-toggle ctrl_vim))
 )
 
 ;; Base layer: esc->caps, caps->tap-hold, insert->paste
@@ -32,15 +33,36 @@
   caps @caps S-ins spc h j k l w b
 )
 
-;; ctrl_vim layer: activated while holding CapsLock (inherits Ctrl)
-;; space switches to vim_mode, everything else passes through
-(deflayer ctrl_vim
-  _ _ _ (layer-switch vim_mode) _ _ _ _ _ _
+;; ctrl_vim layer: activated while holding CapsLock
+;; Uses deflayermap to apply Ctrl to ALL keys (including non-defsrc keys)
+;; without holding a real lctl modifier that would contaminate vim_mode arrows
+(deflayermap (ctrl_vim)
+  ;; Space held → enter vim navigation mode
+  spc (layer-toggle vim_mode)
+  ;; Alpha keys → Ctrl+key
+  a C-a  b C-b  c C-c  d C-d  e C-e  f C-f  g C-g  h C-h
+  i C-i  j C-j  k C-k  l C-l  m C-m  n C-n  o C-o  p C-p
+  q C-q  r C-r  s C-s  t C-t  u C-u  v C-v  w C-w  x C-x
+  y C-y  z C-z
+  ;; Number keys
+  1 C-1  2 C-2  3 C-3  4 C-4  5 C-5
+  6 C-6  7 C-7  8 C-8  9 C-9  0 C-0
+  ;; Symbol and editing keys
+  tab C-tab  ret C-ret  bspc C-bspc  del C-del
+  - C--  = C-=  [ C-[  ] C-]  \ C-\
+  ; C-;  ' C-'  , C-,  . C-.  / C-/
+  grv C-grv  ins C-ins
+  ;; Arrow keys
+  left C-left  right C-right  up C-up  down C-down
+  ;; Function keys
+  f1 C-f1  f2 C-f2  f3 C-f3  f4 C-f4  f5 C-f5  f6 C-f6
+  f7 C-f7  f8 C-f8  f9 C-f9  f10 C-f10  f11 C-f11  f12 C-f12
 )
 
-;; vim_mode layer: Ctrl + vim navigation (inherits Ctrl from keyd's [vim_mode:C])
-;; h/j/k/l = arrows, w = Ctrl+Right (word fwd), b = Ctrl+Left (word back)
-;; Releasing CapsLock returns to base layer
+;; vim_mode layer: CapsLock+Space held → vim navigation
+;; h/j/k/l = plain arrows (no Ctrl since we don't use multi-lctl)
+;; w = Ctrl+Right (word fwd), b = Ctrl+Left (word back)
+;; Keys not in defsrc fall through to ctrl_vim deflayermap (get Ctrl modifier)
 (deflayer vim_mode
-  _ _ _ (layer-switch base) left down up right C-right C-left
+  _ _ _ _ left down up right C-right C-left
 )
