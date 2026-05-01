@@ -191,13 +191,46 @@
         killall Finder 2>/dev/null || true
       '
 
-      # Kanata on macOS requires the Karabiner-VirtualHIDDevice driver.
-      # After first install of karabiner-elements cask, you must:
-      #   1. Open Karabiner-Elements and follow the prompts to allow the system extension
-      #      (System Settings -> Privacy & Security -> allow "Karabiner-Elements.app")
-      #   2. Disable all Karabiner remapping rules so it only acts as a driver for kanata
-      #      (Karabiner-Elements -> Simple Modifications -> leave empty)
-      #   3. Restart the kanata daemon: sudo launchctl kickstart -k system/org.kanata.daemon
+      # Kanata uses Karabiner's VirtualHIDDevice as its output driver, but
+      # karabiner-elements' Karabiner-Core-Service also grabs the input
+      # devices, leaving kanata with IOHIDDeviceOpen "not permitted". Stop
+      # and disable everything from karabiner-elements; keep the
+      # VirtualHIDDevice-Daemon running since that's what kanata talks to.
+      launchctl disable system/org.pqrs.service.daemon.Karabiner-Core-Service 2>/dev/null || true
+      launchctl bootout system/org.pqrs.service.daemon.Karabiner-Core-Service 2>/dev/null || true
+
+      morph_uid=$(id -u morph)
+      for agent in \
+        org.pqrs.service.agent.Karabiner-Core-Service \
+        org.pqrs.service.agent.Karabiner-Menu \
+        org.pqrs.service.agent.Karabiner-NotificationWindow \
+        org.pqrs.service.agent.karabiner_console_user_server \
+        org.pqrs.service.agent.karabiner_session_monitor
+      do
+        launchctl disable "gui/$morph_uid/$agent" 2>/dev/null || true
+        launchctl bootout "gui/$morph_uid/$agent" 2>/dev/null || true
+      done
+
+      # bootout asks launchd to stop the service, but karabiner-elements'
+      # menu-bar app and login-item registrations re-spawn these processes
+      # quickly. Force-kill any survivors so the input devices are free for
+      # kanata before we kickstart it below.
+      for proc in \
+        Karabiner-Core-Service \
+        Karabiner-Menu \
+        Karabiner-NotificationWindow \
+        karabiner_console_user_server \
+        karabiner_session_monitor
+      do
+        /usr/bin/pkill -x "$proc" 2>/dev/null || true
+      done
+
+      launchctl kickstart -k system/org.kanata.daemon 2>/dev/null || true
+
+      # One-time manual step after first karabiner-elements install:
+      # open Karabiner-Elements and allow the system extension in
+      # System Settings -> Privacy & Security. After that, this activation
+      # script handles the rest.
     '';
 
     stateVersion = 4;
