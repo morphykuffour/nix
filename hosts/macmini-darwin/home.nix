@@ -135,7 +135,6 @@
       neovim
       tmux
       abduco
-      kitty
       entr
       cmake
       meson

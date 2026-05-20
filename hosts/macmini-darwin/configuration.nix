@@ -42,6 +42,7 @@
       # System variables
       EDITOR = "nvim";
       VISUAL = "nvim";
+      TERMINAL = "ghostty";
     };
     systemPackages = with pkgs; [
       # Installed Nix packages
@@ -108,6 +109,7 @@
       "font-fira-code-nerd-font"
       "free-gpgmail"
       "gcloud-cli"
+      "ghostty"
       "gpg-suite-no-mail"
       "hashicorp-vagrant"
       "hiddenbar"
@@ -151,15 +153,15 @@
     # ];
   };
 
-  nixpkgs.overlays = [
-    (final: prev: {
-      kitty = prev.kitty.overrideAttrs (old: {
-        version = "0.43.1";
-        __intentionallyOverridingVersion = true;
-        doCheck = false;
-      });
-    })
-  ];
+  # nixpkgs.overlays = [
+  # (final: prev: {
+  # kitty = prev.kitty.overrideAttrs (old: {
+  # version = "0.43.1";
+  # __intentionallyOverridingVersion = true;
+  # doCheck = false;
+  # });
+  # })
+  # ];
 
   # Kanata key remapper (cross-platform, migrated from keyd)
   services.kanata-remapper = {
